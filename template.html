@@ -928,12 +928,21 @@
 
   function setupImages() {
     var banner = document.getElementById('bannerImg');
-    banner.src = 'https://picsum.photos/1200/400?random=' + seed;
-    var keywords = ['1','2','3','4','5','6','7','8','9','10'];
+    banner.src = 'https://loremflickr.com/1200/400/world,news?lock=' + seed;
+    banner.onerror = function() {
+      this.src = 'https://picsum.photos/seed/banner' + seed + '/1200/400';
+      this.onerror = function() { this.style.opacity = '0'; };
+    };
+    var keywords = ['military,tank','finance,money','technology,robot','politics,government','business,industry','energy,solar','medical,hospital','semiconductor,chip','space,rocket','social,media'];
     sections.forEach(function(sec, i) {
       var img = sec.querySelector('.section-header img');
       if (img) {
-        img.src = 'https://picsum.photos/800/300?random=' + (seed*7 + i + 1);
+        var kw = keywords[i] || 'abstract';
+        img.src = 'https://loremflickr.com/800/300/' + encodeURIComponent(kw) + '?lock=' + (seed*7 + i + 1);
+        img.onerror = function() {
+          this.src = 'https://picsum.photos/seed/' + encodeURIComponent(kw) + '/800/300';
+          this.onerror = function() { this.style.opacity = '0'; };
+        };
       }
     });
   }
