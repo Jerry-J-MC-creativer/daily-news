@@ -1346,7 +1346,10 @@
     document.getElementById('btnCancel').textContent = isZh ? '取消' : 'Cancel';
     document.getElementById('btnSave').textContent = isZh ? '保存' : 'Save';
     document.querySelectorAll('.section-title').forEach(function(el) {
-      el.textContent = isZh ? el.dataset.zh : el.dataset.en;
+      if (!el.dataset.zh && !el.dataset.en) return;
+      var icon = el.querySelector('.section-icon');
+      var iconHTML = icon ? icon.outerHTML : '';
+      el.innerHTML = iconHTML + (isZh ? (el.dataset.zh || '') : (el.dataset.en || ''));
     });
   }
 
