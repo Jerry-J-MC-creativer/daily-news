@@ -171,7 +171,7 @@
     transition: all .2s;
   }
   .global-actions button:hover { border-color: var(--accent); color: var(--accent); }
-  .section {
+  .section-card {
     background: var(--surface);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
@@ -1248,7 +1248,7 @@
   var customVoices = JSON.parse(localStorage.getItem('wb_custom_voices') || '[]');
   var selectedVoice = localStorage.getItem('wb_voice') || BUILTIN_PREFS.voice || '';
 
-  var sections = document.querySelectorAll('.section');
+  var sections = document.querySelectorAll('.section-card');
   var sectionData = [];
   var isPlaying = false, isPaused = false, currentUtt = null, currentQueue = [];
   var currentSectionIdx = 0, currentItemIdx = 0, currentMode = 'all'; // 'all' or 'section'
