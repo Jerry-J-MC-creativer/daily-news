@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日全球要闻</title>
+<style>
+  :root {
+    --bg: #f5f7fa; --card: rgba(255,255,255,0.92); --text: #1a1a2e; --sub: #6b7280;
+    --accent: #4f6ef7; --border: rgba(255,255,255,0.4);
+    --shadow: rgba(0,0,0,0.08); --hero-text: #fff; --hero-sub: rgba(255,255,255,0.85);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1117; --card: rgba(26,29,39,0.88); --text: #e5e7eb; --sub: #9ca3af;
+      --border: rgba(255,255,255,0.08); --shadow: rgba(0,0,0,0.3);
+      --hero-text: #fff; --hero-sub: rgba(255,255,255,0.8);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { min-height: 100vh; }
+  body {
+    font-family: "Segoe UI", "Microsoft YaHei", -apple-system, sans-serif;
+    background: var(--bg); color: var(--text);
+    display: flex; flex-direction: column; align-items: center;
+    position: relative; overflow-x: hidden;
+  }
+
+  /* 全屏背景图 */
+  .bg-layer {
+    position: fixed; inset: 0; z-index: 0;
+    background-size: cover; background-position: center;
+    transition: opacity .6s ease, transform .8s ease;
+  }
+  .bg-layer.hidden { opacity: 0; pointer-events: none; }
+  .bg-layer::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 100%);
+  }
+
+  /* 内容层 */
+  .content { position: relative; z-index: 1; width: 100%; max-width: 680px; padding: 48px 20px; }
+
+  /* 右上角开关 */
+  .top-bar {
+    position: fixed; top: 16px; right: 16px; z-index: 10;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border); border-radius: 999px;
+    padding: 6px 14px; font-size: 13px; color: var(--sub);
+    box-shadow: 0 2px 12px var(--shadow); transition: background .3s;
+    cursor: pointer; user-select: none;
+  }
+  .top-bar:hover { background: var(--card); }
+  .toggle-track {
+    width: 36px; height: 20px; border-radius: 999px;
+    background: var(--sub); position: relative; transition: background .25s;
+    flex-shrink: 0;
+  }
+  .toggle-track.on { background: var(--accent); }
+  .toggle-thumb {
+    width: 16px; height: 16px; border-radius: 50%; background: #fff;
+    position: absolute; top: 2px; left: 2px;
+    transition: transform .25s; box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  }
+  .toggle-track.on .toggle-thumb { transform: translateX(16px); }
+
+  /* Hero */
+  .hero { text-align: center; margin-bottom: 40px; }
+  .hero h1 {
+    font-size: clamp(24px, 5vw, 36px); font-weight: 800; letter-spacing: 2px;
+    color: var(--hero-text); text-shadow: 0 2px 16px rgba(0,0,0,.35);
+  }
+  .hero p {
+    color: var(--hero-sub); margin-top: 12px; font-size: 15px;
+    text-shadow: 0 1px 8px rgba(0,0,0,.3);
+  }
+
+  /* 卡片列表 */
+  .list { width: 100%; display: flex; flex-direction: column; gap: 14px; }
+  a.day-card {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--card); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border); border-radius: 16px;
+    padding: 20px 24px; text-decoration: none;
+    color: var(--text); transition: transform .15s, box-shadow .15s, background .3s;
+  }
+  a.day-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,.15); }
+  .day-card .left { display: flex; flex-direction: column; gap: 5px; }
+  .day-card .date { font-size: 17px; font-weight: 700; }
+  .day-card .meta { font-size: 12px; color: var(--sub); }
+  .day-card .badge-wrap { display: flex; align-items: center; gap: 10px; }
+  .day-card .badge {
+    background: var(--accent); color: #fff; font-size: 11px;
+    padding: 4px 12px; border-radius: 999px; font-weight: 700;
+  }
+  .day-card .badge.old { background: var(--sub); }
+  .arrow { font-size: 20px; color: var(--sub); transition: transform .2s; }
+  a.day-card:hover .arrow { transform: translateX(4px); color: var(--accent); }
+
+  /* 空状态 */
+  .empty {
+    text-align: center; padding: 40px; color: var(--sub); font-size: 14px;
+    background: var(--card); backdrop-filter: blur(12px); border-radius: 16px;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 48px; color: var(--hero-sub); font-size: 12px; text-align: center;
+    text-shadow: 0 1px 6px rgba(0,0,0,.3);
+  }
+  footer a { color: var(--hero-sub); text-decoration: underline; }
+
+  /* 移动端 */
+  @media (max-width: 480px) {
+    .content { padding: 36px 14px; }
+    .top-bar { top: 10px; right: 10px; padding: 5px 10px; font-size: 12px; }
+    a.day-card { padding: 16px 18px; }
+    .day-card .date { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+  <!-- 全屏风景背景 -->
+  <div class="bg-layer" id="bgLayer"></div>
+
+  <!-- 背景开关 -->
+  <div class="top-bar" id="bgToggle" title="切换背景图">
+    <span>背景</span>
+    <div class="toggle-track on" id="toggleTrack"><div class="toggle-thumb"></div></div>
+  </div>
+
+  <div class="content">
+    <div class="hero">
+      <h1>每日全球要闻</h1>
+      <p>十大领域 · 全球动态 · 每日更新</p>
+    </div>
+    <div class="list" id="dayList">
+      <!-- 动态生成 -->
+    </div>
+    <footer>
+      内容由 AI 生成 · 图片来自公开共享实拍 · 语音由浏览器内置 TTS 生成<br>
+      遇到问题？请联系 <a href="mailto:jerryjwx@163.com">jerryjwx@163.com</a>
+    </footer>
+  </div>
+
+<script>
+(function(){
+  // 日期种子
+  var d = new Date();
+  var seed = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
+
+  // 背景图：LoremFlickr 风景实拍，每天轮换
+  var landscapes = [
+    'nature,landscape','mountain,lake','ocean,beach','forest,sunlight',
+    'sunset,clouds','river,valley','flower,meadow','snow,mountain'
+  ];
+  var bgKeyword = landscapes[seed % landscapes.length];
+  var bgUrl = 'https://loremflickr.com/1920/1080/' + bgKeyword + '?lock=' + seed;
+  document.getElementById('bgLayer').style.backgroundImage = 'url(' + bgUrl + ')';
+
+  // 读取背景开关状态
+  var bgOn = localStorage.getItem('wb_home_bg');
+  if (bgOn === null) bgOn = '1';
+  function setBgState(on) {
+    var layer = document.getElementById('bgLayer');
+    var track = document.getElementById('toggleTrack');
+    if (on) { layer.classList.remove('hidden'); track.classList.add('on'); }
+    else { layer.classList.add('hidden'); track.classList.remove('on'); }
+    localStorage.setItem('wb_home_bg', on ? '1' : '0');
+  }
+  setBgState(bgOn === '1');
+  document.getElementById('bgToggle').addEventListener('click', function(){
+    setBgState(document.getElementById('bgLayer').classList.contains('hidden'));
+  });
+
+  // 动态生成日期列表（今天 + 昨天）
+  function pad(n){ return n<10 ? '0'+n : ''+n; }
+  function fmtDate(y,m,day){
+    var date = new Date(y, m-1, day);
+    var week = ['周日','周一','周二','周三','周四','周五','周六'][date.getDay()];
+    return y + '-' + pad(m) + '-' + pad(day) + '（' + week + '）';
+  }
+  var today = new Date();
+  var y = today.getFullYear(), m = today.getMonth()+1, day = today.getDate();
+  var list = document.getElementById('dayList');
+  var days = [];
+  // 今天
+  days.push({
+    date: fmtDate(y,m,day), file: y+'-'+pad(m)+'-'+pad(day)+'.html',
+    meta: '军事 · 财经 · AI 与科技 · 国际政治 等 10 个领域', badge: '最新', old: false
+  });
+  // 昨天
+  var yesterday = new Date(today); yesterday.setDate(yesterday.getDate()-1);
+  days.push({
+    date: fmtDate(yesterday.getFullYear(), yesterday.getMonth()+1, yesterday.getDate()),
+    file: yesterday.getFullYear()+'-'+pad(yesterday.getMonth()+1)+'-'+pad(yesterday.getDate())+'.html',
+    meta: '军事 · 财经 · AI 与科技 · 国际政治 等 10 个领域', badge: '往期', old: true
+  });
+
+  list.innerHTML = days.map(function(it){
+    return '<a class="day-card" href="' + it.file + '">' +
+      '<div class="left"><span class="date">' + it.date + '</span>' +
+      '<span class="meta">' + it.meta + '</span></div>' +
+      '<div class="badge-wrap"><span class="badge' + (it.old?' old':'') + '">' + it.badge + '</span>' +
+      '<span class="arrow">→</span></div></a>';
+  }).join('');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>页面无法打开 — 每日全球要闻</title>
+<style>
+  :root {
+    --bg: #f5f7fa; --card: #ffffff; --text: #1a1a2e; --sub: #6b7280;
+    --accent: #4f6ef7; --border: #e5e7eb; --shadow: rgba(0,0,0,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1117; --card: #1a1d27; --text: #e5e7eb; --sub: #9ca3af;
+      --border: #2d3141; --shadow: rgba(0,0,0,0.3);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", "Microsoft YaHei", -apple-system, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .box {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 48px 36px; max-width: 440px; width: 100%; text-align: center;
+    box-shadow: 0 8px 32px var(--shadow);
+  }
+  .icon {
+    width: 72px; height: 72px; margin: 0 auto 24px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 32px; color: #fff;
+  }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+  p { color: var(--sub); font-size: 14px; line-height: 1.7; margin-bottom: 8px; }
+  .reasons {
+    text-align: left; background: var(--bg); border-radius: 12px;
+    padding: 16px 20px; margin: 20px 0; font-size: 13px; color: var(--sub); line-height: 1.9;
+  }
+  .reasons li { list-style: none; padding-left: 18px; position: relative; }
+  .reasons li::before { content: '•'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  .email {
+    margin: 20px 0 8px; font-size: 14px; color: var(--text);
+  }
+  .email a {
+    color: var(--accent); text-decoration: none; font-weight: 600;
+    word-break: break-all;
+  }
+  .email a:hover { text-decoration: underline; }
+  .btn {
+    display: inline-block; margin-top: 16px;
+    background: var(--accent); color: #fff; text-decoration: none;
+    padding: 12px 28px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(79,110,247,.35); }
+  footer { margin-top: 24px; font-size: 12px; color: var(--sub); }
+
+  @media (max-width: 480px) {
+    .box { padding: 36px 24px; }
+    h1 { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+  <div class="box">
+    <div class="icon">!</div>
+    <h1>对不起，您访问的页面无法打开</h1>
+    <p>可能遇到了以下问题，请您尝试排查：</p>
+    <ul class="reasons">
+      <li>网络连接不稳定或已断开</li>
+      <li>该页面链接已过期或已被移除</li>
+      <li>服务器暂时繁忙，请稍后刷新重试</li>
+      <li>浏览器缓存异常，可尝试清除缓存</li>
+    </ul>
+    <p class="email">
+      如果问题持续存在，欢迎联系：<br>
+      <a href="mailto:jerryjwx@163.com">jerryjwx@163.com</a>
+    </p>
+    <a class="btn" href="index.html">← 返回主页</a>
+    <footer>每日全球要闻</footer>
+  </div>
+</body>
+</html>

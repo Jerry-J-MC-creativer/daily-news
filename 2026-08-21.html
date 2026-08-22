@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日全球要闻｜2026-08-21</title>
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#eef1f5; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --line:#e5e7eb;
+    --shadow:rgba(0,0,0,.06); --shadow-strong:rgba(0,0,0,.12);
+    --m-mil:#c0392b; --m-fin:#d97706; --m-ai:#2563eb; --m-pol:#7c3aed;
+    --m-ind:#0891b2; --m-eng:#059669; --m-med:#db2777; --m-semi:#ea580c;
+    --m-space:#4338ca; --m-soc:#64748b;
+    --glass-bg:rgba(255,255,255,.82); --glass-border:rgba(255,255,255,.45);
+    --player-bg:#ffffff; --player-text:#1f2937; --player-muted:#6b7280; --player-line:#e5e7eb;
+    --title-gradient:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    --font-base:15px;
+    --radius:16px;
+    --accent:#2563eb; --accent-ink:#ffffff;
+    --hl-color:#ffeb3b; /* 高光显示默认色（黄） */
+  }
+  [data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#0f1115; --card:#1a1d23; --text:#e5e7eb; --muted:#9ca3af; --line:#2f353d;
+    --shadow:rgba(0,0,0,.25); --shadow-strong:rgba(0,0,0,.45);
+    --glass-bg:rgba(26,29,35,.78); --glass-border:rgba(255,255,255,.08);
+    --player-bg:#1a1d23; --player-text:#e5e7eb; --player-muted:#9ca3af; --player-line:#2f353d;
+  }
+  *{box-sizing:border-box;}
+  html{font-size:var(--font-base);}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.7; -webkit-font-smoothing:antialiased;
+    padding-bottom:170px;
+    transition:background .25s, color .25s;
+  }
+  .wrap{max-width:820px; margin:0 auto; padding:14px 12px 40px;}
+
+  /* 标题区 — 滚动后 sticky */
+  .titlebar{
+    position:sticky; top:0; z-index:60;
+    background:var(--title-gradient);
+    color:#fff; border-radius:var(--radius) var(--radius) 0 0; padding:18px 20px 14px;
+    transition:box-shadow .25s, border-radius .25s, padding .25s;
+  }
+  .title-top{display:flex; align-items:center; gap:10px;}
+  .title-top h1{flex:1; min-width:0;}
+  .titlebar.is-stuck{
+    border-radius:0;
+    box-shadow:0 6px 24px var(--shadow-strong);
+  }
+  .titlebar.is-floating{ border-radius:0 0 calc(var(--radius) - 2px) calc(var(--radius) - 2px); }
+  .titlebar h1{margin:0; font-size:1.25rem; letter-spacing:.4px; transition:font-size .2s;}
+  .titlebar.is-stuck h1{font-size:1.05rem;}
+  .greet-row{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-top:8px; font-size:.84rem; opacity:.96; gap:10px; flex-wrap:wrap;
+  }
+  .greet{white-space:nowrap;}
+  .aigen{
+    font-size:.72rem; opacity:.95; background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.24); padding:2px 9px; border-radius:20px;
+    white-space:nowrap;
+  }
+  .listen-row{
+    display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap;
+  }
+  .listen-btn{
+    background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.32);
+    color:#fff; padding:7px 14px; border-radius:22px; font-size:.82rem; cursor:pointer;
+    transition:background .15s; display:inline-flex; align-items:center; gap:5px;
+  }
+  .listen-btn:hover{background:rgba(255,255,255,.28);}
+  .listen-btn:active{transform:scale(.98);}
+
+  /* 设置图标（与标题同一栏） */
+  .settings-btn{
+    position:static; z-index:70; flex:0 0 auto;
+    width:38px; height:38px; border-radius:50%; border:none;
+    background:rgba(255,255,255,.16); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    color:#fff; box-shadow:0 2px 8px var(--shadow);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    transition:transform .2s, background .2s;
+  }
+  .settings-btn:hover{transform:rotate(30deg); background:var(--card);}
+  .settings-btn svg{width:20px; height:20px; stroke:currentColor; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round;}
+
+  /* 设置面板 */
+  .settings-panel{
+    position:fixed; top:58px; right:12px; z-index:70;
+    width:270px; background:var(--glass-bg); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border:1px solid var(--glass-border); border-radius:var(--radius);
+    box-shadow:0 10px 30px var(--shadow-strong);
+    padding:14px; color:var(--text);
+    transform:scale(.95); opacity:0; pointer-events:none;
+    transition:transform .2s, opacity .2s;
+    max-height:80vh; overflow-y:auto;
+  }
+  .settings-panel.open{transform:scale(1); opacity:1; pointer-events:auto;}
+  .settings-panel h3{margin:0 0 12px; font-size:.95rem;}
+  .setting-row{display:flex; align-items:center; justify-content:space-between; margin:12px 0; font-size:.82rem; gap:8px;}
+  .setting-row .grow{flex:1; display:flex; align-items:center; gap:6px;}
+  .setting-row select{
+    background:var(--card); color:var(--text); border:1px solid var(--line);
+    border-radius:8px; padding:5px 8px; font-size:.78rem; cursor:pointer; max-width:150px;
+  }
+  .radio-group{display:flex; gap:5px; flex-wrap:wrap;}
+  .radio-pill{
+    padding:4px 9px; border-radius:20px; border:1px solid var(--line);
+    background:var(--card); color:var(--text); font-size:.72rem; cursor:pointer;
+  }
+  .radio-pill.active{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
+  .accent-swatches{display:flex; gap:6px; flex-wrap:wrap;}
+  .accent-dot{width:20px; height:20px; border-radius:50%; cursor:pointer; border:2px solid transparent;}
+  .accent-dot.sel{border-color:var(--text);}
+  .accent-apply{
+    background:var(--accent); color:var(--accent-ink); border:none; border-radius:18px;
+    padding:3px 12px; font-size:.74rem; cursor:pointer;
+  }
+  input[type="color"]{
+    width:30px; height:26px; border:none; background:none; cursor:pointer; padding:0;
+  }
+
+  /* 标题底下的背景图 */
+  .banner{
+    width:100%; height:200px; overflow:hidden;
+    background:linear-gradient(135deg,#2c5364,#43818a);
+    border-radius:0 0 16px 16px; margin-bottom:18px;
+  }
+  .banner img{width:100%; height:100%; object-fit:cover; display:block;}
+
+  /* 分区卡片 */
+  .domain-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    margin-bottom:14px; overflow:hidden;
+    box-shadow:0 1px 3px var(--shadow);
+    transition:background .25s, border-color .25s;
+  }
+  .card-head{
+    position:relative; height:150px; cursor:pointer; overflow:hidden;
+    background:#cbd5e1;
+  }
+  .card-head img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition:transform .35s ease;
+  }
+  .domain-card:not(.collapsed) .card-head img{transform:scale(1.03);}
+  .head-bar{
+    position:absolute; top:0; left:0; right:0;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 14px;
+    background:rgba(255,255,255,.88);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(0,0,0,.06);
+  }
+  [data-theme="dark"] .head-bar{
+    background:rgba(26,29,35,.82);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .head-title{
+    display:flex; align-items:center; gap:8px;
+    font-size:1.12rem; font-weight:800; color:var(--text);
+    text-shadow:0 1px 0 rgba(255,255,255,.6);
+  }
+  [data-theme="dark"] .head-title{text-shadow:none;}
+  .head-title .emoji{font-size:1.25rem;}
+  .head-title .bar{width:5px; height:20px; border-radius:3px; background:var(--accent);}
+  .head-right{display:flex; align-items:center; gap:8px;}
+  .spk{
+    width:30px; height:30px; border-radius:50%; border:none;
+    background:color-mix(in srgb, var(--accent) 14%, transparent);
+    color:var(--accent); font-size:14px; line-height:1;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:background .15s, transform .1s;
+  }
+  .spk:hover{background:color-mix(in srgb, var(--accent) 24%, transparent);}
+  .spk:active{transform:scale(.94);}
+  .chevron{
+    width:32px; height:32px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:#f3f4f6; color:#4b5563;
+    transition:transform .25s ease, background .2s;
+  }
+  [data-theme="dark"] .chevron{background:#2f353d; color:#9ca3af;}
+  .card-head:hover .chevron{background:#e5e7eb;}
+  [data-theme="dark"] .card-head:hover .chevron{background:#3b424d;}
+  .domain-card:not(.collapsed) .chevron{transform:rotate(180deg);}
+  .chevron svg{width:16px; height:16px; stroke:currentColor; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round;}
+  .card-body{
+    max-height:2000px; opacity:1; overflow:hidden;
+    transition:max-height .35s ease, opacity .25s ease, padding .25s ease;
+  }
+  .domain-card.collapsed .card-body{
+    max-height:0; opacity:0; padding-top:0 !important; padding-bottom:0 !important;
+  }
+  .items{padding:10px 14px 14px;}
+  .item{
+    display:flex; gap:10px; padding:10px 0 10px 12px;
+    border-top:1px dashed var(--line);
+  }
+  .item:first-child{border-top:none;}
+  .num{
+    flex:0 0 24px; height:24px; border-radius:50%;
+    background:#f1f5f9; color:#475569; font-weight:700;
+    display:flex; align-items:center; justify-content:center; font-size:.75rem;
+  }
+  [data-theme="dark"] .num{background:#2f353d; color:#9ca3af;}
+  .body{flex:1; min-width:0;}
+  .body .t{font-weight:700; font-size:.92rem; color:var(--text); margin-bottom:5px;}
+  .body .c{
+    margin:0; padding-left:12px; font-size:.84rem; color:var(--text); opacity:.92;
+  }
+  .body .c b{color:#b45309;}
+  [data-theme="dark"] .body .c b{color:#fbbf24;}
+
+  /* 全局展开/收起按钮 */
+  .global-toggle{display:flex; gap:10px; margin:0 0 16px;}
+  .global-toggle button{
+    flex:1; padding:10px 0; font-size:.84rem; border:1px solid var(--line);
+    background:var(--card); border-radius:10px; color:var(--text); cursor:pointer;
+    transition:background .15s;
+  }
+  .global-toggle button:active{transform:scale(.98);}
+  .global-toggle button:hover{background:var(--bg);}
+
+  /* 结束语 */
+  .closing{
+    text-align:center; margin-top:24px; padding:16px;
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    color:var(--muted); font-size:.84rem; letter-spacing:.5px;
+  }
+  footer{
+    margin-top:14px; background:var(--card); border:1px solid var(--line);
+    border-radius:12px; padding:14px 16px; font-size:.79rem; color:var(--muted);
+  }
+  footer b{color:var(--text);}
+  .note{color:var(--muted); margin-top:8px; opacity:.85;}
+
+  /* ===== 底部播放器（液态玻璃圆角） ===== */
+  .player{
+    position:fixed; left:50%; transform:translateX(-50%) translateY(110%);
+    bottom:14px; width:min(96vw,760px); z-index:50;
+    background:var(--glass-bg); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    border:1px solid var(--glass-border); border-radius:var(--radius);
+    padding:14px 18px 16px;
+    box-shadow:0 10px 34px var(--shadow-strong);
+    color:var(--player-text);
+    transition:transform .3s cubic-bezier(.2,.8,.2,1), background .25s, border-color .25s;
+  }
+  .player.hidden{transform:translateX(-50%) translateY(110%);}
+  .player:not(.hidden){transform:translateX(-50%) translateY(0);}
+  .player-close{
+    position:absolute; top:10px; right:14px;
+    background:transparent; border:none; color:var(--player-muted); font-size:22px; line-height:1;
+    cursor:pointer; padding:2px 6px; border-radius:6px;
+  }
+  .player-close:hover{color:var(--player-text); background:rgba(128,128,128,.12);}
+  .player-main{flex:1; min-width:0; padding-right:30px;}
+  .player-label{font-size:.78rem; color:var(--player-text); opacity:.95; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-bottom:6px;}
+  .player-row{display:flex; align-items:center; gap:10px;}
+  .player-time{font-size:.7rem; color:var(--player-muted); width:36px; text-align:center; flex:0 0 auto; font-variant-numeric:tabular-nums;}
+  .player-seek{flex:1; accent-color:var(--accent); height:4px; cursor:pointer;}
+  .player-ctrls{margin-top:8px; flex-wrap:wrap;}
+  .player-btn{
+    background:rgba(128,128,128,.14); border:1px solid var(--player-line); color:var(--player-text);
+    width:36px; height:36px; border-radius:50%; font-size:15px; cursor:pointer; flex:0 0 auto;
+    transition:background .15s;
+  }
+  .player-btn:hover{background:rgba(128,128,128,.24);}
+  .player-sel{font-size:.72rem; color:var(--player-muted); display:flex; align-items:center; gap:5px; margin-left:auto;}
+  .player-sel select{
+    background:var(--player-bg); color:var(--player-text); border:1px solid var(--player-line);
+    border-radius:8px; padding:4px 7px; font-size:.7rem; cursor:pointer; max-width:160px;
+  }
+  .player-expand{
+    position:absolute; top:10px; right:48px;
+    background:transparent; border:none; color:var(--player-muted); font-size:16px; line-height:1;
+    cursor:pointer; padding:4px 6px; border-radius:6px;
+  }
+  .player-expand:hover{color:var(--player-text); background:rgba(128,128,128,.12);}
+  .player.big{width:min(96vw,980px); padding:22px 26px 20px;}
+  .player.big .player-main{padding-right:56px;}
+  .player.big .player-label{font-size:.95rem; white-space:normal; margin-bottom:10px;}
+  .player.big .player-seek{height:8px;}
+  .player.big .player-btn{width:52px; height:52px; font-size:24px;}
+  .player.big .player-time{font-size:.82rem; width:48px;}
+  .player.big .player-row{gap:14px;}
+  .player.big .player-ctrls{margin-top:12px;}
+  .player.big .player-sel{font-size:.8rem;}
+  .player.big .player-sel select{font-size:.85rem; padding:6px 10px;}
+
+  /* 自定义声音弹窗 */
+  .modal{
+    position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:95;
+    display:none; align-items:center; justify-content:center; padding:16px;
+  }
+  .modal.open{display:flex;}
+  .modal-box{
+    background:var(--card); color:var(--text); border-radius:var(--radius); padding:18px;
+    width:300px; max-width:92vw; box-shadow:0 20px 50px rgba(0,0,0,.35);
+  }
+  .modal-box h3{margin:0 0 14px; font-size:.95rem;}
+  .modal-field{margin-bottom:12px; font-size:.8rem;}
+  .modal-field label{display:block; margin-bottom:5px; color:var(--muted);}
+  .modal-field input, .modal-field select{
+    width:100%; background:var(--bg); color:var(--text); border:1px solid var(--line);
+    border-radius:8px; padding:7px 9px; font-size:.82rem;
+  }
+  .modal-actions{display:flex; gap:8px; justify-content:flex-end; margin-top:6px;}
+  .modal-actions button{
+    padding:7px 14px; border-radius:18px; font-size:.8rem; cursor:pointer; border:1px solid var(--line);
+    background:var(--bg); color:var(--text);
+  }
+  .modal-actions .primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
+
+  @media (max-width:480px){
+    .titlebar{padding:14px 14px 10px;}
+    .titlebar h1{font-size:1.05rem;}
+    .greet-row{font-size:.78rem;}
+    .card-head{height:130px;}
+    .head-title{font-size:1rem;}
+    .player{width:96vw; padding:12px 14px 14px; border-radius:18px;}
+    .player-sel{margin-left:0; margin-top:6px; width:100%;}
+    .settings-panel{width:92vw; right:4vw;}
+  }
+
+  /* 条目正文折叠 */
+  .body .t{font-weight:700; font-size:.92rem; color:var(--text); cursor:pointer; display:flex; align-items:center; gap:10px; margin-bottom:0;}
+  .body .t .t-text{flex:1; min-width:0;}
+  /* 小分支折叠按钮：与大分支 .chevron 外观/旋转一致，置于右侧 */
+  .body .t .item-chevron{
+    width:32px; height:32px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:#f3f4f6; color:#4b5563;
+    transition:transform .25s ease, background .2s;
+    flex:0 0 auto; margin-left:auto;
+  }
+  [data-theme="dark"] .body .t .item-chevron{background:#2f353d; color:#9ca3af;}
+  .body .t:hover .item-chevron{background:#e5e7eb;}
+  [data-theme="dark"] .body .t:hover .item-chevron{background:#3b424d;}
+  .item.open .item-chevron{transform:rotate(180deg);}
+  .body .t .item-chevron svg{width:16px; height:16px; stroke:currentColor; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round;}
+  .item-body{display:none;}
+  .item.open .item-body{display:block;}
+  .body .c{margin:6px 0 0; padding-left:18px; font-size:.84rem; color:var(--text); opacity:.92;}
+  /* 展开该部分按钮 */
+  .expand-part{
+    height:30px; border-radius:15px; border:none;
+    background:color-mix(in srgb, var(--accent) 14%, transparent);
+    color:var(--accent); font-size:12px; padding:0 10px; cursor:pointer;
+    display:flex; align-items:center; gap:3px; white-space:nowrap;
+    transition:background .15s, transform .1s;
+  }
+  .expand-part:hover{background:color-mix(in srgb, var(--accent) 24%, transparent);}
+  .expand-part:active{transform:scale(.96);}
+  /* RGB 取色器 */
+  .rgb-inputs{display:flex; align-items:center; gap:5px; flex-wrap:wrap; margin-top:4px;}
+  .rgb-inputs span{font-size:.7rem; color:var(--muted); display:flex; align-items:center; gap:2px;}
+  .rgb-inputs input[type="number"]{width:46px; background:var(--card); color:var(--text); border:1px solid var(--line); border-radius:6px; padding:2px 4px; font-size:.72rem;}
+  /* 高光显示：逐字高亮当前正在朗读的字 */
+  .hl-ch{ border-radius:2px; transition:background .08s; }
+  .hl-ch.hl-on{ background:var(--hl-color); box-shadow:0 0 0 1px color-mix(in srgb,var(--hl-color) 55%, transparent); }
+</style>
+</head>
+<body>
+
+<!-- 设置面板 -->
+<div class="settings-panel" id="settingsPanel">
+  <h3 id="settTitle">设置</h3>
+  <div class="setting-row">
+    <span id="settLang">语言</span>
+    <select id="langSelect" onchange="setLang(this.value)">
+      <option value="zh">简体中文</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+  <div class="setting-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+    <span id="settTheme">主题</span>
+    <div class="radio-group">
+      <button class="radio-pill" id="themeAuto" onclick="setTheme('auto')">系统时间</button>
+      <button class="radio-pill" id="themeSystem" onclick="setTheme('system')">跟随系统</button>
+      <button class="radio-pill" id="themeLight" onclick="setTheme('light')">浅色</button>
+      <button class="radio-pill" id="themeDark" onclick="setTheme('dark')">深色</button>
+    </div>
+  </div>
+  <div class="setting-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+    <span id="settAccent">主题色（图形与按钮）</span>
+    <div class="accent-swatches" id="accentSwatches"></div>
+    <div class="rgb-inputs">
+      <input type="color" id="accentPicker" value="#2563eb" oninput="syncRGBFromPicker()">
+      <span>R<input type="number" id="rgbR" min="0" max="255" value="37" oninput="syncPickerFromRGB()"></span>
+      <span>G<input type="number" id="rgbG" min="0" max="255" value="99" oninput="syncPickerFromRGB()"></span>
+      <span>B<input type="number" id="rgbB" min="0" max="255" value="235" oninput="syncPickerFromRGB()"></span>
+      <button class="accent-apply" onclick="applyAccentFromPicker()">应用</button>
+    </div>
+  </div>
+  <div class="setting-row">
+    <span id="settFont">字号</span>
+    <div class="grow">
+      <span style="font-size:.8rem">A</span>
+      <input type="range" id="fontSlider" min="13" max="22" step="1" value="15" oninput="setFontSize(this.value)" style="flex:1;">
+      <span style="font-size:1.1rem">A</span>
+    </div>
+  </div>
+  <div class="setting-row">
+    <span id="settRadius">圆角大小</span>
+    <div class="grow">
+      <span style="font-size:.8rem">▢</span>
+      <input type="range" id="radiusSlider" min="0" max="32" step="1" value="16" oninput="setRadius(this.value)" style="flex:1;">
+      <span style="font-size:1.1rem">▢</span>
+    </div>
+  </div>
+  <div class="setting-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+    <span id="settHL">高光显示</span>
+    <div class="hl-controls" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <label style="display:flex; align-items:center; gap:6px; font-size:.8rem; color:var(--muted);">
+        <span id="hlEnable">启用</span>
+        <input type="checkbox" id="hlOn" onchange="toggleHLOn(this.checked)" checked>
+      </label>
+      <div class="rgb-inputs" style="margin-top:0;">
+        <span id="hlColor" style="color:var(--muted);">高光颜色</span>
+        <input type="color" id="hlPicker" value="#ffeb3b" oninput="syncHLRGBFromPicker()">
+        <span>R<input type="number" id="hlR" min="0" max="255" value="255" oninput="syncHLFromRGB()"></span>
+        <span>G<input type="number" id="hlG" min="0" max="255" value="235" oninput="syncHLFromRGB()"></span>
+        <span>B<input type="number" id="hlB" min="0" max="255" value="59" oninput="syncHLFromRGB()"></span>
+        <button class="accent-apply" onclick="applyHLFromPicker()">应用</button>
+      </div>
+    </div>
+  </div>
+  <div class="setting-row" style="border-top:1px solid var(--line); padding-top:10px; margin-top:4px;">
+    <span id="settBackup">设置备份</span>
+    <div class="grow" style="gap:6px;">
+      <button class="accent-apply" onclick="exportPrefs()" id="btnExport">导出</button>
+      <button class="accent-apply" onclick="document.getElementById('importFile').click()" id="btnImport" style="background:var(--card); color:var(--text); border:1px solid var(--line);">导入</button>
+      <input type="file" id="importFile" accept="application/json,.json" style="display:none;" onchange="importPrefs(this)">
+    </div>
+  </div>
+</div>
+
+<!-- 自定义声音弹窗 -->
+<div class="modal" id="voiceModal">
+  <div class="modal-box">
+    <h3 id="voiceModalTitle">添加自定义声音</h3>
+    <div class="modal-field">
+      <label id="voiceNameLabel" for="customVoiceName">声音名称</label>
+      <input type="text" id="customVoiceName" placeholder="例如：我的 AI 音色">
+    </div>
+    <div class="modal-field">
+      <label id="voicePickLabel" for="customVoicePick">选择设备语音</label>
+      <select id="customVoicePick"></select>
+    </div>
+    <div class="modal-actions">
+      <button onclick="closeVoiceModal()">取消</button>
+      <button class="primary" onclick="saveCustomVoice()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="titlebar" id="titlebar">
+    <div class="title-top">
+      <h1 id="pageTitle">每日全球要闻｜2026-08-21（周五）</h1>
+      <button class="settings-btn" id="homeBtn" title="返回主页" onclick="goHome()"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></button>
+      <button class="settings-btn" id="shareBtn" title="分享" onclick="sharePage()"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
+      <button class="settings-btn" id="settingsBtn" title="设置" onclick="toggleSettings()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </button>
+    </div>
+    <div class="greet-row">
+      <span class="greet" id="greet">祝您拥有愉快的一天</span>
+      <span class="aigen" id="aigen">内容由 AI 生成</span>
+    </div>
+    <div class="listen-row">
+      <button id="globalSpeaker" class="listen-btn" onclick="speakAll()">🔊 <span id="listenAll">全文语音收听</span></button>
+    </div>
+  </div>
+  <div class="banner" id="banner">
+    <img class="banner-img" data-kw="nature,landscape,mountain" src="https://loremflickr.com/1200/400/nature,landscape,mountain?lock=21" alt="风景" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+  </div>
+
+  <!-- 全局展开/收起 -->
+  <div class="global-toggle">
+    <button onclick="expandAll()" id="btnExpand">展开全部</button>
+    <button onclick="collapseAll()" id="btnCollapse">收起全部</button>
+  </div>
+
+  <!-- 军事 -->
+  <div class="domain-card collapsed" data-domain="mil">
+    <div class="card-head" onclick="toggle(this)">
+      <img src="https://loremflickr.com/1000/320/fighter,jet?lock=31" class="fig" data-kw="fighter,jet" alt="军事" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+      <div class="head-bar">
+        <div class="head-title"><span class="bar"></span><span class="emoji">🪖</span><span class="domain-name">军事</span></div>
+        <div class="head-right">
+          <button class="expand-part" title="展开 / 收起本节正文" onclick="event.stopPropagation();toggleSectionContent('mil')">内容</button>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <button class="spk" data-speak="mil" title="朗读本节" onclick="event.stopPropagation();speakSection('mil')">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="items" id="tts-mil">
+        <div class="item"><div class="num">1</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">伊朗确认向 4000 公里外美英迪戈加西亚基地发射两枚弹道导弹</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">总台 8/21 自伊朗方面获悉，伊朗向位于印度洋中部的美英联合军事基地迪戈加西亚岛发射两枚弹道导弹（射程逾 4000 公里）；美方称两枚均未命中目标。FT 此前披露，伊朗高层正"评估"若美国升级战事，将报复目标从海湾扩至欧洲（保加利亚贝兹梅尔、塞浦路斯阿克罗蒂里美军基地），并可能破坏霍尔木兹海底光缆。</p></div>
+        </div></div>
+        <div class="item"><div class="num">2</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">俄乌大规模导弹/无人机夜袭，乌称拦截 90% 巡航弹但弹道弹更难</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">8/20 俄军以弹道+巡航导弹+喷气无人机混合打击基辅及周边长达数小时，乌方称 16+ 死；泽连斯基称乌防空拦截了约 90% 巡航导弹，但弹道导弹拦截更难，单轮袭击致死 17 人。俄国防部称命中 Flamingo 巡航导弹元件厂、无人机与弹药库。</p></div>
+        </div></div>
+        <div class="item"><div class="num">3</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">美国深陷"弹药危机"，复产要等到 2029</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">对伊行动+援乌援以消耗下，美军已耗近 80% 萨德导弹、约半爱国者拦截弹、几乎耗尽 ATACMS/精确打击导弹、战斧耗近半。CSIS 估计爱国者/萨德库存最快 2029 年中才恢复战前水平；洛马年产仅约 600 枚爱国者。五角大楼已令军工"极速"增产。</p></div>
+        </div></div>
+        <div class="item"><div class="num">4</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">朝鲜发射 10+ 枚短程弹道导弹，金与正警告日本</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">8/20 朝方在美韩联合军演期间向日本海发射逾 10 枚短程弹道导弹，为本月第三次试射；韩总统府谴责并令全军戒备。同日，金与正就日本历史问题与安保动向发出警告，称日方举动"不可容忍"。</p></div>
+        </div></div>
+        <div class="item"><div class="num">5</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">俄太平洋舰队在南千岛群岛附近导弹演习</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">俄太平洋舰队在包括南千岛群岛（日称北方四岛）附近海域举行导弹演习，演练对海/对空打击；日方对此高度关注并抗议。</p></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 财经 -->
+  <div class="domain-card collapsed" data-domain="fin">
+    <div class="card-head" onclick="toggle(this)">
+      <img src="https://loremflickr.com/1000/320/money,coins?lock=32" class="fig" data-kw="money,coins" alt="财经" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+      <div class="head-bar">
+        <div class="head-title"><span class="bar"></span><span class="emoji">💵</span><span class="domain-name">财经</span></div>
+        <div class="head-right">
+          <button class="expand-part" title="展开 / 收起本节正文" onclick="event.stopPropagation();toggleSectionContent('fin')">内容</button>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <button class="spk" data-speak="fin" title="朗读本节" onclick="event.stopPropagation();speakSection('fin')">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="items" id="tts-fin">
+        <div class="item"><div class="num">1</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">美国联邦政府债务首破 40 万亿美元</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">美财政部 8/19 数据显示，联邦政府债务总额达 40.047 万亿美元（公众持有 32.266 万亿、政府内部持有 7.782 万亿），史上首次突破 40 万亿；相当于每名美国人背负约 11.6 万美元、约为 GDP 的 123%。财年迄今赤字 1.367 万亿，净利息支出 8270 亿已超军费 7130 亿。</p></div>
+        </div></div>
+        <div class="item"><div class="num">2</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">特朗普宣布对伊"毁灭性经济行动"，贝森特威胁"前所未有经济孤立"</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">因谈判停滞，特朗普 8/19 宣布对伊"史上最严"经济制裁，20 日伊朗谴责；美财长贝森特称要"collapse this regime"，要求盟友与中国"要么站美国一边，要么面临后果"，下周一将公布细节。</p></div>
+        </div></div>
+        <div class="item"><div class="num">3</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">油价大涨至近月高位，美债收益率飙升、美元走弱</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">受美伊对峙+霍尔木兹通行受限，WTI 收涨约 2.5% 至 86 美元/桶、布伦特涨约 2.4% 至 94 美元/桶（7/24 以来最高）；10Y 美债 4.70%+，30Y 逼近 5.25~5.34%；现货金约 4520 美元/盎司。圣路易斯联储主席称抛售主因政府借款+AI 建设融资需求。</p></div>
+        </div></div>
+        <div class="item"><div class="num">4</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">美股重挫，科技与消费双杀</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">道指 -1.3%、标普 -0.86%、纳指 -1%（五连跌）；Moderna -23%、沃尔玛 -9%（2022 年来最大单日跌幅）、SpaceX -4% 再破 IPO 价；光通信/存储逆势（Marvell +5.8%、美光 +4%）。博通洽谈逾 600 亿美元（含次级档或达 1000 亿）债务融资供 Anthropic 等获取 AI 芯片与数据中心。</p></div>
+        </div></div>
+        <div class="item"><div class="num">5</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">中国 LPR 连 15 月不变，上海出楼市"沪八条"</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">8 月 LPR 1 年期 3%、5 年期以上 3.5% 连续第 15 个月不变；上海外环外二套首付由 20% 降至 15%，并推阶段性购房补贴。</p></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI与科技 -->
+  <div class="domain-card collapsed" data-domain="ai">
+    <div class="card-head" onclick="toggle(this)">
+      <img src="https://loremflickr.com/1000/320/robot,technology?lock=33" class="fig" data-kw="robot,technology" alt="AI与科技" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+      <div class="head-bar">
+        <div class="head-title"><span class="bar"></span><span class="emoji">🤖</span><span class="domain-name">AI 与科技</span></div>
+        <div class="head-right">
+          <button class="expand-part" title="展开 / 收起本节正文" onclick="event.stopPropagation();toggleSectionContent('ai')">内容</button>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <button class="spk" data-speak="ai" title="朗读本节" onclick="event.stopPropagation();speakSection('ai')">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="items" id="tts-ai">
+        <div class="item"><div class="num">1</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">SpaceX 600 亿美元全股票收购 Cursor，AI 编程赛道巨震</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">彭博/TechCrunch 报道，马斯克旗下 SpaceX 于 8/14 完成对 AI 编程工具 Cursor（母公司 Anysphere）的 600 亿美元全股票收购，原股东获约 3.89 亿股 SpaceX 股票，Cursor 并入 SpaceXAI（xAI 已于 2026 年并入并更名），与 Grok 编程能力深度整合。同期 a16z 因 Cursor/OpenRouter 等投资一周内连获巨型退出。</p></div>
+        </div></div>
+        <div class="item"><div class="num">2</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">智谱 GLM-5.3 发布，开源编程比肩前沿</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">8/19 上线 API，基于 GLM-5.2 同底座、全靠后训练，编程性能 +50%；Artificial Analysis 智能指数 60 分，与 Kimi K3 并列开源第一，DeepSWE 46.2→66.9；MIT 许可权重下周五开放。</p></div>
+        </div></div>
+        <div class="item"><div class="num">3</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">阿里云 AI 收入 ARR 破 495 亿，平头哥芯片放量</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">阿里 Q2 营收同比 +9%，AI 相关产品年化收入破 495 亿元（占云外部收入 35%）；平头哥真武 M890 超节点上线、下半年持续放量，3800 亿 Capex 预计三年回本。</p></div>
+        </div></div>
+        <div class="item"><div class="num">4</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">英伟达 Spectrum-X CPO 交换机量产 + OpenAI 首批 Vera Rubin 上架</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">英伟达宣布 Spectrum-X 系列全面投产，为全球首款量产 200G/lane 共封装光学（CPO）交换机，单通道带宽 200G，补齐万卡集群网络互联瓶颈；OpenAI 首批 NVIDIA Vera Rubin 机架已上线。同期 Slack 推出 Code、腾讯将从 Meta 手中接下 Manus 股份成为其最大股东。</p></div>
+        </div></div>
+        <div class="item"><div class="num">5</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">具身智能集中亮相 + 百度/微信嵌入日常</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">星尘智能发 Lumo-2 家庭动作模型+人形 T1（8.99 万元起）；小米新一代人形机器人亮相；宇树发仿生 7 轴灵巧机械臂 R1（9900 元起）；百度任务引擎 2.0 免费、微信"小微"灰度测试（公众号 AI 总结、朋友圈 AI 点评、聊天图片 AI 处理）。</p></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 国际政治 -->
+  <div class="domain-card collapsed" data-domain="pol">
+    <div class="card-head" onclick="toggle(this)">
+      <img src="https://loremflickr.com/1000/320/globe,earth?lock=34" class="fig" data-kw="globe,earth" alt="国际政治" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+      <div class="head-bar">
+        <div class="head-title"><span class="bar"></span><span class="emoji">🌐</span><span class="domain-name">国际政治</span></div>
+        <div class="head-right">
+          <button class="expand-part" title="展开 / 收起本节正文" onclick="event.stopPropagation();toggleSectionContent('pol')">内容</button>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <button class="spk" data-speak="pol" title="朗读本节" onclick="event.stopPropagation();speakSection('pol')">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="items" id="tts-pol">
+        <div class="item"><div class="num">1</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">美伊"经济战"升级，盟友与中国被要求选边</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">贝森特对 CNBC 称这是"史上最大协调经济孤立"，"要么与我们、要么对抗我们"；并点名呼吁中国"get with the program"。伊朗称"经济恐怖主义/反人类罪"，外长斥为掩盖军事失败。</p></div>
+        </div></div>
+        <div class="item"><div class="num">2</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">六国联合反对以色列推进"E1 区"定居点</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">法、德、意、挪、荷、英领导人联合声明，称以方约旦河西岸 E1 区建设招标"不可接受"，敦促撤回并警告企业勿投标，指其分割巴领土、损害"两国方案"。埃及、卡塔尔、土耳其亦谴责以方加沙袭击。</p></div>
+        </div></div>
+        <div class="item"><div class="num">3</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">霍尔木兹/红海航运外交密集</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">阿曼与日本外长呼吁依国际法保障霍尔木兹通航；卡塔尔、埃及推动美伊"最终可持续协议"；也门成立国家海上安全委员会护航运；阿联酋因导弹事件冻结与伊朗一切贸易金融往来。</p></div>
+        </div></div>
+        <div class="item"><div class="num">4</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">塞内加尔关切美国制裁 ICC + 俄要求日本承认二战结果</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">塞外交部对美国制裁塞籍国际刑事法院高级律师表示"深切关切"，重申支持多边主义与司法独立；俄方在多处场合要求日本全面承认二战结果、停止美化侵略历史。</p></div>
+        </div></div>
+        <div class="item"><div class="num">5</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">中国外长王毅将访韩、印尼，并会见伊朗外长</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">中国外交部宣布王毅将访问韩国、印尼；此前已应约会见伊朗外长，就美伊局势、地区安全交换意见。</p></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 产业商业 -->
+  <div class="domain-card collapsed" data-domain="ind">
+    <div class="card-head" onclick="toggle(this)">
+      <img src="https://loremflickr.com/1000/320/factory,industry?lock=35" class="fig" data-kw="factory,industry" alt="产业商业" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+      <div class="head-bar">
+        <div class="head-title"><span class="bar"></span><span class="emoji">🏭</span><span class="domain-name">产业商业</span></div>
+        <div class="head-right">
+          <button class="expand-part" title="展开 / 收起本节正文" onclick="event.stopPropagation();toggleSectionContent('ind')">内容</button>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <button class="spk" data-speak="ind" title="朗读本节" onclick="event.stopPropagation();speakSection('ind')">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="items" id="tts-ind">
+        <div class="item"><div class="num">1</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">携程因垄断被罚没 51.79 亿元（平台经济"三合一"处罚首案）</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">市场监管总局 7/25 对携程滥用市场支配地位作出行政处罚：责令停止违法行为、退还强制扣除的订单储备金 1.22 亿元、没收违法所得 16.58 亿元、罚款 35.21 亿元，合计 51.79 亿元。认定其以流量分配为核心，强制"特牌"独家合作、强制"全网最低价"。</p></div>
+        </div></div>
+        <div class="item"><div class="num">2</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">欧盟对科技巨头监管从"天价罚款"转向"合规对话"</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">继 7 月对 Google 处 8.9 亿欧元 DMA 罚款后，欧盟执法重心转向行为规范与企业合规；DMA 累计罚金约 16 亿欧元，远低于昔日 41 亿欧元反垄断罚单。</p></div>
+        </div></div>
+        <div class="item"><div class="num">3</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">高通因未申报 Autotalks 并购遭调查</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">欧盟委员会对高通展开调查，指其未完成申报即完成对以色列芯片商 Autotalks（车规 V2X 通信）的收购，涉嫌违反并购申报义务。</p></div>
+        </div></div>
+        <div class="item"><div class="num">4</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">美国 SEARCH 法案 + 新泽西 FAIR 法</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">两党议员推 SEARCH 法案，拟立法固化 DOJ 胜诉谷歌搜索垄断后的救济（禁默认位付费、强制数据共享/选择屏）；新泽西 FAIR 法禁止算法定价房租。</p></div>
+        </div></div>
+        <div class="item"><div class="num">5</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">全球 DMA"克隆"扩散</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">巴西、土耳其、韩国等十余国正借鉴欧盟 DMA 制定本国数字平台规则（巴西 Bill 4675/2025 罚则达营收 20%，因被纳入关税争端暂缓）。</p></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 能源与气候 -->
+  <div class="domain-card collapsed" data-domain="eng">
+    <div class="card-head" onclick="toggle(this)">
+      <img src="https://loremflickr.com/1000/320/wind,turbine?lock=36" class="fig" data-kw="wind,turbine" alt="能源与气候" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+      <div class="head-bar">
+        <div class="head-title"><span class="bar"></span><span class="emoji">⚡</span><span class="domain-name">能源与气候</span></div>
+        <div class="head-right">
+          <button class="expand-part" title="展开 / 收起本节正文" onclick="event.stopPropagation();toggleSectionContent('eng')">内容</button>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <button class="spk" data-speak="eng" title="朗读本节" onclick="event.stopPropagation();speakSection('eng')">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="items" id="tts-eng">
+        <div class="item"><div class="num">1</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">中国 7 月新能源汽车渗透率首次突破 60%</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">中汽协数据，7 月新能源汽车销量 156.1 万辆（同比 +23.7%），月度新车销量占比首次突破 60% 达 60.4%；前 7 月累计销量 900.7 万辆、累计渗透率 51.2% 首次破 50%。新能源乘用车国内零售渗透率达 68.1%；自主品牌乘用车份额升至 77.4%。</p></div>
+        </div></div>
+        <div class="item"><div class="num">2</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">霍尔木兹受阻拖累石油市场复苏</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">IEA 8 月报告称海湾出口再受干扰，7 月全球供应回升至约 1.015 亿桶/日但仍同比减 630 万桶/日，可观测库存单月降 6900 万桶；油价受地缘风险溢价走高。</p></div>
+        </div></div>
+        <div class="item"><div class="num">3</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">欧洲天然气库存偏低，英国推超长时储能</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">欧洲储气 EU 61.6%、德 50.1%、荷 42.5%（目标 74%）；英国政府 8/20 启动超长时储能挑战（£28mn 拨款，支持 >100 小时储能与地下储氢）。</p></div>
+        </div></div>
+        <div class="item"><div class="num">4</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">中国电网迎极端盛夏 + 多地下游发力新能源</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">哈密—重庆特高压、山东储能等迎夏峰考验；江苏光伏产能突破 100GW；天津经开区零碳产业园（177MW 光伏+1.05GWh 储能）投运；九部门联合发文支持新能源汽车下乡；2026 成都车展聚焦"智驾下沉"。</p></div>
+        </div></div>
+        <div class="item"><div class="num">5</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">沙特—叙利亚签太阳能合作（760MW 光伏+1077MWh 储能）</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">中东签署多项光伏 PPA，含 3 个大型光伏项目（总 760MW）配套 1077MWh 储能，电价低至约 0.03 美元/kWh，期限 20–25 年。</p></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 医疗健康 -->
+  <div class="domain-card collapsed" data-domain="med">
+    <div class="card-head" onclick="toggle(this)">
+      <img src="https://loremflickr.com/1000/320/medical,hospital?lock=37" class="fig" data-kw="medical,hospital" alt="医疗健康" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+      <div class="head-bar">
+        <div class="head-title"><span class="bar"></span><span class="emoji">🏥</span><span class="domain-name">医疗健康</span></div>
+        <div class="head-right">
+          <button class="expand-part" title="展开 / 收起本节正文" onclick="event.stopPropagation();toggleSectionContent('med')">内容</button>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <button class="spk" data-speak="med" title="朗读本节" onclick="event.stopPropagation();speakSection('med')">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="items" id="tts-med">
+        <div class="item"><div class="num">1</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">全球首个 mRNA 流感疫苗获 FDA 批准</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">Moderna 的 mFLUSIVA（mRNA-1010）8/5 获 FDA 批准用于 50 岁以上，为首款 mRNA 流感苗；生产周期约 6 周（传统 6–8 月），III 期较传统苗效力 +26.6%。消息公布后 Moderna 单日 +177%。</p></div>
+        </div></div>
+        <div class="item"><div class="num">2</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">中国原创 iPSC 心肌细胞疗法登 Nature Medicine</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">南京鼓楼医院 HEAL-CHF 长期随访证实，同种异体 iPSC 来源心肌细胞（HiCM-188）可改善重度心衰心功能、无重大安全事件；为全球最大规模 iPSC 衍生心肌细胞治心衰临床研究，已启动 III 期。</p></div>
+        </div></div>
+        <div class="item"><div class="num">3</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">Ultragenyx GSDIa 基因疗法 + 多款"首个"疗法连批</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">FDA 加速批准 Ultragenyx 的 Genglycos（pariglasgene brecaparvovec）用于糖原贮积病 Ia 型（GSDIa），为首个 GSDIa 基因疗法；同期批准 Beqalzi（sonrotoclax，BCL2 抑制剂）用于套细胞淋巴瘤、Inqovi+venetoclax 联合用于急性髓系白血病（AML）等。</p></div>
+        </div></div>
+        <div class="item"><div class="num">4</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">主动脉 CT 快速 AI 获 FDA 510(k) + 悦康 YKYY033 获批临床</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">一款基于主动脉 CT 影像的快速分析 AI 获 FDA 510(k) 许可，用于急诊分诊辅助；国内悦康药业 YKYY033 注射液获批 IND（新药临床试验）。</p></div>
+        </div></div>
+        <div class="item"><div class="num">5</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">个体化 mRNA 癌症疫苗 III 期成功 + AI 医疗监管推进</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">默沙东与 Moderna 宣布个体化 mRNA 疫苗 intismeran 联合帕博利珠单抗辅助治疗高危黑色素瘤 III 期达主要终点，为全球首个 III 期成功的治疗性癌症疫苗。FDA 此前就 GenAI 医疗器械监管路径公开征询。</p></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 半导体与硬件 -->
+  <div class="domain-card collapsed" data-domain="semi">
+    <div class="card-head" onclick="toggle(this)">
+      <img src="https://loremflickr.com/1000/320/microchip,circuit?lock=38" class="fig" data-kw="microchip,circuit" alt="半导体与硬件" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+      <div class="head-bar">
+        <div class="head-title"><span class="bar"></span><span class="emoji">💡</span><span class="domain-name">半导体与硬件</span></div>
+        <div class="head-right">
+          <button class="expand-part" title="展开 / 收起本节正文" onclick="event.stopPropagation();toggleSectionContent('semi')">内容</button>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <button class="spk" data-speak="semi" title="朗读本节" onclick="event.stopPropagation();speakSection('semi')">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="items" id="tts-semi">
+        <div class="item"><div class="num">1</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">台积电 1.6nm 级 A16 完成开发验证，目标 Q4 量产</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">台媒 8/20 报道，台积电已完成 A16（1.6nm）工艺开发与验证，采用背面供电网络"超级电源轨（SPR/BSPDN）"技术，计划今年第四季度量产。相较 N2P，同等功耗性能 +8%~10%、同等性能功耗 -15%~20%、密度 +8%~10%，瞄准 AI/HPC；董事会已批准约 294 亿美元先进工艺与封装资本开支。</p></div>
+        </div></div>
+        <div class="item"><div class="num">2</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">日本第三轮半导体管制落地：先进封装设备"逐案审批"</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">8/1 日本经产省第三轮半导体设备出口管制生效，首次将先进封装全套后道设备（高端固晶机、超薄晶圆减薄/研磨机、激光隐切、TSV、混合键合机、高精度分选机等约 20 大类）纳入管制；8/16 又将高端五轴机床纳入逐案审批。取消批量许可，审批周期拉长至 3–6 个月。</p></div>
+        </div></div>
+        <div class="item"><div class="num">3</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">中国拟放宽对欧芯片出口禁令（安世半导体争端）</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">因荷兰以"治理问题"动用紧急法接管中资控股的安世半导体（Nexperia），中方此前对安世中国工厂芯片实施出口管制，欧洲汽车制造商协会（ACEA）警告供应数周内将耗尽。中方近日表示将"综合考量企业实际情况、对符合条件出口予以豁免"。</p></div>
+        </div></div>
+        <div class="item"><div class="num">4</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">中芯国际 Q2 营收破 30 亿美元、顺势涨价</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">SMIC Q2 营收 30.1 亿美元（同比 +36%）、净利近 3 倍至 4.79 亿，利用率 93.7%，指引 Q3 毛利率 26–28%；对华 AI 芯片需求因美出口管制被"锁"在国内、成 captive market。华虹利用率 102.8%、营收创纪录。</p></div>
+        </div></div>
+        <div class="item"><div class="num">5</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">美国施压苹果弃购中国存储 + BIS 再扩 EDA 管制</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">路透称美方拟施压苹果弃购中国存储；长鑫 H1 营收 1100–1200 亿元（同比 +612%~677%），长江存储 NAND 出货全球第三（14%）。8/12 BIS 临时最终规则对 GAAFET（3nm 及以下）设计所需 EDA/ECAD、氧化镓/金刚石等实施新管制（8/15 生效）。</p></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 航天与空间 -->
+  <div class="domain-card collapsed" data-domain="space">
+    <div class="card-head" onclick="toggle(this)">
+      <img src="https://loremflickr.com/1000/320/rocket,space?lock=39" class="fig" data-kw="rocket,space" alt="航天与空间" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+      <div class="head-bar">
+        <div class="head-title"><span class="bar"></span><span class="emoji">🚀</span><span class="domain-name">航天与空间</span></div>
+        <div class="head-right">
+          <button class="expand-part" title="展开 / 收起本节正文" onclick="event.stopPropagation();toggleSectionContent('space')">内容</button>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <button class="spk" data-speak="space" title="朗读本节" onclick="event.stopPropagation();speakSection('space')">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="items" id="tts-space">
+        <div class="item"><div class="num">1</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">嫦娥七号转运至发射区，瞄准月球南极找水冰</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">器箭组合体 8/19 垂直转运至文昌，长征五号遥十四承担；窗口 8/24 08:00 北京时开启、每日四小时至 8/31。含轨道器/着陆器/巡视器/跳跃探测器，目标 Shackleton 坑缘，将飞跃永久阴影坑探水冰。</p></div>
+        </div></div>
+        <div class="item"><div class="num">2</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">朱雀三号遥二成功陆地回收，民营航天闭环验证</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">8/19 朱雀三号一子级按程序着陆甘肃民勤回收场坪，为中国首次重复使用火箭一子级"着陆腿方式"回收；同箭搭载首颗"雄安造"鸿鹄 03 星入轨。</p></div>
+        </div></div>
+        <div class="item"><div class="num">3</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">北京火箭大街商业航天智能测运控中心启用</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">北京亦庄"火箭大街"配套的商业航天智能测运控中心投入使用，提供火箭发射全程测控与在轨管理服务，聚合区域内民营火箭/卫星企业。</p></div>
+        </div></div>
+        <div class="item"><div class="num">4</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">中国 2026 年计划 2 次载人飞行，港澳航天员或首飞</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">中国载人航天 2026 年拟 2 次载人+1 次货运；港澳航天员有望今年首飞空间站，神舟二十三号 1 名航天员将开展一年期驻留；登月工程长征十号/梦舟/揽月大型试验顺利，目标 2030 前载人登月。</p></div>
+        </div></div>
+        <div class="item"><div class="num">5</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">SpaceX/火箭实验室密集发射 + 美欧宇航员 ISS 太空行走</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">8/20 SpaceX 发射 Starlink 10-39（29 星）；Rocket Lab 发射 iQPS SAR 对地观测卫星（Electron）；美欧宇航员完成 ISS 出舱太空行走，进行设备维护与实验部署。</p></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 社会与舆情 -->
+  <div class="domain-card collapsed" data-domain="soc">
+    <div class="card-head" onclick="toggle(this)">
+      <img src="https://loremflickr.com/1000/320/smartphone,social?lock=40" class="fig" data-kw="smartphone,social" alt="社会与舆情" referrerpolicy="no-referrer" loading="lazy" onerror="this.style.display='none'">
+      <div class="head-bar">
+        <div class="head-title"><span class="bar"></span><span class="emoji">💬</span><span class="domain-name">社会与舆情</span></div>
+        <div class="head-right">
+          <button class="expand-part" title="展开 / 收起本节正文" onclick="event.stopPropagation();toggleSectionContent('soc')">内容</button>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <button class="spk" data-speak="soc" title="朗读本节" onclick="event.stopPropagation();speakSection('soc')">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="items" id="tts-soc">
+        <div class="item"><div class="num">1</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">《网络数据安全风险评估办法》8/20 正式施行</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">网信办、工信部、公安部联合制定，共 25 条：重要数据处理者须年度评估、重大变化即时专项评估；明确"谁来评、怎么评、怎么用"，第三方机构责任与监管闭环。</p></div>
+        </div></div>
+        <div class="item"><div class="num">2</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">三部门重拳整治个人信息乱象</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">2026 个人信息保护专项行动以来，核查 2 万余款 App/SDK，督促 4000 余款整改，公开通报 1100 余款、下架 400 余款；摸排 9 万余家企业机构、整改隐患 1.2 万余个；严打内鬼倒卖。</p></div>
+        </div></div>
+        <div class="item"><div class="num">3</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">AI 换脸突破人脸识别、网红"开盒"追责平台</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">杭州警方侦破利用 AI 换脸突破头部平台人脸识别案，暴露生物识别防护漏洞；网红"开盒"案中警方"一案双查"既打犯罪也追责平台未尽审核义务。</p></div>
+        </div></div>
+        <div class="item"><div class="num">4</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">Grok Bot 走红硅谷，AI 使用量暴增</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">硅谷投资人称 Grok Bot 是"又一个 Claude Code 时刻"，个人 AI 使用量增约 100 倍，零配置+强制云端虚拟机+多智能体原生协同，15 秒搭播客摘要器；亦有质疑其成本/底层模型领先度。</p></div>
+        </div></div>
+        <div class="item"><div class="num">5</div><div class="body">
+          <div class="t item-head" onclick="toggleItem(this)"><span class="t-text">微信"小微"嵌入高频社交场景</span><span class="item-chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></span></div>
+          <div class="item-body"><p class="c">微信原生 AI 助手"小微"灰度测试，新增公众号 AI 总结、朋友圈 AI 点评、聊天图片 AI 处理等入口，被《人民日报》报道。</p></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 结束语 -->
+  <div class="closing" id="closing">—— 今日全球要闻已结束，祝您拥有愉快的一天 ——</div>
+
+  <footer>
+    <b id="coreTitle">核心主线：</b><span id="coreText">美伊霍尔木兹"经济战"+军事威慑外溢（伊朗向 4000km 外迪戈加西亚发射导弹、美债首破 40 万亿）→ AI 算力军备竞赛与监管并行 → 科技管制精细化（日本封先进封装、BIS 再限 EDA）→ 中国硬科技密集兑现（嫦娥七号、NEV 渗透率破 60%、台积电 A16）。</span>
+    <div class="note" id="footerNote">备注：部分军事与地缘条目信源含二三线媒体与自媒体，已尽量交叉核对（总台/CGTN、FT/WSJ 转引、Xinhua、CCTV 等）；本简报为动态信息汇编，重大结论请以官方与权威媒体最终核实为准。图片来自 LoremFlickr 公开共享实拍照片（非 AI 生成），仅供版式示意。语音播报由浏览器内置语音合成（TTS）生成。</div>
+  </footer>
+
+</div>
+
+<!-- ===== 底部播放器 ===== -->
+<div id="player" class="player hidden">
+  <button class="player-close" title="关闭收听" onclick="stopAll()">×</button>
+  <button class="player-expand" id="playerExpandBtn" title="放大播放器" onclick="togglePlayerSize()">⤢</button>
+  <div class="player-main">
+    <span id="playerLabel" class="player-label">正在收听…</span>
+    <div class="player-row">
+      <span id="playerCur" class="player-time">0:00</span>
+      <input id="playerSeek" class="player-seek" type="range" min="0" max="1000" value="0" onchange="seek(this.value)">
+      <span id="playerDur" class="player-time">0:00</span>
+    </div>
+    <div class="player-row player-ctrls">
+      <button id="playerPlay" class="player-btn" title="播放 / 暂停" onclick="togglePlay()">⏸</button>
+      <label class="player-sel"><span id="rateLabel">倍速</span>
+        <select id="playerRate" onchange="changeRate(this.value)">
+          <option value="0.5">0.5×</option>
+          <option value="0.75">0.75×</option>
+          <option value="1" selected>1.0×</option>
+          <option value="1.25">1.25×</option>
+          <option value="1.5">1.5×</option>
+          <option value="2">2.0×</option>
+        </select>
+      </label>
+      <label class="player-sel"><span id="voiceLabel">语音</span>
+        <select id="playerVoice" onchange="changeVoice(this.value)"></select>
+      </label>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ====== 多语言文案 ====== */
+  var i18n = {
+    zh:{
+      settTitle:"设置", settLang:"语言", settTheme:"主题",
+      themeAuto:"系统时间", themeSystem:"跟随系统", themeLight:"浅色", themeDark:"深色",
+      settAccent:"主题色（图形与按钮）", settFont:"字号", settRadius:"圆角大小", expandPart:"展开/收起", settHL:"高光显示", hlEnable:"启用", hlColor:"高光颜色", settBackup:"设置备份", btnExport:"导出", btnImport:"导入",
+      greet:"祝您拥有愉快的一天", aigen:"内容由 AI 生成",
+      listenAll:"全文语音收听", btnExpand:"展开全部", btnCollapse:"收起全部",
+      rateLabel:"倍速", voiceLabel:"语音", closing:"—— 今日全球要闻已结束，祝您拥有愉快的一天 ——",
+      coreTitle:"核心主线：", footerNote:"备注：部分军事与地缘条目信源含二三线媒体与自媒体，已尽量交叉核对；本简报为动态信息汇编，重大结论请以官方与权威媒体最终核实为准。图片来自 LoremFlickr 公开共享实拍照片（非 AI 生成），仅供版式示意。语音播报由浏览器内置语音合成（TTS）生成。",
+      voiceModalTitle:"添加自定义声音", voiceNameLabel:"声音名称", voicePickLabel:"选择设备语音",
+      domains:{mil:"军事", fin:"财经", ai:"AI 与科技", pol:"国际政治", ind:"产业商业", eng:"能源与气候", med:"医疗健康", semi:"半导体与硬件", space:"航天与空间", soc:"社会与舆情"}
+    },
+    en:{
+      settTitle:"Settings", settLang:"Language", settTheme:"Theme",
+      themeAuto:"System time", themeSystem:"Follow system", themeLight:"Light", themeDark:"Dark",
+      settAccent:"Accent (shapes & buttons)", settFont:"Font size", settRadius:"Corner radius", expandPart:"Expand/Collapse", settHL:"Highlight", hlEnable:"On", hlColor:"Highlight color", settBackup:"Settings backup", btnExport:"Export", btnImport:"Import",
+      greet:"Have a wonderful day", aigen:"Content by AI",
+      listenAll:"Listen to all", btnExpand:"Expand all", btnCollapse:"Collapse all",
+      rateLabel:"Speed", voiceLabel:"Voice", closing:"— End of today's global briefing. Have a wonderful day —",
+      coreTitle:"Key thread: ", footerNote:"Note: Some military/geopolitical items rely on secondary sources; cross-check with official statements. Images are real CC photos from LoremFlickr (not AI-generated). Voice uses browser built-in TTS.",
+      voiceModalTitle:"Add custom voice", voiceNameLabel:"Voice name", voicePickLabel:"Pick device voice",
+      domains:{mil:"Military", fin:"Finance", ai:"AI & Tech", pol:"Int'l Politics", ind:"Industry", eng:"Energy & Climate", med:"Healthcare", semi:"Semiconductors", space:"Aerospace", soc:"Society"}
+    }
+  };
+
+  /* 内置默认偏好：由自动化生成时从工作区 user-prefs.json 烘焙进本文件。
+     即使浏览器 localStorage 因预览端口变化（重启 / 换设备）被清空，
+     打开本文件仍会恢复用户上次的偏好，不再退回出厂默认。 */
+  var BUILTIN_PREFS = {
+    lang: 'zh',
+    theme: 'auto',
+    accent: '#2563eb',
+    font: 15,
+    radius: 16,
+    voice: '',
+    hl: '#ffeb3b',
+    hlOn: true
+  };
+
+  /* ====== 高光显示（逐字高亮当前朗读位置） ====== */
+  var hlOn = (localStorage.getItem('wb_hl_on') !== null) ? (localStorage.getItem('wb_hl_on') === '1') : BUILTIN_PREFS.hlOn;
+  var curHLColor = localStorage.getItem('wb_hl') || BUILTIN_PREFS.hl;
+  var hlSpans = [];        // 与 fullText 同长，每字符 -> span 或 null(分隔符)
+  var hlActiveSpans = [];  // 当前高亮的 span
+  var hlWrappedEls = [];   // 已被拆字包裹的元素（用于恢复）
+  var hlLastStart = -1;
+  var curSegs = null;      // 当前朗读片段序列（用于恢复/重建高亮）
+
+  function isBreak(ch){
+    return /[。，、；：！？\.\,\;\:\!\?\s\n\r]/.test(ch);
+  }
+  // 把元素下所有文本节点逐字包成 <span class="hl-ch">
+  function wrapChars(el){
+    if(!el) return [];
+    var spans = [];
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+    var nodes = []; var n; while(n = walker.nextNode()) nodes.push(n);
+    nodes.forEach(function(tn){
+      var s = tn.nodeValue; if(!s) return;
+      var frag = document.createDocumentFragment();
+      for(var i=0;i<s.length;i++){
+        var sp = document.createElement('span');
+        sp.className = 'hl-ch';
+        sp.textContent = s[i];
+        frag.appendChild(sp);
+        spans.push(sp);
+      }
+      tn.parentNode.replaceChild(frag, tn);
+    });
+    return spans;
+  }
+  // 恢复：把 hl-ch 还原为纯文本
+  function restoreHL(){
+    hlWrappedEls.forEach(function(el){
+      el.querySelectorAll('.hl-ch').forEach(function(sp){
+        sp.replaceWith(document.createTextNode(sp.textContent));
+      });
+      if(el.normalize) el.normalize();
+    });
+    hlWrappedEls = []; hlSpans = []; hlActiveSpans = []; hlLastStart = -1;
+  }
+  // 依据片段序列构建 hlSpans（与 fullText 严格对齐）
+  function buildHL(segs){
+    restoreHL();
+    if(!hlOn || !segs) return;
+    hlSpans = [];
+    segs.forEach(function(s){
+      if(s.type === 'sep'){ hlSpans.push(null); }
+      else {
+        var spans = wrapChars(s.el);
+        hlWrappedEls.push(s.el);
+        for(var i=0;i<spans.length;i++) hlSpans.push(spans[i]);
+      }
+    });
+  }
+  // 高亮 globalIdx 所在的"词"（到前后标点为止）
+  function highlightAt(gi){
+    if(!hlOn || !hlSpans.length) return;
+    hlActiveSpans.forEach(function(s){ s.classList.remove('hl-on'); });
+    hlActiveSpans = [];
+    if(gi < 0) gi = 0;
+    if(gi >= hlSpans.length) gi = hlSpans.length - 1;
+    var start = gi;
+    while(start > 0 && hlSpans[start] && !isBreak(hlSpans[start].textContent) && hlSpans[start-1]) start--;
+    var end = gi;
+    while(end < hlSpans.length - 1 && hlSpans[end] && !isBreak(hlSpans[end].textContent)) end++;
+    for(var k=start;k<=end;k++){
+      var sp = hlSpans[k];
+      if(sp){ sp.classList.add('hl-on'); hlActiveSpans.push(sp); }
+    }
+    if(hlActiveSpans.length && start !== hlLastStart){
+      hlActiveSpans[0].scrollIntoView({block:'nearest'});
+      hlLastStart = start;
+    }
+  }
+  function applyHL(){
+    document.documentElement.style.setProperty('--hl-color', curHLColor);
+    var p = document.getElementById('hlPicker'); if(p) p.value = curHLColor;
+    var rr=document.getElementById('hlR'), rg=document.getElementById('hlG'), rb=document.getElementById('hlB');
+    if(rr){ rr.value=parseInt(curHLColor.substr(1,2),16); rg.value=parseInt(curHLColor.substr(3,2),16); rb.value=parseInt(curHLColor.substr(5,2),16); }
+    var cb = document.getElementById('hlOn'); if(cb) cb.checked = hlOn;
+  }
+  function setHLColor(c){ curHLColor = c; localStorage.setItem('wb_hl', c); applyHL(); }
+  function applyHLFromPicker(){ setHLColor(document.getElementById('hlPicker').value); }
+  function syncHLRGBFromPicker(){
+    var c = document.getElementById('hlPicker').value;
+    document.getElementById('hlR').value = parseInt(c.substr(1,2),16);
+    document.getElementById('hlG').value = parseInt(c.substr(3,2),16);
+    document.getElementById('hlB').value = parseInt(c.substr(5,2),16);
+  }
+  function syncHLFromRGB(){
+    var r=toHex(document.getElementById('hlR').value), g=toHex(document.getElementById('hlG').value), b=toHex(document.getElementById('hlB').value);
+    var hex='#'+r+g+b;
+    document.getElementById('hlPicker').value = hex;
+    setHLColor(hex);
+  }
+  function toggleHLOn(v){
+    hlOn = v; localStorage.setItem('wb_hl_on', v?'1':'0');
+    var cb = document.getElementById('hlOn'); if(cb) cb.checked = v;
+    if(!v) restoreHL();
+  }
+
+  var curLang = localStorage.getItem('wb_lang') || BUILTIN_PREFS.lang;
+
+  function applyLang(){
+    var t = i18n[curLang];
+    document.getElementById('settTitle').textContent = t.settTitle;
+    document.getElementById('settLang').textContent = t.settLang;
+    document.getElementById('settTheme').textContent = t.settTheme;
+    document.getElementById('settAccent').textContent = t.settAccent;
+    document.getElementById('settFont').textContent = t.settFont;
+    document.getElementById('settRadius').textContent = t.settRadius;
+    document.getElementById('settHL').textContent = t.settHL;
+    document.getElementById('hlEnable').textContent = t.hlEnable;
+    document.getElementById('hlColor').textContent = t.hlColor;
+    document.getElementById('themeAuto').textContent = t.themeAuto;
+    document.getElementById('themeSystem').textContent = t.themeSystem;
+    document.getElementById('themeLight').textContent = t.themeLight;
+    document.getElementById('themeDark').textContent = t.themeDark;
+    if(window.__applyDailyText){ window.__applyDailyText(); } else { document.getElementById('greet').textContent = t.greet; }
+    document.getElementById('aigen').textContent = t.aigen;
+    document.getElementById('listenAll').textContent = t.listenAll;
+    document.getElementById('btnExpand').textContent = t.btnExpand;
+    document.getElementById('btnCollapse').textContent = t.btnCollapse;
+    document.getElementById('rateLabel').textContent = t.rateLabel;
+    document.getElementById('voiceLabel').textContent = t.voiceLabel;
+    // closing 由每日轮换函数设置（window.__applyDailyText），此处不再覆盖
+    document.getElementById('coreTitle').textContent = t.coreTitle;
+    document.getElementById('footerNote').textContent = t.footerNote;
+    document.getElementById('voiceModalTitle').textContent = t.voiceModalTitle;
+    document.getElementById('voiceNameLabel').textContent = t.voiceNameLabel;
+    document.getElementById('voicePickLabel').textContent = t.voicePickLabel;
+    document.documentElement.lang = curLang === 'en' ? 'en' : 'zh-CN';
+    document.querySelectorAll('.domain-card').forEach(function(c){
+      var d = c.getAttribute('data-domain');
+      c.querySelector('.domain-name').textContent = t.domains[d] || d;
+    });
+    document.querySelectorAll('.expand-part').forEach(function(b){ b.textContent = t.expandPart; });
+    document.getElementById('langSelect').value = curLang;
+    if(customModalOpen) fillModalVoices();
+  }
+  function setLang(v){ curLang = v; localStorage.setItem('wb_lang', v); applyLang(); }
+
+  /* ====== 主题、主题色、字号 ====== */
+  var themeMode = localStorage.getItem('wb_theme') || BUILTIN_PREFS.theme;
+  var mediaDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function applyTheme(){
+    var dark = false;
+    if(themeMode === 'dark') dark = true;
+    else if(themeMode === 'light') dark = false;
+    else if(themeMode === 'system') dark = mediaDark ? mediaDark.matches : false;
+    else { var h = new Date().getHours(); dark = (h < 6 || h >= 18); } // 系统时间
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    ['themeAuto','themeSystem','themeLight','themeDark'].forEach(function(id){ document.getElementById(id).classList.remove('active'); });
+    document.getElementById('theme' + themeMode.charAt(0).toUpperCase() + themeMode.slice(1)).classList.add('active');
+  }
+  function setTheme(m){
+    themeMode = m; localStorage.setItem('wb_theme', m); applyTheme();
+    if(m === 'system' && mediaDark) applyTheme();
+  }
+  if(mediaDark){ mediaDark.addEventListener('change', function(){ if(themeMode==='system') applyTheme(); }); }
+
+  var PRESETS = ['#2563eb','#7c3aed','#db2777','#059669','#d97706','#ea580c','#0891b2','#4338ca','#e11d48','#0ea5e9'];
+  function buildSwatches(){
+    var box = document.getElementById('accentSwatches'); box.innerHTML='';
+    var cur = localStorage.getItem('wb_accent') || BUILTIN_PREFS.accent;
+    PRESETS.forEach(function(c){
+      var d = document.createElement('div');
+      d.className = 'accent-dot' + (c.toLowerCase()===cur.toLowerCase()?' sel':'');
+      d.style.background = c; d.title = c;
+      d.onclick = function(){ setAccent(c); };
+      box.appendChild(d);
+    });
+  }
+  function applyAccent(){
+    var c = localStorage.getItem('wb_accent') || BUILTIN_PREFS.accent;
+    document.documentElement.style.setProperty('--accent', c);
+    var r=parseInt(c.substr(1,2),16), g=parseInt(c.substr(3,2),16), b=parseInt(c.substr(5,2),16);
+    var lum = (0.299*r+0.587*g+0.114*b)/255;
+    document.documentElement.style.setProperty('--accent-ink', lum>0.6 ? '#1f2937' : '#ffffff');
+    document.getElementById('accentPicker').value = c;
+    var rr=document.getElementById('rgbR'), rg=document.getElementById('rgbG'), rb=document.getElementById('rgbB');
+    if(rr){ rr.value=r; rg.value=g; rb.value=b; }
+    buildSwatches();
+  }
+  function setAccent(c){ localStorage.setItem('wb_accent', c); applyAccent(); }
+  function applyAccentFromPicker(){ setAccent(document.getElementById('accentPicker').value); }
+  function toHex(v){ v=Math.max(0,Math.min(255, parseInt(v)||0)); var s=v.toString(16); return s.length<2?'0'+s:s; }
+  function syncRGBFromPicker(){
+    var c=document.getElementById('accentPicker').value;
+    document.getElementById('rgbR').value=parseInt(c.substr(1,2),16);
+    document.getElementById('rgbG').value=parseInt(c.substr(3,2),16);
+    document.getElementById('rgbB').value=parseInt(c.substr(5,2),16);
+  }
+  function syncPickerFromRGB(){
+    var r=toHex(document.getElementById('rgbR').value), g=toHex(document.getElementById('rgbG').value), b=toHex(document.getElementById('rgbB').value);
+    document.getElementById('accentPicker').value='#'+r+g+b;
+  }
+
+  var baseFont = parseInt(localStorage.getItem('wb_font') || BUILTIN_PREFS.font, 10);
+  function setFontSize(v){
+    v = parseInt(v, 10);
+    document.documentElement.style.setProperty('--font-base', v + 'px');
+    var sl = document.getElementById('fontSlider'); if(sl) sl.value = v;
+    localStorage.setItem('wb_font', v);
+  }
+
+  var baseRadius = parseInt(localStorage.getItem('wb_radius') || BUILTIN_PREFS.radius, 10);
+  function setRadius(v){
+    v = parseInt(v, 10);
+    document.documentElement.style.setProperty('--radius', v + 'px');
+    var sl = document.getElementById('radiusSlider'); if(sl) sl.value = v;
+    localStorage.setItem('wb_radius', v);
+  }
+
+  /* ====== 设置面板 ====== */
+  function toggleSettings(){ document.getElementById('settingsPanel').classList.toggle('open'); }
+  document.addEventListener('click', function(e){
+    var p = document.getElementById('settingsPanel');
+    var b = document.getElementById('settingsBtn');
+    if(!p.contains(e.target) && e.target !== b && !b.contains(e.target)) p.classList.remove('open');
+  });
+
+  /* ====== 设置备份：导出 / 导入 JSON（可跨设备、跨重启携带） ====== */
+  function getCurrentAccent(){
+    var c = (document.documentElement.style.getPropertyValue('--accent') || '').trim();
+    return c || BUILTIN_PREFS.accent;
+  }
+  function exportPrefs(){
+    var data = {
+      _app:'daily-news-briefing', _ver:1,
+      lang: curLang, theme: themeMode, accent: getCurrentAccent(),
+      font: baseFont, radius: baseRadius,
+      customVoices: customVoices, voice: curVoiceURI,
+      hl: curHLColor, hlOn: hlOn
+    };
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = '每日要闻-设置备份.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  }
+  function importPrefs(input){
+    var f = input.files && input.files[0]; if(!f) return;
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var d = JSON.parse(reader.result);
+        if(d._app !== 'daily-news-briefing'){ alert('这不是有效的设置备份文件'); return; }
+        if(d.lang) setLang(d.lang);
+        if(d.theme) setTheme(d.theme);
+        if(d.accent) setAccent(d.accent);
+        if(d.font) setFontSize(d.font);
+        if(d.radius) setRadius(d.radius);
+        if(Array.isArray(d.customVoices)){ customVoices = d.customVoices; localStorage.setItem('wb_custom_voices', JSON.stringify(customVoices)); }
+        if(d.voice){ curVoiceURI = d.voice; localStorage.setItem('wb_voice', d.voice); }
+        if(d.hl) setHLColor(d.hl);
+        if(typeof d.hlOn !== 'undefined'){ hlOn = d.hlOn; localStorage.setItem('wb_hl_on', hlOn?'1':'0'); var hcb=document.getElementById('hlOn'); if(hcb) hcb.checked=hlOn; if(!hlOn) restoreHL(); }
+      }catch(e){ alert('导入失败：文件格式错误'); }
+    };
+    reader.readAsText(f);
+    input.value = '';
+  }
+
+  /* ====== 标题 sticky 状态 ====== */
+  var titlebar = document.getElementById('titlebar');
+  var banner = document.getElementById('banner');
+  var ticking = false;
+  function onScroll(){
+    if(ticking) return; ticking = true;
+    requestAnimationFrame(function(){
+      var tb = titlebar.getBoundingClientRect();
+      var stuck = tb.top <= 0.5;
+      titlebar.classList.toggle('is-stuck', stuck);
+      if(stuck){
+        var bb = banner.getBoundingClientRect();
+        titlebar.classList.toggle('is-floating', bb.bottom <= tb.bottom);
+      } else {
+        titlebar.classList.remove('is-floating');
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* ====== 折叠 ====== */
+  function toggle(head){
+    var card = head.closest('.domain-card');
+    card.classList.toggle('collapsed');
+  }
+  function toggleItem(head){ var item = head.closest('.item'); item.classList.toggle('open'); }
+  function toggleSectionContent(domain){
+    var card = document.querySelector('.domain-card[data-domain="'+domain+'"]');
+    card.classList.remove('collapsed');
+    var items = card.querySelectorAll('.item');
+    var anyClosed = false;
+    items.forEach(function(it){ if(!it.classList.contains('open')) anyClosed = true; });
+    items.forEach(function(it){ it.classList.toggle('open', anyClosed); });
+  }
+  function expandAll(){ document.querySelectorAll('.domain-card').forEach(function(c){ c.classList.remove('collapsed'); }); }
+  function collapseAll(){ document.querySelectorAll('.domain-card').forEach(function(c){ c.classList.add('collapsed'); }); }
+
+  /* ====== 自定义声音（收藏设备语音） ====== */
+  var customVoices = JSON.parse(localStorage.getItem('wb_custom_voices') || '[]');
+  var customModalOpen = false;
+  function fillModalVoices(){
+    var sel = document.getElementById('customVoicePick');
+    sel.innerHTML = '';
+    var vs = speechSynthesis.getVoices();
+    if(!vs.length){
+      var o = document.createElement('option'); o.value=''; o.textContent='（设备暂无可用语音）'; sel.appendChild(o); return;
+    }
+    vs.forEach(function(v){
+      var o = document.createElement('option');
+      o.value = v.voiceURI; o.textContent = v.name + '（' + v.lang + '）';
+      sel.appendChild(o);
+    });
+  }
+  function openVoiceModal(){
+    customModalOpen = true;
+    document.getElementById('customVoiceName').value = '';
+    fillModalVoices();
+    document.getElementById('voiceModal').classList.add('open');
+  }
+  function closeVoiceModal(){ customModalOpen = false; document.getElementById('voiceModal').classList.remove('open'); }
+  function saveCustomVoice(){
+    var name = document.getElementById('customVoiceName').value.trim();
+    var uri = document.getElementById('customVoicePick').value;
+    if(!name || !uri){ alert('请填写名称并选择设备语音'); return; }
+    customVoices.push({name:name, uri:uri});
+    localStorage.setItem('wb_custom_voices', JSON.stringify(customVoices));
+    closeVoiceModal();
+    populateVoices();
+  }
+
+  /* ====== 语音播报 + 底部播放器 ====== */
+  var hasTTS = ('speechSynthesis' in window);
+  var player = document.getElementById('player');
+  var curUtterId = 0;
+  var current = null;
+  var isPlaying = false;
+  var paused = false;
+  var fullText = '';
+  var totalChars = 0;
+  var speakOffset = 0;
+  var curRate = 1;
+  var curVoiceURI = '';
+  var lastCharIndex = 0;
+  var curTotalSec = 0;
+  var tActive = 0;
+  var segT0 = 0;
+  var tickTimer = null;
+  var allQueue = [];
+
+  function activeElapsed(){
+    if(paused) return tActive;
+    return tActive + (performance.now() - segT0)/1000;
+  }
+  function fmt(s){
+    s = Math.max(0, Math.floor(s));
+    var m = Math.floor(s/60), ss = s%60;
+    return m + ':' + (ss<10?'0':'') + ss;
+  }
+  function updateTimes(){
+    document.getElementById('playerCur').textContent = fmt(activeElapsed());
+    document.getElementById('playerDur').textContent = curTotalSec>0 ? fmt(curTotalSec) : '0:00';
+  }
+  function setIconFor(btn, speaking){ btn.innerHTML = speaking ? '⏹' : '🔊'; }
+  function updateIcons(){
+    document.querySelectorAll('.spk').forEach(function(b){
+      setIconFor(b, b.getAttribute('data-speak') === current);
+    });
+    var g = document.getElementById('globalSpeaker');
+    setIconFor(g, current === 'all');
+  }
+  function pickVoice(){
+    var vs = speechSynthesis.getVoices();
+    for(var i=0;i<vs.length;i++){ if(vs[i].lang && vs[i].lang.toLowerCase().indexOf('zh')===0){ return vs[i]; } }
+    return null;
+  }
+  function voiceByURI(uri){
+    var vs = speechSynthesis.getVoices();
+    for(var i=0;i<vs.length;i++){ if(vs[i].voiceURI===uri) return vs[i]; }
+    return null;
+  }
+  function populateVoices(){
+    var sel = document.getElementById('playerVoice');
+    sel.innerHTML = '';
+    var optAdd = document.createElement('option');
+    optAdd.value = '__add'; optAdd.textContent = (curLang==='en'?'➕ Custom voice…':'➕ 自定义声音…');
+    sel.appendChild(optAdd);
+    var vs = speechSynthesis.getVoices();
+    vs.forEach(function(v){
+      var o = document.createElement('option');
+      o.value = v.voiceURI; o.textContent = v.name + '（' + v.lang + '）';
+      sel.appendChild(o);
+    });
+    customVoices.forEach(function(cv){
+      var o = document.createElement('option');
+      o.value = cv.uri; o.textContent = '★ ' + cv.name;
+      sel.appendChild(o);
+    });
+    if(curVoiceURI) sel.value = curVoiceURI;
+  }
+
+  function startUtterance(text, label, offset, rate, voiceURI, resumeKeepTime, segs){
+    if(!hasTTS){ alert('当前浏览器不支持语音播报，请使用桌面版 Chrome/Edge/Safari 打开。'); return; }
+    fullText = text;
+    totalChars = text.length;
+    speakOffset = offset || 0;
+    curRate = rate || 1;
+    curSegs = segs || curSegs;
+    var slice = speakOffset>0 ? text.slice(speakOffset) : text;
+    var u = new SpeechSynthesisUtterance(slice);
+    u.lang = curLang === 'en' ? 'en-US' : 'zh-CN'; u.rate = curRate; u.pitch = 1.0;
+    var v = voiceURI ? voiceByURI(voiceURI) : pickVoice();
+    if(v) u.voice = v;
+    var myId = ++curUtterId;
+    u.onstart = function(){
+      player.classList.remove('hidden');
+      document.getElementById('playerLabel').textContent = (curLang==='en'?'Listening: ':'正在收听：') + label;
+      document.getElementById('playerPlay').textContent = '⏸';
+      document.getElementById('playerSeek').value = 0;
+      curTotalSec = 0;
+      if(!resumeKeepTime){ tActive = 0; }
+      segT0 = performance.now(); paused = false; isPlaying = true;
+      updateTimes();
+      if(tickTimer) clearInterval(tickTimer);
+      tickTimer = setInterval(updateTimes, 250);
+    };
+    u.onboundary = function(e){
+      var ci = e.charIndex || 0;
+      lastCharIndex = ci;
+      var prog = (speakOffset + ci) / totalChars;
+      if(prog>1) prog = 1; if(prog<0) prog = 0;
+      document.getElementById('playerSeek').value = Math.round(prog*1000);
+      var el = activeElapsed();
+      if(el > 0.3){
+        var cps = (speakOffset + ci) / el;
+        if(cps > 0) curTotalSec = totalChars / cps;
+      }
+      updateTimes();
+      highlightAt(speakOffset + ci);
+    };
+    u.onend = function(){
+      if(myId !== curUtterId) return;
+      if(tickTimer){ clearInterval(tickTimer); tickTimer = null; }
+      if(current === 'all'){ nextAll(); return; }
+      restoreHL();
+      isPlaying = false; paused = false;
+      document.getElementById('playerPlay').textContent = '▶';
+      document.getElementById('playerSeek').value = 1000;
+      updateTimes();
+    };
+    u.onerror = function(){ if(myId !== curUtterId) return; isPlaying=false; };
+    buildHL(curSegs);
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  }
+
+  function sectionText(domain){
+    var t = i18n[curLang];
+    var card = document.querySelector('[data-domain="'+domain+'"]');
+    card.classList.remove('collapsed');
+    var name = t.domains[domain] || domain;
+    // 片段序列：与拼接出的 text 严格一一对应（str=朗读文本并高亮对应DOM，sep=分隔符）
+    var segs = [{type:'str', el: card.querySelector('.domain-name'), str: name}, {type:'sep', ch:'。'}];
+    var itemEls = card.querySelectorAll('.item');
+    card.querySelectorAll('.item').forEach(function(it, idx){
+      var ttEl = it.querySelector('.t-text');
+      var tt = ttEl.textContent.trim();
+      var ib = it.querySelector('.item-body');
+      var cb = ib ? ib.textContent.trim() : '';
+      segs.push({type:'str', el: ttEl, str: tt});
+      if(cb){ segs.push({type:'sep', ch:'：'}); segs.push({type:'str', el: ib, str: cb}); }
+      if(idx < itemEls.length - 1) segs.push({type:'sep', ch:'。'});
+    });
+    var text = segs.map(function(s){ return s.type==='sep' ? s.ch : s.str; }).join('');
+    return { label: name, text: text, segs: segs };
+  }
+
+  function speakSection(domain){
+    if(current === domain){ stopAll(); return; }
+    var s = sectionText(domain);
+    current = domain; updateIcons();
+    startUtterance(s.text, s.label, 0, curRate, curVoiceURI, false, s.segs);
+  }
+  function speakAll(){
+    if(current === 'all'){ stopAll(); return; }
+    speechSynthesis.cancel();
+    allQueue = [];
+    document.querySelectorAll('.domain-card').forEach(function(c){
+      var d = c.getAttribute('data-domain');
+      allQueue.push(sectionText(d));
+    });
+    current = 'all'; updateIcons();
+    nextAll();
+  }
+  function nextAll(){
+    if(allQueue.length === 0){ current = null; updateIcons(); return; }
+    var item = allQueue.shift();
+    startUtterance(item.text, item.label, 0, curRate, curVoiceURI, false, item.segs);
+  }
+
+  function togglePlay(){
+    if(!fullText) return;
+    if(paused || !isPlaying){
+      var idx = (speakOffset + lastCharIndex);
+      var label = document.getElementById('playerLabel').textContent.replace(/^(正在收听：|Listening: )/,'');
+      paused = false; isPlaying = true;
+      startUtterance(fullText, label, idx, curRate, curVoiceURI, true, curSegs);
+    } else {
+      var idx2 = speakOffset + lastCharIndex;
+      tActive += (performance.now() - segT0)/1000;
+      if(tickTimer){ clearInterval(tickTimer); tickTimer = null; }
+      speechSynthesis.cancel();
+      curUtterId++;
+      restoreHL();
+      paused = true; isPlaying = false;
+      document.getElementById('playerPlay').textContent = '▶';
+    }
+  }
+  function seek(val){
+    if(!fullText) return;
+    var prog = val/1000;
+    var target = Math.round(prog * totalChars);
+    var label = document.getElementById('playerLabel').textContent.replace(/^(正在收听：|Listening: )/,'');
+    startUtterance(fullText, label, target, curRate, curVoiceURI, false, curSegs);
+  }
+  function changeRate(v){
+    curRate = parseFloat(v);
+    if(!fullText) return;
+    var prog = document.getElementById('playerSeek').value/1000;
+    var target = Math.round(prog * totalChars);
+    var label = document.getElementById('playerLabel').textContent.replace(/^(正在收听：|Listening: )/,'');
+    startUtterance(fullText, label, target, curRate, curVoiceURI, false, curSegs);
+  }
+  function changeVoice(v){
+    if(v === '__add'){
+      // 还原选择并打开弹窗
+      document.getElementById('playerVoice').value = curVoiceURI || '';
+      if(!hasTTS){ alert('当前浏览器不支持语音播报。'); return; }
+      openVoiceModal();
+      return;
+    }
+    curVoiceURI = v; localStorage.setItem('wb_voice', v);
+    if(!fullText) return;
+    var prog = document.getElementById('playerSeek').value/1000;
+    var target = Math.round(prog * totalChars);
+    var label = document.getElementById('playerLabel').textContent.replace(/^(正在收听：|Listening: )/,'');
+    startUtterance(fullText, label, target, curRate, curVoiceURI, false, curSegs);
+  }
+  function stopAll(){
+    if(hasTTS) speechSynthesis.cancel();
+    if(tickTimer){ clearInterval(tickTimer); tickTimer = null; }
+    curUtterId++;
+    current = null; isPlaying = false; paused = false;
+    player.classList.add('hidden');
+    restoreHL();
+    updateIcons();
+  }
+
+  /* 退出/离开网页时：统一保存所有自定义设置 + 关闭声音 */
+  function saveAllPrefs(){
+    try{
+      localStorage.setItem('wb_lang', curLang);
+      localStorage.setItem('wb_theme', themeMode);
+      localStorage.setItem('wb_accent', getCurrentAccent());
+      localStorage.setItem('wb_font', String(baseFont));
+      localStorage.setItem('wb_radius', String(baseRadius));
+      localStorage.setItem('wb_voice', curVoiceURI);
+      localStorage.setItem('wb_custom_voices', JSON.stringify(customVoices));
+      localStorage.setItem('wb_hl', curHLColor);
+      localStorage.setItem('wb_hl_on', hlOn ? '1' : '0');
+    }catch(e){}
+  }
+  function exitCleanup(){
+    saveAllPrefs();   // 自动保存当前自定义（语言/主题/主题色/字号/圆角/高光/声音）
+    stopAll();        // 关闭声音并收起播放器
+  }
+  // 关页/刷新：桌面与移动端都会触发，统一收尾
+  window.addEventListener('pagehide', exitCleanup);
+  window.addEventListener('beforeunload', exitCleanup);
+  // 切到别的标签页或最小化（移动端退到后台）也静音，避免声音在背后继续播
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) exitCleanup();
+  });
+
+
+  /* ====== 每日轮换（欢迎语/结束语/标题渐变/图片） ====== */
+  (function(){
+    var now = new Date();
+    var seed = now.getFullYear()*10000 + (now.getMonth()+1)*100 + now.getDate(); // 如 20260821
+    var greets = [
+      {zh:'祝您拥有愉快的一天', en:'Have a wonderful day'},
+      {zh:'愿您今日元气满满', en:'Wishing you an energetic day'},
+      {zh:'祝您一天好心情', en:'Hope you have a great day'},
+      {zh:'愿您收获满满、轻松自在', en:'May your day be fruitful and relaxed'},
+      {zh:'祝您诸事顺遂、平安喜乐', en:'Wishing you smooth days and peace'},
+      {zh:'愿今天的您被温柔以待', en:'May you be treated gently today'},
+      {zh:'祝您开工大吉、神清气爽', en:'A fresh, productive day to you'},
+      {zh:'愿您今日所遇皆美好', en:'May everything you meet today be beautiful'}
+    ];
+    var ends = [
+      {zh:'—— 今日全球要闻已结束，祝您拥有愉快的一天 ——', en:'—— Today’s global brief ends. Have a wonderful day ——'},
+      {zh:'—— 今日要闻播报完毕，愿您轻松入眠 ——', en:'—— Today’s news is done. Sleep well ——'},
+      {zh:'—— 今天的全球动态就到这里，明天见 ——', en:'—— That’s today’s global update. See you tomorrow ——'},
+      {zh:'—— 今日要闻一览结束，祝您一切顺心 ——', en:'—— Today’s briefing ends. All the best ——'},
+      {zh:'—— 全球要闻已送达，愿您心安、夜安 ——', en:'—— Global news delivered. Peaceful night ——'},
+      {zh:'—— 今日资讯分享完毕，祝您生活愉快 ——', en:'—— Today’s digest is complete. Enjoy your day ——'}
+    ];
+    var grads = [
+      'linear-gradient(135deg,#0f2027,#203a43,#2c5364)',
+      'linear-gradient(135deg,#1e3a8a,#2563eb)',
+      'linear-gradient(135deg,#7c3aed,#db2777)',
+      'linear-gradient(135deg,#0f766e,#10b981)',
+      'linear-gradient(135deg,#b45309,#f59e0b)',
+      'linear-gradient(135deg,#9d174d,#f43f5e)',
+      'linear-gradient(135deg,#3730a3,#6366f1)',
+      'linear-gradient(135deg,#0e7490,#22d3ee)'
+    ];
+    var bannerKws = [
+      'nature,landscape','mountain,lake','ocean,beach','forest,sunlight',
+      'sunset,clouds','river,valley','flower,meadow','snow,mountain'
+    ];
+    window.__dailyGreet = greets[seed % greets.length];
+    window.__dailyEnd   = ends[seed % ends.length];
+    window.__dailyGrad  = grads[seed % grads.length];
+    window.__dailyBannerKw = bannerKws[seed % bannerKws.length];
+    window.__applyDailyText = function(){
+      var g = (curLang === 'en') ? window.__dailyGreet.en : window.__dailyGreet.zh;
+      var e = (curLang === 'en') ? window.__dailyEnd.en : window.__dailyEnd.zh;
+      var ge = document.getElementById('greet'); if(ge) ge.textContent = g;
+      var ce = document.getElementById('closing'); if(ce) ce.textContent = e;
+    };
+    // 标题渐变每天换
+    document.documentElement.style.setProperty('--title-gradient', window.__dailyGrad);
+    // 图片：lock 用日期种子，当天稳定、跨天不同
+    var b = document.querySelector('img.banner-img');
+    if(b) b.src = 'https://loremflickr.com/1200/400/' + encodeURIComponent(window.__dailyBannerKw) + '?lock=' + seed;
+    var figs = document.querySelectorAll('img.fig');
+    for(var i=0;i<figs.length;i++){
+      var kw = figs[i].getAttribute('data-kw');
+      if(kw) figs[i].src = 'https://loremflickr.com/1000/320/' + encodeURIComponent(kw) + '?lock=' + (seed*7 + i + 1);
+    }
+    window.__applyDailyText();
+  })();
+
+  /* ====== 返回主页 / 分享 / 播放器放大 ====== */
+  window.goHome = function(){ location.href = 'index.html'; };
+  window.sharePage = function(){
+    var url = location.href;
+    var zh = curLang !== 'en';
+    if (navigator.share) { navigator.share({ title: document.title, url: url }).catch(function(){}); return; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(
+        function(){ alert((zh ? '链接已复制：' : 'Link copied: ') + url); },
+        function(){ prompt(zh ? '请手动复制链接：' : 'Copy this link:', url); }
+      );
+    } else { prompt(zh ? '请手动复制链接：' : 'Copy this link:', url); }
+  };
+  window.togglePlayerSize = function(){
+    var p = document.getElementById('player');
+    var b = document.getElementById('playerExpandBtn');
+    var big = p.classList.toggle('big');
+    b.textContent = big ? '⤡' : '⤢';
+    b.title = big ? (curLang !== 'en' ? '缩小播放器' : 'Shrink player') : (curLang !== 'en' ? '放大播放器' : 'Enlarge player');
+  };
+
+  /* ====== 初始化 ====== */
+  applyLang();
+  applyTheme();
+  setFontSize(baseFont);
+  setRadius(baseRadius);
+  applyAccent();
+  applyHL();
+  curVoiceURI = localStorage.getItem('wb_voice') || BUILTIN_PREFS.voice;
+  if(hasTTS){
+    populateVoices();
+    speechSynthesis.onvoiceschanged = populateVoices;
+  }
+  onScroll();
+</script>
+</body>
+</html>
