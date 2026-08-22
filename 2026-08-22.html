@@ -151,7 +151,7 @@
     height: 220px;
     object-fit: cover;
     display: block;
-    background: var(--border);
+    background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 40%, #000) 100%);
   }
   .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 20px clamp(12px, 4vw, 48px); }
   .global-actions {
@@ -226,6 +226,20 @@
     flex-shrink: 0;
   }
   .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .fold-btn, .tts-btn {
+    width: 32px; height: 32px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+  .fold-btn:hover, .tts-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .fold-btn:active, .tts-btn:active { transform: scale(.94); }
   .section-body { display: none; padding: 12px 16px 16px; }
   .section-body.open { display: block; }
   .item { margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
@@ -562,6 +576,7 @@
     .section-titlebar { padding: 8px 10px; }
     .section-title { font-size: .95em; }
     .icon-btn { width: 28px; height: 28px; font-size: 12px; }
+    .fold-btn, .tts-btn { width: 28px; height: 28px; font-size: 12px; }
     .global-actions button { padding: 5px 10px; font-size: .82em; }
     .item-title { font-size: .92em; }
     .item-body { font-size: .9em; }
@@ -617,6 +632,7 @@
     .section-header { min-height: 160px; }
     .global-actions button { padding: 8px 18px; font-size: 1em; }
     .icon-btn { width: 36px; height: 36px; font-size: 15px; }
+    .fold-btn, .tts-btn { width: 36px; height: 36px; font-size: 15px; }
     .settings-panel { max-width: 480px; padding: 24px; }
   }
   /* ========== Responsive: Extra ultra-wide (>= 2560px) ========== */
@@ -656,7 +672,7 @@
   <span id="browserTipText">建议使用 Safari / Chrome / Edge 等默认浏览器打开，否则可能遇到语音朗读等功能异常。</span>
 </div>
 
-<img class="banner" id="bannerImg" src="" alt="banner" onerror="this.style.display='none'" fetchpriority="high" decoding="async">
+<img class="banner" id="bannerImg" src="" alt="banner" onerror="this.style.opacity='0'" fetchpriority="high" decoding="async">
 
 <div class="container">
   <div class="global-actions">
@@ -666,7 +682,7 @@
 
 
   <!-- CONTENT_SECTIONS_PLACEHOLDER -->
-    <div class="section-card" id="sec0">
+  <div class="section-card" id="sec0">
     <div class="section-header" onclick="toggleSection('sec0')">
       <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
