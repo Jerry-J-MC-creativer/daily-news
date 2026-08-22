@@ -185,13 +185,16 @@
     min-height: 120px;
     display: flex;
     align-items: flex-end;
+    border-radius: var(--radius) var(--radius) 0 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 15%, transparent) 0%, color-mix(in srgb, var(--accent) 30%, transparent) 100%);
   }
   .section-header img {
     position: absolute;
     inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    opacity: .65;
+    opacity: .75;
     transition: opacity .3s;
   }
   .section-header:hover img { opacity: .8; }
@@ -909,12 +912,12 @@
 
   function setupImages() {
     var banner = document.getElementById('bannerImg');
-    banner.src = 'https://loremflickr.com/1200/400/' + encodeURIComponent(bannerKw) + '?lock=' + seed;
-    var imgKeywords = ['fighter,jet','money,coins','robot,technology','globe,earth','factory,industry','wind,turbine','medical,hospital','microchip,circuit','rocket,space','smartphone,social'];
+    banner.src = 'https://picsum.photos/1200/400?random=' + seed;
+    var keywords = ['1','2','3','4','5','6','7','8','9','10'];
     sections.forEach(function(sec, i) {
       var img = sec.querySelector('.section-header img');
       if (img) {
-        img.src = 'https://loremflickr.com/800/300/' + encodeURIComponent(imgKeywords[i]) + '?lock=' + (seed*7 + i + 1);
+        img.src = 'https://picsum.photos/800/300?random=' + (seed*7 + i + 1);
       }
     });
   }
@@ -1001,9 +1004,10 @@
   }
 
   function applyRadius() {
-    document.documentElement.style.setProperty('--radius', radius + 'px');
-    document.getElementById('rngRadius').value = radius;
-    document.getElementById('radiusVal').textContent = radius + 'px';
+    var r = Math.max(4, Math.min(32, parseInt(radius) || 16));
+    document.documentElement.style.setProperty('--radius', r + 'px');
+    document.getElementById('rngRadius').value = r;
+    document.getElementById('radiusVal').textContent = r + 'px';
   }
 
   function applyHl() {
