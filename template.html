@@ -104,7 +104,7 @@
   .title-btn {
     display: inline-flex; align-items: center; gap: 4px;
     padding: 5px 10px;
-    border-radius: 6px;
+    border-radius: var(--radius);
     border: none;
     background: rgba(255,255,255,0.12);
     color: #fff;
@@ -162,7 +162,7 @@
   }
   .global-actions button {
     padding: 6px 14px;
-    border-radius: 999px;
+    border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
@@ -209,32 +209,35 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    flex-wrap: wrap;
     border-bottom: 1px solid var(--border);
   }
   .section-title { font-weight: 700; font-size: 1.05em; display: flex; align-items: center; gap: 8px; }
-  .section-actions { display: flex; align-items: center; gap: 8px; }
+  .section-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .icon-btn {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    transition: all .2s;
-    flex-shrink: 0;
-  }
-  .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .fold-btn, .tts-btn {
-    width: 32px; height: 32px;
+    height: 32px; padding: 0 10px; width: auto;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    font-size: .82em;
+    white-space: nowrap;
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .fold-btn, .tts-btn {
+    height: 32px; padding: 0 9px; width: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    font-size: .8em;
+    white-space: nowrap;
     transition: all .2s;
     flex-shrink: 0;
   }
@@ -405,14 +408,15 @@
     cursor: pointer;
   }
   .player-btn {
-    width: 36px; height: 36px;
-    border-radius: 50%;
+    height: 36px; padding: 0 13px; width: auto;
+    border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    font-size: .85em;
+    white-space: nowrap;
     flex-shrink: 0;
   }
   .player-btn:hover { border-color: var(--accent); color: var(--accent); }
@@ -474,20 +478,21 @@
     cursor: pointer; border: none;
   }
   .vol-btn {
-    width: 30px; height: 30px;
-    border-radius: 50%;
+    height: 36px; padding: 0 11px; width: auto;
+    border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    font-size: .85em;
+    white-space: nowrap;
     flex-shrink: 0;
   }
   .vol-btn:hover { border-color: var(--accent); color: var(--accent); }
   .player-reset-btn {
     padding: 5px 10px;
-    border-radius: 6px;
+    border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
@@ -500,7 +505,7 @@
   .player-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
   .player-native-btn {
     padding: 5px 10px;
-    border-radius: 6px;
+    border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
@@ -764,7 +769,7 @@
   </div>
   <input type="range" class="player-progress" id="playerProgress" value="0" min="0" max="100" step="0.1" oninput="previewSeek(this.value)" onchange="seekProgress(this.value)">
   <div class="player-controls">
-    <button class="player-btn" id="playPauseBtn" onclick="togglePlay()">▶</button>
+    <button class="player-btn" id="playPauseBtn" onclick="togglePlay()">▶ 播放</button>
     <select id="speedSel" onchange="setSpeed(this.value)">
       <option value="0.5">0.5x</option>
       <option value="0.75">0.75x</option>
@@ -779,7 +784,7 @@
     </select>
     <div class="player-extra">
       <div class="volume-wrap">
-        <button class="vol-btn" id="volBtn" title="音量">🔊</button>
+        <button class="vol-btn" id="volBtn" title="音量">🔊 音量</button>
         <div class="volume-slider">
           <input type="range" id="volRange" min="0" max="100" value="100" orient="vertical" oninput="previewVolume(this.value/100)" onchange="setVolume(this.value/100)">
         </div>
@@ -787,8 +792,8 @@
       <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置">⏹ <span id="playerResetLabel">重置</span></button>
       <button class="player-native-btn" id="nativeBtn" onclick="toggleNativeMode()" title="切换系统原生播放模式">🖥️ <span id="nativeLabel">智能分块</span></button>
     </div>
-    <button class="player-btn" id="playerExpandBtn" onclick="togglePlayerSize()" title="放大播放器">⤢</button>
-    <button class="player-btn" onclick="stopAll()" title="关闭">✕</button>
+    <button class="player-btn" id="playerExpandBtn" onclick="togglePlayerSize()" title="放大播放器">⤢ 放大</button>
+    <button class="player-btn" onclick="stopAll()" title="关闭">✕ 关闭</button>
   </div>
   <div class="player-hint" id="playerHint" style="width:100%;font-size:11px;color:var(--text-secondary);opacity:.7;text-align:center;margin-top:4px;">💡 建议使用默认浏览器打开，语音朗读更稳定</div>
 </div>
@@ -1005,7 +1010,7 @@
     var p = document.getElementById('player');
     var b = document.getElementById('playerExpandBtn');
     var expanded = p.classList.toggle('expanded');
-    b.textContent = expanded ? '⤡' : '⤢';
+    b.innerHTML = expanded ? '⤡ 缩小' : '⤢ 放大';
     b.title = expanded ? (lang === 'zh' ? '缩小播放器' : 'Shrink player') : (lang === 'zh' ? '放大播放器' : 'Enlarge player');
   };
 
@@ -1201,7 +1206,7 @@
     if (!body) return;
     body.classList.toggle('open');
     var btns = card.querySelectorAll('.section-actions .fold-btn');
-    if (btns.length >= 2) btns[1].textContent = body.classList.contains('open') ? '▲' : '▼';
+    if (btns.length >= 2) btns[1].innerHTML = body.classList.contains('open') ? '▲ 折叠' : '▼ 展开';
   };
   window.toggleItem = function(idOrEl) {
     var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
@@ -1211,7 +1216,7 @@
     if (!body) return;
     body.classList.toggle('open');
     var btn = item.querySelector('.fold-btn');
-    if (btn) btn.textContent = body.classList.contains('open') ? '▲' : '▼';
+    if (btn) btn.innerHTML = body.classList.contains('open') ? '▲ 折叠' : '▼ 展开';
   };
   window.expandSectionItems = function(idOrEl) {
     var section = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl.closest('.section-card');
@@ -1219,25 +1224,25 @@
     var bodies = section.querySelectorAll('.item-body');
     var anyClosed = Array.from(bodies).some(function(b) { return !b.classList.contains('open'); });
     bodies.forEach(function(b) { b.classList.toggle('open', anyClosed); });
-    section.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.textContent = anyClosed ? '▲' : '▼'; });
+    section.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = anyClosed ? '▲ 折叠' : '▼ 展开'; });
   };
   window.expandAll = function() {
     document.querySelectorAll('.section-body').forEach(function(b) { b.classList.add('open'); });
     document.querySelectorAll('.section-actions').forEach(function(actions) {
       var btns = actions.querySelectorAll('.fold-btn');
-      if (btns.length >= 2) btns[1].textContent = '▲';
+      if (btns.length >= 2) btns[1].innerHTML = '▲ 折叠';
     });
     document.querySelectorAll('.item-body').forEach(function(b) { b.classList.add('open'); });
-    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.textContent = '▲'; });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = '▲ 折叠'; });
   };
   window.collapseAll = function() {
     document.querySelectorAll('.section-body').forEach(function(b) { b.classList.remove('open'); });
     document.querySelectorAll('.section-actions').forEach(function(actions) {
       var btns = actions.querySelectorAll('.fold-btn');
-      if (btns.length >= 2) btns[1].textContent = '▼';
+      if (btns.length >= 2) btns[1].innerHTML = '▼ 展开';
     });
     document.querySelectorAll('.item-body').forEach(function(b) { b.classList.remove('open'); });
-    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.textContent = '▼'; });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = '▼ 展开'; });
   };
 
   // ========== TTS ==========
@@ -1570,9 +1575,9 @@
   function updateVolIcon() {
     var volBtn = document.getElementById('volBtn');
     if (volBtn) {
-      if (volume === 0) volBtn.textContent = '🔇';
-      else if (volume < 0.5) volBtn.textContent = '🔉';
-      else volBtn.textContent = '🔊';
+      if (volume === 0) volBtn.innerHTML = '🔇 静音';
+      else if (volume < 0.5) volBtn.innerHTML = '🔉 音量';
+      else volBtn.innerHTML = '🔊 音量';
     }
   }
 
@@ -1653,7 +1658,7 @@
 
   function updatePlayerUI() {
     var btn = document.getElementById('playPauseBtn');
-    btn.textContent = (isPlaying && !isPaused) ? '⏸' : '▶';
+    btn.innerHTML = (isPlaying && !isPaused) ? '⏸ 暂停' : '▶ 播放';
   }
 
   window.toggleNativeMode = function() {
