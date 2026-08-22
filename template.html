@@ -396,22 +396,26 @@
   .player-time { font-size: .8em; color: var(--text-secondary); }
   .player-progress {
     flex: 2;
-    min-width: 120px;
-    height: 6px;
+    min-width: 140px;
+    height: 8px;
     -webkit-appearance: none;
     appearance: none;
     background: var(--border);
-    border-radius: 3px;
+    border-radius: 4px;
     cursor: pointer;
     accent-color: var(--accent);
+    transition: background .2s;
   }
   .player-progress::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 14px; height: 14px;
+    width: 16px; height: 16px;
     border-radius: 50%;
     background: var(--accent);
     cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    transition: transform .12s;
   }
+  .player-progress::-webkit-slider-thumb:active { transform: scale(1.25); }
   .player-btn {
     height: 42px; padding: 0 22px; width: auto; min-width: 96px;
     border-radius: var(--radius);
@@ -548,7 +552,8 @@
   .player.expanded .player-info { min-width: 0; text-align: center; }
   .player.expanded .player-chapter { font-size: 1.15em; }
   .player.expanded .player-time { font-size: .9em; }
-  .player.expanded .player-progress { width: 100%; flex: none; height: 10px; }
+  .player.expanded .player-progress { width: 100%; flex: none; height: 12px; }
+  .player.expanded .player-progress::-webkit-slider-thumb { width: 20px; height: 20px; }
   .player.expanded .player-btn { width: 52px; height: 52px; font-size: 22px; }
   .player.expanded select { padding: 9px 12px; font-size: .95em; max-width: 140px; }
   /* Custom voice modal */
@@ -899,6 +904,19 @@
   var speakOffset = 0, charMap = [], highlightSpans = [], currentBodyEl = null;
   var chunks = [], chunkIdx = 0; // text chunking for Chrome TTS silence bug
   var nativeMode = false; // toggle: false=chunked mode, true=single native utterance
+  // Refined progress: track chars across the whole queue for smooth, fine-grained bar + time.
+  var totalQueueChars = 0, playedChars = 0, currentItemChars = 0, intraChar = 0;
+  var CPS = 4.8; // approx chars/sec for zh TTS at rate 1 (used for time estimate)
+  function fmtTime(s) { s = Math.max(0, Math.floor(s)); var m = Math.floor(s/60), ss = s % 60; return m + ':' + (ss < 10 ? '0' : '') + ss; }
+  function computeQueueChars() {
+    var total = 0;
+    if (currentMode === 'section' && sectionData[currentSectionIdx]) {
+      sectionData[currentSectionIdx].items.forEach(function(it) { total += it.text.length; });
+    } else {
+      sectionData.forEach(function(s) { s.items.forEach(function(it) { total += it.text.length; }); });
+    }
+    return total;
+  }
   // AI voice enhancement: auto-pick the best neural/cloud voice + warmer pitch.
   // Defaults ON (user wants better-than-system voice); can be turned off in player.
   var aiVoiceBoost = localStorage.getItem('wb_ai_voice') !== '0';
@@ -1084,17 +1102,32 @@
     });
   }
 
+  function foldLabel(isOpen) {
+    return lang === 'zh' ? (isOpen ? '▲ 折叠' : '▼ 展开') : (isOpen ? '▲ Collapse' : '▶ Expand');
+  }
+  function relabelAllButtons() {
+    // Re-apply visible text labels to every fold/tts/expand button,
+    // preserving each element's current open/closed state and the language.
+    document.querySelectorAll('.section-card').forEach(function(card) {
+      var body = card.querySelector('.section-body');
+      var open = body && body.classList.contains('open');
+      var acts = card.querySelectorAll('.section-actions .fold-btn');
+      if (acts.length >= 1) acts[0].innerHTML = lang === 'zh' ? '📖 展开' : '📖 Expand';
+      if (acts.length >= 2) acts[1].innerHTML = foldLabel(open);
+      var tts = card.querySelector('.tts-btn');
+      if (tts) tts.innerHTML = lang === 'zh' ? '🔊 朗读' : '🔊 Read';
+    });
+    document.querySelectorAll('.item').forEach(function(item) {
+      var body = item.querySelector('.item-body');
+      var open = body && body.classList.contains('open');
+      var b = item.querySelector('.item-title .fold-btn');
+      if (b) b.innerHTML = foldLabel(open);
+    });
+  }
   function setupSectionButtonLabels() {
     // Auto-apply visible text labels to all section/item buttons on load,
     // so even generated HTML without text still shows labels (idempotent).
-    document.querySelectorAll('.section-actions').forEach(function(actions) {
-      var btns = actions.querySelectorAll('.fold-btn');
-      if (btns.length >= 1) btns[0].innerHTML = '📖 展开';
-      if (btns.length >= 2) btns[1].innerHTML = '▼ 展开';
-      var tts = actions.querySelector('.tts-btn');
-      if (tts) tts.innerHTML = '🔊 朗读';
-    });
-    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = '▼ 展开'; });
+    relabelAllButtons();
   }
 
   function applyLang() {
@@ -1133,6 +1166,17 @@
       var iconHTML = icon ? icon.outerHTML : '';
       el.innerHTML = iconHTML + (isZh ? (el.dataset.zh || '') : (el.dataset.en || ''));
     });
+    document.querySelectorAll('.item-title strong').forEach(function(el) {
+      if (!el.dataset.zh && !el.dataset.en) return;
+      el.textContent = isZh ? (el.dataset.zh || '') : (el.dataset.en || '');
+    });
+    document.querySelectorAll('.item-body').forEach(function(el) {
+      if (!el.dataset.zh && !el.dataset.en) return;
+      el.textContent = isZh ? (el.dataset.zh || '') : (el.dataset.en || '');
+    });
+    var sb = document.getElementById('summaryBody');
+    if (sb && sb.dataset.zh) sb.textContent = isZh ? sb.dataset.zh : (sb.dataset.en || sb.dataset.zh);
+    relabelAllButtons();
   }
 
   window.goHome = function() { location.href = 'index.html'; };
@@ -1353,7 +1397,7 @@
     if (!body) return;
     body.classList.toggle('open');
     var btns = card.querySelectorAll('.section-actions .fold-btn');
-    if (btns.length >= 2) btns[1].innerHTML = body.classList.contains('open') ? '▲ 折叠' : '▼ 展开';
+    if (btns.length >= 2) btns[1].innerHTML = foldLabel(body.classList.contains('open'));
   };
   window.toggleItem = function(idOrEl) {
     var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
@@ -1363,7 +1407,7 @@
     if (!body) return;
     body.classList.toggle('open');
     var btn = item.querySelector('.fold-btn');
-    if (btn) btn.innerHTML = body.classList.contains('open') ? '▲ 折叠' : '▼ 展开';
+    if (btn) btn.innerHTML = foldLabel(body.classList.contains('open'));
   };
   window.expandSectionItems = function(idOrEl) {
     var section = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl.closest('.section-card');
@@ -1371,25 +1415,25 @@
     var bodies = section.querySelectorAll('.item-body');
     var anyClosed = Array.from(bodies).some(function(b) { return !b.classList.contains('open'); });
     bodies.forEach(function(b) { b.classList.toggle('open', anyClosed); });
-    section.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = anyClosed ? '▲ 折叠' : '▼ 展开'; });
+    section.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldLabel(anyClosed); });
   };
   window.expandAll = function() {
     document.querySelectorAll('.section-body').forEach(function(b) { b.classList.add('open'); });
     document.querySelectorAll('.section-actions').forEach(function(actions) {
       var btns = actions.querySelectorAll('.fold-btn');
-      if (btns.length >= 2) btns[1].innerHTML = '▲ 折叠';
+      if (btns.length >= 2) btns[1].innerHTML = foldLabel(true);
     });
     document.querySelectorAll('.item-body').forEach(function(b) { b.classList.add('open'); });
-    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = '▲ 折叠'; });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldLabel(true); });
   };
   window.collapseAll = function() {
     document.querySelectorAll('.section-body').forEach(function(b) { b.classList.remove('open'); });
     document.querySelectorAll('.section-actions').forEach(function(actions) {
       var btns = actions.querySelectorAll('.fold-btn');
-      if (btns.length >= 2) btns[1].innerHTML = '▼ 展开';
+      if (btns.length >= 2) btns[1].innerHTML = foldLabel(false);
     });
     document.querySelectorAll('.item-body').forEach(function(b) { b.classList.remove('open'); });
-    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = '▼ 展开'; });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldLabel(false); });
   };
 
   // ========== TTS ==========
@@ -1401,14 +1445,15 @@
     if (/yuxuan|yunxi|xiaoxiao|huihui|yaoyao|kangkang|yaoyao|tencent|azure|microsoft/.test(n)) return 2;
     return 1;
   }
-  function bestChineseVoice() {
+  function bestVoiceByLang(prefix) {
     var voices = speechSynthesis.getVoices();
     if (!voices || !voices.length) return null;
-    var zh = voices.filter(function(v) { return v.lang && v.lang.indexOf('zh') === 0; });
-    if (!zh.length) zh = voices.slice();
-    zh.sort(function(a, b) { return voiceQuality(b) - voiceQuality(a); });
-    return zh[0];
+    var pool = voices.filter(function(v) { return v.lang && v.lang.toLowerCase().indexOf(prefix) === 0; });
+    if (!pool.length) pool = voices.slice();
+    pool.sort(function(a, b) { return voiceQuality(b) - voiceQuality(a); });
+    return pool[0];
   }
+  function bestChineseVoice() { return bestVoiceByLang('zh'); }
   function getVoice() {
     var voices = speechSynthesis.getVoices();
     if (!voices || !voices.length) return null;
@@ -1416,22 +1461,26 @@
       var found = voices.find(function(v) { return v.voiceURI === selectedVoice; });
       if (found) return found;
     }
+    var prefix = lang === 'en' ? 'en' : 'zh';
     if (aiVoiceBoost) {
-      var best = bestChineseVoice();
+      var best = bestVoiceByLang(prefix);
       if (best) return best;
     }
-    var zh = voices.find(function(v) { return v.lang && v.lang.indexOf('zh') === 0; });
-    return zh || voices[0] || null;
+    var match = voices.find(function(v) { return v.lang && v.lang.toLowerCase().indexOf(prefix) === 0; });
+    return match || voices[0] || null;
   }
 
   function buildTextFromSection(secIdx) {
     var sec = sections[secIdx];
-    var title = sec.querySelector('.section-title').textContent;
+    var titleEl = sec.querySelector('.section-title');
+    var title = (titleEl && titleEl.dataset[lang]) ? titleEl.dataset[lang] : titleEl.textContent;
     var items = sec.querySelectorAll('.item');
     var parts = [title];
     items.forEach(function(item) {
-      var t = item.querySelector('.item-title').textContent;
-      var b = item.querySelector('.item-body').textContent;
+      var strong = item.querySelector('.item-title strong');
+      var t = (strong && strong.dataset[lang]) ? strong.dataset[lang] : strong.textContent;
+      var bEl = item.querySelector('.item-body');
+      var b = (bEl && bEl.dataset[lang]) ? bEl.dataset[lang] : bEl.textContent;
       parts.push(t + '。' + b);
     });
     return parts.join('。');
@@ -1533,10 +1582,12 @@
     window.speechSynthesis.cancel();
     currentBodyEl = bodyEl;
     charMap = bodyEl ? wrapTextForHighlight(bodyEl) : [];
+    currentItemChars = text.length;
+    intraChar = 0;
     if (nativeMode) {
       // Native mode: single utterance (no chunking)
       var utt = new SpeechSynthesisUtterance(text);
-      utt.lang = 'zh-CN';
+      utt.lang = lang === 'zh' ? 'zh-CN' : 'en-US';
       utt.rate = playbackRate;
       utt.volume = volume;
       utt.pitch = aiVoiceBoost ? AI_BOOST_PITCH : 1;
@@ -1547,9 +1598,11 @@
       utt.onboundary = function(e) {
         if (e.name === 'word' || e.name === 'sentence') {
           var globalIdx = e.charIndex;
+          intraChar = globalIdx;
           if (charMap.length && hlOn) {
             highlightCharAt(charMap, globalIdx);
           }
+          updateProgressUI();
         }
       };
       utt.onend = function() {
@@ -1584,7 +1637,7 @@
     updateProgressUI();
     var text = chunks[chunkIdx];
     var utt = new SpeechSynthesisUtterance(text);
-    utt.lang = 'zh-CN';
+    utt.lang = lang === 'zh' ? 'zh-CN' : 'en-US';
     utt.rate = playbackRate;
     utt.volume = volume;
     utt.pitch = aiVoiceBoost ? AI_BOOST_PITCH : 1;
@@ -1595,21 +1648,27 @@
     utt.onboundary = function(e) {
       if (e.name === 'word' || e.name === 'sentence') {
         var globalIdx = speakOffset + e.charIndex;
+        intraChar = globalIdx;
         if (charMap.length && hlOn) {
           highlightCharAt(charMap, globalIdx);
         }
+        updateProgressUI();
       }
     };
     utt.onend = function() {
       if (currentUtt !== utt) return;
       speakOffset += text.length;
+      intraChar = speakOffset;
       chunkIdx++;
+      updateProgressUI();
       speakCurrentChunk();
     };
     utt.onerror = function() {
       if (currentUtt !== utt) return;
       speakOffset += text.length;
+      intraChar = speakOffset;
       chunkIdx++;
+      updateProgressUI();
       speakCurrentChunk();
     };
     window.speechSynthesis.speak(utt);
@@ -1618,6 +1677,7 @@
   }
 
   function onItemEnd() {
+    playedChars += currentItemChars;
     if (currentMode === 'all') {
       currentItemIdx++;
       if (currentItemIdx >= sectionData[currentSectionIdx].items.length) {
@@ -1656,11 +1716,14 @@
   function buildQueue() {
     sectionData = [];
     sections.forEach(function(sec) {
-      var title = sec.querySelector('.section-title').textContent;
+      var titleEl = sec.querySelector('.section-title');
+      var title = (titleEl && titleEl.dataset[lang]) ? titleEl.dataset[lang] : (titleEl ? titleEl.textContent : '');
       var items = [];
       sec.querySelectorAll('.item').forEach(function(item) {
-        var t = item.querySelector('.item-title').textContent;
-        var b = item.querySelector('.item-body').textContent;
+        var strong = item.querySelector('.item-title strong');
+        var t = (strong && strong.dataset[lang]) ? strong.dataset[lang] : (strong ? strong.textContent : '');
+        var bEl = item.querySelector('.item-body');
+        var b = (bEl && bEl.dataset[lang]) ? bEl.dataset[lang] : (bEl ? bEl.textContent : '');
         items.push({ text: t + '。' + b, el: item });
       });
       sectionData.push({ title: title, items: items });
@@ -1679,6 +1742,8 @@
     if (!sectionData.length) return;
     currentMode = 'all';
     currentSectionIdx = 0; currentItemIdx = 0;
+    playedChars = 0;
+    totalQueueChars = computeQueueChars();
     document.getElementById('player').classList.add('open');
     playCurrentQueue();
   };
@@ -1690,6 +1755,8 @@
     if (idx < 0 || idx >= sectionData.length) return;
     currentMode = 'section';
     currentSectionIdx = idx; currentItemIdx = 0;
+    playedChars = 0;
+    totalQueueChars = computeQueueChars();
     document.getElementById('player').classList.add('open');
     playCurrentQueue();
   };
@@ -1699,6 +1766,7 @@
   window.stopAll = function() {
     currentUtt = null; // set null BEFORE cancel so stale onend/onerror get ignored
     chunks = []; chunkIdx = 0;
+    totalQueueChars = 0; playedChars = 0; intraChar = 0;
     if (window.speechSynthesis) window.speechSynthesis.cancel();
     isPlaying = false; isPaused = false;
     if (currentBodyEl) clearHighlight(currentBodyEl);
@@ -1874,15 +1942,25 @@
     var cur = document.getElementById('curTime');
     var tot = document.getElementById('totTime');
     if (!prog) return;
-    if (nativeMode || !chunks.length) {
+    if (totalQueueChars > 0) {
+      // Fine-grained: char-level position across the whole queue
+      var pos = playedChars + intraChar;
+      var pct = (pos / totalQueueChars) * 100;
+      prog.value = Math.max(0, Math.min(100, pct));
+      prog.disabled = false;
+      var totalSec = totalQueueChars / CPS / playbackRate;
+      var elapSec = pos / CPS / playbackRate;
+      if (cur) cur.textContent = fmtTime(elapSec);
+      if (tot) tot.textContent = fmtTime(totalSec);
+    } else if (nativeMode || !chunks.length) {
       prog.value = 0;
       prog.disabled = true;
       if (cur) cur.textContent = '--';
       if (tot) tot.textContent = '--';
     } else {
       prog.disabled = false;
-      var pct = chunks.length ? (chunkIdx / chunks.length) * 100 : 0;
-      prog.value = pct;
+      var pct2 = chunks.length ? (chunkIdx / chunks.length) * 100 : 0;
+      prog.value = pct2;
       if (cur) cur.textContent = String(chunkIdx + 1);
       if (tot) tot.textContent = String(chunks.length);
     }
@@ -1891,9 +1969,9 @@
   window.previewSeek = function(val) {
     isSeeking = true;
     var cur = document.getElementById('curTime');
-    if (cur && chunks.length) {
-      var target = Math.floor((val / 100) * chunks.length) + 1;
-      cur.textContent = String(Math.min(target, chunks.length));
+    if (cur && totalQueueChars) {
+      var elapSec = (val / 100) * totalQueueChars / CPS / playbackRate;
+      cur.textContent = fmtTime(elapSec);
     }
   };
 
@@ -1912,6 +1990,7 @@
     for (var i = 0; i < targetIdx; i++) {
       speakOffset += chunks[i].length;
     }
+    intraChar = speakOffset;
 
     chunkIdx = targetIdx;
 
