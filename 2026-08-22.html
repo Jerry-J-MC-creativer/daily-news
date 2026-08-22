@@ -1307,6 +1307,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
   </div>
+  <div class="player-chapter" id="playerChapter" style="width:100%;font-size:12px;color:var(--text-secondary);text-align:center;margin-top:2px;min-height:16px;"></div>
   <div class="player-hint" id="playerHint" style="width:100%;font-size:11px;color:var(--text-secondary);opacity:.7;text-align:center;margin-top:4px;">💡 建议使用默认浏览器打开，语音朗读更稳定</div>
 </div>
 <!-- Custom voice modal -->
@@ -2202,7 +2203,8 @@
     if (!body.classList.contains('open')) body.classList.add('open');
     var itemBody = item.el.querySelector('.item-body');
     if (!itemBody.classList.contains('open')) itemBody.classList.add('open');
-    document.getElementById('playerChapter').textContent = sec.title + ' - ' + (currentItemIdx+1);
+    var chapEl = document.getElementById('playerChapter');
+    if (chapEl) chapEl.textContent = sec.title + ' - ' + (currentItemIdx+1);
     startSpeaking(item.text, itemBody);
   }
 
@@ -2405,22 +2407,22 @@
   }
 
   // Playback control helpers
-  function toggleShuffle() {
+  window.toggleShuffle = function() {
     shuffleMode = !shuffleMode;
     var btn = document.getElementById('shuffleBtn');
     if (btn) {
       if (shuffleMode) btn.classList.add('active');
       else btn.classList.remove('active');
     }
-  }
-  function toggleRepeat() {
+  };
+  window.toggleRepeat = function() {
     repeatMode = !repeatMode;
     var btn = document.getElementById('repeatBtn');
     if (btn) {
       if (repeatMode) btn.classList.add('active');
       else btn.classList.remove('active');
     }
-  }
+  };
   function recalcPlayedChars() {
     playedChars = 0;
     if (currentMode === 'section' && sectionData[currentSectionIdx]) {
