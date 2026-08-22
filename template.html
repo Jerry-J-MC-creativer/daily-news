@@ -1042,44 +1042,97 @@
     setupExitCleanup();
   }
 
-  // ---------- Scenery-themed SVG images (always render, no network) ----------
-  var IMG_COLORS = {
-    cover:  ['#1e3a8a', '#3b82f6'],
-    scenery:['#0f4c75', '#3282b8']
+  // ---------- Category-themed scenery images (pure nature, NO people/objects) ----------
+  // Every category maps to a nature motif + color + nature keyword.
+  // Guarantee: no people, no buildings, no text, no objects -- only landscapes/sky/water/plants/celestial.
+  var KIND_META = {
+    military:    { kw:['mountains,fog','mountain,mist'],                c:['#3b4252','#56657d'], motif:'ridges'  },
+    finance:     { kw:['golden,field','wheat,field'],                  c:['#7c5e10','#caa12b'], motif:'field'   },
+    ai:          { kw:['milkyway,stars','aurora,sky'],                 c:['#1a1a3a','#5b4bb0'], motif:'stars'   },
+    politics:    { kw:['horizon,ocean','sea,horizon'],                 c:['#0b3d5c','#2693b3'], motif:'horizon' },
+    industry:    { kw:['rolling,hills','green,hills'],                 c:['#274a22','#5f9a3e'], motif:'hills'   },
+    energy:      { kw:['sun,desert','desert,dune'],                    c:['#7a3b10','#e89a1c'], motif:'sun'     },
+    health:      { kw:['forest,waterfall','leaf,plant'],               c:['#0f5132','#33bd86'], motif:'leaf'    },
+    semiconductor:{ kw:['ice,berg','crystal,rock'],                    c:['#16455c','#5cc4ec'], motif:'crystal' },
+    space:       { kw:['moon,night','galaxy,sky'],                     c:['#0a0a23','#4a3c8e'], motif:'moon'    },
+    society:     { kw:['sky,clouds','river,stones'],                   c:['#3a4a5a','#8aa6bd'], motif:'clouds'  },
+    cover:       { kw:['mountain,lake','lake,mountain'],               c:['#16356b','#3b82f6'], motif:'lake'    }
   };
-  var IMG_KINDS = Array(10).fill('scenery');
+  var SECTION_KIND = ['military','finance','ai','politics','industry','energy','health','semiconductor','space','society'];
 
   function svgMotif(kind, w, h) {
     var m = '';
-    var op = "opacity='0.16'";
-    // sun / moon
-    m += "<circle cx='" + (w*0.78) + "' cy='" + (h*0.28) + "' r='" + (h*0.18) + "' fill='#fff' " + op + "/>";
-    // distant mountains
-    m += "<path d='M0," + h + " L0," + (h*0.62) + " " + (w*0.22) + "," + (h*0.42) + " " + (w*0.48) + "," + (h*0.58) + " " + (w*0.72) + "," + (h*0.38) + " " + w + "," + (h*0.64) + " " + w + "," + h + " Z' fill='#fff' " + op + "/>";
-    // nearer hills
-    m += "<path d='M0," + h + " L0," + (h*0.78) + " " + (w*0.18) + "," + (h*0.66) + " " + (w*0.42) + "," + (h*0.76) + " " + (w*0.66) + "," + (h*0.62) + " " + w + "," + (h*0.80) + " " + w + "," + h + " Z' fill='#fff' " + op + "/>";
+    var W = " fill='#fff'";
+    var op = " opacity='0.18'";
+    // celestial disc (sun / moon / generic glow)
+    if (kind === 'sun' || kind === 'moon' || kind === 'stars' || kind === 'space') {
+      m += "<circle cx='" + (w*0.76) + "' cy='" + (h*0.28) + "' r='" + (h*0.17) + "'" + W + op + "/>";
+    }
+    if (kind === 'stars') {
+      for (var st=0; st<16; st++) {
+        var sx = (st*97) % w, sy = (st*53) % Math.floor(h*0.62);
+        m += "<circle cx='" + sx + "' cy='" + sy + "' r='" + (1.1 + (st%3)*0.7) + "' fill='#fff' opacity='0.5'/>";
+      }
+    }
+    if (kind === 'moon') {
+      m += "<circle cx='" + (w*0.76) + "' cy='" + (h*0.28) + "' r='" + (h*0.17) + "'" + W + op + "/>";
+      m += "<circle cx='" + (w*0.83) + "' cy='" + (h*0.24) + "' r='" + (h*0.17) + "' fill='url(#g)' opacity='0.55'/>";
+    }
+    if (kind === 'crystal') {
+      m += "<polygon points='" + (w*0.5) + "," + (h*0.16) + " " + (w*0.68) + "," + (h*0.5) + " " + (w*0.5) + "," + (h*0.84) + " " + (w*0.32) + "," + (h*0.5) + "' fill='#fff' opacity='0.16'/>";
+      m += "<polygon points='" + (w*0.5) + "," + (h*0.16) + " " + (w*0.8) + "," + (h*0.34) + " " + (w*0.5) + "," + (h*0.5) + " " + (w*0.32) + "," + (h*0.5) + "' fill='#fff' opacity='0.10'/>";
+      m += "<line x1='" + (w*0.5) + "' y1='" + (h*0.16) + "' x2='" + (w*0.5) + "' y2='" + (h*0.84) + "' stroke='#fff' stroke-width='1' opacity='0.14'/>";
+    }
+    if (kind === 'leaf') {
+      m += "<path d='M" + (w*0.5) + "," + (h*0.9) + " Q" + (w*0.18) + "," + (h*0.4) + " " + (w*0.5) + "," + (h*0.12) + " Q" + (w*0.82) + "," + (h*0.4) + " " + (w*0.5) + "," + (h*0.9) + " Z' fill='#fff' opacity='0.16'/>";
+      m += "<line x1='" + (w*0.5) + "' y1='" + (h*0.9) + "' x2='" + (w*0.5) + "' y2='" + (h*0.12) + "' stroke='#fff' stroke-width='1' opacity='0.18'/>";
+    }
+    if (kind === 'field') {
+      m += "<path d='M0," + h + " L0," + (h*0.68) + " " + w + "," + (h*0.68) + " " + w + "," + h + " Z' fill='#fff' opacity='0.12'/>";
+      for (var fl=1; fl<7; fl++) {
+        var yy = h*0.68 + fl*h*0.045;
+        m += "<line x1='0' y1='" + yy + "' x2='" + w + "' y2='" + (yy + (fl%2?6:-6)) + "' stroke='#fff' stroke-width='1' opacity='0.07'/>";
+      }
+    }
+    if (kind === 'clouds') {
+      m += "<ellipse cx='" + (w*0.3) + "' cy='" + (h*0.3) + "' rx='" + (w*0.22) + "' ry='" + (h*0.1) + "' fill='#fff' opacity='0.16'/>";
+      m += "<ellipse cx='" + (w*0.68) + "' cy='" + (h*0.22) + "' rx='" + (w*0.18) + "' ry='" + (h*0.08) + "' fill='#fff' opacity='0.13'/>";
+    }
+    if (kind === 'lake') {
+      m += "<rect x='0' y='" + (h*0.72) + "' width='" + w + "' height='" + (h*0.28) + "' fill='#fff' opacity='0.12'/>";
+      m += "<path d='M0," + (h*0.72) + " Q" + (w*0.5) + "," + (h*0.66) + " " + w + "," + (h*0.72) + "' fill='none' stroke='#fff' stroke-width='1' opacity='0.14'/>";
+    }
+    // shared layered terrain for ridges / hills / mountain / horizon / lake
+    if (['ridges','hills','mountain','horizon','lake'].indexOf(kind) >= 0) {
+      m += "<path d='M0," + h + " L0," + (h*0.6) + " " + (w*0.25) + "," + (h*0.4) + " " + (w*0.5) + "," + (h*0.56) + " " + (w*0.75) + "," + (h*0.36) + " " + w + "," + (h*0.6) + " " + w + "," + h + " Z' fill='#fff' opacity='0.18'/>";
+      m += "<path d='M0," + h + " L0," + (h*0.78) + " " + (w*0.2) + "," + (h*0.66) + " " + (w*0.45) + "," + (h*0.74) + " " + (w*0.7) + "," + (h*0.62) + " " + w + "," + (h*0.8) + " " + w + "," + h + " Z' fill='#fff' opacity='0.14'/>";
+    }
+    if (kind === 'horizon' || kind === 'lake') {
+      m += "<line x1='0' y1='" + (h*0.66) + "' x2='" + w + "' y2='" + (h*0.66) + "' stroke='#fff' stroke-width='1' opacity='0.16'/>";
+    }
     return m;
   }
 
   function themedImage(kind, w, h) {
-    var col = IMG_COLORS['scenery'];
-    var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='" + w + "' height='" + h + "' viewBox='0 0 " + w + ' ' + h + "'>" +
+    var meta = KIND_META[kind] || KIND_META['cover'];
+    var col = meta.c;
+    var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='" + w + "' height='" + h + "' viewBox='0 0 " + w + " " + h + "'>" +
       "<defs>" +
         "<linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>" +
           "<stop offset='0' stop-color='" + col[0] + "'/><stop offset='1' stop-color='" + col[1] + "'/>" +
         "</linearGradient>" +
-        "<radialGradient id='r' cx='0.72' cy='0.28' r='0.85'>" +
-          "<stop offset='0' stop-color='rgba(255,255,255,0.28)'/><stop offset='1' stop-color='rgba(255,255,255,0)'/>" +
+        "<radialGradient id='r' cx='0.74' cy='0.26' r='0.9'>" +
+          "<stop offset='0' stop-color='rgba(255,255,255,0.30)'/><stop offset='1' stop-color='rgba(255,255,255,0)'/>" +
         "</radialGradient>" +
       "</defs>" +
       "<rect width='" + w + "' height='" + h + "' fill='url(#g)'/>" +
       "<rect width='" + w + "' height='" + h + "' fill='url(#r)'/>" +
-      svgMotif(kind, w, h) +
+      svgMotif(meta.motif, w, h) +
       "</svg>";
     return 'data:image/svg+xml,' + encodeURIComponent(svg);
   }
 
-  // Try each URL in turn; if all fail (or time out), fall back to a guaranteed themed SVG.
+  // Try each URL in turn; if all fail (or time out), fall back to a guaranteed category-themed nature SVG.
   function loadWithFallback(img, sources, finalUri, timeout) {
     var i = 0;
     function tryNext() {
@@ -1100,22 +1153,25 @@
 
   function setupImages() {
     var banner = document.getElementById('bannerImg');
-    var sceneryKw = ['nature,landscape','mountain,lake','ocean,beach','forest,sunlight','sunset,clouds','river,valley','flower,meadow','snow,mountain'][seed % 8];
+    var bannerMeta = KIND_META['cover'];
     loadWithFallback(
       banner,
-      ['https://loremflickr.com/1200/400/' + encodeURIComponent(sceneryKw) + '?lock=' + seed,
+      ['https://loremflickr.com/1200/400/' + encodeURIComponent(bannerMeta.kw[0]) + '?lock=' + seed,
+       'https://loremflickr.com/1200/400/' + encodeURIComponent(bannerMeta.kw[1]) + '?lock=' + (seed+11),
        'https://picsum.photos/seed/banner' + seed + '/1200/400'],
       themedImage('cover', 1200, 400)
     );
     sections.forEach(function(sec, i) {
       var img = sec.querySelector('.section-header img');
       if (!img) return;
-      var kw = ['landscape,mountains','lake,nature','forest,trees','sunset,sky','meadow,flowers','river,nature','ocean,coast','valley,greenery','snow,peaks','autumn,forest'][i % 10];
+      var kind = SECTION_KIND[i] || 'cover';
+      var meta = KIND_META[kind];
       loadWithFallback(
         img,
-        ['https://loremflickr.com/800/300/' + encodeURIComponent(kw) + '?lock=' + (seed*7 + i + 1),
-         'https://picsum.photos/seed/scenery' + (seed*7 + i + 1) + '/800/300'],
-        themedImage('scenery', 800, 300)
+        ['https://loremflickr.com/800/300/' + encodeURIComponent(meta.kw[0]) + '?lock=' + (seed*7 + i + 1),
+         'https://loremflickr.com/800/300/' + encodeURIComponent(meta.kw[1]) + '?lock=' + (seed*7 + i + 23),
+         'https://picsum.photos/seed/' + kind + (seed*7 + i + 1) + '/800/300'],
+        themedImage(kind, 800, 300)
       );
     });
   }
