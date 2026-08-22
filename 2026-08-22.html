@@ -1558,21 +1558,23 @@
 
   // ========== Collapse/Expand ==========
   window.toggleSection = function(idOrEl) {
-    var header = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
-    if (!header) return;
-    var body = header.nextElementSibling;
+    var card = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
+    if (!card) return;
+    var body = card.querySelector('.section-body');
+    if (!body) { body = card.nextElementSibling; }
     if (!body) return;
     body.classList.toggle('open');
-    var btns = header.querySelectorAll('.section-actions .fold-btn');
+    var btns = card.querySelectorAll('.section-actions .fold-btn');
     if (btns.length >= 2) btns[1].textContent = body.classList.contains('open') ? '▲' : '▼';
   };
   window.toggleItem = function(idOrEl) {
-    var header = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
-    if (!header) return;
-    var body = header.nextElementSibling;
+    var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
+    if (!item) return;
+    var body = item.querySelector('.item-body');
+    if (!body) { body = item.nextElementSibling; }
     if (!body) return;
     body.classList.toggle('open');
-    var btn = header.querySelector('.fold-btn');
+    var btn = item.querySelector('.fold-btn');
     if (btn) btn.textContent = body.classList.contains('open') ? '▲' : '▼';
   };
   window.expandSectionItems = function(idOrEl) {
