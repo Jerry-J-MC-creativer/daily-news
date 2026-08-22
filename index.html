@@ -146,17 +146,22 @@
 
 <script>
 (function(){
-  // 日期种子
-  var d = new Date();
-  var seed = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
-
-  // 背景图：LoremFlickr 风景实拍，每天轮换
+  // 每次访问随机换背景（使用 sessionStorage 保证同一会话内一致，刷新则换）
   var landscapes = [
     'nature,landscape','mountain,lake','ocean,beach','forest,sunlight',
     'sunset,clouds','river,valley','flower,meadow','snow,mountain'
   ];
-  var bgKeyword = landscapes[seed % landscapes.length];
-  var bgUrl = 'https://loremflickr.com/1920/1080/' + bgKeyword + '?lock=' + seed;
+  var sessIdx = sessionStorage.getItem('wb_bg_idx');
+  if (sessIdx === null) {
+    sessIdx = Math.floor(Math.random() * landscapes.length);
+    sessionStorage.setItem('wb_bg_idx', sessIdx);
+  } else {
+    sessIdx = (+sessIdx + 1 + Math.floor(Math.random() * (landscapes.length - 1))) % landscapes.length;
+    sessionStorage.setItem('wb_bg_idx', sessIdx);
+  }
+  var bgKeyword = landscapes[sessIdx];
+  var nocache = Math.floor(Math.random() * 1000000);
+  var bgUrl = 'https://loremflickr.com/1920/1080/' + bgKeyword + '?lock=' + nocache;
   document.getElementById('bgLayer').style.backgroundImage = 'url(' + bgUrl + ')';
 
   // 读取背景开关状态
