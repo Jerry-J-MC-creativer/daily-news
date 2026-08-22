@@ -53,6 +53,28 @@
   }
   .titlebar.scrolled { border-radius: var(--radius); margin: 8px 12px 0; }
   .titlebar.shrunk { padding: 10px 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+  /* Browser compatibility tip */
+  .browser-tip {
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: .82em;
+    text-align: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .browser-tip svg { width: 16px; height: 16px; flex-shrink: 0; }
+  /* Firefox / older browsers: fallback when backdrop-filter is unsupported */
+  @supports not (backdrop-filter: blur(1px)) {
+    .section-titlebar { background: var(--glass); }
+    .player { background: var(--player-bg); }
+    .settings-panel { background: var(--surface); }
+  }
+  /* Safari 15+ backdrop-filter fix */
+  @supports (-webkit-backdrop-filter: blur(1px)) {
+    .section-titlebar { -webkit-backdrop-filter: blur(12px); }
+    .player { -webkit-backdrop-filter: blur(16px); }
+  }
   .title-row {
     display: flex;
     align-items: center;
@@ -623,6 +645,12 @@
   </div>
 </div>
 
+<!-- Browser recommendation -->
+<div class="browser-tip" id="browserTip">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+  <span id="browserTipText">建议使用 Safari / Chrome / Edge 等默认浏览器打开，否则可能遇到语音朗读等功能异常。</span>
+</div>
+
 <img class="banner" id="bannerImg" src="" alt="banner" onerror="this.style.display='none'" fetchpriority="high" decoding="async">
 
 <div class="container">
@@ -829,18 +857,32 @@
   var speakOffset = 0, charMap = [], highlightSpans = [], currentBodyEl = null;
 
   function init() {
-    // WeChat TTS compatibility check
+    // Browser compatibility: adjust tip text for WeChat / in-app browsers
     var ua = navigator.userAgent || '';
     var isWeChat = /MicroMessenger/i.test(ua);
-    if (isWeChat) {
-      var ttsOk = !!(window.speechSynthesis && window.speechSynthesis.getVoices);
-      if (!ttsOk) {
-        var tip = document.createElement('div');
-        tip.id = 'wechatTtsTip';
-        tip.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#fff3cd;color:#856404;padding:10px 16px;font-size:14px;text-align:center;border-bottom:1px solid #ffeaa7;';
-        tip.innerHTML = '检测到微信内置浏览器，语音朗读功能可能受限。建议用 Safari / Chrome / Edge 打开以获得完整体验。';
-        document.body.insertBefore(tip, document.body.firstChild);
-        setTimeout(function(){ var t=document.getElementById('wechatTtsTip'); if(t) t.style.display='none'; }, 8000);
+    var isQQ = /QQ\//i.test(ua);
+    var isWeibo = /Weibo/i.test(ua);
+    var isInApp = isWeChat || isQQ || isWeibo || /WebView/i.test(ua);
+    var tipEl = document.getElementById('browserTip');
+    var tipText = document.getElementById('browserTipText');
+    if (tipEl && tipText) {
+      if (isInApp) {
+        tipText.textContent = (lang === 'zh'
+          ? '检测到内置浏览器，语音朗读等功能可能受限。建议点击右上角「在浏览器中打开」使用 Safari / Chrome / Edge 获得完整体验。'
+          : 'In-app browser detected. Voice features may be limited. Please open in Safari / Chrome / Edge for full experience.');
+        tipEl.style.background = '#fff3cd';
+        tipEl.style.color = '#856404';
+        tipEl.style.borderColor = '#ffeaa7';
+      } else if (!window.speechSynthesis) {
+        tipText.textContent = (lang === 'zh'
+          ? '当前浏览器不支持语音朗读（Web Speech API）。建议更换为 Safari / Chrome / Edge。'
+          : 'Your browser does not support text-to-speech (Web Speech API). Please use Safari / Chrome / Edge.');
+        tipEl.style.background = '#fee2e2';
+        tipEl.style.color = '#991b1b';
+        tipEl.style.borderColor = '#fecaca';
+      } else {
+        // Normal browser: hide the tip after 6s
+        setTimeout(function(){ if(tipEl) tipEl.style.display='none'; }, 6000);
       }
     }
     applyLang();
@@ -970,29 +1012,44 @@
   }
 
   function setupVoices() {
+    if (!window.speechSynthesis) return;
     var sel = document.getElementById('voiceSel');
+    if (!sel) return;
     // keep the first two fixed options (默认语音 / 自定义声音...)
     while (sel.options.length > 2) sel.remove(2);
-    customVoices.forEach(function(v, i) {
+    customVoices.forEach(function(v) {
       var opt = document.createElement('option');
       opt.value = v.voiceURI;
       opt.textContent = (lang==='zh'?'自定义: ':'Custom: ') + v.name;
       sel.appendChild(opt);
     });
-    // populate device voices (Chrome loads them asynchronously -> also handled by onvoiceschanged)
-    if (window.speechSynthesis) {
-      speechSynthesis.getVoices().forEach(function(v) {
-        var opt = document.createElement('option');
-        opt.value = v.voiceURI;
-        opt.textContent = '🎤 ' + v.name + ' (' + v.lang + ')';
-        sel.appendChild(opt);
-      });
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return; // Firefox may return empty on first call; onvoiceschanged will re-trigger
+    voices.forEach(function(v) {
+      var opt = document.createElement('option');
+      opt.value = v.voiceURI;
+      opt.textContent = '\uD83C\uDFA4 ' + v.name + ' (' + v.lang + ')';
+      sel.appendChild(opt);
+    });
+    if (selectedVoice) {
+      // verify the voice still exists before selecting
+      var stillExists = Array.from(sel.options).some(function(o){ return o.value === selectedVoice; });
+      if (stillExists) sel.value = selectedVoice;
     }
-    if (selectedVoice) sel.value = selectedVoice;
   }
-  // Chrome populates getVoices() asynchronously; re-fill the dropdown when ready
+  // Chrome / Firefox populate getVoices() asynchronously; re-fill when ready
   if (window.speechSynthesis) {
-    speechSynthesis.onvoiceschanged = function() { setupVoices(); };
+    var _voicesReady = false;
+    function _onVoicesReady() {
+      if (_voicesReady) return;
+      _voicesReady = true;
+      setupVoices();
+    }
+    speechSynthesis.onvoiceschanged = _onVoicesReady;
+    // some browsers already have voices synchronously
+    if (speechSynthesis.getVoices && speechSynthesis.getVoices().length > 0) {
+      _onVoicesReady();
+    }
   }
 
   function setupScroll() {
@@ -1294,7 +1351,14 @@
     });
   }
 
+  function ttsUnavailableAlert() {
+    var msg = lang === 'zh'
+      ? '当前浏览器或环境不支持语音朗读。建议用 Safari / Chrome / Edge 打开。'
+      : 'Text-to-speech is not supported in this browser. Please use Safari / Chrome / Edge.';
+    alert(msg);
+  }
   window.playAll = function() {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
     buildQueue();
     if (!sectionData.length) return;
     currentMode = 'all';
@@ -1304,6 +1368,7 @@
   };
 
   window.playSection = function(idx) {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
     buildQueue();
     idx = +idx;
     if (idx < 0 || idx >= sectionData.length) return;
@@ -1338,7 +1403,7 @@
   };
 
   window.togglePlay = function() {
-    if (!window.speechSynthesis) return;
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
     if (isPlaying && !isPaused) {
       window.speechSynthesis.pause();
       isPaused = true;
@@ -1398,15 +1463,22 @@
   };
 
   window.openVoiceModal = function() {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
     var sel = document.getElementById('modalVoiceSel');
     sel.innerHTML = '';
     var voices = speechSynthesis.getVoices();
-    voices.forEach(function(v) {
+    if (!voices || !voices.length) {
       var opt = document.createElement('option');
-      opt.value = v.voiceURI;
-      opt.textContent = v.name + ' (' + v.lang + ')';
+      opt.textContent = lang === 'zh' ? '暂无可选声音，请稍后再试' : 'No voices available, please try again later';
       sel.appendChild(opt);
-    });
+    } else {
+      voices.forEach(function(v) {
+        var opt = document.createElement('option');
+        opt.value = v.voiceURI;
+        opt.textContent = v.name + ' (' + v.lang + ')';
+        sel.appendChild(opt);
+      });
+    }
     document.getElementById('voiceModal').classList.add('open');
   };
   window.closeVoiceModal = function() { document.getElementById('voiceModal').classList.remove('open'); };
