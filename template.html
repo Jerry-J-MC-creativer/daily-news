@@ -768,6 +768,7 @@
       <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置">⏹ <span id="playerResetLabel">重置</span></button>
     </div>
   </div>
+  <div class="player-hint" id="playerHint" style="width:100%;font-size:11px;color:var(--text-secondary);opacity:.7;text-align:center;margin-top:4px;">💡 建议使用默认浏览器打开，语音朗读更稳定</div>
 </div>
 
 <!-- Custom voice modal -->
@@ -855,6 +856,7 @@
   var playbackRate = 1;
   var volume = 1;
   var speakOffset = 0, charMap = [], highlightSpans = [], currentBodyEl = null;
+  var chunks = [], chunkIdx = 0; // text chunking for Chrome TTS silence bug
 
   function init() {
     // Browser compatibility: adjust tip text for WeChat / in-app browsers
@@ -1265,9 +1267,50 @@
     map[idx].span.scrollIntoView({behavior:'smooth', block:'center'});
   }
 
+  // Split long text into chunks to avoid Chrome ~15s silence bug
+  function splitIntoChunks(text, maxChars) {
+    var parts = text.split(/([。！？.!?]\s*)/);
+    var out = [], cur = '';
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i];
+      if (!p) continue;
+      if (cur.length + p.length > maxChars && cur.length > 0) {
+        out.push(cur);
+        cur = p;
+      } else {
+        cur += p;
+      }
+    }
+    if (cur) out.push(cur);
+    var result = [];
+    out.forEach(function(c) {
+      while (c.length > maxChars) {
+        result.push(c.slice(0, maxChars));
+        c = c.slice(maxChars);
+      }
+      if (c) result.push(c);
+    });
+    return result.length ? result : [text];
+  }
+
   function startSpeaking(text, bodyEl) {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
+    chunks = splitIntoChunks(text, 150);
+    chunkIdx = 0;
+    currentBodyEl = bodyEl;
+    charMap = bodyEl ? wrapTextForHighlight(bodyEl) : [];
+    speakOffset = 0;
+    speakCurrentChunk();
+  }
+
+  function speakCurrentChunk() {
+    if (chunkIdx >= chunks.length) {
+      if (charMap.length) clearHighlight(currentBodyEl);
+      onItemEnd();
+      return;
+    }
+    var text = chunks[chunkIdx];
     var utt = new SpeechSynthesisUtterance(text);
     utt.lang = 'zh-CN';
     utt.rate = playbackRate;
@@ -1275,33 +1318,33 @@
     var v = getVoice();
     if (v) utt.voice = v;
     currentUtt = utt;
-    currentBodyEl = bodyEl;
-    charMap = bodyEl ? wrapTextForHighlight(bodyEl) : [];
-    speakOffset = 0;
 
     utt.onboundary = function(e) {
       if (e.name === 'word' || e.name === 'sentence') {
+        var globalIdx = speakOffset + e.charIndex;
         if (charMap.length && hlOn) {
-          highlightCharAt(charMap, e.charIndex);
+          highlightCharAt(charMap, globalIdx);
         }
       }
     };
     utt.onend = function() {
-      if (currentUtt !== utt) return; // ignore stale events from a cancelled utterance
-      if (charMap.length) clearHighlight(bodyEl);
-      onUtteranceEnd();
+      if (currentUtt !== utt) return;
+      speakOffset += text.length;
+      chunkIdx++;
+      speakCurrentChunk();
     };
     utt.onerror = function() {
-      if (currentUtt !== utt) return; // ignore stale events (e.g. 'interrupted' after cancel)
-      if (charMap.length) clearHighlight(bodyEl);
-      onUtteranceEnd();
+      if (currentUtt !== utt) return;
+      speakOffset += text.length;
+      chunkIdx++;
+      speakCurrentChunk();
     };
     window.speechSynthesis.speak(utt);
     isPlaying = true; isPaused = false;
     updatePlayerUI();
   }
 
-  function onUtteranceEnd() {
+  function onItemEnd() {
     if (currentMode === 'all') {
       currentItemIdx++;
       if (currentItemIdx >= sectionData[currentSectionIdx].items.length) {
@@ -1380,6 +1423,7 @@
 
   window.stopAll = function() {
     currentUtt = null; // set null BEFORE cancel so stale onend/onerror get ignored
+    chunks = []; chunkIdx = 0;
     if (window.speechSynthesis) window.speechSynthesis.cancel();
     isPlaying = false; isPaused = false;
     if (currentBodyEl) clearHighlight(currentBodyEl);
@@ -1433,14 +1477,15 @@
     updateVolIcon();
   };
 
-  // restart current utterance with new settings (rate/volume/voice) from the start of the current item
+  // restart current item with new settings (rate/volume/voice)
   function restartIfPlaying() {
-    if (currentUtt && isPlaying && !isPaused) {
-      var text = currentUtt.text;
-      var bodyEl = currentBodyEl;
-      currentUtt = null; // prevent stale onend/onerror from advancing the queue
+    if (isPlaying && !isPaused && currentBodyEl) {
+      var sec = sectionData[currentSectionIdx];
+      var item = sec.items[currentItemIdx];
+      currentUtt = null;
+      chunks = []; chunkIdx = 0;
       window.speechSynthesis.cancel();
-      setTimeout(function() { startSpeaking(text, bodyEl); }, 80);
+      setTimeout(function() { startSpeaking(item.text, currentBodyEl); }, 80);
     }
   }
 
@@ -1520,13 +1565,13 @@
   }
 
   // Chrome bug workaround: speechSynthesis goes silent ~15s into long utterances.
-  // A periodic pause/resume keeps the engine alive without audible interruption.
+  // Text chunking (splitIntoChunks) is the primary fix; this keepalive is secondary insurance.
   setInterval(function() {
     if (window.speechSynthesis && speechSynthesis.speaking && !speechSynthesis.paused && isPlaying && !isPaused) {
       speechSynthesis.pause();
       speechSynthesis.resume();
     }
-  }, 12000);
+  }, 8000);
 
   init();
 })();
