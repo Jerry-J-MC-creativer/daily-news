@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>每日全球要闻｜2026-08-22</title>
+<title>姣忔棩鍏ㄧ悆瑕侀椈锝渰{DATE}}</title>
 <style>
   :root {
     --bg: #f3f4f6;
@@ -53,6 +53,28 @@
   }
   .titlebar.scrolled { border-radius: var(--radius); margin: 8px 12px 0; }
   .titlebar.shrunk { padding: 10px 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+  /* Browser compatibility tip */
+  .browser-tip {
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: .82em;
+    text-align: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .browser-tip svg { width: 16px; height: 16px; flex-shrink: 0; }
+  /* Firefox / older browsers: fallback when backdrop-filter is unsupported */
+  @supports not (backdrop-filter: blur(1px)) {
+    .section-titlebar { background: var(--glass); }
+    .player { background: var(--player-bg); }
+    .settings-panel { background: var(--surface); }
+  }
+  /* Safari 15+ backdrop-filter fix */
+  @supports (-webkit-backdrop-filter: blur(1px)) {
+    .section-titlebar { -webkit-backdrop-filter: blur(12px); }
+    .player { -webkit-backdrop-filter: blur(16px); }
+  }
   .title-row {
     display: flex;
     align-items: center;
@@ -386,22 +408,6 @@
     font-size: .85em;
     max-width: 100px;
   }
-  .player-close {
-    position: absolute;
-    top: 8px; right: 10px;
-    width: 24px; height: 24px;
-    border: none; background: none;
-    color: var(--text-secondary);
-    cursor: pointer; font-size: 18px;
-  }
-  .player-expand {
-    position: absolute;
-    top: 8px; right: 38px;
-    width: 24px; height: 24px;
-    border: none; background: none;
-    color: var(--text-secondary);
-    cursor: pointer; font-size: 15px;
-  }
   .player-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .player-extra { display: flex; align-items: center; gap: 8px; margin-left: auto; }
   .volume-wrap { position: relative; display: inline-flex; align-items: center; }
@@ -475,6 +481,24 @@
     transition: border-color .2s, color .2s;
   }
   .player-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .player-native-btn {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-size: .78em;
+    display: inline-flex; align-items: center; gap: 4px;
+    flex-shrink: 0;
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .player-native-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(37, 99, 235, 0.08);
+  }
+  .player-native-btn:hover { border-color: var(--accent); color: var(--accent); }
   .player.expanded .player-extra { margin-left: 0; gap: 14px; }
   .player.expanded .vol-btn { width: 40px; height: 40px; font-size: 18px; }
   .player.expanded .player-reset-btn { padding: 8px 14px; font-size: .9em; }
@@ -606,494 +630,442 @@
 <div class="titlebar" id="titlebar">
   <div class="title-row">
     <div>
-      <div class="title-text" id="pageTitle">每日全球要闻｜2026-08-22（周六）</div>
+      <div class="title-text" id="pageTitle">姣忔棩鍏ㄧ悆瑕侀椈锝?026-08-22锛堝懆鍏級</div>
       <div class="subtitle-row">
-        <span id="welcomeText">祝您拥有愉快的一天</span>
-        <span id="aiGenText">内容由 AI 生成</span>
+        <span id="welcomeText">绁濇偍鎷ユ湁鎰夊揩鐨勪竴澶?/span>
+        <span id="aiGenText">鍐呭鐢?AI 鐢熸垚</span>
       </div>
       <div class="tts-btn-row">
-        <button class="tts-main-btn" id="ttsMainBtn" onclick="playAll()">🔊 <span id="ttsMainLabel">全文语音收听</span></button>
+        <button class="tts-main-btn" id="ttsMainBtn" onclick="playAll()">馃攰 <span id="ttsMainLabel">鍏ㄦ枃璇煶鏀跺惉</span></button>
       </div>
     </div>
     <div class="title-btns">
-      <button class="title-btn" id="homeBtn" onclick="goHome()" title="返回主页"><span class="tb-icon">🏠</span><span id="homeLabel">主页</span></button>
-      <button class="title-btn" id="shareBtn" onclick="sharePage()" title="分享"><span class="tb-icon">⬆️</span><span id="shareLabel">分享</span></button>
-      <button class="title-btn" id="settingsBtn" onclick="openSettings()" title="设置"><span class="tb-icon">⚙️</span><span id="settingsLabel">设置</span></button>
+      <button class="title-btn" id="homeBtn" onclick="goHome()" title="杩斿洖涓婚〉"><span class="tb-icon">馃彔</span><span id="homeLabel">涓婚〉</span></button>
+      <button class="title-btn" id="shareBtn" onclick="sharePage()" title="鍒嗕韩"><span class="tb-icon">猬嗭笍</span><span id="shareLabel">鍒嗕韩</span></button>
+      <button class="title-btn" id="settingsBtn" onclick="openSettings()" title="璁剧疆"><span class="tb-icon">鈿欙笍</span><span id="settingsLabel">璁剧疆</span></button>
     </div>
   </div>
+</div>
+
+<!-- Browser recommendation -->
+<div class="browser-tip" id="browserTip">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+  <span id="browserTipText">寤鸿浣跨敤 Safari / Chrome / Edge 绛夐粯璁ゆ祻瑙堝櫒鎵撳紑锛屽惁鍒欏彲鑳介亣鍒拌闊虫湕璇荤瓑鍔熻兘寮傚父銆?/span>
 </div>
 
 <img class="banner" id="bannerImg" src="" alt="banner" onerror="this.style.display='none'" fetchpriority="high" decoding="async">
 
 <div class="container">
   <div class="global-actions">
-    <button onclick="expandAll()" id="btnExpandAll">展开全部</button>
-    <button onclick="collapseAll()" id="btnCollapseAll">收起全部</button>
+    <button onclick="expandAll()" id="btnExpandAll">灞曞紑鍏ㄩ儴</button>
+    <button onclick="collapseAll()" id="btnCollapseAll">鏀惰捣鍏ㄩ儴</button>
   </div>
 
-  <!-- 军事 -->
-  <div class="section" data-idx="0">
+
+  <div class="section" id="sec0" style="--accent:#8b0000">
     <div class="section-header" onclick="toggleSection(this)">
-      <img src="" alt="" onerror="this.style.opacity='0'" loading="lazy" decoding="async" data-img="fighter,jet">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
-        <div class="section-title" data-zh="🪖 军事" data-en="🪖 Military">🪖 军事</div>
-        <div class="section-actions">
-          <button class="icon-btn" onclick="event.stopPropagation(); expandSectionItems(this)" title="展开/收起本节">📄</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleSection(this.closest('.section-header'))" title="折叠">▼</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); playSection(this.closest('.section').dataset.idx)" title="朗读本节">🔊</button>
-        </div>
+        <span class="section-title"><span class="section-icon">馃帠锔?/span>鍐涗簨</span>
+        <span class="section-actions">
+          <button class="icon-btn" onclick="event.stopPropagation();expandSectionItems(this)" title="灞曞紑鏈妭">馃摉</button>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleSection(this.closest('.section-header'))" id="fold-sec0">鈻?/button>
+          <button class="icon-btn" onclick="event.stopPropagation();playSection(0)" title="鏈楄鏈妭">馃攰</button>
+        </span>
       </div>
     </div>
-    <div class="section-body">
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">1. 伊朗宣布禁止美军进入霍尔木兹海峡并悬赏逮捕</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+    <div class="section-body" id="body-sec0">
+      <div class="item" id="item-sec0-0">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>1. 浼婃湕娴峰啗瀹ｇО"瀹屽叏鎺у埗"闇嶅皵鏈ㄥ吂娴峰场</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec0-0">鈻?/button>
         </div>
-        <div class="item-body">伊朗陆军总司令哈塔米8月16日表示，美军已被驱逐，今后不得进入波斯湾、阿曼湾及霍尔木兹海峡，并称任何逮捕或消灭入境美军的伊朗人员将获约3万美元悬赏。此举加剧海湾盟友对美不满，全球能源"咽喉"局势持续紧张。霍尔木兹海峡承担全球约20%石油运输量，任何封锁都可能引发能源市场剧烈波动。</div>
+        <div class="item-body">浼婃湕娴峰啗鍙镐护鍏紑琛ㄧず宸?瀹屽叏鎺у埗"闇嶅皵鏈ㄥ吂娴峰场锛屽苟璀﹀憡灏嗗湪娴蜂笂缁欐晫浜?鍘嗗彶鎬ф暀璁?銆傞樋鏇煎浜ゅぇ鑷ｇ揣鎬ヤ笌浼婃湕澶栭暱閫氳瘽锛岃璁鸿娴峰场鑸繍瀹夊叏闂銆備腑鍥藉浜ら儴鍚屾棩鍥炲簲缇庡浗濞佽儊瀵逛紛鍒惰锛屽己璋冨啗浜嬫墜娈靛拰鍒惰鏂藉帇鏃犲姪浜庤В鍐抽棶棰樸€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">2. 乌军大规模无人机袭击俄本土物流枢纽，俄单日击落近1500架创纪录</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec0-1">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>2. 淇勪箤鍐茬獊楠ょ劧鍗囩骇锛岄粦娴疯埅杩愰櫡鍏ョ槴鐥?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec0-1">鈻?/button>
         </div>
-        <div class="item-body">乌克兰国防部8月16日凌晨通报，乌军对俄电商平台野莓位于莫斯科州的物流枢纽发动大规模无人机袭击，该公司10处大型仓库已有7处停运；俄国防部同日称过去24小时击落1478架乌无人机，创单日纪录。双方"空中消耗战"升级，无人机攻防能力成为战场新焦点。</div>
+        <div class="item-body">淇勪箤鎴樹簤楠ょ劧鍗囩骇锛岄粦娴疯埅杩愰櫡鍏ョ槴鐥€備粎7鏈堜竴涓湀锛屾腐鍙ｅ強鑸瑰彧閬瓒?20璧凤紝涔屽厠鍏?鏈堣胺鐗╁嚭璐ч噺浠呭強娼滃湪鍑哄彛鑳藉姏鐨?0%銆傝姖鍔犲摜灏忛害鏈熻揣椋欒嚦涓ゅ勾楂樹綅锛屽叏鐞冪伯椋熶緵搴旈摼闈复涓ュ郴鑰冮獙銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">3. 特朗普宣称将吞并霍尔木兹海峡，伊朗强硬回应</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec0-2">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>3. 鑿插緥瀹鹃鏈洪潪娉曚镜鍏ヤ腑鍥介粍宀╁矝棰嗙┖</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec0-2">鈻?/button>
         </div>
-        <div class="item-body">美国总统特朗普8月14-15日在共和党集会上宣称，打算在美伊冲突结束后宣布霍尔木兹海峡为"美国领土"。伊朗副外长加布里阿巴迪断然拒绝，称该海峡"将永远是伊朗的"。这是现代史上美国总统最激进的领土主张，对国际海洋法和航行自由构成重大挑战。</div>
+        <div class="item-body">鑿插緥瀹?鏋跺皬鍨嬮鏈洪潪娉曚镜鍏ヤ腑鍥介粍宀╁矝棰嗙┖銆傚崡閮ㄦ垬鍖烘鍛婅彶鏂癸紝鍏惰涓轰弗閲嶄镜鐘腑鍥戒富鏉冿紝鏋佹槗寮曞彂璇В璇垽锛岃姹傝彶鏂圭珛鍗冲仠姝镜鏉冩寫琛呫€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">4. 哥伦比亚授权与美联合军事行动打击武装组织</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec0-3">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>4. 淇勭綏鏂湪浜夎宀涘笨闄勮繎杩涜瀵煎脊璁粌</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec0-3">鈻?/button>
         </div>
-        <div class="item-body">美国国防部长赫格塞斯8月12日宣布，哥伦比亚已授权联合美军在其领土内对民族解放军（ELN）等武装组织展开军事行动。哥伦比亚新总统埃斯普里埃拉上任后转向强硬安全策略，美国承诺约10亿美元安全援助。这标志着美国在西半球军事介入范围的进一步扩展。</div>
+        <div class="item-body">淇勭綏鏂湪浜夎宀涘笨闄勮繎杩涜瀵煎脊璁粌锛屾棩鏈柟闈㈢О"鏃犳硶鎺ュ彈"锛屽湴鍖虹揣寮犲眬鍔挎寔缁崌娓┿€?/div>
       </div>
     </div>
   </div>
 
-  <!-- 财经 -->
-  <div class="section" data-idx="1">
+  <div class="section" id="sec1" style="--accent:#d4af37">
     <div class="section-header" onclick="toggleSection(this)">
-      <img src="" alt="" onerror="this.style.opacity='0'" loading="lazy" decoding="async" data-img="money,coins">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
-        <div class="section-title" data-zh="💵 财经" data-en="💵 Finance">💵 财经</div>
-        <div class="section-actions">
-          <button class="icon-btn" onclick="event.stopPropagation(); expandSectionItems(this)" title="展开/收起本节">📄</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleSection(this.closest('.section-header'))" title="折叠">▼</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); playSection(this.closest('.section').dataset.idx)" title="朗读本节">🔊</button>
-        </div>
+        <span class="section-title"><span class="section-icon">馃挼</span>璐㈢粡</span>
+        <span class="section-actions">
+          <button class="icon-btn" onclick="event.stopPropagation();expandSectionItems(this)" title="灞曞紑鏈妭">馃摉</button>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleSection(this.closest('.section-header'))" id="fold-sec1">鈻?/button>
+          <button class="icon-btn" onclick="event.stopPropagation();playSection(1)" title="鏈楄鏈妭">馃攰</button>
+        </span>
       </div>
     </div>
-    <div class="section-body">
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">1. 德国对美直接投资暴跌至三年低点</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+    <div class="section-body" id="body-sec1">
+      <div class="item" id="item-sec1-0">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>1. 缇庡姞璐告槗璋堝垽鏈€鍚庡啿鍒猴紝鎷熻閽㈤搧閰嶉</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec1-0">鈻?/button>
         </div>
-        <div class="item-body">德国企业2026年上半年对美直接投资骤降至43亿欧元（约50亿美元），为三年低点，同比缩水近三分之二。巴斯夫、西门子等行业巨头均缩减在美布局。贸易政策不确定性与关税威胁是主要诱因，跨大西洋经济关系面临显著降温。</div>
+        <div class="item-body">缇庡姞璐告槗璋堝垽杩涘叆鏈€鍚庡啿鍒洪樁娈点€傛嵁鍔犲獟鎶ラ亾锛屽崗璁嫙涓哄姞鎷垮ぇ閽㈤搧鍑哄彛寤虹珛鍏崇◣閰嶉鍒讹細姣忓勾鍑哄彛閲忓湪400涓囧惃閰嶉浠ュ唴閫傜敤25%鍏崇◣锛岃秴杩囬厤棰濋儴鍒嗙户缁潰涓?0%鍏崇◣銆備綔涓轰氦鎹紝鍔犳嬁澶у凡鍚屾剰鍙栨秷瀵圭編鍥介挗閾佸緛鏀剁殑鍏ㄩ儴鍙嶅埗鎬у叧绋庛€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">2. 印度大幅增加国内LPG产量应对霍尔木兹危机</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec1-1">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>2. 鐗规湕鏅甯冩殏鏃惰眮鍏嶇鐗涜倝杩涘彛鍏崇◣</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec1-1">鈻?/button>
         </div>
-        <div class="item-body">印度政府已指示国有和私营炼油商将国内液化石油气（LPG）日产量提升至63,810吨，目标覆盖近70%的日消费量。印度90%的LPG进口依赖霍尔木兹海峡，海峡持续 closure 风险迫使新德里加速能源自给布局。</div>
+        <div class="item-body">鐗规湕鏅甯冿紝鏈潵90澶╁唴缇庡浗灏嗗厑璁歌繘鍙ｆ渶澶?0涓囧惃纰庣墰鑲変笖涓嶅緛鏀堕厤棰濆鍏崇◣銆傜壒鏈楁櫘绉版涓?鏃ㄥ湪闄嶄綆缇庡浗姘戜紬鐨勬秷璐逛环鏍硷紝鍚屾椂涔熶负缇庡浗鐣滅墽鍏绘畺涓氭仮澶嶅闀挎彁渚涚┖闂?銆傜洰鍓嶇墿浠蜂笂娑ㄦ槸鐗规湕鏅斂搴滃湪涓湡閫変妇鍓嶅簲瀵圭殑鍏抽敭闂銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">3. 英国面临"芯片通胀"，AI热潮推升消费电子设备成本</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec1-2">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>3. 缇庡浗8鏈堢患鍚圥MI鍒濆€煎崌鑷抽€惧洓骞存柊楂?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec1-2">鈻?/button>
         </div>
-        <div class="item-body">半导体制造产能向高利润AI芯片倾斜，导致标准内存芯片短缺，英国消费者设备价格上涨。叠加第五波夏季热浪带来的能源成本上升，英国经济面临双重通胀压力，NHS医院室内温度 reportedly 达41°C。</div>
+        <div class="item-body">缇庡浗8鏈堟爣鏅叏鐞冪患鍚圥MI浜у嚭鎸囨暟鍗囪嚦56锛岃緝7鏈堢殑54.5鏄庢樉涓婂崌锛屽垱2022骞?鏈堜互鏉ユ渶楂樸€傛湇鍔′笟PMI浠?4.6鍗囪嚦56.8锛屼负2024骞?2鏈堜互鏉ユ渶楂橈紝寮哄姴鎵╁紶鎶垫秷浜嗗埗閫犱笟鐨勭柌杞€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">4. 阿布扎比主权基金持有比特币ETF仓位穿越市场下跌</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec1-3">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>4. 鎭掑ぇ鍦颁骇鐮翠骇娓呯畻鐢宠琚硶闄㈠彈鐞?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec1-3">鈻?/button>
         </div>
-        <div class="item-body">尽管加密货币市场波动加剧，阿布扎比主权财富基金仍维持比特币ETF持仓。此举标志着传统主权资本对数字资产配置的常态化，同时也引发市场对中东资本流向和全球加密监管格局的关注。</div>
+        <div class="item-body">骞垮窞鍐滃晢琛屽崕澶忔敮琛屼互鎭掑ぇ鍦颁骇闆嗗洟鏈夐檺鍏徃涓嶈兘娓呭伩鍒版湡鍊哄姟涓旇祫浜т笉瓒充互娓呭伩鍏ㄩ儴鍊哄姟涓虹敱锛屽悜娉曢櫌鐢宠瀵瑰叾鐮翠骇娓呯畻銆傚箍宸炲競涓骇浜烘皯娉曢櫌宸蹭簬8鏈?1鏃ヨ瀹氬彈鐞嗚鐢宠锛屾垨鎴愪腑鍥芥埧鍦颁骇琛屼笟椋庨櫓鍑烘竻鐨勯噸瑕佹爣蹇椼€?/div>
       </div>
     </div>
   </div>
 
-  <!-- AI与科技 -->
-  <div class="section" data-idx="2">
+  <div class="section" id="sec2" style="--accent:#6366f1">
     <div class="section-header" onclick="toggleSection(this)">
-      <img src="" alt="" onerror="this.style.opacity='0'" loading="lazy" decoding="async" data-img="robot,technology">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
-        <div class="section-title" data-zh="🤖 AI 与科技" data-en="🤖 AI & Tech">🤖 AI 与科技</div>
-        <div class="section-actions">
-          <button class="icon-btn" onclick="event.stopPropagation(); expandSectionItems(this)" title="展开/收起本节">📄</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleSection(this.closest('.section-header'))" title="折叠">▼</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); playSection(this.closest('.section').dataset.idx)" title="朗读本节">🔊</button>
-        </div>
+        <span class="section-title"><span class="section-icon">馃</span>AI涓庣鎶€</span>
+        <span class="section-actions">
+          <button class="icon-btn" onclick="event.stopPropagation();expandSectionItems(this)" title="灞曞紑鏈妭">馃摉</button>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleSection(this.closest('.section-header'))" id="fold-sec2">鈻?/button>
+          <button class="icon-btn" onclick="event.stopPropagation();playSection(2)" title="鏈楄鏈妭">馃攰</button>
+        </span>
       </div>
     </div>
-    <div class="section-body">
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">1. 英伟达Spectrum-X硅光交换机全面量产，CPO正式走向量产</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+    <div class="section-body" id="body-sec2">
+      <div class="item" id="item-sec2-0">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>1. OpenAI鍏ㄩ潰寮€婧怌odex Harness涓夊ぇ鏍稿績缁勪欢</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec2-0">鈻?/button>
         </div>
-        <div class="item-body">英伟达宣布Spectrum-X硅光交换机全面量产，激光器数量减少4倍、功耗降低5倍、平均无故障时间提升10倍。台积电、鸿海、天孚通信等共同参与制造。这标志着CPO（共封装光学）技术从样品阶段正式迈入大规模商用，为AI数据中心网络架构带来革命性升级。</div>
+        <div class="item-body">OpenAI浠pache-2.0璁稿彲寮€婧怌odex Harness涓夊ぇ鏍稿績缁勪欢锛圕LI宸ュ叿銆佸畼鏂筍DK銆乤pp-server锛夈€侶arness浣滀负椹卞姩AI鏅鸿兘浣撶殑搴曞眰鎵ц妗嗘灦锛屽彲鏃犵紳宓屽叆寮€鍙戣€呰嚜鏈変骇鍝侊紝灏嗙晫闈€佹暟鎹笌瀹夊叏瀹℃壒鏉冧氦杩樺紑鍙戣€咃紝褰诲簳鎵撻€欰I浼佷笟绾ц惤鍦扮殑鏈€鍚庝竴鍏噷銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">2. DeepSeek V4 Pro正式版权重开放，Harness框架MIT开源</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec2-1">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>2. DeepSeek涓婄嚎V4-Flash-Vision-Exp澶氭ā鎬佹ā鍨?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec2-1">鈻?/button>
         </div>
-        <div class="item-body">DeepSeek双线出击：V4 Pro正式版权重全面开放，同时发布Harness开发者框架（MIT开源）。公司还引入分时计价模式，API按时段峰谷定价，用"电网逻辑"做推理降本。竞争维度正从模型参数延伸到本地部署与Agent工具链生态。</div>
+        <div class="item-body">DeepSeek鍦ㄥ叾API骞冲彴姝ｅ紡涓婄嚎瀹為獙鎬ц川澶氭ā鎬佹ā鍨婦eepSeek-V4-Flash-Vision-Exp銆傝鐗堟湰淇濈暀V4-Flash鍏ㄩ儴鏂囨湰鑳藉姏锛岃ˉ榻愯瑙夌悊瑙ｈ兘鍔涳紝澶氭ā鎬丄gent缁煎悎琛ㄧ幇鎺ヨ繎Claude Opus-4.8鏃楄埌姘村钩銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">3. 智谱GLM-5.3发布，长上下文推理与代码生成增强</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec2-2">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>3. ChatGPT Mac鐗堝彲璇诲彇鐢ㄦ埛鐭俊寮曞彂闅愮浜夎</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec2-2">鈻?/button>
         </div>
-        <div class="item-body">智谱AI发布GLM-5.3，重点增强长上下文推理与代码生成能力。与谷歌Gemini 3.7 Flash、DeepSeek同周上新，大模型价格战继续下探，Agent能力成为各厂商共同发力方向。国产大模型在推理效率与代码场景的持续进步值得关注。</div>
+        <div class="item-body">OpenAI涓篗ac鐗圕hatGPT涓婄嚎Messages杩炴帴鍣紝閫氳繃"瀹屽叏纾佺洏璁块棶鏉冮檺"璇诲彇鏈湴鏁版嵁搴撳苟璧疯崏鍥炲锛屽欢缁簡鎺ュ叆鍋ュ悍銆侀噾铻嶆暟鎹殑鎬濊矾銆傝嫻鏋滆櫧浠嶆帉鎺у簳灞傛潈闄愶紝浣嗛殢鐫€鍙屾柟鍚堜綔杞喎銆佽嫻鏋滃姞閫烻iri AI锛屾湭鏉ョ郴缁熸剰鍥剧紪鎺掔殑鎸囨尌鏉冨綊灞炲凡鎴愭偓蹇点€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">4. 宇树科技登陆科创板，发行市值约610亿元</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec2-3">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>4. 鏅鸿氨涓嬩竴浠ｆ棗鑸版ā鍨嬬枒浼肩幇韬玂penRouter</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec2-3">鈻?/button>
         </div>
-        <div class="item-body">宇树科技8月19日正式挂牌科创板，发行市值约610亿元，被誉为"A股人形机器人第一股"。上市前夜公司发布"超人"机器人，腿长0.85m、原地跳高2m、极速12.66m/s。具身智能赛道融资持续火爆，上半年国内融资935亿元，同比增长5倍。</div>
-      </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">5. OpenAI与英伟达锁定6000亿美元算力合作</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
-        </div>
-        <div class="item-body">OpenAI承诺在2030年前大规模部署英伟达AI基础设施，未来五年算力采购规模或达6000亿美元。与此同时，Anthropic年化营收运行率突破650亿美元，CFO已启动IPO前期投资者沟通，大模型商业化正从烧钱转向正向现金流。</div>
+        <div class="item-body">涓€涓尶鍚岮I妯″瀷鎮勭劧鐜拌韩妯″瀷鍒嗗彂骞冲彴OpenRouter銆傜嫭绔嬬爺绌朵汉鍛樻祴璇曟樉绀猴紝璇ユā鍨嬩笉浠呭湪閮ㄥ垎缂栫▼鍩哄噯涓秴瓒奊PT銆丆laude绛変富娴佹ā鍨嬶紝鍏舵妧鏈壒寰佷篃楂樺害鎸囧悜鏅鸿氨灏氭湭鍙戝竷鐨勪笅涓€浠ｅ妯℃€佹棗鑸版ā鍨嬨€?/div>
       </div>
     </div>
   </div>
 
-  <!-- 国际政治 -->
-  <div class="section" data-idx="3">
+  <div class="section" id="sec3" style="--accent:#0d9488">
     <div class="section-header" onclick="toggleSection(this)">
-      <img src="" alt="" onerror="this.style.opacity='0'" loading="lazy" decoding="async" data-img="globe,earth">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
-        <div class="section-title" data-zh="🌍 国际政治" data-en="🌍 Global Politics">🌍 国际政治</div>
-        <div class="section-actions">
-          <button class="icon-btn" onclick="event.stopPropagation(); expandSectionItems(this)" title="展开/收起本节">📄</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleSection(this.closest('.section-header'))" title="折叠">▼</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); playSection(this.closest('.section').dataset.idx)" title="朗读本节">🔊</button>
-        </div>
+        <span class="section-title"><span class="section-icon">馃實</span>鍥介檯鏀挎不</span>
+        <span class="section-actions">
+          <button class="icon-btn" onclick="event.stopPropagation();expandSectionItems(this)" title="灞曞紑鏈妭">馃摉</button>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleSection(this.closest('.section-header'))" id="fold-sec3">鈻?/button>
+          <button class="icon-btn" onclick="event.stopPropagation();playSection(3)" title="鏈楄鏈妭">馃攰</button>
+        </span>
       </div>
     </div>
-    <div class="section-body">
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">1. 特朗普宣称将吞并霍尔木兹海峡，伊朗断然拒绝</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+    <div class="section-body" id="body-sec3">
+      <div class="item" id="item-sec3-0">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>1. 涓浗澶栦氦閮ㄥ洖搴旂編鍥藉▉鑳佸浼婂埗瑁?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec3-0">鈻?/button>
         </div>
-        <div class="item-body">特朗普8月14-15日在共和党集会上宣布，打算在美伊冲突结束后将霍尔木兹海峡"宣布为美国领土"。伊朗副外长加布里阿巴迪回应称该海峡"将永远是伊朗的"。此言论在现代美国总统外交史上前所未有，直接冲击国际海洋法与全球能源安全秩序。</div>
+        <div class="item-body">涓浗澶栦氦閮ㄦ槑纭洖搴?缇庡浗濞佽儊瀵逛紛鍒惰"锛屽己璋冨啗浜嬫墜娈靛拰鍒惰鏂藉帇鏃犲姪浜庤В鍐抽棶棰橈紝鍙嶅闈炴硶鍗曡竟鍒惰锛屽懠鍚侀€氳繃瀵硅瘽鍗忓晢瑙ｅ喅鍒嗘銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">2. 俄警告美土对乌供武将严重损害双边关系</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec3-1">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>2. 鍦熻€冲叾璇锋眰瀵逛互鑹插垪鎬荤悊鍙戝嚭绾㈣壊閫氱級浠?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec3-1">鈻?/button>
         </div>
-        <div class="item-body">针对美土计划向乌克兰供应美制武器（含12套多管火箭炮、70枚ATACMS等），俄外交部8月15日提出质询，发言人扎哈罗娃称此举将严重损害俄同美土两国关系并削弱互信。该交易价值约2.83亿美元，若30天内国会无异议即视为获批。</div>
+        <div class="item-body">鍦熻€冲叾鍙告硶閮ㄩ暱琛ㄧず锛屽湡鑰冲叾宸茶姹傚浗闄呭垜璀︾粍缁囧浠ヨ壊鍒楁€荤悊鍐呭灏间簹鑳″彂鍑虹孩鑹查€氱級浠わ紝鎸囨帶鍏惰鍑昏瘯鍥惧悜鍔犳矙杩愰€佷汉閬撲富涔夋彺鍔╃墿璧勭殑娲诲姩浜哄＋銆傚湡鑰冲叾姝ゅ墠宸插鍐呭灏间簹鑳″彂鍑洪€崟浠わ紝鎸囨帶鍏剁姱鏈?绉嶆棌鐏粷"缃€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">3. 普京访问争议千岛群岛，日本抗议美国支持东京</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec3-2">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>3. 涓浗涓庣憺澹甯冨畬鎴愯嚜璐稿崗瀹氬崌绾ц皥鍒?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec3-2">鈻?/button>
         </div>
-        <div class="item-body">俄罗斯总统普京近日访问争议的千岛群岛（北方四岛），引发日本强烈抗议。美国表态支持日本立场。此举正值俄乌冲突持续、俄向东转向加速之际，东北亚领土争端与大国博弈交织，地区安全局势更趋复杂。</div>
+        <div class="item-body">涓浗涓庣憺澹甯冨畬鎴愯嚜璐稿崗瀹氬崌绾ц皥鍒わ紝杩欐槸缁т腑鐟炶嚜璐稿崗瀹?014骞寸敓鏁堝悗鐨勯噸瑕佸崌绾э紝棰勮灏嗚繘涓€姝ユ墿澶у弻杈硅锤鏄撴姇璧勪究鍒╁寲锛屾繁鍖栦腑娆х粡璐稿悎浣溿€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">4. 哈马斯与埃及在开罗讨论15点"和平委员会"计划</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec3-3">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>4. 浼婃湕鎬荤粺鍛煎悂浠?瀹炲姏鍦颁綅"鍑哄彂璋堝垽</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec3-3">鈻?/button>
         </div>
-        <div class="item-body">由哈立德·哈亚率领的哈马斯高级代表团正在开罗与埃及情报总局局长哈桑·拉沙德会谈，讨论包含15点的"和平委员会"计划，涉及加沙停火、解除武装及国际稳定部队进驻等议题。中东和平进程再现微妙窗口期。</div>
+        <div class="item-body">浼婃湕鎬荤粺鍛煎悂缁撴潫鎴樹簤锛屼絾寮鸿皟搴斾粠"瀹炲姏鍦颁綅"鍑哄彂杩涜璋堝垽銆備紛鏈楁柟闈㈠悓鏃跺洖搴旂編鍥界粡娴庢垬濞佽儊锛岀О缇庢柟"娉ㄥ畾澶辫触"锛屾樉绀哄嚭鍦ㄩ珮鍘嬫€佸娍涓嬬殑寮虹‖绔嬪満銆?/div>
       </div>
     </div>
   </div>
 
-  <!-- 产业商业 -->
-  <div class="section" data-idx="4">
+  <div class="section" id="sec4" style="--accent:#ea580c">
     <div class="section-header" onclick="toggleSection(this)">
-      <img src="" alt="" onerror="this.style.opacity='0'" loading="lazy" decoding="async" data-img="factory,industry">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
-        <div class="section-title" data-zh="🏭 产业商业" data-en="🏭 Industry & Biz">🏭 产业商业</div>
-        <div class="section-actions">
-          <button class="icon-btn" onclick="event.stopPropagation(); expandSectionItems(this)" title="展开/收起本节">📄</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleSection(this.closest('.section-header'))" title="折叠">▼</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); playSection(this.closest('.section').dataset.idx)" title="朗读本节">🔊</button>
-        </div>
+        <span class="section-title"><span class="section-icon">馃彮</span>浜т笟鍟嗕笟</span>
+        <span class="section-actions">
+          <button class="icon-btn" onclick="event.stopPropagation();expandSectionItems(this)" title="灞曞紑鏈妭">馃摉</button>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleSection(this.closest('.section-header'))" id="fold-sec4">鈻?/button>
+          <button class="icon-btn" onclick="event.stopPropagation();playSection(4)" title="鏈楄鏈妭">馃攰</button>
+        </span>
       </div>
     </div>
-    <div class="section-body">
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">1. SpaceX收购AI编程龙头Cursor，交易估值600亿美元</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+    <div class="section-body" id="body-sec4">
+      <div class="item" id="item-sec4-0">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>1. 涓夋槦鍏竷闊╁浗鍙蹭笂鏈€澶ц偂涓滃洖鎶ヨ鍒?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec4-0">鈻?/button>
         </div>
-        <div class="item-body">SpaceX以股权方式完成对AI编程工具Cursor的收购，交易估值约600亿美元。此举补齐了SpaceX在软件研发端的短板，将全面赋能Grok大模型迭代，并向全球开发者开放太空算力调度能力，有望大幅降低AI研发成本。</div>
+        <div class="item-body">涓夋槦鐢靛瓙瀹ｅ竷2026骞村皢鍚戣偂涓滆繑杩樻渶楂?10涓囦嚎闊╁厓锛堢害790浜跨編鍏冿級锛岀害鍗犺嚜鐢辩幇閲戞祦浜旀垚锛屽垱闊╁浗浼佷笟鍙蹭笂鏈€楂樺洖鎶ョ邯褰曘€傝繖涓€澶ф墜绗斿洖鎶ヨ鍒掑弽鏄犲嚭涓夋槦鍦ㄥ瓨鍌ㄨ姱鐗囧拰AI闇€姹傞┍鍔ㄤ笅鐨勫己鍔茬幇閲戞祦銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">2. 海外大模型开启新一轮价格战</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec4-1">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>2. 涓檯鏃垱涓婂崐骞村噣鍒╂毚澧?41.7%</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec4-1">鈻?/button>
         </div>
-        <div class="item-body">谷歌发布Gemini 3.7 Flash模型，延迟更低、性能更强，直接降价50%，对标马斯克Grok模型。SpaceX新版Grok 4.6综合能力追平顶级GPT模型，推理成本更低。行业竞争已从参数规模全面转向性价比与Agent能力肉搏。</div>
+        <div class="item-body">AI绠楀姏绾㈠埄鎸佺画閲婃斁锛屼腑闄呮棴鍒涗笂鍗婂勾鍑€鍒╂鼎鏆村241.7%锛岀煡鍚嶆父璧勭珷寤哄钩鏂拌繘鎴愪负绗節澶ц偂涓溿€傚厜妯″潡浣滀负AI鏁版嵁涓績鐨勫叧閿粍浠讹紝闇€姹傛寔缁椇鐩涖€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">3. PayPal收购谈判升温，Stripe和Advent进入讨论</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec4-2">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>3. 鍗氶€氭嫙绛?00-800浜跨編鍏冨€哄姟铻嶈祫</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec4-2">鈻?/button>
         </div>
-        <div class="item-body">PayPal潜在收购交易引发市场热议，Stripe和Advent成为潜在买方。若交易达成，将标志着支付巨头整合浪潮的加速，同时也反映出传统金融科技企业在AI原生支付与跨境结算领域面临的竞争压力。</div>
+        <div class="item-body">鍗氶€氭灏?00浜胯嚦800浜跨編鍏冨€哄姟铻嶈祫灞曞紑璋堝垽锛岃祫閲戝皢鐢ㄤ簬鏀寔Anthropic绛堿I鍏徃鐨勮姱鐗囬噰璐渶姹傘€傜劧鑰岃繖鍦?閲戣瀺宸ョ▼"寮曠垎淇＄敤鎭愭厡锛岃嚧鍏禖DS鐙傞鐮寸邯褰曪紝鏇存挄寮€浜嗙鎶€宸ㄥご3涓囦嚎缇庡厓AI闅愭€у€哄姟鐨勫啺灞变竴瑙掋€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">4. 英伟达深度绑定SpaceX，百亿级股权持仓</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec4-3">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>4. 鍏ㄧ悆閲戣瀺绉戞妧铻嶈祫浜屽搴﹁揪133浜跨編鍏?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec4-3">鈻?/button>
         </div>
-        <div class="item-body">英伟达披露百亿级SpaceX股权持仓，位列第六大股东。双方敲定长期合作，SpaceX太空算力项目全线独家采用英伟达芯片。英伟达、微软、SpaceX还联合成立AI安全联盟，统一智能体安全标准，形成资本+业务双垄断格局。</div>
+        <div class="item-body">"椤圭洰寤鸿涔?鏁版嵁鍏徃鎶ュ憡鏄剧ず锛屼粖骞翠簩瀛ｅ害鍏ㄧ悆閲戣瀺绉戞妧铻嶈祫甯傚満瑙勬ā杈?33浜跨編鍏冿紝鐜瘮澧為暱28.1%锛屽悓姣斾笂娑?7.3%銆傚湪鎶曡祫鎬婚噺涓婂崌鐨勫悓鏃讹紝璧勯噾娴佸悜鏇磋仛鐒﹀ご閮ㄤ紒涓氾紝浜ゆ槗鏁伴噺涓嬮檷锛屽崟绗斾氦鏄撹妯′笂鍗囥€?/div>
       </div>
     </div>
   </div>
 
-  <!-- 能源与气候 -->
-  <div class="section" data-idx="5">
+  <div class="section" id="sec5" style="--accent:#16a34a">
     <div class="section-header" onclick="toggleSection(this)">
-      <img src="" alt="" onerror="this.style.opacity='0'" loading="lazy" decoding="async" data-img="wind,turbine">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
-        <div class="section-title" data-zh="⚡ 能源与气候" data-en="⚡ Energy & Climate">⚡ 能源与气候</div>
-        <div class="section-actions">
-          <button class="icon-btn" onclick="event.stopPropagation(); expandSectionItems(this)" title="展开/收起本节">📄</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleSection(this.closest('.section-header'))" title="折叠">▼</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); playSection(this.closest('.section').dataset.idx)" title="朗读本节">🔊</button>
-        </div>
+        <span class="section-title"><span class="section-icon">鈿?/span>鑳芥簮涓庢皵鍊?/span>
+        <span class="section-actions">
+          <button class="icon-btn" onclick="event.stopPropagation();expandSectionItems(this)" title="灞曞紑鏈妭">馃摉</button>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleSection(this.closest('.section-header'))" id="fold-sec5">鈻?/button>
+          <button class="icon-btn" onclick="event.stopPropagation();playSection(5)" title="鏈楄鏈妭">馃攰</button>
+        </span>
       </div>
     </div>
-    <div class="section-body">
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">1. 霍尔木兹海峡危机加剧，全球油市面临供应冲击</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+    <div class="section-body" id="body-sec5">
+      <div class="item" id="item-sec5-0">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>1. 鎽╂牴澶ч€氳鍛婁笅涓€鍦哄叏鐞冪伯椋熷嵄鏈烘渶鏃╂槑骞村埌鏉?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec5-0">鈻?/button>
         </div>
-        <div class="item-body">美伊围绕霍尔木兹海峡的对抗急剧升级，伊朗威胁封锁海峡，特朗普则宣称要将其"收为美国领土"。该海峡每日输送约2000万桶原油，占全球海上石油贸易的三分之一。任何实质性中断都可能将布伦特原油推至历史新高，并引发全球性通胀压力。</div>
+        <div class="item-body">淇勪箤鎴樹簤鍐插嚮榛戞捣娓彛锛屽叏鐞冪伯椋熺敓浜ф閬亣澶氶噸鍐插嚮銆傚彔鍔犻湇灏旀湪鍏规捣宄＄殑鎸佺画鎵板姩銆佸巹灏斿凹璇洪闄╀笂鍗囦互鍙婄編鍥藉啘涓氬甫涓嶅埄澶╂皵锛屾懇鏍瑰ぇ閫氳鍛婁笅涓€鍦哄叏鐞冪伯椋熷嵄鏈烘渶鏃╂槑骞村埌鏉ャ€傚焹鍙娿€佸嵃灏肩瓑楂樺害渚濊禆榛戞捣绮簮鐨勫浗瀹堕闄╂暈鍙ｆ€ュ墽鎵╁ぇ銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">2. 印尼7.7级地震致超73人死亡，海啸预警一度发布</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec5-1">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>2. 鑺濆姞鍝ュ皬楹︽湡璐ч鑷充袱骞撮珮浣?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec5-1">鈻?/button>
         </div>
-        <div class="item-body">印尼弗洛雷斯岛附近8月发生7.7级强震，已造成至少73人死亡、5000人撤离，余震持续。此次地震是印尼近十年来最严重的地震灾害之一，灾后重建与防灾体系升级再次成为该国紧迫议题。</div>
+        <div class="item-body">鍙楅粦娴疯埅杩愮槴鐥拰涔屽厠鍏拌胺鐗╁嚭鍙ｉ攼鍑忓奖鍝嶏紝鑺濆姞鍝ュ皬楹︽湡璐ч鑷充袱骞撮珮浣嶃€備箤鍏嬪叞8鏈堣胺鐗╁嚭璐ч噺浠呭強娼滃湪鍑哄彛鑳藉姏鐨?0%锛屽叏鐞冪伯椋熶緵搴旈摼鑴嗗急鎬у啀娆℃毚闇层€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">3. 法国Landes野火蔓延至1600公顷</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec5-2">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>3. 鍙伴"缇庤帋鍏?鑷村箍瑗夸袱鍦伴噸澶х伨鎯?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec5-2">鈻?/button>
         </div>
-        <div class="item-body">法国西南部Landes地区野火持续蔓延，过火面积已达1600公顷，澳大利亚出动直升机支援灭火。欧洲今夏持续高温干燥，野火频发暴露出气候适应基础设施的脆弱性，欧盟层面联合防灾机制亟待加强。</div>
-      </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">4. 德国Eifel野火推进，河流水位创历史新低</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
-        </div>
-        <div class="item-body">德国Eifel地区野火持续前进，多条河流水位降至历史最低，内河航运受到严重影响。极端干旱与高温正在重塑欧洲中部的水资源格局，能源冷却、农业灌溉与工业用水之间的竞争日趋激烈。</div>
+        <div class="item-body">鍙伴"缇庤帋鍏?鑷村箍瑗夸袱鍦?59浜洪亣闅俱€?0浜哄け鑱旓紝鐏炬儏涓ラ噸銆傛瀬绔皵鍊欎簨浠堕鍙戝啀娆℃暡鍝嶅叏鐞冩皵鍊欏彉鍖栫殑璀﹂挓銆?/div>
       </div>
     </div>
   </div>
 
-  <!-- 医疗健康 -->
-  <div class="section" data-idx="6">
+  <div class="section" id="sec6" style="--accent:#ef4444">
     <div class="section-header" onclick="toggleSection(this)">
-      <img src="" alt="" onerror="this.style.opacity='0'" loading="lazy" decoding="async" data-img="medical,hospital">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
-        <div class="section-title" data-zh="🏥 医疗健康" data-en="🏥 Healthcare">🏥 医疗健康</div>
-        <div class="section-actions">
-          <button class="icon-btn" onclick="event.stopPropagation(); expandSectionItems(this)" title="展开/收起本节">📄</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleSection(this.closest('.section-header'))" title="折叠">▼</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); playSection(this.closest('.section').dataset.idx)" title="朗读本节">🔊</button>
-        </div>
+        <span class="section-title"><span class="section-icon">馃彞</span>鍖荤枟鍋ュ悍</span>
+        <span class="section-actions">
+          <button class="icon-btn" onclick="event.stopPropagation();expandSectionItems(this)" title="灞曞紑鏈妭">馃摉</button>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleSection(this.closest('.section-header'))" id="fold-sec6">鈻?/button>
+          <button class="icon-btn" onclick="event.stopPropagation();playSection(6)" title="鏈楄鏈妭">馃攰</button>
+        </span>
       </div>
     </div>
-    <div class="section-body">
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">1. GLP-1药物可能通过此前未知的大脑机制发挥作用</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+    <div class="section-body" id="body-sec6">
+      <div class="item" id="item-sec6-0">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>1. Moderna"mRNA涓€у寲鐤嫍"棣栧害鎴愬姛</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec6-0">鈻?/button>
         </div>
-        <div class="item-body">最新研究表明，司美格鲁肽等GLP-1受体激动剂可能通过此前未被发现的大脑神经通路发挥减重和代谢调节作用。这一发现可能帮助科学家设计出副作用更少、疗效更精准的下一代减肥药，并拓展其在成瘾、抑郁等神经精神领域的应用前景。</div>
+        <div class="item-body">Moderna鐨?mRNA涓€у寲鐤嫍"棣栧害鍙栧緱鎴愬姛锛屾爣蹇楃潃绮惧噯鍖荤枟鍜屼釜浣撳寲鍏嶇柅娌荤枟杩堝嚭閲嶈涓€姝ャ€備腑鍥藉垱鏂拌嵂浼佷笟涔熷湪璇ラ鍩熺Н鏋佸竷灞€锛岀浉鍏充骇鍝佹鍦ㄦ帓闃熷鎵逛腑銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">2. 英国NHS在创纪录第五波夏季热浪中挣扎</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec6-1">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>2. 鍒氭灉锛堥噾锛夊焹鍗氭媺纭瘖鐥呬緥瓒?200渚?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec6-1">鈻?/button>
         </div>
-        <div class="item-body">英国国家医疗服务体系（NHS）正面临史无前例的第五波夏季热浪冲击，部分医院室内温度 reportedly 达到41°C，导致医护人员晕厥及药品稳定性风险。皇家护理学院警告现有医疗设施"已不适合人类工作"。5-6月高温相关死亡估计达2877人。</div>
+        <div class="item-body">鍒氭灉锛堥噾锛夊焹鍗氭媺纭瘖鐥呬緥宸茶秴杩?200渚嬶紝鐤儏褰㈠娍涓ュ郴锛屽浗闄呯ぞ浼氬懠鍚佸姞寮哄尰鐤楁彺鍔╁拰鐤嫍鎺ョ銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">3. 中国科学家在犬类癌症检测领域取得进展</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec6-2">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>3. 鍥藉鍗仴濮斿己璋冩帴绉嶆祦鎰熺柅鑻楃殑閲嶈鎬?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec6-2">鈻?/button>
         </div>
-        <div class="item-body">科学研究揭示了犬类嗅觉在癌症早期检测中的惊人潜力。狗的鼻子能够识别癌症患者体内的挥发性有机化合物，为无创、低成本的癌症筛查提供了全新思路。该方向的人机结合研究正在加速，未来或可转化为电子鼻医疗设备。</div>
-      </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">4. 法国西尼罗河病毒病例攀升至120例</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
-        </div>
-        <div class="item-body">法国今夏西尼罗河病毒感染病例持续上升，已达120例。气候变化导致蚊虫活动范围扩大，蚊媒传染病正向传统非疫区蔓延。欧洲疾控中心已加强对南部Member States的监测预警，公共卫生体系面临新挑战。</div>
+        <div class="item-body">鍥藉鍗仴濮旇〃绀猴紝鎺ョ娴佹劅鐤嫍鏄闃叉祦鎰熸渶缁忔祹鏈夋晥鐨勬墜娈碉紝鎻愰啋鍏紬鍦ㄦ祦鎰熷鍒版潵鍓嶅強鏃舵帴绉嶏紝鐗瑰埆鏄€佸勾浜恒€佸効绔ュ拰鎱㈡€х梾鎮ｈ€呯瓑楂樺嵄浜虹兢銆?/div>
       </div>
     </div>
   </div>
 
-  <!-- 半导体与硬件 -->
-  <div class="section" data-idx="7">
+  <div class="section" id="sec7" style="--accent:#9333ea">
     <div class="section-header" onclick="toggleSection(this)">
-      <img src="" alt="" onerror="this.style.opacity='0'" loading="lazy" decoding="async" data-img="microchip,circuit">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
-        <div class="section-title" data-zh="🔌 半导体与硬件" data-en="🔌 Semiconductors">🔌 半导体与硬件</div>
-        <div class="section-actions">
-          <button class="icon-btn" onclick="event.stopPropagation(); expandSectionItems(this)" title="展开/收起本节">📄</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleSection(this.closest('.section-header'))" title="折叠">▼</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); playSection(this.closest('.section').dataset.idx)" title="朗读本节">🔊</button>
-        </div>
+        <span class="section-title"><span class="section-icon">馃捇</span>鍗婂浣撲笌纭欢</span>
+        <span class="section-actions">
+          <button class="icon-btn" onclick="event.stopPropagation();expandSectionItems(this)" title="灞曞紑鏈妭">馃摉</button>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleSection(this.closest('.section-header'))" id="fold-sec7">鈻?/button>
+          <button class="icon-btn" onclick="event.stopPropagation();playSection(7)" title="鏈楄鏈妭">馃攰</button>
+        </span>
       </div>
     </div>
-    <div class="section-body">
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">1. SK海力士预警2027年"最严重存储荒"</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+    <div class="section-body" id="body-sec7">
+      <div class="item" id="item-sec7-0">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>1. 闀挎睙瀛樺偍绉戝垱鏉縄PO宸插彈鐞?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec7-0">鈻?/button>
         </div>
-        <div class="item-body">SK海力士警告，AI服务器拉动HBM与DRAM需求翻倍，但产能扩张需4-5年周期，存储芯片供需缺口可能延续至2027年。原厂七成产能优先供给HBM，普通内存与闪存产能被严重挤压，涨价已从点状转向面状，MCU/模拟/功率芯片全面跟涨5%-10%。</div>
+        <div class="item-body">闀挎睙瀛樺偍绉戝垱鏉縄PO宸茶幏鍙楃悊銆傛暟鎹樉绀猴紝鍏徃1-3鏈堣惀鏀惰揪470.42浜垮厓锛屽綊姣嶅噣鍒╂鼎333.79浜垮厓锛屼笟缁╄〃鐜颁寒鐪笺€備綔涓哄浗鍐呭瓨鍌ㄨ姱鐗囬緳澶达紝鍏朵笂甯傝繘绋嬪彈鍒颁骇涓氱晫鍜岃祫鏈競鍦洪珮搴﹀叧娉ㄣ€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">2. 中芯国际Q2营收首破30亿美元，同比增36.1%</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec7-1">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>2. SK娴峰姏澹湁鎰忓湪鏃ユ湰寤洪€犲崐瀵间綋宸ュ巶</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec7-1">鈻?/button>
         </div>
-        <div class="item-body">中芯国际第二季度营收首次突破30亿美元大关，同比增长36.1%，主要受益于AI配套芯片需求激增。华虹宏力销售收入亦创历史新高达7.175亿美元。两家晶圆代工厂Q3指引出现分化：中芯环比放缓至2%-4%，华虹加速至约8%。</div>
+        <div class="item-body">鎹姤閬擄紝闊╁浗鍗婂浣撳法澶碨K娴峰姏澹湁鎰忓湪鏃ユ湰瀹煄鍘垮缓閫犲崐瀵间綋宸ュ巶锛岃鍒掓姇璧勬暟鍗佷竾浜块煩鍏冦€係K娴峰姏澹浉鍏充汉澹洖搴旂О锛屽彧瑕佹槸鍩虹璁炬柦瀹屽鐨勫湴鐐归兘鍙互鎴愪负鍊欓€夊湴锛屼絾鐩墠灏氭湭浣滃嚭浠讳綍鍐冲畾銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">3. 英伟达Spectrum-X硅光交换机量产，功耗降5倍</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec7-2">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>3. 鑻变紵杈句笌闊╁浗AI鑺墖鍏徃Rebellions璋堝垽鍚堜綔</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec7-2">鈻?/button>
         </div>
-        <div class="item-body">英伟达Spectrum-X硅光交换机全面量产，采用CPO技术将激光器数量减少4倍、功耗降低5倍、平均无故障时间提升10倍。台积电、鸿海等供应链共同参与。这标志着数据中心光互连技术进入新阶段，为超大规模AI集群提供关键基础设施支撑。</div>
-      </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">4. 汽车芯片五项认证国标发布</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
-        </div>
-        <div class="item-body">国家认监委发布全球首个汽车芯片全产业链机构能力评价标准，打通国产车规芯片"研发—认证—上车"质量链。配合7月新能源汽车销量占比突破60%的背景，国产汽车半导体正加速实现从替代到主导的跨越。</div>
+        <div class="item-body">鐭ユ儏浜哄＋閫忛湶锛岃嫳浼熻揪姝ｄ笌闊╁浗AI鑺墖璁捐鍏徃Rebellions灏卞彲鑳界殑鍚堜綔杩涜鏃╂湡璋堝垽锛屽悎浣滈€夐」鍖呮嫭鎶€鏈悎浣溿€佹姇璧勶紝鐢氳嚦鍙兘娑夊強鏀惰喘銆傝繖鍙嶆槧鍑鸿嫳浼熻揪鍦ㄥ叏鐞傾I鑺墖甯冨眬涓婄殑鎸佺画鎵╁紶銆?/div>
       </div>
     </div>
   </div>
 
-  <!-- 航天与空间 -->
-  <div class="section" data-idx="8">
+  <div class="section" id="sec8" style="--accent:#0ea5e9">
     <div class="section-header" onclick="toggleSection(this)">
-      <img src="" alt="" onerror="this.style.opacity='0'" loading="lazy" decoding="async" data-img="rocket,space">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
-        <div class="section-title" data-zh="🚀 航天与空间" data-en="🚀 Space">🚀 航天与空间</div>
-        <div class="section-actions">
-          <button class="icon-btn" onclick="event.stopPropagation(); expandSectionItems(this)" title="展开/收起本节">📄</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleSection(this.closest('.section-header'))" title="折叠">▼</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); playSection(this.closest('.section').dataset.idx)" title="朗读本节">🔊</button>
-        </div>
+        <span class="section-title"><span class="section-icon">馃殌</span>鑸ぉ涓庣┖闂?/span>
+        <span class="section-actions">
+          <button class="icon-btn" onclick="event.stopPropagation();expandSectionItems(this)" title="灞曞紑鏈妭">馃摉</button>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleSection(this.closest('.section-header'))" id="fold-sec8">鈻?/button>
+          <button class="icon-btn" onclick="event.stopPropagation();playSection(8)" title="鏈楄鏈妭">馃攰</button>
+        </span>
       </div>
     </div>
-    <div class="section-body">
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">1. 朱雀三号完成陆地回收，中国首次成功实施重复使用火箭着陆腿回收</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+    <div class="section-body" id="body-sec8">
+      <div class="item" id="item-sec8-0">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>1. 涓浗鍗€氭帹鍑烘秷璐圭骇鍗槦绉诲姩鏁版嵁涓氬姟</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec8-0">鈻?/button>
         </div>
-        <div class="item-body">8月19日，朱雀三号遥二运载火箭在东风商业航天创新试验区发射升空，一子级按预定程序成功着陆于甘肃民勤回收场坪。这是中国首次成功实施重复使用运载火箭一子级着陆腿方式回收，标志着商业航天低成本、高频次发射能力获得关键验证。</div>
+        <div class="item-body">涓浗鍗€氬甯冿紝闈㈠悜娑堣垂绾у競鍦烘帹鍑虹殑"鍗槦绉诲姩鏁版嵁涓氬姟"姝ｅ紡鍏ㄩ潰涓婄嚎寮€鍞€傞鎵规帹鍑轰笁娆剧Щ鍔ㄦ暟鎹笟鍔￠€傞厤鐨勫悎绾︽満浜у搧锛屽椁愬敭浠峰垎鍒负27999鍏冦€?5800鍏冨拰47200鍏冿紝鏍囧織鐫€鍗槦閫氫俊鍚戞秷璐圭骇甯傚満杩堝嚭閲嶈涓€姝ャ€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">2. 嫦娥七号转运至发射区，计划近日择机发射奔月南极</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec8-1">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>2. 鎴戝浗鍚堟垚涓栫晫涓婃渶闀垮崟鍘熷瓙鐩村緞"閲戝睘绾?</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec8-1">鈻?/button>
         </div>
-        <div class="item-body">8月19日上午，嫦娥七号探测器与长征五号遥十四火箭器箭组合体在文昌航天发射场垂直转运至发射区。该任务是中国探月工程四期第3次任务，计划对月球近南极地区实施绕、落、巡、飞跃综合探测，重点寻找水冰并突破多项关键技术。</div>
-      </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">3. SpaceX星链Group 10-39发射，助推器完成第30次飞行</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
-        </div>
-        <div class="item-body">北京时间8月21日晚，SpaceX从卡纳维拉尔角成功发射Starlink Group 10-39任务，将29颗星链卫星送入轨道。助推器B1078完成第30次飞行并成功海降回收。目前猎鹰9号一子级重复使用纪录由助推器B1067保持的36次。</div>
-      </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">4. 特朗普签署新太空政策备忘录，SpaceX获"黄金穹顶"80亿美元大单</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
-        </div>
-        <div class="item-body">8月20日，特朗普签署新太空政策备忘录，提出到2030年美国实现每年至少1000次发射与再入（2025年约178次）。同时，SpaceX在"黄金穹顶"（Golden Dome）导弹防御体系中已获得合计约80亿美元量级合同，涵盖军事数据传输网络、空中移动目标指示星座及发射服务。</div>
+        <div class="item-body">鎴戝浗绉戠爺鍥㈤槦鎴愬姛鍚堟垚涓栫晫涓婃渶闀垮崟鍘熷瓙鐩村緞"閲戝睘绾?锛屽湪绾崇背鏉愭枡鍜岄噺瀛愬櫒浠堕鍩熷彇寰楅噸瑕佺獊鐮达紝涓烘湭鏉ュ井鍨嬬數瀛愬櫒浠跺拰閲忓瓙璁＄畻鍙戝睍濂犲畾鏉愭枡鍩虹銆?/div>
       </div>
     </div>
   </div>
 
-  <!-- 社会与舆情 -->
-  <div class="section" data-idx="9">
+  <div class="section" id="sec9" style="--accent:#f59e0b">
     <div class="section-header" onclick="toggleSection(this)">
-      <img src="" alt="" onerror="this.style.opacity='0'" loading="lazy" decoding="async" data-img="smartphone,social">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
       <div class="section-titlebar">
-        <div class="section-title" data-zh="📱 社会与舆情" data-en="📱 Society">📱 社会与舆情</div>
-        <div class="section-actions">
-          <button class="icon-btn" onclick="event.stopPropagation(); expandSectionItems(this)" title="展开/收起本节">📄</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleSection(this.closest('.section-header'))" title="折叠">▼</button>
-          <button class="icon-btn" onclick="event.stopPropagation(); playSection(this.closest('.section').dataset.idx)" title="朗读本节">🔊</button>
-        </div>
+        <span class="section-title"><span class="section-icon">馃摫</span>绀句細涓庤垎鎯?/span>
+        <span class="section-actions">
+          <button class="icon-btn" onclick="event.stopPropagation();expandSectionItems(this)" title="灞曞紑鏈妭">馃摉</button>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleSection(this.closest('.section-header'))" id="fold-sec9">鈻?/button>
+          <button class="icon-btn" onclick="event.stopPropagation();playSection(9)" title="鏈楄鏈妭">馃攰</button>
+        </span>
       </div>
     </div>
-    <div class="section-body">
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">1. 菲律宾发生两个月内第二起校园枪击案，网络激进化威胁上升</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+    <div class="section-body" id="body-sec9">
+      <div class="item" id="item-sec9-0">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>1. ChatGPT璇诲彇鐢ㄦ埛鐭俊寮曞彂闅愮鎷呭咖</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec9-0">鈻?/button>
         </div>
-        <div class="item-body">菲律宾近日发生两个月内第二起校园枪击事件，凸显网络激进化在非英语国家的蔓延趋势。分析人士指出，社交媒体算法推荐与封闭群组加速了个体极端化进程，发展中国家在内容审核与心理健康干预方面面临双重资源缺口。</div>
+        <div class="item-body">OpenAI涓篗ac鐗圕hatGPT涓婄嚎Messages杩炴帴鍣紝鍙鍙栫敤鎴锋湰鍦扮煭淇″苟璧疯崏鍥炲锛屽紩鍙戝箍娉涢殣绉佹媴蹇с€侫I姝ｈ瘯鍥句粠鐢ㄦ埛鐨凙pp涓幏鍙栬秺鏉ヨ秺澶氱殑涓汉鏁版嵁锛屾暟鎹畨鍏ㄥ拰闅愮淇濇姢闂浜熷緟鍏虫敞銆?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">2. 法国宪法委员会否决15岁以下社交媒体禁令</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec9-1">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>2. 娑堣垂鍝佷互鏃ф崲鏂版斂绛栨儬鍙?.78浜夸汉娆?/strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec9-1">鈻?/button>
         </div>
-        <div class="item-body">法国宪法委员会裁定，禁止15岁以下未成年人使用社交媒体的法案违宪。该裁决引发关于青少年数字权利与网络保护之间平衡的广泛讨论，也为全球各国在未成年人网络监管立法方面提供了重要的司法参考。</div>
+        <div class="item-body">浠婂勾浠ユ潵锛屾秷璐瑰搧浠ユ棫鎹㈡柊鏀跨瓥宸叉儬鍙?.78浜夸汉娆★紝鏈夋晥鍒烘縺浜嗘秷璐归渶姹傦紝鎺ㄥ姩瀹剁數銆佹苯杞︾瓑澶у畻鍟嗗搧鏇存柊鎹唬锛屾垚涓虹ǔ澧為暱銆佷績娑堣垂鐨勯噸瑕佹姄鎵嬨€?/div>
       </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">3. 英国改革党誓言削减500亿英镑福利开支</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
+      <div class="item" id="item-sec9-2">
+        <div class="item-title" onclick="toggleItem(this)">
+          <strong>3. 1鑷?鏈堝叏绀句細鐢ㄧ數閲忓悓姣斿闀?.7%</strong>
+          <button class="icon-btn" onclick="event.stopPropagation();toggleItem(this.parentElement)" id="fold-item-sec9-2">鈻?/button>
         </div>
-        <div class="item-body">英国改革党提出大规模福利改革计划，目标削减500亿英镑支出，其中仅残障福利项目就拟削减220亿英镑，可能影响300万申领者。该党财政部发言人将当前福利支出水平称为"经济灾难"，引发社会对弱势群体保障的强烈争议。</div>
-      </div>
-      <div class="item">
-        <div class="item-header" onclick="toggleItem(this)">
-          <div class="item-title">4. 尼日利亚移民危机：574名移民四天内登陆克里特岛</div>
-          <button class="icon-btn" onclick="event.stopPropagation(); toggleItem(this.closest('.item-header'))">▼</button>
-        </div>
-        <div class="item-body">在四天内，共有574名尼日利亚移民登陆希腊克里特岛，欧洲南部边境再次面临移民潮压力。地中海移民 route 的复苏与北非局势不稳定密切相关，欧盟边境管理局 Frontex 已加强海上巡逻，但人道主义与边境管控的平衡仍是难题。</div>
+        <div class="item-body">1鑷?鏈堜唤鍏ㄧぞ浼氱敤鐢甸噺杈?1399浜垮崈鐡︽椂锛屽悓姣斿闀?.7%銆傜敤鐢甸噺鏁版嵁鏄粡娴庤繍琛岀殑"鏅撮洦琛?锛屽弽鏄犲嚭鎴戝浗缁忔祹淇濇寔骞崇ǔ鎭㈠鎬佸娍銆?/div>
       </div>
     </div>
   </div>
 
-  <div class="closing" id="closingText">—— 今日全球要闻已结束，祝您拥有愉快的一天 ——</div>
+  <div class="closing" id="closingText">浠婃棩鍏ㄧ悆瑕侀椈宸茬粨鏉燂紝鎰熻阿鎮ㄧ殑闃呰</div>
 
   <div class="summary">
-    <h3 id="summaryTitle">核心主线</h3>
-    <p id="summaryBody">今日全球要闻核心主线：美伊霍尔木兹海峡危机急剧升级，特朗普宣称"吞并海峡"与伊朗悬赏逮捕美军人员将地缘政治推向危险边缘，全球油市与能源安全面临严峻考验。科技领域，AI产业继续高速迭代——英伟达CPO量产、DeepSeek开源框架、宇树科创板上市、OpenAI锁定6000亿美元算力合作，显示中美AI竞争已从模型参数延伸至基础设施与生态工具链。航天方面，中国朱雀三号完成首次着陆腿回收、嫦娥七号即将奔月南极，与SpaceX高频星链发射形成中美商业航天双轨并进格局。</p>
-    <p style="margin-top:12px;font-size:.85em;">图片来源：LoremFlickr 公开共享实拍照片；语音由浏览器内置 Web Speech API 生成。</p>
+    <h3 id="summaryTitle">鏍稿績涓荤嚎</h3>
+    <p id="summaryBody">8鏈?2鏃ワ紝鍏ㄧ悆灞€鍔挎寔缁揣寮犮€備腑涓滄柟闈紝浼婃湕涓庣編鍥藉宄欏崌绾э紝闇嶅皵鏈ㄥ吂娴峰场灞€鍔跨壍鍔ㄥ叏鐞冭兘婧愪笌绮瀹夊叏绁炵粡锛涗縿涔屽啿绐侀鐒舵縺鍖栵紝榛戞捣鑸繍鐦棯寮曞彂绮鍗辨満璀﹀憡銆傜粡璐搁鍩燂紝缇庡姞璐告槗璋堝垽杩涘叆鍐插埡闃舵锛岀壒鏈楁櫘鏀垮簻涓哄簲瀵归€氳儉鍘嬪姏鏆傛椂璞佸厤纰庣墰鑲夊叧绋庛€傜鎶€鍓嶆部锛孫penAI寮€婧怌odex Harness鏍囧織AI鏅鸿兘浣撴鏋惰繘鍏ユ柊闃舵锛孌eepSeek銆佹櫤璋辩瓑涓浗妯″瀷蹇€熻拷璧躲€傚€煎緱鍏虫敞鐨勬槸锛屾亽澶у湴浜х牬浜ф竻绠楁寮忚娉曢櫌鍙楃悊锛屾垨鎴愪腑鍥芥埧鍦颁骇琛屼笟鍑烘竻鐨勯噸瑕佹爣蹇椼€?/p>
+    <p style="margin-top:12px;font-size:.85em;">鍥剧墖鏉ユ簮锛歀oremFlickr 鍏紑鍏变韩瀹炴媿鐓х墖锛涜闊崇敱娴忚鍣ㄥ唴缃?Web Speech API 鐢熸垚銆?/p>
   </div>
 </div>
 
@@ -1101,46 +1073,46 @@
 <div class="settings-overlay" id="settingsOverlay" onclick="if(event.target===this)closeSettings()">
   <div class="settings-panel">
     <div class="settings-header">
-      <h2 id="settingsTitle">设置</h2>
-      <button class="icon-btn" onclick="closeSettings()">✕</button>
+      <h2 id="settingsTitle">璁剧疆</h2>
+      <button class="icon-btn" onclick="closeSettings()">鉁?/button>
     </div>
     <div class="setting-row">
-      <label id="lblLang">语言</label>
+      <label id="lblLang">璇█</label>
       <select id="selLang" onchange="setLang(this.value)">
-        <option value="zh">简体中文</option>
+        <option value="zh">绠€浣撲腑鏂?/option>
         <option value="en">English</option>
       </select>
     </div>
     <div class="setting-row">
-      <label id="lblTheme">主题</label>
+      <label id="lblTheme">涓婚</label>
       <select id="selTheme" onchange="setTheme(this.value)">
-        <option value="auto">跟随系统</option>
-        <option value="light">浅色</option>
-        <option value="dark">深色</option>
+        <option value="auto">璺熼殢绯荤粺</option>
+        <option value="light">娴呰壊</option>
+        <option value="dark">娣辫壊</option>
       </select>
     </div>
     <div class="setting-row">
-      <label id="lblAccent">主题色</label>
+      <label id="lblAccent">涓婚鑹?/label>
       <div class="color-row">
         <input type="color" id="accentColor" value="#2563eb" onchange="setAccent(this.value)">
         <input type="number" id="accentR" min="0" max="255" placeholder="R">
         <input type="number" id="accentG" min="0" max="255" placeholder="G">
         <input type="number" id="accentB" min="0" max="255" placeholder="B">
-        <button class="apply-btn" onclick="applyRGBAccent()" id="btnApplyAccent">应用</button>
+        <button class="apply-btn" onclick="applyRGBAccent()" id="btnApplyAccent">搴旂敤</button>
       </div>
     </div>
     <div class="setting-row">
-      <label id="lblFont">字号</label>
+      <label id="lblFont">瀛楀彿</label>
       <input type="range" id="rngFont" min="12" max="22" value="15" oninput="setFont(this.value)">
       <span id="fontVal">15px</span>
     </div>
     <div class="setting-row">
-      <label id="lblRadius">圆角大小</label>
+      <label id="lblRadius">鍦嗚澶у皬</label>
       <input type="range" id="rngRadius" min="0" max="32" value="16" oninput="setRadius(this.value)">
       <span id="radiusVal">16px</span>
     </div>
     <div class="setting-row">
-      <label id="lblHl">高光显示</label>
+      <label id="lblHl">楂樺厜鏄剧ず</label>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
         <label class="switch">
           <input type="checkbox" id="chkHl" checked onchange="setHlOn(this.checked)">
@@ -1150,27 +1122,25 @@
         <input type="number" id="hlR" min="0" max="255" placeholder="R">
         <input type="number" id="hlG" min="0" max="255" placeholder="G">
         <input type="number" id="hlB" min="0" max="255" placeholder="B">
-        <button class="apply-btn" onclick="applyRGBHl()" id="btnApplyHl">应用</button>
+        <button class="apply-btn" onclick="applyRGBHl()" id="btnApplyHl">搴旂敤</button>
       </div>
     </div>
     <div class="setting-row" style="justify-content:flex-end;gap:8px;margin-top:8px;">
-      <button class="apply-btn" onclick="exportSettings()" id="btnExport">导出设置</button>
-      <button class="apply-btn" onclick="importSettings()" id="btnImport">导入设置</button>
+      <button class="apply-btn" onclick="exportSettings()" id="btnExport">瀵煎嚭璁剧疆</button>
+      <button class="apply-btn" onclick="importSettings()" id="btnImport">瀵煎叆璁剧疆</button>
     </div>
   </div>
 </div>
 
 <!-- Player -->
 <div class="player" id="player">
-  <button class="player-close" onclick="stopAll()">×</button>
-  <button class="player-expand" id="playerExpandBtn" onclick="togglePlayerSize()" title="放大播放器">⤢</button>
   <div class="player-info">
     <div class="player-chapter" id="playerChapter">--</div>
     <div class="player-time"><span id="curTime">0:00</span> / <span id="totTime">0:00</span></div>
   </div>
-  <input type="range" class="player-progress" id="playerProgress" value="0" min="0" max="100" step="0.1" oninput="seekProgress(this.value)">
+  <input type="range" class="player-progress" id="playerProgress" value="0" min="0" max="100" step="0.1" oninput="previewSeek(this.value)" onchange="seekProgress(this.value)">
   <div class="player-controls">
-    <button class="player-btn" id="playPauseBtn" onclick="togglePlay()">▶</button>
+    <button class="player-btn" id="playPauseBtn" onclick="togglePlay()">鈻?/button>
     <select id="speedSel" onchange="setSpeed(this.value)">
       <option value="0.5">0.5x</option>
       <option value="0.75">0.75x</option>
@@ -1180,29 +1150,33 @@
       <option value="2">2x</option>
     </select>
     <select id="voiceSel" onchange="changeVoice(this.value)">
-      <option value="">默认语音</option>
-      <option value="__custom__">➕ 自定义声音…</option>
+      <option value="">榛樿璇煶</option>
+      <option value="__custom__">鉃?鑷畾涔夊０闊斥€?/option>
     </select>
     <div class="player-extra">
       <div class="volume-wrap">
-        <button class="vol-btn" id="volBtn" title="音量">🔊</button>
+        <button class="vol-btn" id="volBtn" title="闊抽噺">馃攰</button>
         <div class="volume-slider">
           <input type="range" id="volRange" min="0" max="100" value="100" orient="vertical" oninput="previewVolume(this.value/100)" onchange="setVolume(this.value/100)">
         </div>
       </div>
-      <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置">⏹ <span id="playerResetLabel">重置</span></button>
+      <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="鍋滄骞堕噸缃?>鈴?<span id="playerResetLabel">閲嶇疆</span></button>
+      <button class="player-native-btn" id="nativeBtn" onclick="toggleNativeMode()" title="鍒囨崲绯荤粺鍘熺敓鎾斁妯″紡">馃枼锔?<span id="nativeLabel">鏅鸿兘鍒嗗潡</span></button>
     </div>
+    <button class="player-btn" id="playerExpandBtn" onclick="togglePlayerSize()" title="鏀惧ぇ鎾斁鍣?>猡?/button>
+    <button class="player-btn" onclick="stopAll()" title="鍏抽棴">鉁?/button>
   </div>
+  <div class="player-hint" id="playerHint" style="width:100%;font-size:11px;color:var(--text-secondary);opacity:.7;text-align:center;margin-top:4px;">馃挕 寤鸿浣跨敤榛樿娴忚鍣ㄦ墦寮€锛岃闊虫湕璇绘洿绋冲畾</div>
 </div>
 
 <!-- Custom voice modal -->
 <div class="modal-overlay" id="voiceModal" onclick="if(event.target===this)closeVoiceModal()">
   <div class="modal">
-    <h3 id="modalTitle">收藏自定义声音</h3>
+    <h3 id="modalTitle">鏀惰棌鑷畾涔夊０闊?/h3>
     <select id="modalVoiceSel"></select>
     <div class="modal-actions">
-      <button onclick="closeVoiceModal()" id="btnCancel">取消</button>
-      <button class="primary" onclick="saveCustomVoice()" id="btnSave">保存</button>
+      <button onclick="closeVoiceModal()" id="btnCancel">鍙栨秷</button>
+      <button class="primary" onclick="saveCustomVoice()" id="btnSave">淇濆瓨</button>
     </div>
   </div>
 </div>
@@ -1213,7 +1187,7 @@
 
   // ========== Date Seed Rotation ==========
   var seed = new Date().getFullYear()*10000 + (new Date().getMonth()+1)*100 + new Date().getDate();
-  var dayNames = ['周日','周一','周二','周三','周四','周五','周六'];
+  var dayNames = ['鍛ㄦ棩','鍛ㄤ竴','鍛ㄤ簩','鍛ㄤ笁','鍛ㄥ洓','鍛ㄤ簲','鍛ㄥ叚'];
   var dayNamesEn = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   var today = new Date();
   var dateStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
@@ -1221,24 +1195,24 @@
   var weekDayEn = dayNamesEn[today.getDay()];
 
   var welcomes = [
-    {zh:'愿今日资讯为您带来收获', en:'May today\'s news bring you value'},
-    {zh:'欢迎阅读今日全球要闻', en:'Welcome to today\'s global briefing'},
-    {zh:'新的一天，从了解世界开始', en:'Start your day by understanding the world'},
-    {zh:'保持好奇，保持关注', en:'Stay curious, stay informed'},
-    {zh:'信息是洞察世界的窗口', en:'Information is a window into the world'},
-    {zh:'探索世界，从这里出发', en:'Explore the world from here'},
-    {zh:'愿知识照亮前路', en:'May knowledge light your way'},
-    {zh:'今日事，今日知', en:'Today\'s affairs, today known'}
+    {zh:'鎰夸粖鏃ヨ祫璁负鎮ㄥ甫鏉ユ敹鑾?, en:'May today\'s news bring you value'},
+    {zh:'娆㈣繋闃呰浠婃棩鍏ㄧ悆瑕侀椈', en:'Welcome to today\'s global briefing'},
+    {zh:'鏂扮殑涓€澶╋紝浠庝簡瑙ｄ笘鐣屽紑濮?, en:'Start your day by understanding the world'},
+    {zh:'淇濇寔濂藉锛屼繚鎸佸叧娉?, en:'Stay curious, stay informed'},
+    {zh:'淇℃伅鏄礊瀵熶笘鐣岀殑绐楀彛', en:'Information is a window into the world'},
+    {zh:'鎺㈢储涓栫晫锛屼粠杩欓噷鍑哄彂', en:'Explore the world from here'},
+    {zh:'鎰跨煡璇嗙収浜墠璺?, en:'May knowledge light your way'},
+    {zh:'浠婃棩浜嬶紝浠婃棩鐭?, en:'Today\'s affairs, today known'}
   ];
   var closings = [
-    {zh:'今日全球要闻已结束，感谢您的阅读', en:'Today\'s briefing ends here. Thank you for reading'},
-    {zh:'资讯有价，思考无价，明日再会', en:'News has value, thinking is priceless. See you tomorrow'},
-    {zh:'世界瞬息万变，我们始终关注', en:'The world changes fast; we keep watching'},
-    {zh:'感谢您的阅读，愿明日更好', en:'Thanks for reading. May tomorrow be better'},
-    {zh:'知全局者，方行稳致远', en:'Know the whole to walk steady and far'},
-    {zh:'新闻有终点，思考无止境', en:'News ends, thinking never does'},
-    {zh:'愿您在信息的海洋中找到方向', en:'May you find direction in the sea of information'},
-    {zh:'今日落幕，明朝再启', en:'Today closes; tomorrow begins'}
+    {zh:'浠婃棩鍏ㄧ悆瑕侀椈宸茬粨鏉燂紝鎰熻阿鎮ㄧ殑闃呰', en:'Today\'s briefing ends here. Thank you for reading'},
+    {zh:'璧勮鏈変环锛屾€濊€冩棤浠凤紝鏄庢棩鍐嶄細', en:'News has value, thinking is priceless. See you tomorrow'},
+    {zh:'涓栫晫鐬伅涓囧彉锛屾垜浠缁堝叧娉?, en:'The world changes fast; we keep watching'},
+    {zh:'鎰熻阿鎮ㄧ殑闃呰锛屾効鏄庢棩鏇村ソ', en:'Thanks for reading. May tomorrow be better'},
+    {zh:'鐭ュ叏灞€鑰咃紝鏂硅绋宠嚧杩?, en:'Know the whole to walk steady and far'},
+    {zh:'鏂伴椈鏈夌粓鐐癸紝鎬濊€冩棤姝㈠', en:'News ends, thinking never does'},
+    {zh:'鎰挎偍鍦ㄤ俊鎭殑娴锋磱涓壘鍒版柟鍚?, en:'May you find direction in the sea of information'},
+    {zh:'浠婃棩钀藉箷锛屾槑鏈濆啀鍚?, en:'Today closes; tomorrow begins'}
   ];
   var gradients = [
     'linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%)',
@@ -1280,8 +1254,40 @@
   var playbackRate = 1;
   var volume = 1;
   var speakOffset = 0, charMap = [], highlightSpans = [], currentBodyEl = null;
+  var chunks = [], chunkIdx = 0; // text chunking for Chrome TTS silence bug
+  var nativeMode = false; // toggle: false=chunked mode, true=single native utterance
+  var lastHlTime = 0, lastHlEl = null; // highlight throttle + dedup scroll
+  var isSeeking = false; // true while user drags the progress bar
 
   function init() {
+    // Browser compatibility: adjust tip text for WeChat / in-app browsers
+    var ua = navigator.userAgent || '';
+    var isWeChat = /MicroMessenger/i.test(ua);
+    var isQQ = /QQ\//i.test(ua);
+    var isWeibo = /Weibo/i.test(ua);
+    var isInApp = isWeChat || isQQ || isWeibo || /WebView/i.test(ua);
+    var tipEl = document.getElementById('browserTip');
+    var tipText = document.getElementById('browserTipText');
+    if (tipEl && tipText) {
+      if (isInApp) {
+        tipText.textContent = (lang === 'zh'
+          ? '妫€娴嬪埌鍐呯疆娴忚鍣紝璇煶鏈楄绛夊姛鑳藉彲鑳藉彈闄愩€傚缓璁偣鍑诲彸涓婅銆屽湪娴忚鍣ㄤ腑鎵撳紑銆嶄娇鐢?Safari / Chrome / Edge 鑾峰緱瀹屾暣浣撻獙銆?
+          : 'In-app browser detected. Voice features may be limited. Please open in Safari / Chrome / Edge for full experience.');
+        tipEl.style.background = '#fff3cd';
+        tipEl.style.color = '#856404';
+        tipEl.style.borderColor = '#ffeaa7';
+      } else if (!window.speechSynthesis) {
+        tipText.textContent = (lang === 'zh'
+          ? '褰撳墠娴忚鍣ㄤ笉鏀寔璇煶鏈楄锛圵eb Speech API锛夈€傚缓璁洿鎹负 Safari / Chrome / Edge銆?
+          : 'Your browser does not support text-to-speech (Web Speech API). Please use Safari / Chrome / Edge.');
+        tipEl.style.background = '#fee2e2';
+        tipEl.style.color = '#991b1b';
+        tipEl.style.borderColor = '#fecaca';
+      } else {
+        // Normal browser: hide the tip after 6s
+        setTimeout(function(){ if(tipEl) tipEl.style.display='none'; }, 6000);
+      }
+    }
     applyLang();
     applyTheme();
     applyAccent();
@@ -1310,34 +1316,34 @@
 
   function applyLang() {
     var isZh = lang === 'zh';
-    document.getElementById('pageTitle').textContent = (isZh ? '每日全球要闻｜' : 'Daily Global Brief｜') + dateStr + '（' + (isZh ? weekDay : weekDayEn) + '）';
+    document.getElementById('pageTitle').textContent = (isZh ? '姣忔棩鍏ㄧ悆瑕侀椈锝? : 'Daily Global Brief锝?) + dateStr + '锛? + (isZh ? weekDay : weekDayEn) + '锛?;
     document.getElementById('welcomeText').textContent = isZh ? welcome.zh : welcome.en;
-    document.getElementById('aiGenText').textContent = isZh ? '内容由 AI 生成' : 'Content generated by AI';
-    document.getElementById('ttsMainLabel').textContent = isZh ? '全文语音收听' : 'Listen to all';
-    document.getElementById('homeLabel').textContent = isZh ? '主页' : 'Home';
-    document.getElementById('shareLabel').textContent = isZh ? '分享' : 'Share';
-    document.getElementById('settingsLabel').textContent = isZh ? '设置' : 'Settings';
-    document.getElementById('playerResetLabel').textContent = isZh ? '重置' : 'Reset';
+    document.getElementById('aiGenText').textContent = isZh ? '鍐呭鐢?AI 鐢熸垚' : 'Content generated by AI';
+    document.getElementById('ttsMainLabel').textContent = isZh ? '鍏ㄦ枃璇煶鏀跺惉' : 'Listen to all';
+    document.getElementById('homeLabel').textContent = isZh ? '涓婚〉' : 'Home';
+    document.getElementById('shareLabel').textContent = isZh ? '鍒嗕韩' : 'Share';
+    document.getElementById('settingsLabel').textContent = isZh ? '璁剧疆' : 'Settings';
+    document.getElementById('playerResetLabel').textContent = isZh ? '閲嶇疆' : 'Reset';
     var peb = document.getElementById('playerExpandBtn');
-    if (peb) peb.title = peb.textContent === '⤡' ? (isZh ? '缩小播放器' : 'Shrink player') : (isZh ? '放大播放器' : 'Enlarge player');
-    document.getElementById('closingText').textContent = '—— ' + (isZh ? closing.zh : closing.en) + ' ——';
-    document.getElementById('btnExpandAll').textContent = isZh ? '展开全部' : 'Expand all';
-    document.getElementById('btnCollapseAll').textContent = isZh ? '收起全部' : 'Collapse all';
-    document.getElementById('settingsTitle').textContent = isZh ? '设置' : 'Settings';
-    document.getElementById('lblLang').textContent = isZh ? '语言' : 'Language';
-    document.getElementById('lblTheme').textContent = isZh ? '主题' : 'Theme';
-    document.getElementById('lblAccent').textContent = isZh ? '主题色' : 'Accent color';
-    document.getElementById('lblFont').textContent = isZh ? '字号' : 'Font size';
-    document.getElementById('lblRadius').textContent = isZh ? '圆角大小' : 'Corner radius';
-    document.getElementById('lblHl').textContent = isZh ? '高光显示' : 'Highlight';
-    document.getElementById('btnApplyAccent').textContent = isZh ? '应用' : 'Apply';
-    document.getElementById('btnApplyHl').textContent = isZh ? '应用' : 'Apply';
-    document.getElementById('btnExport').textContent = isZh ? '导出设置' : 'Export';
-    document.getElementById('btnImport').textContent = isZh ? '导入设置' : 'Import';
-    document.getElementById('summaryTitle').textContent = isZh ? '核心主线' : 'Key Themes';
-    document.getElementById('modalTitle').textContent = isZh ? '收藏自定义声音' : 'Save custom voice';
-    document.getElementById('btnCancel').textContent = isZh ? '取消' : 'Cancel';
-    document.getElementById('btnSave').textContent = isZh ? '保存' : 'Save';
+    if (peb) peb.title = peb.textContent === '猡? ? (isZh ? '缂╁皬鎾斁鍣? : 'Shrink player') : (isZh ? '鏀惧ぇ鎾斁鍣? : 'Enlarge player');
+    document.getElementById('closingText').textContent = '鈥斺€?' + (isZh ? closing.zh : closing.en) + ' 鈥斺€?;
+    document.getElementById('btnExpandAll').textContent = isZh ? '灞曞紑鍏ㄩ儴' : 'Expand all';
+    document.getElementById('btnCollapseAll').textContent = isZh ? '鏀惰捣鍏ㄩ儴' : 'Collapse all';
+    document.getElementById('settingsTitle').textContent = isZh ? '璁剧疆' : 'Settings';
+    document.getElementById('lblLang').textContent = isZh ? '璇█' : 'Language';
+    document.getElementById('lblTheme').textContent = isZh ? '涓婚' : 'Theme';
+    document.getElementById('lblAccent').textContent = isZh ? '涓婚鑹? : 'Accent color';
+    document.getElementById('lblFont').textContent = isZh ? '瀛楀彿' : 'Font size';
+    document.getElementById('lblRadius').textContent = isZh ? '鍦嗚澶у皬' : 'Corner radius';
+    document.getElementById('lblHl').textContent = isZh ? '楂樺厜鏄剧ず' : 'Highlight';
+    document.getElementById('btnApplyAccent').textContent = isZh ? '搴旂敤' : 'Apply';
+    document.getElementById('btnApplyHl').textContent = isZh ? '搴旂敤' : 'Apply';
+    document.getElementById('btnExport').textContent = isZh ? '瀵煎嚭璁剧疆' : 'Export';
+    document.getElementById('btnImport').textContent = isZh ? '瀵煎叆璁剧疆' : 'Import';
+    document.getElementById('summaryTitle').textContent = isZh ? '鏍稿績涓荤嚎' : 'Key Themes';
+    document.getElementById('modalTitle').textContent = isZh ? '鏀惰棌鑷畾涔夊０闊? : 'Save custom voice';
+    document.getElementById('btnCancel').textContent = isZh ? '鍙栨秷' : 'Cancel';
+    document.getElementById('btnSave').textContent = isZh ? '淇濆瓨' : 'Save';
     document.querySelectorAll('.section-title').forEach(function(el) {
       el.textContent = isZh ? el.dataset.zh : el.dataset.en;
     });
@@ -1352,19 +1358,19 @@
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(url).then(
-        function() { alert((lang === 'zh' ? '链接已复制：' : 'Link copied: ') + url); },
-        function() { prompt(lang === 'zh' ? '请手动复制链接：' : 'Copy this link:', url); }
+        function() { alert((lang === 'zh' ? '閾炬帴宸插鍒讹細' : 'Link copied: ') + url); },
+        function() { prompt(lang === 'zh' ? '璇锋墜鍔ㄥ鍒堕摼鎺ワ細' : 'Copy this link:', url); }
       );
     } else {
-      prompt(lang === 'zh' ? '请手动复制链接：' : 'Copy this link:', url);
+      prompt(lang === 'zh' ? '璇锋墜鍔ㄥ鍒堕摼鎺ワ細' : 'Copy this link:', url);
     }
   };
   window.togglePlayerSize = function() {
     var p = document.getElementById('player');
     var b = document.getElementById('playerExpandBtn');
     var expanded = p.classList.toggle('expanded');
-    b.textContent = expanded ? '⤡' : '⤢';
-    b.title = expanded ? (lang === 'zh' ? '缩小播放器' : 'Shrink player') : (lang === 'zh' ? '放大播放器' : 'Enlarge player');
+    b.textContent = expanded ? '猡? : '猡?;
+    b.title = expanded ? (lang === 'zh' ? '缂╁皬鎾斁鍣? : 'Shrink player') : (lang === 'zh' ? '鏀惧ぇ鎾斁鍣? : 'Enlarge player');
   };
 
   function applyTheme() {
@@ -1409,29 +1415,44 @@
   }
 
   function setupVoices() {
+    if (!window.speechSynthesis) return;
     var sel = document.getElementById('voiceSel');
-    // keep the first two fixed options (默认语音 / 自定义声音...)
+    if (!sel) return;
+    // keep the first two fixed options (榛樿璇煶 / 鑷畾涔夊０闊?..)
     while (sel.options.length > 2) sel.remove(2);
-    customVoices.forEach(function(v, i) {
+    customVoices.forEach(function(v) {
       var opt = document.createElement('option');
       opt.value = v.voiceURI;
-      opt.textContent = (lang==='zh'?'自定义: ':'Custom: ') + v.name;
+      opt.textContent = (lang==='zh'?'鑷畾涔? ':'Custom: ') + v.name;
       sel.appendChild(opt);
     });
-    // populate device voices (Chrome loads them asynchronously -> also handled by onvoiceschanged)
-    if (window.speechSynthesis) {
-      speechSynthesis.getVoices().forEach(function(v) {
-        var opt = document.createElement('option');
-        opt.value = v.voiceURI;
-        opt.textContent = '🎤 ' + v.name + ' (' + v.lang + ')';
-        sel.appendChild(opt);
-      });
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return; // Firefox may return empty on first call; onvoiceschanged will re-trigger
+    voices.forEach(function(v) {
+      var opt = document.createElement('option');
+      opt.value = v.voiceURI;
+      opt.textContent = '\uD83C\uDFA4 ' + v.name + ' (' + v.lang + ')';
+      sel.appendChild(opt);
+    });
+    if (selectedVoice) {
+      // verify the voice still exists before selecting
+      var stillExists = Array.from(sel.options).some(function(o){ return o.value === selectedVoice; });
+      if (stillExists) sel.value = selectedVoice;
     }
-    if (selectedVoice) sel.value = selectedVoice;
   }
-  // Chrome populates getVoices() asynchronously; re-fill the dropdown when ready
+  // Chrome / Firefox populate getVoices() asynchronously; re-fill when ready
   if (window.speechSynthesis) {
-    speechSynthesis.onvoiceschanged = function() { setupVoices(); };
+    var _voicesReady = false;
+    function _onVoicesReady() {
+      if (_voicesReady) return;
+      _voicesReady = true;
+      setupVoices();
+    }
+    speechSynthesis.onvoiceschanged = _onVoicesReady;
+    // some browsers already have voices synchronously
+    if (speechSynthesis.getVoices && speechSynthesis.getVoices().length > 0) {
+      _onVoicesReady();
+    }
   }
 
   function setupScroll() {
@@ -1539,13 +1560,13 @@
     var body = header.nextElementSibling;
     body.classList.toggle('open');
     var btn = header.querySelector('.section-actions .icon-btn:nth-child(2)');
-    if (btn) btn.textContent = body.classList.contains('open') ? '▲' : '▼';
+    if (btn) btn.textContent = body.classList.contains('open') ? '鈻? : '鈻?;
   };
   window.toggleItem = function(header) {
     var body = header.nextElementSibling;
     body.classList.toggle('open');
     var btn = header.querySelector('.icon-btn');
-    if (btn) btn.textContent = body.classList.contains('open') ? '▲' : '▼';
+    if (btn) btn.textContent = body.classList.contains('open') ? '鈻? : '鈻?;
   };
   window.expandSectionItems = function(btn) {
     var section = btn.closest('.section');
@@ -1553,19 +1574,19 @@
     var anyClosed = Array.from(bodies).some(function(b) { return !b.classList.contains('open'); });
     bodies.forEach(function(b) { b.classList.toggle('open', anyClosed); });
     var headers = section.querySelectorAll('.item-header .icon-btn');
-    headers.forEach(function(b) { b.textContent = anyClosed ? '▲' : '▼'; });
+    headers.forEach(function(b) { b.textContent = anyClosed ? '鈻? : '鈻?; });
   };
   window.expandAll = function() {
     document.querySelectorAll('.section-body').forEach(function(b) { b.classList.add('open'); });
-    document.querySelectorAll('.section-actions .icon-btn:nth-child(2)').forEach(function(b) { b.textContent = '▲'; });
+    document.querySelectorAll('.section-actions .icon-btn:nth-child(2)').forEach(function(b) { b.textContent = '鈻?; });
     document.querySelectorAll('.item-body').forEach(function(b) { b.classList.add('open'); });
-    document.querySelectorAll('.item-header .icon-btn').forEach(function(b) { b.textContent = '▲'; });
+    document.querySelectorAll('.item-header .icon-btn').forEach(function(b) { b.textContent = '鈻?; });
   };
   window.collapseAll = function() {
     document.querySelectorAll('.section-body').forEach(function(b) { b.classList.remove('open'); });
-    document.querySelectorAll('.section-actions .icon-btn:nth-child(2)').forEach(function(b) { b.textContent = '▼'; });
+    document.querySelectorAll('.section-actions .icon-btn:nth-child(2)').forEach(function(b) { b.textContent = '鈻?; });
     document.querySelectorAll('.item-body').forEach(function(b) { b.classList.remove('open'); });
-    document.querySelectorAll('.item-header .icon-btn').forEach(function(b) { b.textContent = '▼'; });
+    document.querySelectorAll('.item-header .icon-btn').forEach(function(b) { b.textContent = '鈻?; });
   };
 
   // ========== TTS ==========
@@ -1587,9 +1608,9 @@
     items.forEach(function(item) {
       var t = item.querySelector('.item-title').textContent;
       var b = item.querySelector('.item-body').textContent;
-      parts.push(t + '。' + b);
+      parts.push(t + '銆? + b);
     });
-    return parts.join('。');
+    return parts.join('銆?);
   }
 
   function wrapTextForHighlight(bodyEl) {
@@ -1631,25 +1652,112 @@
 
   function highlightCharAt(map, idx) {
     if (!map || !map.length) return;
+    var now = Date.now();
+    if (now - lastHlTime < 120) return; // throttle ~120ms to avoid flicker
+    lastHlTime = now;
     // clear all
     map.forEach(function(m) { m.span.style.background = 'transparent'; });
     if (idx < 0 || idx >= map.length) return;
     // find word boundaries around idx
     var start = idx, end = idx;
-    var ch = map[idx].char;
-    var punct = /[\s\n\r\t，。！？、；：""''（）【】《》.,;:!?()'"\-\/\[\]]/;
+    var punct = /[\s\n\r\t锛屻€傦紒锛熴€侊紱锛?"''锛堬級銆愩€戙€娿€?,;:!?()'"\-\/\[\]]/;
     while (start > 0 && !punct.test(map[start-1].char)) start--;
     while (end < map.length - 1 && !punct.test(map[end+1].char)) end++;
     for (var i = start; i <= end; i++) {
       map[i].span.style.background = 'var(--hl-color)';
     }
-    // scroll into view
-    map[idx].span.scrollIntoView({behavior:'smooth', block:'center'});
+    // scroll into view only if not already visible (avoid jitter)
+    var span = map[idx].span;
+    var rect = span.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    if (rect.top < 100 || rect.bottom > vh - 100) {
+      if (lastHlEl !== span) {
+        lastHlEl = span;
+        span.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+    }
+  }
+
+  // Split long text into chunks to avoid Chrome ~15s silence bug
+  function splitIntoChunks(text, maxChars) {
+    var parts = text.split(/([銆傦紒锛?!?]\s*)/);
+    var out = [], cur = '';
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i];
+      if (!p) continue;
+      if (cur.length + p.length > maxChars && cur.length > 0) {
+        out.push(cur);
+        cur = p;
+      } else {
+        cur += p;
+      }
+    }
+    if (cur) out.push(cur);
+    var result = [];
+    out.forEach(function(c) {
+      while (c.length > maxChars) {
+        result.push(c.slice(0, maxChars));
+        c = c.slice(maxChars);
+      }
+      if (c) result.push(c);
+    });
+    return result.length ? result : [text];
   }
 
   function startSpeaking(text, bodyEl) {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
+    currentBodyEl = bodyEl;
+    charMap = bodyEl ? wrapTextForHighlight(bodyEl) : [];
+    if (nativeMode) {
+      // Native mode: single utterance (no chunking)
+      var utt = new SpeechSynthesisUtterance(text);
+      utt.lang = 'zh-CN';
+      utt.rate = playbackRate;
+      utt.volume = volume;
+      var v = getVoice();
+      if (v) utt.voice = v;
+      currentUtt = utt;
+      speakOffset = 0;
+      utt.onboundary = function(e) {
+        if (e.name === 'word' || e.name === 'sentence') {
+          var globalIdx = e.charIndex;
+          if (charMap.length && hlOn) {
+            highlightCharAt(charMap, globalIdx);
+          }
+        }
+      };
+      utt.onend = function() {
+        if (currentUtt !== utt) return;
+        if (charMap.length) clearHighlight(currentBodyEl);
+        onItemEnd();
+      };
+      utt.onerror = function() {
+        if (currentUtt !== utt) return;
+        if (charMap.length) clearHighlight(currentBodyEl);
+        onItemEnd();
+      };
+      window.speechSynthesis.speak(utt);
+      isPlaying = true; isPaused = false;
+      updatePlayerUI();
+    } else {
+      // Chunked mode: split into short chunks to avoid Chrome 15s silence bug
+      chunks = splitIntoChunks(text, 150);
+      chunkIdx = 0;
+      speakOffset = 0;
+      updateProgressUI();
+      speakCurrentChunk();
+    }
+  }
+
+  function speakCurrentChunk() {
+    if (chunkIdx >= chunks.length) {
+      if (charMap.length) clearHighlight(currentBodyEl);
+      onItemEnd();
+      return;
+    }
+    updateProgressUI();
+    var text = chunks[chunkIdx];
     var utt = new SpeechSynthesisUtterance(text);
     utt.lang = 'zh-CN';
     utt.rate = playbackRate;
@@ -1657,33 +1765,33 @@
     var v = getVoice();
     if (v) utt.voice = v;
     currentUtt = utt;
-    currentBodyEl = bodyEl;
-    charMap = bodyEl ? wrapTextForHighlight(bodyEl) : [];
-    speakOffset = 0;
 
     utt.onboundary = function(e) {
       if (e.name === 'word' || e.name === 'sentence') {
+        var globalIdx = speakOffset + e.charIndex;
         if (charMap.length && hlOn) {
-          highlightCharAt(charMap, e.charIndex);
+          highlightCharAt(charMap, globalIdx);
         }
       }
     };
     utt.onend = function() {
-      if (currentUtt !== utt) return; // ignore stale events from a cancelled utterance
-      if (charMap.length) clearHighlight(bodyEl);
-      onUtteranceEnd();
+      if (currentUtt !== utt) return;
+      speakOffset += text.length;
+      chunkIdx++;
+      speakCurrentChunk();
     };
     utt.onerror = function() {
-      if (currentUtt !== utt) return; // ignore stale events (e.g. 'interrupted' after cancel)
-      if (charMap.length) clearHighlight(bodyEl);
-      onUtteranceEnd();
+      if (currentUtt !== utt) return;
+      speakOffset += text.length;
+      chunkIdx++;
+      speakCurrentChunk();
     };
     window.speechSynthesis.speak(utt);
     isPlaying = true; isPaused = false;
     updatePlayerUI();
   }
 
-  function onUtteranceEnd() {
+  function onItemEnd() {
     if (currentMode === 'all') {
       currentItemIdx++;
       if (currentItemIdx >= sectionData[currentSectionIdx].items.length) {
@@ -1727,13 +1835,20 @@
       sec.querySelectorAll('.item').forEach(function(item) {
         var t = item.querySelector('.item-title').textContent;
         var b = item.querySelector('.item-body').textContent;
-        items.push({ text: t + '。' + b, el: item });
+        items.push({ text: t + '銆? + b, el: item });
       });
       sectionData.push({ title: title, items: items });
     });
   }
 
+  function ttsUnavailableAlert() {
+    var msg = lang === 'zh'
+      ? '褰撳墠娴忚鍣ㄦ垨鐜涓嶆敮鎸佽闊虫湕璇汇€傚缓璁敤 Safari / Chrome / Edge 鎵撳紑銆?
+      : 'Text-to-speech is not supported in this browser. Please use Safari / Chrome / Edge.';
+    alert(msg);
+  }
   window.playAll = function() {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
     buildQueue();
     if (!sectionData.length) return;
     currentMode = 'all';
@@ -1743,6 +1858,7 @@
   };
 
   window.playSection = function(idx) {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
     buildQueue();
     idx = +idx;
     if (idx < 0 || idx >= sectionData.length) return;
@@ -1751,16 +1867,25 @@
     document.getElementById('player').classList.add('open');
     playCurrentQueue();
   };
+  // Alias for generated HTML buttons that use speakSection()
+  window.speakSection = window.playSection;
 
   window.stopAll = function() {
     currentUtt = null; // set null BEFORE cancel so stale onend/onerror get ignored
+    chunks = []; chunkIdx = 0;
     if (window.speechSynthesis) window.speechSynthesis.cancel();
     isPlaying = false; isPaused = false;
     if (currentBodyEl) clearHighlight(currentBodyEl);
     document.getElementById('player').classList.remove('open');
+    var prog = document.getElementById('playerProgress');
+    if (prog) { prog.value = 0; prog.disabled = false; }
+    var cur = document.getElementById('curTime');
+    var tot = document.getElementById('totTime');
+    if (cur) cur.textContent = '0:00';
+    if (tot) tot.textContent = '0:00';
   };
 
-  // 暂停并重置语音播放：立即停止合成、清除高光、收起播放器，并把播放进度归零（下次点击「全文语音收听」从第一节第一条重新开始）
+  // 鏆傚仠骞堕噸缃闊虫挱鏀撅細绔嬪嵆鍋滄鍚堟垚銆佹竻闄ら珮鍏夈€佹敹璧锋挱鏀惧櫒锛屽苟鎶婃挱鏀捐繘搴﹀綊闆讹紙涓嬫鐐瑰嚮銆屽叏鏂囪闊虫敹鍚€嶄粠绗竴鑺傜涓€鏉￠噸鏂板紑濮嬶級
   window.resetSpeech = function() {
     stopAll();
     currentMode = null;
@@ -1777,7 +1902,7 @@
   };
 
   window.togglePlay = function() {
-    if (!window.speechSynthesis) return;
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
     if (isPlaying && !isPaused) {
       window.speechSynthesis.pause();
       isPaused = true;
@@ -1794,9 +1919,9 @@
   function updateVolIcon() {
     var volBtn = document.getElementById('volBtn');
     if (volBtn) {
-      if (volume === 0) volBtn.textContent = '🔇';
-      else if (volume < 0.5) volBtn.textContent = '🔉';
-      else volBtn.textContent = '🔊';
+      if (volume === 0) volBtn.textContent = '馃攪';
+      else if (volume < 0.5) volBtn.textContent = '馃攭';
+      else volBtn.textContent = '馃攰';
     }
   }
 
@@ -1807,14 +1932,15 @@
     updateVolIcon();
   };
 
-  // restart current utterance with new settings (rate/volume/voice) from the start of the current item
+  // restart current item with new settings (rate/volume/voice)
   function restartIfPlaying() {
-    if (currentUtt && isPlaying && !isPaused) {
-      var text = currentUtt.text;
-      var bodyEl = currentBodyEl;
-      currentUtt = null; // prevent stale onend/onerror from advancing the queue
+    if (isPlaying && !isPaused && currentBodyEl) {
+      var sec = sectionData[currentSectionIdx];
+      var item = sec.items[currentItemIdx];
+      currentUtt = null;
+      chunks = []; chunkIdx = 0;
       window.speechSynthesis.cancel();
-      setTimeout(function() { startSpeaking(text, bodyEl); }, 80);
+      setTimeout(function() { startSpeaking(item.text, currentBodyEl); }, 80);
     }
   }
 
@@ -1837,15 +1963,22 @@
   };
 
   window.openVoiceModal = function() {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
     var sel = document.getElementById('modalVoiceSel');
     sel.innerHTML = '';
     var voices = speechSynthesis.getVoices();
-    voices.forEach(function(v) {
+    if (!voices || !voices.length) {
       var opt = document.createElement('option');
-      opt.value = v.voiceURI;
-      opt.textContent = v.name + ' (' + v.lang + ')';
+      opt.textContent = lang === 'zh' ? '鏆傛棤鍙€夊０闊筹紝璇风◢鍚庡啀璇? : 'No voices available, please try again later';
       sel.appendChild(opt);
-    });
+    } else {
+      voices.forEach(function(v) {
+        var opt = document.createElement('option');
+        opt.value = v.voiceURI;
+        opt.textContent = v.name + ' (' + v.lang + ')';
+        sel.appendChild(opt);
+      });
+    }
     document.getElementById('voiceModal').classList.add('open');
   };
   window.closeVoiceModal = function() { document.getElementById('voiceModal').classList.remove('open'); };
@@ -1869,12 +2002,75 @@
 
   function updatePlayerUI() {
     var btn = document.getElementById('playPauseBtn');
-    btn.textContent = (isPlaying && !isPaused) ? '⏸' : '▶';
+    btn.textContent = (isPlaying && !isPaused) ? '鈴? : '鈻?;
   }
 
+  window.toggleNativeMode = function() {
+    nativeMode = !nativeMode;
+    var btn = document.getElementById('nativeBtn');
+    var lbl = document.getElementById('nativeLabel');
+    if (nativeMode) {
+      btn.classList.add('active');
+      lbl.textContent = lang === 'zh' ? '绯荤粺鍘熺敓' : 'Native';
+    } else {
+      btn.classList.remove('active');
+      lbl.textContent = lang === 'zh' ? '鏅鸿兘鍒嗗潡' : 'Chunked';
+    }
+  };
+
+  function updateProgressUI() {
+    var prog = document.getElementById('playerProgress');
+    var cur = document.getElementById('curTime');
+    var tot = document.getElementById('totTime');
+    if (!prog) return;
+    if (nativeMode || !chunks.length) {
+      prog.value = 0;
+      prog.disabled = true;
+      if (cur) cur.textContent = '--';
+      if (tot) tot.textContent = '--';
+    } else {
+      prog.disabled = false;
+      var pct = chunks.length ? (chunkIdx / chunks.length) * 100 : 0;
+      prog.value = pct;
+      if (cur) cur.textContent = String(chunkIdx + 1);
+      if (tot) tot.textContent = String(chunks.length);
+    }
+  }
+
+  window.previewSeek = function(val) {
+    isSeeking = true;
+    var cur = document.getElementById('curTime');
+    if (cur && chunks.length) {
+      var target = Math.floor((val / 100) * chunks.length) + 1;
+      cur.textContent = String(Math.min(target, chunks.length));
+    }
+  };
+
   window.seekProgress = function(val) {
-    // Web Speech API doesn't support true seeking; this is a visual placeholder
-    // In a full implementation, you'd chunk text and track progress manually
+    isSeeking = false;
+    if (nativeMode || !chunks.length) return;
+    var targetIdx = Math.floor((val / 100) * chunks.length);
+    targetIdx = Math.max(0, Math.min(targetIdx, chunks.length - 1));
+
+    // Stop current playback
+    currentUtt = null;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+
+    // Recalculate speakOffset from start up to target chunk
+    speakOffset = 0;
+    for (var i = 0; i < targetIdx; i++) {
+      speakOffset += chunks[i].length;
+    }
+
+    chunkIdx = targetIdx;
+
+    // Rebuild highlight map for the new position
+    if (currentBodyEl) {
+      charMap = wrapTextForHighlight(currentBodyEl);
+    }
+
+    updateProgressUI();
+    speakCurrentChunk();
   };
 
   // ========== Utils ==========
@@ -1887,13 +2083,13 @@
   }
 
   // Chrome bug workaround: speechSynthesis goes silent ~15s into long utterances.
-  // A periodic pause/resume keeps the engine alive without audible interruption.
+  // Text chunking (splitIntoChunks) is the primary fix; this keepalive is secondary insurance.
   setInterval(function() {
     if (window.speechSynthesis && speechSynthesis.speaking && !speechSynthesis.paused && isPlaying && !isPaused) {
       speechSynthesis.pause();
       speechSynthesis.resume();
     }
-  }, 12000);
+  }, 8000);
 
   init();
 })();
