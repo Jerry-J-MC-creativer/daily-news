@@ -1321,6 +1321,7 @@
     applyHl();
     applyHlOn();
     setupImages();
+    setupSectionButtonLabels();
     setupSettingsUI();
     setupVoices();
     setupScroll();
@@ -1346,6 +1347,19 @@
         };
       }
     });
+  }
+
+  function setupSectionButtonLabels() {
+    // Auto-apply visible text labels to all section/item buttons on load,
+    // so even generated HTML without text still shows labels (idempotent).
+    document.querySelectorAll('.section-actions').forEach(function(actions) {
+      var btns = actions.querySelectorAll('.fold-btn');
+      if (btns.length >= 1) btns[0].innerHTML = '📖 展开';
+      if (btns.length >= 2) btns[1].innerHTML = '▼ 展开';
+      var tts = actions.querySelector('.tts-btn');
+      if (tts) tts.innerHTML = '🔊 朗读';
+    });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = '▼ 展开'; });
   }
 
   function applyLang() {
