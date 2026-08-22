@@ -497,6 +497,24 @@
     transition: border-color .2s, color .2s;
   }
   .player-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .player-native-btn {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-size: .78em;
+    display: inline-flex; align-items: center; gap: 4px;
+    flex-shrink: 0;
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .player-native-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(37, 99, 235, 0.08);
+  }
+  .player-native-btn:hover { border-color: var(--accent); color: var(--accent); }
   .player.expanded .player-extra { margin-left: 0; gap: 14px; }
   .player.expanded .vol-btn { width: 40px; height: 40px; font-size: 18px; }
   .player.expanded .player-reset-btn { padding: 8px 14px; font-size: .9em; }
@@ -766,6 +784,7 @@
         </div>
       </div>
       <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置">⏹ <span id="playerResetLabel">重置</span></button>
+      <button class="player-native-btn" id="nativeBtn" onclick="toggleNativeMode()" title="切换系统原生播放模式">🖥️ <span id="nativeLabel">智能分块</span></button>
     </div>
   </div>
   <div class="player-hint" id="playerHint" style="width:100%;font-size:11px;color:var(--text-secondary);opacity:.7;text-align:center;margin-top:4px;">💡 建议使用默认浏览器打开，语音朗读更稳定</div>
@@ -857,6 +876,8 @@
   var volume = 1;
   var speakOffset = 0, charMap = [], highlightSpans = [], currentBodyEl = null;
   var chunks = [], chunkIdx = 0; // text chunking for Chrome TTS silence bug
+  var nativeMode = false; // toggle: false=chunked mode, true=single native utterance
+  var lastHlTime = 0, lastHlEl = null; // highlight throttle + dedup scroll
 
   function init() {
     // Browser compatibility: adjust tip text for WeChat / in-app browsers
@@ -1251,20 +1272,30 @@
 
   function highlightCharAt(map, idx) {
     if (!map || !map.length) return;
+    var now = Date.now();
+    if (now - lastHlTime < 120) return; // throttle ~120ms to avoid flicker
+    lastHlTime = now;
     // clear all
     map.forEach(function(m) { m.span.style.background = 'transparent'; });
     if (idx < 0 || idx >= map.length) return;
     // find word boundaries around idx
     var start = idx, end = idx;
-    var ch = map[idx].char;
     var punct = /[\s\n\r\t，。！？、；：""''（）【】《》.,;:!?()'"\-\/\[\]]/;
     while (start > 0 && !punct.test(map[start-1].char)) start--;
     while (end < map.length - 1 && !punct.test(map[end+1].char)) end++;
     for (var i = start; i <= end; i++) {
       map[i].span.style.background = 'var(--hl-color)';
     }
-    // scroll into view
-    map[idx].span.scrollIntoView({behavior:'smooth', block:'center'});
+    // scroll into view only if not already visible (avoid jitter)
+    var span = map[idx].span;
+    var rect = span.getBoundingClientRect();
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    if (rect.top < 100 || rect.bottom > vh - 100) {
+      if (lastHlEl !== span) {
+        lastHlEl = span;
+        span.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+    }
   }
 
   // Split long text into chunks to avoid Chrome ~15s silence bug
@@ -1296,12 +1327,46 @@
   function startSpeaking(text, bodyEl) {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
-    chunks = splitIntoChunks(text, 150);
-    chunkIdx = 0;
     currentBodyEl = bodyEl;
     charMap = bodyEl ? wrapTextForHighlight(bodyEl) : [];
-    speakOffset = 0;
-    speakCurrentChunk();
+    if (nativeMode) {
+      // Native mode: single utterance (no chunking)
+      var utt = new SpeechSynthesisUtterance(text);
+      utt.lang = 'zh-CN';
+      utt.rate = playbackRate;
+      utt.volume = volume;
+      var v = getVoice();
+      if (v) utt.voice = v;
+      currentUtt = utt;
+      speakOffset = 0;
+      utt.onboundary = function(e) {
+        if (e.name === 'word' || e.name === 'sentence') {
+          var globalIdx = e.charIndex;
+          if (charMap.length && hlOn) {
+            highlightCharAt(charMap, globalIdx);
+          }
+        }
+      };
+      utt.onend = function() {
+        if (currentUtt !== utt) return;
+        if (charMap.length) clearHighlight(currentBodyEl);
+        onItemEnd();
+      };
+      utt.onerror = function() {
+        if (currentUtt !== utt) return;
+        if (charMap.length) clearHighlight(currentBodyEl);
+        onItemEnd();
+      };
+      window.speechSynthesis.speak(utt);
+      isPlaying = true; isPaused = false;
+      updatePlayerUI();
+    } else {
+      // Chunked mode: split into short chunks to avoid Chrome 15s silence bug
+      chunks = splitIntoChunks(text, 150);
+      chunkIdx = 0;
+      speakOffset = 0;
+      speakCurrentChunk();
+    }
   }
 
   function speakCurrentChunk() {
@@ -1420,6 +1485,8 @@
     document.getElementById('player').classList.add('open');
     playCurrentQueue();
   };
+  // Alias for generated HTML buttons that use speakSection()
+  window.speakSection = window.playSection;
 
   window.stopAll = function() {
     currentUtt = null; // set null BEFORE cancel so stale onend/onerror get ignored
@@ -1549,6 +1616,19 @@
     var btn = document.getElementById('playPauseBtn');
     btn.textContent = (isPlaying && !isPaused) ? '⏸' : '▶';
   }
+
+  window.toggleNativeMode = function() {
+    nativeMode = !nativeMode;
+    var btn = document.getElementById('nativeBtn');
+    var lbl = document.getElementById('nativeLabel');
+    if (nativeMode) {
+      btn.classList.add('active');
+      lbl.textContent = lang === 'zh' ? '系统原生' : 'Native';
+    } else {
+      btn.classList.remove('active');
+      lbl.textContent = lang === 'zh' ? '智能分块' : 'Chunked';
+    }
+  };
 
   window.seekProgress = function(val) {
     // Web Speech API doesn't support true seeking; this is a visual placeholder
