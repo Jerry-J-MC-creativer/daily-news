@@ -385,18 +385,55 @@
     padding: 14px 18px;
     z-index: 150;
     display: none;
-    align-items: center;
+    flex-direction: column;
     gap: 12px;
-    flex-wrap: wrap;
     border: 1px solid var(--border);
   }
   .player.open { display: flex; }
-  .player-info { flex: 1; min-width: 120px; }
-  .player-chapter { font-weight: 700; font-size: .9em; }
-  .player-time { font-size: .8em; color: var(--text-secondary); }
+  .player-main-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .p-icon-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s, transform .1s;
+    flex-shrink: 0;
+  }
+  .p-icon-btn:hover { background: rgba(128,128,128,0.12); color: var(--accent); }
+  .p-icon-btn:active { transform: scale(0.92); }
+  .p-icon-btn.active { color: var(--accent); background: rgba(37,99,235,0.10); }
+  .p-icon-btn svg { width: 22px; height: 22px; }
+  .p-play-btn {
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    border: none;
+    background: conic-gradient(from 180deg, #f97316, #a855f7, #f97316);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+    transition: transform .1s;
+    flex-shrink: 0;
+  }
+  .p-play-btn:hover { transform: scale(1.05); }
+  .p-play-btn:active { transform: scale(0.96); }
+  .p-play-btn svg { width: 26px; height: 26px; }
+  .p-play-btn #playIcon { margin-left: 3px; }
+  .player-progress-row {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%;
+  }
   .player-progress {
-    flex: 2;
-    min-width: 140px;
+    flex: 1;
+    min-width: 0;
     height: 8px;
     -webkit-appearance: none;
     appearance: none;
@@ -416,21 +453,21 @@
     transition: transform .12s;
   }
   .player-progress::-webkit-slider-thumb:active { transform: scale(1.25); }
-  .player-btn {
-    height: 42px; padding: 0 22px; width: auto; min-width: 96px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    cursor: pointer;
-    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    font-size: .92em;
-    font-weight: 600;
-    white-space: nowrap;
-    box-shadow: 0 1px 2px rgba(0,0,0,.06);
-    flex-shrink: 0;
+  .player-time { font-size: .8em; color: var(--text-secondary); min-width: 36px; text-align: center; }
+  .player-extra-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
   }
-  .player-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .player-extra-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
   .player select {
     padding: 5px 8px;
     border-radius: 6px;
@@ -438,10 +475,8 @@
     background: var(--bg);
     color: var(--text);
     font-size: .85em;
-    max-width: 100px;
+    max-width: 120px;
   }
-  .player-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .player-extra { display: flex; align-items: center; gap: 8px; margin-left: auto; }
   .volume-wrap { position: relative; display: inline-flex; align-items: center; }
   .volume-wrap .volume-slider {
     position: absolute;
@@ -464,9 +499,8 @@
     width: 6px; height: 80px;
     accent-color: var(--accent);
   }
-  /* fallback for browsers without slider-vertical */
   .volume-slider input[type=range] {
-    writing-mode: bt-lr; /* IE */
+    writing-mode: bt-lr;
     -webkit-appearance: none;
     appearance: none;
     width: 6px; height: 80px;
@@ -489,7 +523,7 @@
     cursor: pointer; border: none;
   }
   .vol-btn {
-    height: 42px; padding: 0 18px; width: auto; min-width: 84px;
+    height: 38px; padding: 0 10px; width: auto; min-width: 42px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
@@ -502,9 +536,10 @@
     box-shadow: 0 1px 2px rgba(0,0,0,.06);
     flex-shrink: 0;
   }
+  .vol-btn svg { width: 20px; height: 20px; }
   .vol-btn:hover { border-color: var(--accent); color: var(--accent); }
   .player-reset-btn {
-    padding: 8px 18px;
+    padding: 8px 16px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
@@ -512,14 +547,16 @@
     cursor: pointer;
     font-size: .85em;
     font-weight: 600;
-    display: inline-flex; align-items: center; gap: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     flex-shrink: 0;
     box-shadow: 0 1px 2px rgba(0,0,0,.06);
     transition: border-color .2s, color .2s;
   }
   .player-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
   .player-native-btn {
-    padding: 8px 18px;
+    padding: 8px 14px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
@@ -527,7 +564,9 @@
     cursor: pointer;
     font-size: .85em;
     font-weight: 600;
-    display: inline-flex; align-items: center; gap: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     flex-shrink: 0;
     box-shadow: 0 1px 2px rgba(0,0,0,.06);
     transition: border-color .2s, color .2s, background .2s;
@@ -538,24 +577,19 @@
     background: rgba(37, 99, 235, 0.08);
   }
   .player-native-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .player.expanded .player-extra { margin-left: 0; gap: 14px; }
-  .player.expanded .vol-btn { width: 40px; height: 40px; font-size: 18px; }
-  .player.expanded .player-reset-btn { padding: 8px 14px; font-size: .9em; }
   .player.expanded {
     width: 96%;
     max-width: 960px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 14px;
-    padding: 24px 28px 18px;
+    padding: 22px 28px 18px;
   }
-  .player.expanded .player-info { min-width: 0; text-align: center; }
-  .player.expanded .player-chapter { font-size: 1.15em; }
-  .player.expanded .player-time { font-size: .9em; }
-  .player.expanded .player-progress { width: 100%; flex: none; height: 12px; }
+  .player.expanded .player-main-row { gap: 18px; }
+  .player.expanded .p-icon-btn { width: 44px; height: 44px; }
+  .player.expanded .p-icon-btn svg { width: 26px; height: 26px; }
+  .player.expanded .p-play-btn { width: 72px; height: 72px; }
+  .player.expanded .p-play-btn svg { width: 32px; height: 32px; }
+  .player.expanded .player-progress { height: 12px; }
   .player.expanded .player-progress::-webkit-slider-thumb { width: 20px; height: 20px; }
-  .player.expanded .player-btn { width: 52px; height: 52px; font-size: 22px; }
-  .player.expanded select { padding: 9px 12px; font-size: .95em; max-width: 140px; }
+  .player.expanded .player-time { font-size: .9em; }
   /* Custom voice modal */
   .modal-overlay {
     position: fixed; inset: 0;
@@ -605,9 +639,15 @@
     .item-body { font-size: .9em; }
     .settings-panel { padding: 14px; }
     .modal { padding: 14px; }
-    .player-btn { height: 38px; padding: 0 16px; min-width: 84px; font-size: 14px; }
-    .player.expanded .player-btn { width: 46px; height: 46px; font-size: 18px; }
-    .vol-btn { height: 38px; padding: 0 14px; min-width: 74px; font-size: 13px; }
+    .p-icon-btn { width: 34px; height: 34px; }
+    .p-icon-btn svg { width: 20px; height: 20px; }
+    .p-play-btn { width: 50px; height: 50px; }
+    .p-play-btn svg { width: 22px; height: 22px; }
+    .player.expanded .p-icon-btn { width: 40px; height: 40px; }
+    .player.expanded .p-play-btn { width: 58px; height: 58px; }
+    .vol-btn { height: 34px; padding: 0 8px; min-width: 34px; font-size: 12px; }
+    .player-reset-btn, .player-native-btn { padding: 6px 10px; font-size: .78em; }
+    .player-extra-group { gap: 6px; }
   }
   /* ========== Responsive: Large phones (480px - 767px) ========== */
   @media (min-width: 480px) and (max-width: 767px) {
@@ -655,7 +695,7 @@
     .section-header { min-height: 160px; }
     .global-actions button { padding: 8px 18px; font-size: 1em; }
     .icon-btn { width: 36px; height: 36px; font-size: 15px; }
-    .fold-btn, .tts-btn { width: 36px; height: 36px; font-size: 15px; }
+    .fold-btn, .tts-btn { height: 36px; padding: 0 12px; font-size: 14px; }
     .settings-panel { max-width: 480px; padding: 24px; }
   }
   /* ========== Responsive: Extra ultra-wide (>= 2560px) ========== */
@@ -1202,42 +1242,73 @@
 
 <!-- Player -->
 <div class="player" id="player">
-  <div class="player-info">
-    <div class="player-chapter" id="playerChapter">--</div>
-    <div class="player-time"><span id="curTime">0:00</span> / <span id="totTime">0:00</span></div>
+  <div class="player-main-row">
+    <button class="p-icon-btn" id="shuffleBtn" onclick="toggleShuffle()" title="随机">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M3 4l5 5"/></svg>
+    </button>
+    <button class="p-icon-btn" onclick="prevItem()" title="上一则">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm11 12l-8-6 8-6v12z"/></svg>
+    </button>
+    <button class="p-icon-btn" onclick="seekBy(-10)" title="后退 10 秒">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 17.5L7 12l4.5-5.5"/><path d="M7 12h10"/><text x="12" y="22" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">10</text></svg>
+    </button>
+    <button class="p-play-btn" id="playPauseBtn" onclick="togglePlay()" title="播放/暂停">
+      <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+    <button class="p-icon-btn" onclick="seekBy(30)" title="前进 30 秒">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 17.5L17 12l-4.5-5.5"/><path d="M17 12H7"/><text x="12" y="22" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">30</text></svg>
+    </button>
+    <button class="p-icon-btn" onclick="nextItem()" title="下一则">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8-6-8-6v12zm9-12h2v12h-2z"/></svg>
+    </button>
+    <button class="p-icon-btn" id="repeatBtn" onclick="toggleRepeat()" title="循环">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2.5l3 3-3 3M2 12a10 10 0 0115-8.5M7 21.5l-3-3 3-3M22 12a10 10 0 01-15 8.5"/></svg>
+    </button>
   </div>
-  <input type="range" class="player-progress" id="playerProgress" value="0" min="0" max="100" step="0.1" oninput="previewSeek(this.value)" onchange="seekProgress(this.value)">
-  <div class="player-controls">
-    <button class="player-btn" id="playPauseBtn" onclick="togglePlay()">▶ 播放</button>
-    <select id="speedSel" onchange="setSpeed(this.value)">
-      <option value="0.5">0.5x</option>
-      <option value="0.75">0.75x</option>
-      <option value="1" selected>1x</option>
-      <option value="1.25">1.25x</option>
-      <option value="1.5">1.5x</option>
-      <option value="2">2x</option>
-    </select>
-    <select id="voiceSel" onchange="changeVoice(this.value)">
-      <option value="">默认语音</option>
-      <option value="__custom__">➕ 自定义声音…</option>
-    </select>
-    <div class="player-extra">
+  <div class="player-progress-row">
+    <span class="player-time" id="curTime">0:00</span>
+    <input type="range" class="player-progress" id="playerProgress" value="0" min="0" max="100" step="0.1" oninput="previewSeek(this.value)" onchange="seekProgress(this.value)">
+    <span class="player-time" id="totTime">0:00</span>
+  </div>
+  <div class="player-extra-row">
+    <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置"><span id="playerResetLabel">重置</span></button>
+    <div class="player-extra-group">
+      <select id="voiceSel" onchange="changeVoice(this.value)">
+        <option value="">默认语音</option>
+        <option value="__custom__">➕ 自定义声音…</option>
+      </select>
+      <select id="speedSel" onchange="setSpeed(this.value)">
+        <option value="0.5">0.5x</option>
+        <option value="0.75">0.75x</option>
+        <option value="1" selected>1x</option>
+        <option value="1.25">1.25x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+      </select>
       <div class="volume-wrap">
-        <button class="vol-btn" id="volBtn" title="音量">🔊 音量</button>
+        <button class="vol-btn" id="volBtn" title="音量">
+          <svg id="volHighIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 000-6.5v1.75a2.75 2.75 0 010 4.75V12zm3-6.5a8 8 0 000 11.5v-1.75a6.25 6.25 0 010-8V5.5z"/></svg>
+          <svg id="volMuteIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M16.5 12l4.5-4.5-1.5-1.5L15 10.5 10.5 6 9 7.5l4.5 4.5L9 16.5l1.5 1.5 4.5-4.5 4.5 4.5 1.5-1.5L16.5 12zM3 9v6h4l5 5V4L7 9H3z"/></svg>
+          <span id="volLabel">音量</span>
+        </button>
         <div class="volume-slider">
           <input type="range" id="volRange" min="0" max="100" value="100" orient="vertical" oninput="previewVolume(this.value/100)" onchange="setVolume(this.value/100)">
         </div>
       </div>
-      <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置">⏹ <span id="playerResetLabel">重置</span></button>
-      <button class="player-native-btn" id="aiVoiceBtn" onclick="toggleAiVoice()" title="AI 语音增强：自动选用云端神经语音并优化音色">🤖 <span id="aiVoiceLabel">AI 语音</span></button>
-      <button class="player-native-btn" id="nativeBtn" onclick="toggleNativeMode()" title="切换系统原生播放模式">🖥️ <span id="nativeLabel">智能分块</span></button>
+      <button class="player-native-btn" id="aiVoiceBtn" onclick="toggleAiVoice()" title="AI 语音增强：自动选用云端神经语音并优化音色"><span id="aiVoiceLabel">AI 语音</span></button>
+      <button class="player-native-btn" id="nativeBtn" onclick="toggleNativeMode()" title="切换系统原生播放模式"><span id="nativeLabel">智能分块</span></button>
+      <button class="p-icon-btn" id="playerExpandBtn" onclick="togglePlayerSize()" title="放大播放器">
+        <svg id="expandIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3m11-5v3a2 2 0 002 2h3"/></svg>
+        <svg id="shrinkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2V3M3 16h3a2 2 0 012 2v3m11-5h-3a2 2 0 01-2-2v-3"/></svg>
+      </button>
     </div>
-    <button class="player-btn" id="playerExpandBtn" onclick="togglePlayerSize()" title="放大播放器">⤢ 放大</button>
-    <button class="player-btn" onclick="stopAll()" title="关闭">✕ 关闭</button>
+    <button class="p-icon-btn" onclick="stopAll()" title="关闭">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
   </div>
   <div class="player-hint" id="playerHint" style="width:100%;font-size:11px;color:var(--text-secondary);opacity:.7;text-align:center;margin-top:4px;">💡 建议使用默认浏览器打开，语音朗读更稳定</div>
 </div>
-
 <!-- Custom voice modal -->
 <div class="modal-overlay" id="voiceModal" onclick="if(event.target===this)closeVoiceModal()">
   <div class="modal">
@@ -1344,6 +1415,7 @@
   var AI_BOOST_PITCH = 1.08;
   var lastHlTime = 0, lastHlEl = null; // highlight throttle + dedup scroll
   var isSeeking = false; // true while user drags the progress bar
+  var shuffleMode = false, repeatMode = false;
 
   function init() {
     // Browser compatibility: adjust tip text for WeChat / in-app browsers
@@ -1390,82 +1462,27 @@
     setupExitCleanup();
   }
 
-  // ---------- Category-themed SVG images (always render, no network) ----------
+  // ---------- Scenery-themed SVG images (always render, no network) ----------
   var IMG_COLORS = {
-    cover:         ['#1e3a8a', '#3b82f6'],
-    military:      ['#334155', '#0f172a'],
-    finance:       ['#14532d', '#22c55e'],
-    tech:          ['#0c4a6e', '#0ea5e9'],
-    politics:      ['#312e81', '#6366f1'],
-    business:      ['#1e3a5f', '#3b82f6'],
-    energy:        ['#7c2d12', '#f59e0b'],
-    medical:       ['#064e3b', '#10b981'],
-    semiconductor: ['#3b0764', '#a855f7'],
-    space:         ['#0b1026', '#4338ca'],
-    social:        ['#5b0e2d', '#ec4899']
+    cover:  ['#1e3a8a', '#3b82f6'],
+    scenery:['#0f4c75', '#3282b8']
   };
-  var IMG_KINDS = ['military','finance','tech','politics','business','energy','medical','semiconductor','space','social'];
+  var IMG_KINDS = Array(10).fill('scenery');
 
   function svgMotif(kind, w, h) {
     var m = '';
     var op = "opacity='0.16'";
-    if (kind === 'military') {
-      for (var k = 0; k < 4; k++) {
-        var x = w * 0.45 + k * 26, y = h * 0.12 + k * 14;
-        m += "<polyline points='" + (x) + ',' + (y) + ' ' + (x+34) + ',' + (y+22) + ' ' + (x) + ',' + (y+44) + "' fill='none' stroke='#fff' stroke-width='6' " + op + "/>";
-      }
-    } else if (kind === 'finance') {
-      for (var c = 0; c < 3; c++) {
-        m += "<circle cx='" + (w*0.72) + "' cy='" + (h*0.7) + "' r='" + (70 - c*22) + "' fill='none' stroke='#fff' stroke-width='5' " + op + "/>";
-      }
-    } else if (kind === 'tech') {
-      for (var gx = 0; gx < 6; gx++) for (var gy = 0; gy < 4; gy++) {
-        m += "<circle cx='" + (w*0.12 + gx*22) + "' cy='" + (h*0.18 + gy*22) + "' r='3.2' fill='#fff' " + op + "/>";
-      }
-    } else if (kind === 'politics') {
-      m += "<circle cx='" + (w*0.7) + "' cy='" + (h*0.45) + "' r='" + (h*0.32) + "' fill='none' stroke='#fff' stroke-width='4' " + op + "/>";
-      m += "<ellipse cx='" + (w*0.7) + "' cy='" + (h*0.45) + "' rx='" + (h*0.14) + "' ry='" + (h*0.32) + "' fill='none' stroke='#fff' stroke-width='3' " + op + "/>";
-      m += "<line x1='" + (w*0.38) + "' y1='" + (h*0.45) + "' x2='" + (w*1.02) + "' y2='" + (h*0.45) + "' stroke='#fff' stroke-width='3' " + op + "/>";
-    } else if (kind === 'business') {
-      for (var b = 0; b < 5; b++) {
-        var bh = 30 + b * 26;
-        m += "<rect x='" + (w*0.1 + b*40) + "' y='" + (h - 24 - bh) + "' width='26' height='" + bh + "' rx='4' fill='#fff' " + op + "/>";
-      }
-    } else if (kind === 'energy') {
-      m += "<circle cx='" + (w*0.74) + "' cy='" + (h*0.42) + "' r='26' fill='#fff' " + op + "/>";
-      for (var a = 0; a < 12; a++) {
-        var ang = a * Math.PI / 6;
-        var x1 = w*0.74 + Math.cos(ang)*40, y1 = h*0.42 + Math.sin(ang)*40;
-        var x2 = w*0.74 + Math.cos(ang)*78, y2 = h*0.42 + Math.sin(ang)*78;
-        m += "<line x1='" + x1 + "' y1='" + y1 + "' x2='" + x2 + "' y2='" + y2 + "' stroke='#fff' stroke-width='5' " + op + "/>";
-      }
-    } else if (kind === 'medical') {
-      m += "<rect x='" + (w*0.5 - 12) + "' y='" + (h*0.28) + "' width='24' height='" + (h*0.44) + "' rx='6' fill='#fff' " + op + "/>";
-      m += "<rect x='" + (w*0.34) + "' y='" + (h*0.44 - 12) + "' width='" + (w*0.32) + "' height='24' rx='6' fill='#fff' " + op + "/>";
-    } else if (kind === 'semiconductor') {
-      var cx = w*0.5, cy = h*0.5, s = 64;
-      m += "<rect x='" + (cx - s/2) + "' y='" + (cy - s/2) + "' width='" + s + "' height='" + s + "' rx='6' fill='none' stroke='#fff' stroke-width='4' " + op + "/>";
-      for (var i2 = 1; i2 < 4; i2++) {
-        m += "<line x1='" + (cx - s/2 + i2*s/4) + "' y1='" + (cy - s/2) + "' x2='" + (cx - s/2 + i2*s/4) + "' y2='" + (cy + s/2) + "' stroke='#fff' stroke-width='2' " + op + "/>";
-        m += "<line x1='" + (cx - s/2) + "' y1='" + (cy - s/2 + i2*s/4) + "' x2='" + (cx + s/2) + "' y2='" + (cy - s/2 + i2*s/4) + "' stroke='#fff' stroke-width='2' " + op + "/>";
-      }
-    } else if (kind === 'space') {
-      m += "<path d='M " + (w*0.55) + ' ' + (h*0.7) + " A 30 30 0 1 1 " + (w*0.72) + ' ' + (h*0.5) + "' fill='none' stroke='#fff' stroke-width='5' " + op + "/>";
-      var stars = [[0.2,0.2,2.5],[0.35,0.4,1.8],[0.6,0.18,2.2],[0.8,0.3,1.6],[0.45,0.6,2],[0.9,0.6,2.4],[0.25,0.75,1.8]];
-      stars.forEach(function(s2){ m += "<circle cx='" + (w*s2[0]) + "' cy='" + (h*s2[1]) + "' r='" + s2[2] + "' fill='#fff' " + op + "/>"; });
-    } else if (kind === 'social') {
-      m += "<circle cx='" + (w*0.42) + "' cy='" + (h*0.5) + "' r='34' fill='none' stroke='#fff' stroke-width='5' " + op + "/>";
-      m += "<circle cx='" + (w*0.6) + "' cy='" + (h*0.45) + "' r='46' fill='none' stroke='#fff' stroke-width='5' " + op + "/>";
-    } else { // cover / world
-      m += "<circle cx='" + (w*0.7) + "' cy='" + (h*0.5) + "' r='" + (h*0.4) + "' fill='none' stroke='#fff' stroke-width='3' " + op + "/>";
-      m += "<ellipse cx='" + (w*0.7) + "' cy='" + (h*0.5) + "' rx='" + (h*0.18) + "' ry='" + (h*0.4) + "' fill='none' stroke='#fff' stroke-width='2' " + op + "/>";
-      m += "<line x1='" + (w*0.3) + "' y1='" + (h*0.5) + "' x2='" + (w*1.1) + "' y2='" + (h*0.5) + "' stroke='#fff' stroke-width='2' " + op + "/>";
-    }
+    // sun / moon
+    m += "<circle cx='" + (w*0.78) + "' cy='" + (h*0.28) + "' r='" + (h*0.18) + "' fill='#fff' " + op + "/>";
+    // distant mountains
+    m += "<path d='M0," + h + " L0," + (h*0.62) + " " + (w*0.22) + "," + (h*0.42) + " " + (w*0.48) + "," + (h*0.58) + " " + (w*0.72) + "," + (h*0.38) + " " + w + "," + (h*0.64) + " " + w + "," + h + " Z' fill='#fff' " + op + "/>";
+    // nearer hills
+    m += "<path d='M0," + h + " L0," + (h*0.78) + " " + (w*0.18) + "," + (h*0.66) + " " + (w*0.42) + "," + (h*0.76) + " " + (w*0.66) + "," + (h*0.62) + " " + w + "," + (h*0.80) + " " + w + "," + h + " Z' fill='#fff' " + op + "/>";
     return m;
   }
 
   function themedImage(kind, w, h) {
-    var col = IMG_COLORS[kind] || IMG_COLORS.cover;
+    var col = IMG_COLORS['scenery'];
     var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='" + w + "' height='" + h + "' viewBox='0 0 " + w + ' ' + h + "'>" +
       "<defs>" +
         "<linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>" +
@@ -1503,48 +1520,54 @@
 
   function setupImages() {
     var banner = document.getElementById('bannerImg');
+    var sceneryKw = ['nature,landscape','mountain,lake','ocean,beach','forest,sunlight','sunset,clouds','river,valley','flower,meadow','snow,mountain'][seed % 8];
     loadWithFallback(
       banner,
-      ['https://loremflickr.com/1200/400/world,news?lock=' + seed,
+      ['https://loremflickr.com/1200/400/' + encodeURIComponent(sceneryKw) + '?lock=' + seed,
        'https://picsum.photos/seed/banner' + seed + '/1200/400'],
       themedImage('cover', 1200, 400)
     );
     sections.forEach(function(sec, i) {
       var img = sec.querySelector('.section-header img');
       if (!img) return;
-      var kind = IMG_KINDS[i] || 'cover';
-      var kw = ['military,tank','finance,money','technology,robot','politics,government','business,industry','energy,solar','medical,hospital','semiconductor,chip','space,rocket','social,media'][i] || 'abstract';
+      var kw = ['landscape,mountains','lake,nature','forest,trees','sunset,sky','meadow,flowers','river,nature','ocean,coast','valley,greenery','snow,peaks','autumn,forest'][i % 10];
       loadWithFallback(
         img,
         ['https://loremflickr.com/800/300/' + encodeURIComponent(kw) + '?lock=' + (seed*7 + i + 1),
-         'https://picsum.photos/seed/' + encodeURIComponent(kw) + '/800/300'],
-        themedImage(kind, 800, 300)
+         'https://picsum.photos/seed/scenery' + (seed*7 + i + 1) + '/800/300'],
+        themedImage('scenery', 800, 300)
       );
     });
   }
 
   function foldLabel(isOpen) {
-    return lang === 'zh' ? (isOpen ? '▲ 折叠' : '▼ 展开') : (isOpen ? '▲ Collapse' : '▶ Expand');
+    return lang === 'zh' ? (isOpen ? '折叠' : '展开') : (isOpen ? 'Collapse' : 'Expand');
+  }
+  var FOLD_EXPAND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M6 9l6 6 6-6"/></svg>';
+  var FOLD_COLLAPSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M18 15l-6-6-6 6"/></svg>';
+  var READ_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 000-6.5v1.75a2.75 2.75 0 010 4.75V12zm3-6.5a8 8 0 000 11.5v-1.75a6.25 6.25 0 010-8V5.5z"/></svg>';
+  function foldBtnHtml(isOpen) {
+    var icon = isOpen ? FOLD_COLLAPSE_ICON : FOLD_EXPAND_ICON;
+    return icon + '<span>' + foldLabel(isOpen) + '</span>';
   }
   function relabelAllButtons() {
-    // Re-apply visible text labels to every fold/tts/expand button,
-    // preserving each element's current open/closed state and the language.
     document.querySelectorAll('.section-card').forEach(function(card) {
       var body = card.querySelector('.section-body');
       var open = body && body.classList.contains('open');
       var acts = card.querySelectorAll('.section-actions .fold-btn');
-      if (acts.length >= 1) acts[0].innerHTML = lang === 'zh' ? '📖 展开' : '📖 Expand';
-      if (acts.length >= 2) acts[1].innerHTML = foldLabel(open);
+      if (acts.length >= 1) acts[0].innerHTML = FOLD_EXPAND_ICON + '<span>' + (lang==='zh'?'展开':'Expand') + '</span>';
+      if (acts.length >= 2) acts[1].innerHTML = foldBtnHtml(open);
       var tts = card.querySelector('.tts-btn');
-      if (tts) tts.innerHTML = lang === 'zh' ? '🔊 朗读' : '🔊 Read';
+      if (tts) tts.innerHTML = READ_ICON + '<span>' + (lang==='zh'?'朗读':'Read') + '</span>';
     });
     document.querySelectorAll('.item').forEach(function(item) {
       var body = item.querySelector('.item-body');
       var open = body && body.classList.contains('open');
       var b = item.querySelector('.item-title .fold-btn');
-      if (b) b.innerHTML = foldLabel(open);
+      if (b) b.innerHTML = foldBtnHtml(open);
     });
   }
+
   function setupSectionButtonLabels() {
     // Auto-apply visible text labels to all section/item buttons on load,
     // so even generated HTML without text still shows labels (idempotent).
@@ -1561,8 +1584,15 @@
     document.getElementById('shareLabel').textContent = isZh ? '分享' : 'Share';
     document.getElementById('settingsLabel').textContent = isZh ? '设置' : 'Settings';
     document.getElementById('playerResetLabel').textContent = isZh ? '重置' : 'Reset';
+    document.getElementById('volLabel').textContent = isZh ? '音量' : 'Vol';
     var peb = document.getElementById('playerExpandBtn');
-    if (peb) peb.title = peb.textContent === '⤡' ? (isZh ? '缩小播放器' : 'Shrink player') : (isZh ? '放大播放器' : 'Enlarge player');
+    if (peb) peb.title = isZh ? '放大/缩小播放器' : 'Enlarge/Shrink player';
+    updateAiVoiceUI();
+    var nativeLabel = document.getElementById('nativeLabel');
+    var nativeBtn = document.getElementById('nativeBtn');
+    if (nativeLabel && nativeBtn) {
+      nativeLabel.textContent = nativeMode ? (isZh ? '系统原生' : 'Native') : (isZh ? '智能分块' : 'Chunked');
+    }
     document.getElementById('closingText').textContent = '—— ' + (isZh ? closing.zh : closing.en) + ' ——';
     document.getElementById('btnExpandAll').textContent = isZh ? '展开全部' : 'Expand all';
     document.getElementById('btnCollapseAll').textContent = isZh ? '收起全部' : 'Collapse all';
@@ -1618,10 +1648,15 @@
   };
   window.togglePlayerSize = function() {
     var p = document.getElementById('player');
-    var b = document.getElementById('playerExpandBtn');
     var expanded = p.classList.toggle('expanded');
-    b.innerHTML = expanded ? '⤡ 缩小' : '⤢ 放大';
-    b.title = expanded ? (lang === 'zh' ? '缩小播放器' : 'Shrink player') : (lang === 'zh' ? '放大播放器' : 'Enlarge player');
+    var expandIcon = document.getElementById('expandIcon');
+    var shrinkIcon = document.getElementById('shrinkIcon');
+    if (expandIcon && shrinkIcon) {
+      expandIcon.style.display = expanded ? 'none' : 'inline-block';
+      shrinkIcon.style.display = expanded ? 'inline-block' : 'none';
+    }
+    var b = document.getElementById('playerExpandBtn');
+    if (b) b.title = expanded ? (lang === 'zh' ? '缩小播放器' : 'Shrink player') : (lang === 'zh' ? '放大播放器' : 'Enlarge player');
   };
 
   function applyTheme() {
@@ -1670,7 +1705,6 @@
     if (!window.speechSynthesis) return;
     var sel = document.getElementById('voiceSel');
     if (!sel) return;
-    // keep the first two fixed options (默认语音 / 自定义声音...)
     while (sel.options.length > 2) sel.remove(2);
     customVoices.forEach(function(v) {
       var opt = document.createElement('option');
@@ -1678,34 +1712,21 @@
       opt.textContent = (lang==='zh'?'自定义: ':'Custom: ') + v.name;
       sel.appendChild(opt);
     });
-    var voices = speechSynthesis.getVoices();
-    if (!voices || !voices.length) return; // Firefox may return empty on first call; onvoiceschanged will re-trigger
-    voices.forEach(function(v) {
-      var opt = document.createElement('option');
-      opt.value = v.voiceURI;
-      var q = voiceQuality(v);
-      var badge = q >= 3 ? '🤖' : (q === 2 ? '✨' : '\uD83C\uDFA4');
-      opt.textContent = badge + ' ' + v.name + ' (' + v.lang + ')';
-      sel.appendChild(opt);
-    });
+    var preferred = findPreferredVoices();
+    if (preferred.length) {
+      var group = document.createElement('optgroup');
+      group.label = lang === 'zh' ? 'AI 语音' : 'AI Voices';
+      preferred.forEach(function(x) {
+        var opt = document.createElement('option');
+        opt.value = x.voice.voiceURI;
+        opt.textContent = (lang==='zh' ? x.pref.gender + ' · ' : '') + x.pref.name;
+        group.appendChild(opt);
+      });
+      sel.appendChild(group);
+    }
     if (selectedVoice) {
-      // verify the voice still exists before selecting
       var stillExists = Array.from(sel.options).some(function(o){ return o.value === selectedVoice; });
       if (stillExists) sel.value = selectedVoice;
-    }
-  }
-  // Chrome / Firefox populate getVoices() asynchronously; re-fill when ready
-  if (window.speechSynthesis) {
-    var _voicesReady = false;
-    function _onVoicesReady() {
-      if (_voicesReady) return;
-      _voicesReady = true;
-      setupVoices();
-    }
-    speechSynthesis.onvoiceschanged = _onVoicesReady;
-    // some browsers already have voices synchronously
-    if (speechSynthesis.getVoices && speechSynthesis.getVoices().length > 0) {
-      _onVoicesReady();
     }
   }
 
@@ -1818,7 +1839,7 @@
     if (!body) return;
     body.classList.toggle('open');
     var btns = card.querySelectorAll('.section-actions .fold-btn');
-    if (btns.length >= 2) btns[1].innerHTML = foldLabel(body.classList.contains('open'));
+    if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(body.classList.contains('open'));
   };
   window.toggleItem = function(idOrEl) {
     var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
@@ -1828,7 +1849,7 @@
     if (!body) return;
     body.classList.toggle('open');
     var btn = item.querySelector('.fold-btn');
-    if (btn) btn.innerHTML = foldLabel(body.classList.contains('open'));
+    if (btn) btn.innerHTML = foldBtnHtml(body.classList.contains('open'));
   };
   window.expandSectionItems = function(idOrEl) {
     var section = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl.closest('.section-card');
@@ -1836,39 +1857,100 @@
     var bodies = section.querySelectorAll('.item-body');
     var anyClosed = Array.from(bodies).some(function(b) { return !b.classList.contains('open'); });
     bodies.forEach(function(b) { b.classList.toggle('open', anyClosed); });
-    section.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldLabel(anyClosed); });
+    section.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(anyClosed); });
   };
   window.expandAll = function() {
     document.querySelectorAll('.section-body').forEach(function(b) { b.classList.add('open'); });
     document.querySelectorAll('.section-actions').forEach(function(actions) {
       var btns = actions.querySelectorAll('.fold-btn');
-      if (btns.length >= 2) btns[1].innerHTML = foldLabel(true);
+      if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(true);
     });
     document.querySelectorAll('.item-body').forEach(function(b) { b.classList.add('open'); });
-    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldLabel(true); });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(true); });
   };
   window.collapseAll = function() {
     document.querySelectorAll('.section-body').forEach(function(b) { b.classList.remove('open'); });
     document.querySelectorAll('.section-actions').forEach(function(actions) {
       var btns = actions.querySelectorAll('.fold-btn');
-      if (btns.length >= 2) btns[1].innerHTML = foldLabel(false);
+      if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(false);
     });
     document.querySelectorAll('.item-body').forEach(function(b) { b.classList.remove('open'); });
-    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldLabel(false); });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(false); });
   };
 
   // ========== TTS ==========
-  // Quality ranking: neural / cloud / online voices sound far better than the
-  // default system voice. Used both for auto-selection and for labelling.
+  // Curated list of 20 preferred AI/neural voices (5 zhM, 5 zhF, 5 enM, 5 enF).
+  // The browser must expose these (usually Microsoft Online/Natural voices on Windows/Edge).
+  // If you need guaranteed cloud AI voices, integrate Azure/Google/ElevenLabs TTS with an API key.
+  var PREFERRED_VOICES = [
+    // Chinese male
+    {name:'Yunxi',   lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Yunjian', lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Yunxia',  lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Kangkang',lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Yunhao',  lang:'zh', gender:lang==='zh'?'男':'M'},
+    // Chinese female
+    {name:'Xiaoxiao',lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaoyi',  lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaochen',lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaohan', lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaomeng',lang:'zh', gender:lang==='zh'?'女':'F'},
+    // English male
+    {name:'Guy',        lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Christopher',lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Eric',       lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Steffan',    lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Brandon',    lang:'en', gender:lang==='zh'?'男':'M'},
+    // English female
+    {name:'Jenny',   lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Michelle',lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Ava',     lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Emma',    lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Ana',     lang:'en', gender:lang==='zh'?'女':'F'}
+  ];
+
   function voiceQuality(v) {
     var n = (v.name || '').toLowerCase();
-    if (/neural|online|natural|云端|在线|云|神经|premium|enhanced|tts|晓|云希|云扬|云健|云皓/.test(n)) return 3;
-    if (/yuxuan|yunxi|xiaoxiao|huihui|yaoyao|kangkang|yaoyao|tencent|azure|microsoft/.test(n)) return 2;
+    if (/neural|online|natural|premium|enhanced/.test(n)) return 3;
+    if (/microsoft|azure|google|amazon/.test(n)) return 2;
     return 1;
+  }
+  function scoreVoice(v, pref) {
+    var n = (v.name || '').toLowerCase();
+    var pName = pref.name.toLowerCase();
+    var score = 0;
+    if (n.indexOf(pName) !== -1) score += 100;
+    else if (n.indexOf(pName.replace(/[^a-z]/g,'')) !== -1) score += 80;
+    if (v.lang && v.lang.toLowerCase().indexOf(pref.lang) === 0) score += 10;
+    score += voiceQuality(v) * 5;
+    return score;
+  }
+  function findPreferredVoices() {
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return [];
+    var out = [];
+    PREFERRED_VOICES.forEach(function(pref) {
+      var best = null, bestScore = 0;
+      voices.forEach(function(v) {
+        var s = scoreVoice(v, pref);
+        if (s > bestScore) { bestScore = s; best = v; }
+      });
+      if (best && bestScore >= 80) {
+        out.push({voice: best, pref: pref});
+      }
+    });
+    var seen = {};
+    return out.filter(function(x) {
+      if (seen[x.voice.voiceURI]) return false;
+      seen[x.voice.voiceURI] = true;
+      return true;
+    });
   }
   function bestVoiceByLang(prefix) {
     var voices = speechSynthesis.getVoices();
     if (!voices || !voices.length) return null;
+    var preferred = findPreferredVoices().filter(function(x) { return x.voice.lang.toLowerCase().indexOf(prefix) === 0; });
+    if (preferred.length) return preferred[0].voice;
     var pool = voices.filter(function(v) { return v.lang && v.lang.toLowerCase().indexOf(prefix) === 0; });
     if (!pool.length) pool = voices.slice();
     pool.sort(function(a, b) { return voiceQuality(b) - voiceQuality(a); });
@@ -1947,12 +2029,10 @@
   function highlightCharAt(map, idx) {
     if (!map || !map.length) return;
     var now = Date.now();
-    if (now - lastHlTime < 120) return; // throttle ~120ms to avoid flicker
+    if (now - lastHlTime < 120) return;
     lastHlTime = now;
-    // clear all
     map.forEach(function(m) { m.span.style.background = 'transparent'; });
     if (idx < 0 || idx >= map.length) return;
-    // find word boundaries around idx
     var start = idx, end = idx;
     var punct = /[\s\n\r\t，。！？、；：""''（）【】《》.,;:!?()'"\-\/\[\]]/;
     while (start > 0 && !punct.test(map[start-1].char)) start--;
@@ -1960,18 +2040,10 @@
     for (var i = start; i <= end; i++) {
       map[i].span.style.background = 'var(--hl-color)';
     }
-    // scroll into view only if not already visible (avoid jitter)
-    var span = map[idx].span;
-    var rect = span.getBoundingClientRect();
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    if (rect.top < 100 || rect.bottom > vh - 100) {
-      if (lastHlEl !== span) {
-        lastHlEl = span;
-        span.scrollIntoView({behavior:'smooth', block:'center'});
-      }
-    }
+    // Do not auto-scroll: let the user freely scroll while listening.
   }
 
+  // Split long text into chunks
   // Split long text into chunks to avoid Chrome ~15s silence bug
   function splitIntoChunks(text, maxChars) {
     var parts = text.split(/([。！？.!?]\s*)/);
@@ -2106,15 +2178,15 @@
         currentItemIdx = 0;
       }
       if (currentSectionIdx >= sectionData.length) {
-        stopAll();
-        return;
+        if (repeatMode) { currentSectionIdx = 0; currentItemIdx = 0; }
+        else { stopAll(); return; }
       }
       playCurrentQueue();
     } else if (currentMode === 'section') {
       currentItemIdx++;
       if (currentItemIdx >= sectionData[currentSectionIdx].items.length) {
-        stopAll();
-        return;
+        if (repeatMode) { currentItemIdx = 0; }
+        else { stopAll(); return; }
       }
       playCurrentQueue();
     }
@@ -2232,14 +2304,17 @@
   };
 
   function updateVolIcon() {
-    var volBtn = document.getElementById('volBtn');
-    if (volBtn) {
-      if (volume === 0) volBtn.innerHTML = '🔇 静音';
-      else if (volume < 0.5) volBtn.innerHTML = '🔉 音量';
-      else volBtn.innerHTML = '🔊 音量';
+    var high = document.getElementById('volHighIcon');
+    var mute = document.getElementById('volMuteIcon');
+    var label = document.getElementById('volLabel');
+    if (high && mute) {
+      if (volume === 0) { high.style.display = 'none'; mute.style.display = 'inline-block'; }
+      else { high.style.display = 'inline-block'; mute.style.display = 'none'; }
     }
+    if (label) label.textContent = lang === 'zh' ? '音量' : 'Vol';
   }
 
+  // called continuously
   // called continuously while dragging the volume slider: update value + icon only,
   // do NOT restart speech here (restarting on every input causes choppy repeated audio)
   window.previewVolume = function(v) {
@@ -2316,9 +2391,114 @@
   };
 
   function updatePlayerUI() {
-    var btn = document.getElementById('playPauseBtn');
-    btn.innerHTML = (isPlaying && !isPaused) ? '⏸ 暂停' : '▶ 播放';
+    var playIcon = document.getElementById('playIcon');
+    var pauseIcon = document.getElementById('pauseIcon');
+    if (playIcon && pauseIcon) {
+      if (isPlaying && !isPaused) {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'inline-block';
+      } else {
+        playIcon.style.display = 'inline-block';
+        pauseIcon.style.display = 'none';
+      }
+    }
   }
+
+  // Playback control helpers
+  function toggleShuffle() {
+    shuffleMode = !shuffleMode;
+    var btn = document.getElementById('shuffleBtn');
+    if (btn) {
+      if (shuffleMode) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  }
+  function toggleRepeat() {
+    repeatMode = !repeatMode;
+    var btn = document.getElementById('repeatBtn');
+    if (btn) {
+      if (repeatMode) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  }
+  function recalcPlayedChars() {
+    playedChars = 0;
+    if (currentMode === 'section' && sectionData[currentSectionIdx]) {
+      for (var i = 0; i < currentItemIdx; i++) playedChars += sectionData[currentSectionIdx].items[i].text.length;
+    } else {
+      for (var s = 0; s < currentSectionIdx; s++) {
+        sectionData[s].items.forEach(function(it){ playedChars += it.text.length; });
+      }
+      if (sectionData[currentSectionIdx]) {
+        for (var i = 0; i < currentItemIdx; i++) playedChars += sectionData[currentSectionIdx].items[i].text.length;
+      }
+    }
+  }
+  window.seekBy = function(seconds) {
+    if (nativeMode || !chunks.length) return;
+    var charJump = Math.floor(seconds * CPS * playbackRate);
+    var targetOffset = Math.max(0, Math.min(speakOffset + intraChar + charJump, totalQueueChars));
+    var acc = 0, targetIdx = 0;
+    for (var i = 0; i < chunks.length; i++) {
+      if (acc + chunks[i].length > targetOffset) { targetIdx = i; break; }
+      acc += chunks[i].length;
+      targetIdx = i + 1;
+    }
+    targetIdx = Math.max(0, Math.min(targetIdx, chunks.length - 1));
+    speakOffset = 0;
+    for (var j = 0; j < targetIdx; j++) speakOffset += chunks[j].length;
+    intraChar = speakOffset;
+    chunkIdx = targetIdx;
+    if (currentBodyEl) charMap = wrapTextForHighlight(currentBodyEl);
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    currentUtt = null;
+    updateProgressUI();
+    speakCurrentChunk();
+  };
+  window.prevItem = function() {
+    if (!sectionData.length) return;
+    currentItemIdx--;
+    if (currentItemIdx < 0) {
+      currentSectionIdx--;
+      if (currentSectionIdx < 0) {
+        if (currentMode === 'section') { currentSectionIdx = 0; currentItemIdx = 0; }
+        else { currentSectionIdx = sectionData.length - 1; }
+      }
+      if (currentSectionIdx >= 0 && sectionData[currentSectionIdx]) {
+        currentItemIdx = sectionData[currentSectionIdx].items.length - 1;
+      }
+    }
+    if (currentSectionIdx < 0) currentSectionIdx = 0;
+    if (currentItemIdx < 0) currentItemIdx = 0;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    chunks = []; chunkIdx = 0; speakOffset = 0; intraChar = 0;
+    if (currentBodyEl) clearHighlight(currentBodyEl);
+    recalcPlayedChars();
+    playCurrentQueue();
+  };
+  window.nextItem = function() {
+    if (!sectionData.length) return;
+    if (shuffleMode) {
+      var randS = Math.floor(Math.random() * sectionData.length);
+      var randI = Math.floor(Math.random() * sectionData[randS].items.length);
+      currentSectionIdx = randS; currentItemIdx = randI;
+    } else {
+      currentItemIdx++;
+      if (currentSectionIdx >= sectionData.length || currentItemIdx >= sectionData[currentSectionIdx].items.length) {
+        currentItemIdx = 0;
+        currentSectionIdx++;
+        if (currentMode === 'section' || currentSectionIdx >= sectionData.length) {
+          if (repeatMode) { currentSectionIdx = 0; }
+          else { stopAll(); return; }
+        }
+      }
+    }
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    chunks = []; chunkIdx = 0; speakOffset = 0; intraChar = 0;
+    if (currentBodyEl) clearHighlight(currentBodyEl);
+    recalcPlayedChars();
+    playCurrentQueue();
+  };
 
   window.toggleNativeMode = function() {
     nativeMode = !nativeMode;
