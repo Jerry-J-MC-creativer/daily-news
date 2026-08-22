@@ -408,22 +408,6 @@
     font-size: .85em;
     max-width: 100px;
   }
-  .player-close {
-    position: absolute;
-    top: 8px; right: 10px;
-    width: 24px; height: 24px;
-    border: none; background: none;
-    color: var(--text-secondary);
-    cursor: pointer; font-size: 18px;
-  }
-  .player-expand {
-    position: absolute;
-    top: 8px; right: 38px;
-    width: 24px; height: 24px;
-    border: none; background: none;
-    color: var(--text-secondary);
-    cursor: pointer; font-size: 15px;
-  }
   .player-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .player-extra { display: flex; align-items: center; gap: 8px; margin-left: auto; }
   .volume-wrap { position: relative; display: inline-flex; align-items: center; }
@@ -755,13 +739,11 @@
 
 <!-- Player -->
 <div class="player" id="player">
-  <button class="player-close" onclick="stopAll()">×</button>
-  <button class="player-expand" id="playerExpandBtn" onclick="togglePlayerSize()" title="放大播放器">⤢</button>
   <div class="player-info">
     <div class="player-chapter" id="playerChapter">--</div>
     <div class="player-time"><span id="curTime">0:00</span> / <span id="totTime">0:00</span></div>
   </div>
-  <input type="range" class="player-progress" id="playerProgress" value="0" min="0" max="100" step="0.1" oninput="seekProgress(this.value)">
+  <input type="range" class="player-progress" id="playerProgress" value="0" min="0" max="100" step="0.1" oninput="previewSeek(this.value)" onchange="seekProgress(this.value)">
   <div class="player-controls">
     <button class="player-btn" id="playPauseBtn" onclick="togglePlay()">▶</button>
     <select id="speedSel" onchange="setSpeed(this.value)">
@@ -786,6 +768,8 @@
       <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置">⏹ <span id="playerResetLabel">重置</span></button>
       <button class="player-native-btn" id="nativeBtn" onclick="toggleNativeMode()" title="切换系统原生播放模式">🖥️ <span id="nativeLabel">智能分块</span></button>
     </div>
+    <button class="player-btn" id="playerExpandBtn" onclick="togglePlayerSize()" title="放大播放器">⤢</button>
+    <button class="player-btn" onclick="stopAll()" title="关闭">✕</button>
   </div>
   <div class="player-hint" id="playerHint" style="width:100%;font-size:11px;color:var(--text-secondary);opacity:.7;text-align:center;margin-top:4px;">💡 建议使用默认浏览器打开，语音朗读更稳定</div>
 </div>
@@ -878,6 +862,7 @@
   var chunks = [], chunkIdx = 0; // text chunking for Chrome TTS silence bug
   var nativeMode = false; // toggle: false=chunked mode, true=single native utterance
   var lastHlTime = 0, lastHlEl = null; // highlight throttle + dedup scroll
+  var isSeeking = false; // true while user drags the progress bar
 
   function init() {
     // Browser compatibility: adjust tip text for WeChat / in-app browsers
@@ -1365,6 +1350,7 @@
       chunks = splitIntoChunks(text, 150);
       chunkIdx = 0;
       speakOffset = 0;
+      updateProgressUI();
       speakCurrentChunk();
     }
   }
@@ -1375,6 +1361,7 @@
       onItemEnd();
       return;
     }
+    updateProgressUI();
     var text = chunks[chunkIdx];
     var utt = new SpeechSynthesisUtterance(text);
     utt.lang = 'zh-CN';
@@ -1495,6 +1482,12 @@
     isPlaying = false; isPaused = false;
     if (currentBodyEl) clearHighlight(currentBodyEl);
     document.getElementById('player').classList.remove('open');
+    var prog = document.getElementById('playerProgress');
+    if (prog) { prog.value = 0; prog.disabled = false; }
+    var cur = document.getElementById('curTime');
+    var tot = document.getElementById('totTime');
+    if (cur) cur.textContent = '0:00';
+    if (tot) tot.textContent = '0:00';
   };
 
   // 暂停并重置语音播放：立即停止合成、清除高光、收起播放器，并把播放进度归零（下次点击「全文语音收听」从第一节第一条重新开始）
@@ -1630,9 +1623,59 @@
     }
   };
 
+  function updateProgressUI() {
+    var prog = document.getElementById('playerProgress');
+    var cur = document.getElementById('curTime');
+    var tot = document.getElementById('totTime');
+    if (!prog) return;
+    if (nativeMode || !chunks.length) {
+      prog.value = 0;
+      prog.disabled = true;
+      if (cur) cur.textContent = '--';
+      if (tot) tot.textContent = '--';
+    } else {
+      prog.disabled = false;
+      var pct = chunks.length ? (chunkIdx / chunks.length) * 100 : 0;
+      prog.value = pct;
+      if (cur) cur.textContent = String(chunkIdx + 1);
+      if (tot) tot.textContent = String(chunks.length);
+    }
+  }
+
+  window.previewSeek = function(val) {
+    isSeeking = true;
+    var cur = document.getElementById('curTime');
+    if (cur && chunks.length) {
+      var target = Math.floor((val / 100) * chunks.length) + 1;
+      cur.textContent = String(Math.min(target, chunks.length));
+    }
+  };
+
   window.seekProgress = function(val) {
-    // Web Speech API doesn't support true seeking; this is a visual placeholder
-    // In a full implementation, you'd chunk text and track progress manually
+    isSeeking = false;
+    if (nativeMode || !chunks.length) return;
+    var targetIdx = Math.floor((val / 100) * chunks.length);
+    targetIdx = Math.max(0, Math.min(targetIdx, chunks.length - 1));
+
+    // Stop current playback
+    currentUtt = null;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+
+    // Recalculate speakOffset from start up to target chunk
+    speakOffset = 0;
+    for (var i = 0; i < targetIdx; i++) {
+      speakOffset += chunks[i].length;
+    }
+
+    chunkIdx = targetIdx;
+
+    // Rebuild highlight map for the new position
+    if (currentBodyEl) {
+      charMap = wrapTextForHighlight(currentBodyEl);
+    }
+
+    updateProgressUI();
+    speakCurrentChunk();
   };
 
   // ========== Utils ==========
