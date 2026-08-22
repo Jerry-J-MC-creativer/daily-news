@@ -1187,7 +1187,7 @@
       <div class="volume-wrap">
         <button class="vol-btn" id="volBtn" title="音量">🔊</button>
         <div class="volume-slider">
-          <input type="range" id="volRange" min="0" max="100" value="100" orient="vertical" oninput="setVolume(this.value/100)">
+          <input type="range" id="volRange" min="0" max="100" value="100" orient="vertical" oninput="previewVolume(this.value/100)" onchange="setVolume(this.value/100)">
         </div>
       </div>
       <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置">⏹ <span id="playerResetLabel">重置</span></button>
@@ -1410,7 +1410,7 @@
 
   function setupVoices() {
     var sel = document.getElementById('voiceSel');
-    // clear except first two
+    // keep the first two fixed options (默认语音 / 自定义声音...)
     while (sel.options.length > 2) sel.remove(2);
     customVoices.forEach(function(v, i) {
       var opt = document.createElement('option');
@@ -1418,7 +1418,20 @@
       opt.textContent = (lang==='zh'?'自定义: ':'Custom: ') + v.name;
       sel.appendChild(opt);
     });
+    // populate device voices (Chrome loads them asynchronously -> also handled by onvoiceschanged)
+    if (window.speechSynthesis) {
+      speechSynthesis.getVoices().forEach(function(v) {
+        var opt = document.createElement('option');
+        opt.value = v.voiceURI;
+        opt.textContent = '🎤 ' + v.name + ' (' + v.lang + ')';
+        sel.appendChild(opt);
+      });
+    }
     if (selectedVoice) sel.value = selectedVoice;
+  }
+  // Chrome populates getVoices() asynchronously; re-fill the dropdown when ready
+  if (window.speechSynthesis) {
+    speechSynthesis.onvoiceschanged = function() { setupVoices(); };
   }
 
   function setupScroll() {
@@ -1656,10 +1669,12 @@
       }
     };
     utt.onend = function() {
+      if (currentUtt !== utt) return; // ignore stale events from a cancelled utterance
       if (charMap.length) clearHighlight(bodyEl);
       onUtteranceEnd();
     };
     utt.onerror = function() {
+      if (currentUtt !== utt) return; // ignore stale events (e.g. 'interrupted' after cancel)
       if (charMap.length) clearHighlight(bodyEl);
       onUtteranceEnd();
     };
@@ -1738,8 +1753,9 @@
   };
 
   window.stopAll = function() {
+    currentUtt = null; // set null BEFORE cancel so stale onend/onerror get ignored
     if (window.speechSynthesis) window.speechSynthesis.cancel();
-    isPlaying = false; isPaused = false; currentUtt = null;
+    isPlaying = false; isPaused = false;
     if (currentBodyEl) clearHighlight(currentBodyEl);
     document.getElementById('player').classList.remove('open');
   };
@@ -1775,43 +1791,49 @@
     updatePlayerUI();
   };
 
-  window.setSpeed = function(v) {
-    playbackRate = +v;
-    if (currentUtt && isPlaying) {
-      // restart with new rate
-      window.speechSynthesis.cancel();
-      var text = currentUtt.text;
-      var bodyEl = currentBodyEl;
-      setTimeout(function() { startSpeaking(text, bodyEl); }, 50);
-    }
-  };
-
-  window.setVolume = function(v) {
-    volume = Math.max(0, Math.min(1, +v));
+  function updateVolIcon() {
     var volBtn = document.getElementById('volBtn');
     if (volBtn) {
       if (volume === 0) volBtn.textContent = '🔇';
       else if (volume < 0.5) volBtn.textContent = '🔉';
       else volBtn.textContent = '🔊';
     }
-    if (currentUtt && isPlaying) {
-      window.speechSynthesis.cancel();
+  }
+
+  // called continuously while dragging the volume slider: update value + icon only,
+  // do NOT restart speech here (restarting on every input causes choppy repeated audio)
+  window.previewVolume = function(v) {
+    volume = Math.max(0, Math.min(1, +v));
+    updateVolIcon();
+  };
+
+  // restart current utterance with new settings (rate/volume/voice) from the start of the current item
+  function restartIfPlaying() {
+    if (currentUtt && isPlaying && !isPaused) {
       var text = currentUtt.text;
       var bodyEl = currentBodyEl;
-      setTimeout(function() { startSpeaking(text, bodyEl); }, 50);
+      currentUtt = null; // prevent stale onend/onerror from advancing the queue
+      window.speechSynthesis.cancel();
+      setTimeout(function() { startSpeaking(text, bodyEl); }, 80);
     }
+  }
+
+  window.setSpeed = function(v) {
+    playbackRate = +v;
+    restartIfPlaying();
+  };
+
+  window.setVolume = function(v) {
+    volume = Math.max(0, Math.min(1, +v));
+    updateVolIcon();
+    restartIfPlaying();
   };
 
   window.changeVoice = function(v) {
     if (v === '__custom__') { openVoiceModal(); return; }
     selectedVoice = v;
     localStorage.setItem('wb_voice', selectedVoice);
-    if (currentUtt && isPlaying) {
-      var text = currentUtt.text;
-      var bodyEl = currentBodyEl;
-      window.speechSynthesis.cancel();
-      setTimeout(function() { startSpeaking(text, bodyEl); }, 50);
-    }
+    restartIfPlaying();
   };
 
   window.openVoiceModal = function() {
@@ -1863,6 +1885,15 @@
   function rgbToHex(r,g,b) {
     return '#' + [r,g,b].map(function(x) { var h = Math.max(0,Math.min(255,Math.round(x))).toString(16); return h.length===1?'0'+h:h; }).join('');
   }
+
+  // Chrome bug workaround: speechSynthesis goes silent ~15s into long utterances.
+  // A periodic pause/resume keeps the engine alive without audible interruption.
+  setInterval(function() {
+    if (window.speechSynthesis && speechSynthesis.speaking && !speechSynthesis.paused && isPlaying && !isPaused) {
+      speechSynthesis.pause();
+      speechSynthesis.resume();
+    }
+  }, 12000);
 
   init();
 })();
