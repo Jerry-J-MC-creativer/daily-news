@@ -102,14 +102,15 @@
   .gear-btn:hover { background: rgba(255,255,255,0.35); }
   .title-btns { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; flex-shrink: 0; }
   .title-btn {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 5px 10px;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 8px 14px;
     border-radius: var(--radius);
     border: none;
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.16);
     color: #fff;
     cursor: pointer;
-    font-size: .78em;
+    font-size: .82em;
+    font-weight: 600;
     line-height: 1.4;
     transition: background .2s;
     white-space: nowrap;
@@ -161,13 +162,15 @@
     flex-wrap: wrap;
   }
   .global-actions button {
-    padding: 6px 14px;
+    padding: 10px 22px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
-    font-size: .9em;
+    font-size: .92em;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
     transition: all .2s;
   }
   .global-actions button:hover { border-color: var(--accent); color: var(--accent); }
@@ -215,7 +218,7 @@
   .section-title { font-weight: 700; font-size: 1.05em; display: flex; align-items: center; gap: 8px; }
   .section-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .icon-btn {
-    height: 32px; padding: 0 10px; width: auto;
+    height: 38px; padding: 0 16px; width: auto; min-width: 40px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
@@ -229,15 +232,17 @@
   }
   .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
   .fold-btn, .tts-btn {
-    height: 32px; padding: 0 9px; width: auto;
+    height: 38px; padding: 0 18px; width: auto; min-width: 88px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
-    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
-    font-size: .8em;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: .85em;
+    font-weight: 600;
     white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
     transition: all .2s;
     flex-shrink: 0;
   }
@@ -408,15 +413,17 @@
     cursor: pointer;
   }
   .player-btn {
-    height: 36px; padding: 0 13px; width: auto;
+    height: 42px; padding: 0 22px; width: auto; min-width: 96px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
-    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-    font-size: .85em;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: .92em;
+    font-weight: 600;
     white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
     flex-shrink: 0;
   }
   .player-btn:hover { border-color: var(--accent); color: var(--accent); }
@@ -478,41 +485,47 @@
     cursor: pointer; border: none;
   }
   .vol-btn {
-    height: 36px; padding: 0 11px; width: auto;
+    height: 42px; padding: 0 18px; width: auto; min-width: 84px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
-    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
-    font-size: .85em;
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    font-size: .9em;
+    font-weight: 600;
     white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
     flex-shrink: 0;
   }
   .vol-btn:hover { border-color: var(--accent); color: var(--accent); }
   .player-reset-btn {
-    padding: 5px 10px;
+    padding: 8px 18px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
-    font-size: .78em;
-    display: inline-flex; align-items: center; gap: 4px;
+    font-size: .85em;
+    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 5px;
     flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
     transition: border-color .2s, color .2s;
   }
   .player-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
   .player-native-btn {
-    padding: 5px 10px;
+    padding: 8px 18px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     cursor: pointer;
-    font-size: .78em;
-    display: inline-flex; align-items: center; gap: 4px;
+    font-size: .85em;
+    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 5px;
     flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
     transition: border-color .2s, color .2s, background .2s;
   }
   .player-native-btn.active {
@@ -580,16 +593,16 @@
     .player.expanded { padding: 16px 14px 12px; }
     .section-titlebar { padding: 8px 10px; }
     .section-title { font-size: .95em; }
-    .icon-btn { width: 28px; height: 28px; font-size: 12px; }
-    .fold-btn, .tts-btn { width: 28px; height: 28px; font-size: 12px; }
-    .global-actions button { padding: 5px 10px; font-size: .82em; }
+    .icon-btn { height: 34px; padding: 0 12px; font-size: 12.5px; }
+    .fold-btn, .tts-btn { height: 34px; padding: 0 14px; min-width: 78px; font-size: 12.5px; }
+    .global-actions button { padding: 8px 16px; font-size: .85em; }
     .item-title { font-size: .92em; }
     .item-body { font-size: .9em; }
     .settings-panel { padding: 14px; }
     .modal { padding: 14px; }
-    .player-btn { width: 32px; height: 32px; font-size: 14px; }
-    .player.expanded .player-btn { width: 44px; height: 44px; font-size: 18px; }
-    .vol-btn { width: 26px; height: 26px; font-size: 12px; }
+    .player-btn { height: 38px; padding: 0 16px; min-width: 84px; font-size: 14px; }
+    .player.expanded .player-btn { width: 46px; height: 46px; font-size: 18px; }
+    .vol-btn { height: 38px; padding: 0 14px; min-width: 74px; font-size: 13px; }
   }
   /* ========== Responsive: Large phones (480px - 767px) ========== */
   @media (min-width: 480px) and (max-width: 767px) {
@@ -677,7 +690,7 @@
   <span id="browserTipText">建议使用 Safari / Chrome / Edge 等默认浏览器打开，否则可能遇到语音朗读等功能异常。</span>
 </div>
 
-<img class="banner" id="bannerImg" src="" alt="banner" onerror="this.style.opacity='0'" fetchpriority="high" decoding="async">
+<img class="banner" id="bannerImg" src="" alt="banner" fetchpriority="high" decoding="async">
 
 <div class="container">
   <div class="global-actions">
@@ -694,7 +707,7 @@
   <div class="summary">
     <h3 id="summaryTitle">核心主线</h3>
     <p id="summaryBody">{{SUMMARY_BODY}}</p>
-    <p style="margin-top:12px;font-size:.85em;">图片来源：LoremFlickr 公开共享实拍照片；语音由浏览器内置 Web Speech API 生成。</p>
+    <p style="margin-top:12px;font-size:.85em;">图片来源：LoremFlickr 公开实拍 + 智能分类配图兜底（离线也始终有图）；语音由浏览器 Web Speech API 生成，播放器可一键开启「AI 语音增强」选用云端神经语音。</p>
   </div>
 </div>
 
@@ -790,6 +803,7 @@
         </div>
       </div>
       <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置">⏹ <span id="playerResetLabel">重置</span></button>
+      <button class="player-native-btn" id="aiVoiceBtn" onclick="toggleAiVoice()" title="AI 语音增强：自动选用云端神经语音并优化音色">🤖 <span id="aiVoiceLabel">AI 语音</span></button>
       <button class="player-native-btn" id="nativeBtn" onclick="toggleNativeMode()" title="切换系统原生播放模式">🖥️ <span id="nativeLabel">智能分块</span></button>
     </div>
     <button class="player-btn" id="playerExpandBtn" onclick="togglePlayerSize()" title="放大播放器">⤢ 放大</button>
@@ -885,6 +899,10 @@
   var speakOffset = 0, charMap = [], highlightSpans = [], currentBodyEl = null;
   var chunks = [], chunkIdx = 0; // text chunking for Chrome TTS silence bug
   var nativeMode = false; // toggle: false=chunked mode, true=single native utterance
+  // AI voice enhancement: auto-pick the best neural/cloud voice + warmer pitch.
+  // Defaults ON (user wants better-than-system voice); can be turned off in player.
+  var aiVoiceBoost = localStorage.getItem('wb_ai_voice') !== '0';
+  var AI_BOOST_PITCH = 1.08;
   var lastHlTime = 0, lastHlEl = null; // highlight throttle + dedup scroll
   var isSeeking = false; // true while user drags the progress bar
 
@@ -928,28 +946,141 @@
     setupSectionButtonLabels();
     setupSettingsUI();
     setupVoices();
+    updateAiVoiceUI();
     setupScroll();
     setupExitCleanup();
   }
 
+  // ---------- Category-themed SVG images (always render, no network) ----------
+  var IMG_COLORS = {
+    cover:         ['#1e3a8a', '#3b82f6'],
+    military:      ['#334155', '#0f172a'],
+    finance:       ['#14532d', '#22c55e'],
+    tech:          ['#0c4a6e', '#0ea5e9'],
+    politics:      ['#312e81', '#6366f1'],
+    business:      ['#1e3a5f', '#3b82f6'],
+    energy:        ['#7c2d12', '#f59e0b'],
+    medical:       ['#064e3b', '#10b981'],
+    semiconductor: ['#3b0764', '#a855f7'],
+    space:         ['#0b1026', '#4338ca'],
+    social:        ['#5b0e2d', '#ec4899']
+  };
+  var IMG_KINDS = ['military','finance','tech','politics','business','energy','medical','semiconductor','space','social'];
+
+  function svgMotif(kind, w, h) {
+    var m = '';
+    var op = "opacity='0.16'";
+    if (kind === 'military') {
+      for (var k = 0; k < 4; k++) {
+        var x = w * 0.45 + k * 26, y = h * 0.12 + k * 14;
+        m += "<polyline points='" + (x) + ',' + (y) + ' ' + (x+34) + ',' + (y+22) + ' ' + (x) + ',' + (y+44) + "' fill='none' stroke='#fff' stroke-width='6' " + op + "/>";
+      }
+    } else if (kind === 'finance') {
+      for (var c = 0; c < 3; c++) {
+        m += "<circle cx='" + (w*0.72) + "' cy='" + (h*0.7) + "' r='" + (70 - c*22) + "' fill='none' stroke='#fff' stroke-width='5' " + op + "/>";
+      }
+    } else if (kind === 'tech') {
+      for (var gx = 0; gx < 6; gx++) for (var gy = 0; gy < 4; gy++) {
+        m += "<circle cx='" + (w*0.12 + gx*22) + "' cy='" + (h*0.18 + gy*22) + "' r='3.2' fill='#fff' " + op + "/>";
+      }
+    } else if (kind === 'politics') {
+      m += "<circle cx='" + (w*0.7) + "' cy='" + (h*0.45) + "' r='" + (h*0.32) + "' fill='none' stroke='#fff' stroke-width='4' " + op + "/>";
+      m += "<ellipse cx='" + (w*0.7) + "' cy='" + (h*0.45) + "' rx='" + (h*0.14) + "' ry='" + (h*0.32) + "' fill='none' stroke='#fff' stroke-width='3' " + op + "/>";
+      m += "<line x1='" + (w*0.38) + "' y1='" + (h*0.45) + "' x2='" + (w*1.02) + "' y2='" + (h*0.45) + "' stroke='#fff' stroke-width='3' " + op + "/>";
+    } else if (kind === 'business') {
+      for (var b = 0; b < 5; b++) {
+        var bh = 30 + b * 26;
+        m += "<rect x='" + (w*0.1 + b*40) + "' y='" + (h - 24 - bh) + "' width='26' height='" + bh + "' rx='4' fill='#fff' " + op + "/>";
+      }
+    } else if (kind === 'energy') {
+      m += "<circle cx='" + (w*0.74) + "' cy='" + (h*0.42) + "' r='26' fill='#fff' " + op + "/>";
+      for (var a = 0; a < 12; a++) {
+        var ang = a * Math.PI / 6;
+        var x1 = w*0.74 + Math.cos(ang)*40, y1 = h*0.42 + Math.sin(ang)*40;
+        var x2 = w*0.74 + Math.cos(ang)*78, y2 = h*0.42 + Math.sin(ang)*78;
+        m += "<line x1='" + x1 + "' y1='" + y1 + "' x2='" + x2 + "' y2='" + y2 + "' stroke='#fff' stroke-width='5' " + op + "/>";
+      }
+    } else if (kind === 'medical') {
+      m += "<rect x='" + (w*0.5 - 12) + "' y='" + (h*0.28) + "' width='24' height='" + (h*0.44) + "' rx='6' fill='#fff' " + op + "/>";
+      m += "<rect x='" + (w*0.34) + "' y='" + (h*0.44 - 12) + "' width='" + (w*0.32) + "' height='24' rx='6' fill='#fff' " + op + "/>";
+    } else if (kind === 'semiconductor') {
+      var cx = w*0.5, cy = h*0.5, s = 64;
+      m += "<rect x='" + (cx - s/2) + "' y='" + (cy - s/2) + "' width='" + s + "' height='" + s + "' rx='6' fill='none' stroke='#fff' stroke-width='4' " + op + "/>";
+      for (var i2 = 1; i2 < 4; i2++) {
+        m += "<line x1='" + (cx - s/2 + i2*s/4) + "' y1='" + (cy - s/2) + "' x2='" + (cx - s/2 + i2*s/4) + "' y2='" + (cy + s/2) + "' stroke='#fff' stroke-width='2' " + op + "/>";
+        m += "<line x1='" + (cx - s/2) + "' y1='" + (cy - s/2 + i2*s/4) + "' x2='" + (cx + s/2) + "' y2='" + (cy - s/2 + i2*s/4) + "' stroke='#fff' stroke-width='2' " + op + "/>";
+      }
+    } else if (kind === 'space') {
+      m += "<path d='M " + (w*0.55) + ' ' + (h*0.7) + " A 30 30 0 1 1 " + (w*0.72) + ' ' + (h*0.5) + "' fill='none' stroke='#fff' stroke-width='5' " + op + "/>";
+      var stars = [[0.2,0.2,2.5],[0.35,0.4,1.8],[0.6,0.18,2.2],[0.8,0.3,1.6],[0.45,0.6,2],[0.9,0.6,2.4],[0.25,0.75,1.8]];
+      stars.forEach(function(s2){ m += "<circle cx='" + (w*s2[0]) + "' cy='" + (h*s2[1]) + "' r='" + s2[2] + "' fill='#fff' " + op + "/>"; });
+    } else if (kind === 'social') {
+      m += "<circle cx='" + (w*0.42) + "' cy='" + (h*0.5) + "' r='34' fill='none' stroke='#fff' stroke-width='5' " + op + "/>";
+      m += "<circle cx='" + (w*0.6) + "' cy='" + (h*0.45) + "' r='46' fill='none' stroke='#fff' stroke-width='5' " + op + "/>";
+    } else { // cover / world
+      m += "<circle cx='" + (w*0.7) + "' cy='" + (h*0.5) + "' r='" + (h*0.4) + "' fill='none' stroke='#fff' stroke-width='3' " + op + "/>";
+      m += "<ellipse cx='" + (w*0.7) + "' cy='" + (h*0.5) + "' rx='" + (h*0.18) + "' ry='" + (h*0.4) + "' fill='none' stroke='#fff' stroke-width='2' " + op + "/>";
+      m += "<line x1='" + (w*0.3) + "' y1='" + (h*0.5) + "' x2='" + (w*1.1) + "' y2='" + (h*0.5) + "' stroke='#fff' stroke-width='2' " + op + "/>";
+    }
+    return m;
+  }
+
+  function themedImage(kind, w, h) {
+    var col = IMG_COLORS[kind] || IMG_COLORS.cover;
+    var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='" + w + "' height='" + h + "' viewBox='0 0 " + w + ' ' + h + "'>" +
+      "<defs>" +
+        "<linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>" +
+          "<stop offset='0' stop-color='" + col[0] + "'/><stop offset='1' stop-color='" + col[1] + "'/>" +
+        "</linearGradient>" +
+        "<radialGradient id='r' cx='0.72' cy='0.28' r='0.85'>" +
+          "<stop offset='0' stop-color='rgba(255,255,255,0.28)'/><stop offset='1' stop-color='rgba(255,255,255,0)'/>" +
+        "</radialGradient>" +
+      "</defs>" +
+      "<rect width='" + w + "' height='" + h + "' fill='url(#g)'/>" +
+      "<rect width='" + w + "' height='" + h + "' fill='url(#r)'/>" +
+      svgMotif(kind, w, h) +
+      "</svg>";
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }
+
+  // Try each URL in turn; if all fail (or time out), fall back to a guaranteed themed SVG.
+  function loadWithFallback(img, sources, finalUri, timeout) {
+    var i = 0;
+    function tryNext() {
+      if (i >= sources.length) { img.src = finalUri; return; }
+      var url = sources[i++];
+      var settled = false;
+      var timer = setTimeout(function() {
+        if (settled) return; settled = true;
+        img.onload = null; img.onerror = null;
+        tryNext();
+      }, timeout || 3500);
+      img.onload = function() { if (settled) return; settled = true; clearTimeout(timer); img.onerror = null; };
+      img.onerror = function() { if (settled) return; settled = true; clearTimeout(timer); tryNext(); };
+      img.src = url;
+    }
+    tryNext();
+  }
+
   function setupImages() {
     var banner = document.getElementById('bannerImg');
-    banner.src = 'https://loremflickr.com/1200/400/world,news?lock=' + seed;
-    banner.onerror = function() {
-      this.src = 'https://picsum.photos/seed/banner' + seed + '/1200/400';
-      this.onerror = function() { this.style.opacity = '0'; };
-    };
-    var keywords = ['military,tank','finance,money','technology,robot','politics,government','business,industry','energy,solar','medical,hospital','semiconductor,chip','space,rocket','social,media'];
+    loadWithFallback(
+      banner,
+      ['https://loremflickr.com/1200/400/world,news?lock=' + seed,
+       'https://picsum.photos/seed/banner' + seed + '/1200/400'],
+      themedImage('cover', 1200, 400)
+    );
     sections.forEach(function(sec, i) {
       var img = sec.querySelector('.section-header img');
-      if (img) {
-        var kw = keywords[i] || 'abstract';
-        img.src = 'https://loremflickr.com/800/300/' + encodeURIComponent(kw) + '?lock=' + (seed*7 + i + 1);
-        img.onerror = function() {
-          this.src = 'https://picsum.photos/seed/' + encodeURIComponent(kw) + '/800/300';
-          this.onerror = function() { this.style.opacity = '0'; };
-        };
-      }
+      if (!img) return;
+      var kind = IMG_KINDS[i] || 'cover';
+      var kw = ['military,tank','finance,money','technology,robot','politics,government','business,industry','energy,solar','medical,hospital','semiconductor,chip','space,rocket','social,media'][i] || 'abstract';
+      loadWithFallback(
+        img,
+        ['https://loremflickr.com/800/300/' + encodeURIComponent(kw) + '?lock=' + (seed*7 + i + 1),
+         'https://picsum.photos/seed/' + encodeURIComponent(kw) + '/800/300'],
+        themedImage(kind, 800, 300)
+      );
     });
   }
 
@@ -1087,7 +1218,9 @@
     voices.forEach(function(v) {
       var opt = document.createElement('option');
       opt.value = v.voiceURI;
-      opt.textContent = '\uD83C\uDFA4 ' + v.name + ' (' + v.lang + ')';
+      var q = voiceQuality(v);
+      var badge = q >= 3 ? '🤖' : (q === 2 ? '✨' : '\uD83C\uDFA4');
+      opt.textContent = badge + ' ' + v.name + ' (' + v.lang + ')';
       sel.appendChild(opt);
     });
     if (selectedVoice) {
@@ -1260,13 +1393,34 @@
   };
 
   // ========== TTS ==========
+  // Quality ranking: neural / cloud / online voices sound far better than the
+  // default system voice. Used both for auto-selection and for labelling.
+  function voiceQuality(v) {
+    var n = (v.name || '').toLowerCase();
+    if (/neural|online|natural|云端|在线|云|神经|premium|enhanced|tts|晓|云希|云扬|云健|云皓/.test(n)) return 3;
+    if (/yuxuan|yunxi|xiaoxiao|huihui|yaoyao|kangkang|yaoyao|tencent|azure|microsoft/.test(n)) return 2;
+    return 1;
+  }
+  function bestChineseVoice() {
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return null;
+    var zh = voices.filter(function(v) { return v.lang && v.lang.indexOf('zh') === 0; });
+    if (!zh.length) zh = voices.slice();
+    zh.sort(function(a, b) { return voiceQuality(b) - voiceQuality(a); });
+    return zh[0];
+  }
   function getVoice() {
     var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return null;
     if (selectedVoice) {
       var found = voices.find(function(v) { return v.voiceURI === selectedVoice; });
       if (found) return found;
     }
-    var zh = voices.find(function(v) { return v.lang && v.lang.startsWith('zh'); });
+    if (aiVoiceBoost) {
+      var best = bestChineseVoice();
+      if (best) return best;
+    }
+    var zh = voices.find(function(v) { return v.lang && v.lang.indexOf('zh') === 0; });
     return zh || voices[0] || null;
   }
 
@@ -1385,6 +1539,7 @@
       utt.lang = 'zh-CN';
       utt.rate = playbackRate;
       utt.volume = volume;
+      utt.pitch = aiVoiceBoost ? AI_BOOST_PITCH : 1;
       var v = getVoice();
       if (v) utt.voice = v;
       currentUtt = utt;
@@ -1432,6 +1587,7 @@
     utt.lang = 'zh-CN';
     utt.rate = playbackRate;
     utt.volume = volume;
+    utt.pitch = aiVoiceBoost ? AI_BOOST_PITCH : 1;
     var v = getVoice();
     if (v) utt.voice = v;
     currentUtt = utt;
@@ -1686,6 +1842,31 @@
       btn.classList.remove('active');
       lbl.textContent = lang === 'zh' ? '智能分块' : 'Chunked';
     }
+  };
+
+  function updateAiVoiceUI() {
+    var btn = document.getElementById('aiVoiceBtn');
+    var lbl = document.getElementById('aiVoiceLabel');
+    if (!btn) return;
+    if (aiVoiceBoost) {
+      btn.classList.add('active');
+      lbl.textContent = lang === 'zh' ? 'AI 已增强' : 'AI On';
+    } else {
+      btn.classList.remove('active');
+      lbl.textContent = lang === 'zh' ? 'AI 语音' : 'AI Voice';
+    }
+  }
+  window.toggleAiVoice = function() {
+    aiVoiceBoost = !aiVoiceBoost;
+    localStorage.setItem('wb_ai_voice', aiVoiceBoost ? '1' : '0');
+    updateAiVoiceUI();
+    // re-pick voice immediately so the dropdown reflects the chosen voice
+    var sel = document.getElementById('voiceSel');
+    if (sel && aiVoiceBoost && !selectedVoice) {
+      var best = bestChineseVoice();
+      if (best) sel.value = best.voiceURI;
+    }
+    if (isPlaying) restartIfPlaying();
   };
 
   function updateProgressUI() {
