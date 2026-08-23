@@ -1323,6 +1323,23 @@
 </div>
 
 <script>
+// Safe storage wrapper: localStorage throws a SecurityError on file:// (opaque
+// origin) in Chrome/Edge, which would crash init(). Fall back to in-memory.
+var safeLS = (function() {
+  try {
+    var __k = '__wb_ls_probe__';
+    window.localStorage.setItem(__k, '1');
+    window.localStorage.removeItem(__k);
+    return window.localStorage;
+  } catch (e) {
+    var __mem = {};
+    return {
+      getItem: function(k) { return (Object.prototype.hasOwnProperty.call(__mem, k)) ? __mem[k] : null; },
+      setItem: function(k, v) { __mem[k] = String(v); },
+      removeItem: function(k) { delete __mem[k]; }
+    };
+  }
+})();
 (function() {
   'use strict';
 
@@ -1378,15 +1395,15 @@
   var BUILTIN_PREFS = {"lang":"zh","theme":"auto","accent":"#2563eb","font":15,"radius":16,"voice":"","hl":"#ffeb3b","hlOn":true};
 
   // ========== State ==========
-  var lang = localStorage.getItem('wb_lang') || BUILTIN_PREFS.lang || 'zh';
-  var theme = localStorage.getItem('wb_theme') || BUILTIN_PREFS.theme || 'auto';
-  var accent = localStorage.getItem('wb_accent') || BUILTIN_PREFS.accent || '#2563eb';
-  var fontSize = parseInt(localStorage.getItem('wb_font') || BUILTIN_PREFS.font || 15);
-  var radius = parseInt(localStorage.getItem('wb_radius') || BUILTIN_PREFS.radius || 16);
-  var hlColor = localStorage.getItem('wb_hl') || BUILTIN_PREFS.hl || '#ffeb3b';
-  var hlOn = (localStorage.getItem('wb_hl_on') !== null ? localStorage.getItem('wb_hl_on') : (BUILTIN_PREFS.hlOn !== undefined ? BUILTIN_PREFS.hlOn : true)) === 'true' || (localStorage.getItem('wb_hl_on') !== null ? localStorage.getItem('wb_hl_on') : (BUILTIN_PREFS.hlOn !== undefined ? BUILTIN_PREFS.hlOn : true)) === true;
-  var customVoices = JSON.parse(localStorage.getItem('wb_custom_voices') || '[]');
-  var selectedVoice = localStorage.getItem('wb_voice') || BUILTIN_PREFS.voice || '';
+  var lang = safeLS.getItem('wb_lang') || BUILTIN_PREFS.lang || 'zh';
+  var theme = safeLS.getItem('wb_theme') || BUILTIN_PREFS.theme || 'auto';
+  var accent = safeLS.getItem('wb_accent') || BUILTIN_PREFS.accent || '#2563eb';
+  var fontSize = parseInt(safeLS.getItem('wb_font') || BUILTIN_PREFS.font || 15);
+  var radius = parseInt(safeLS.getItem('wb_radius') || BUILTIN_PREFS.radius || 16);
+  var hlColor = safeLS.getItem('wb_hl') || BUILTIN_PREFS.hl || '#ffeb3b';
+  var hlOn = (safeLS.getItem('wb_hl_on') !== null ? safeLS.getItem('wb_hl_on') : (BUILTIN_PREFS.hlOn !== undefined ? BUILTIN_PREFS.hlOn : true)) === 'true' || (safeLS.getItem('wb_hl_on') !== null ? safeLS.getItem('wb_hl_on') : (BUILTIN_PREFS.hlOn !== undefined ? BUILTIN_PREFS.hlOn : true)) === true;
+  var customVoices = JSON.parse(safeLS.getItem('wb_custom_voices') || '[]');
+  var selectedVoice = safeLS.getItem('wb_voice') || BUILTIN_PREFS.voice || '';
 
   var sections = document.querySelectorAll('.section-card');
   var sectionData = [];
@@ -1412,7 +1429,7 @@
   }
   // AI voice enhancement: auto-pick the best neural/cloud voice + warmer pitch.
   // Defaults ON (user wants better-than-system voice); can be turned off in player.
-  var aiVoiceBoost = localStorage.getItem('wb_ai_voice') !== '0';
+  var aiVoiceBoost = safeLS.getItem('wb_ai_voice') !== '0';
   var AI_BOOST_PITCH = 1.08;
   var lastHlTime = 0, lastHlEl = null; // highlight throttle + dedup scroll
   var isSeeking = false; // true while user drags the progress bar
@@ -1790,16 +1807,18 @@
   function setupScroll() {
     var titlebar = document.getElementById('titlebar');
     var banner = document.getElementById('bannerImg');
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          titlebar.classList.remove('scrolled');
-        } else {
-          titlebar.classList.add('scrolled');
-        }
-      });
-    }, { threshold: 0 });
-    if (banner) observer.observe(banner);
+    if (typeof IntersectionObserver !== 'undefined') {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            titlebar.classList.remove('scrolled');
+          } else {
+            titlebar.classList.add('scrolled');
+          }
+        });
+      }, { threshold: 0 });
+      if (banner) observer.observe(banner);
+    }
 
     window.addEventListener('scroll', function() {
       if (window.scrollY > 30) {
@@ -1812,15 +1831,15 @@
 
   function setupExitCleanup() {
     function cleanup() {
-      localStorage.setItem('wb_lang', lang);
-      localStorage.setItem('wb_theme', theme);
-      localStorage.setItem('wb_accent', accent);
-      localStorage.setItem('wb_font', fontSize);
-      localStorage.setItem('wb_radius', radius);
-      localStorage.setItem('wb_hl', hlColor);
-      localStorage.setItem('wb_hl_on', hlOn);
-      localStorage.setItem('wb_custom_voices', JSON.stringify(customVoices));
-      localStorage.setItem('wb_voice', selectedVoice);
+      safeLS.setItem('wb_lang', lang);
+      safeLS.setItem('wb_theme', theme);
+      safeLS.setItem('wb_accent', accent);
+      safeLS.setItem('wb_font', fontSize);
+      safeLS.setItem('wb_radius', radius);
+      safeLS.setItem('wb_hl', hlColor);
+      safeLS.setItem('wb_hl_on', hlOn);
+      safeLS.setItem('wb_custom_voices', JSON.stringify(customVoices));
+      safeLS.setItem('wb_voice', selectedVoice);
       stopAll();
     }
     window.addEventListener('pagehide', cleanup);
@@ -1833,19 +1852,19 @@
   // ========== Settings actions ==========
   window.openSettings = function() { document.getElementById('settingsOverlay').classList.add('open'); };
   window.closeSettings = function() { document.getElementById('settingsOverlay').classList.remove('open'); };
-  window.setLang = function(v) { lang = v; localStorage.setItem('wb_lang', lang); applyLang(); setupVoices(); };
-  window.setTheme = function(v) { theme = v; localStorage.setItem('wb_theme', theme); applyTheme(); };
-  window.setAccent = function(v) { accent = v; localStorage.setItem('wb_accent', accent); applyAccent(); };
+  window.setLang = function(v) { lang = v; safeLS.setItem('wb_lang', lang); applyLang(); setupVoices(); };
+  window.setTheme = function(v) { theme = v; safeLS.setItem('wb_theme', theme); applyTheme(); };
+  window.setAccent = function(v) { accent = v; safeLS.setItem('wb_accent', accent); applyAccent(); };
   window.applyRGBAccent = function() {
     var r = document.getElementById('accentR').value;
     var g = document.getElementById('accentG').value;
     var b = document.getElementById('accentB').value;
     if (r!=='' && g!=='' && b!=='') { accent = rgbToHex(+r,+g,+b); setAccent(accent); }
   };
-  window.setFont = function(v) { fontSize = +v; localStorage.setItem('wb_font', fontSize); applyFont(); };
-  window.setRadius = function(v) { radius = +v; localStorage.setItem('wb_radius', radius); applyRadius(); };
-  window.setHl = function(v) { hlColor = v; localStorage.setItem('wb_hl', hlColor); applyHl(); };
-  window.setHlOn = function(v) { hlOn = !!v; localStorage.setItem('wb_hl_on', hlOn); applyHlOn(); };
+  window.setFont = function(v) { fontSize = +v; safeLS.setItem('wb_font', fontSize); applyFont(); };
+  window.setRadius = function(v) { radius = +v; safeLS.setItem('wb_radius', radius); applyRadius(); };
+  window.setHl = function(v) { hlColor = v; safeLS.setItem('wb_hl', hlColor); applyHl(); };
+  window.setHlOn = function(v) { hlOn = !!v; safeLS.setItem('wb_hl_on', hlOn); applyHlOn(); };
   window.applyRGBHl = function() {
     var r = document.getElementById('hlR').value;
     var g = document.getElementById('hlG').value;
@@ -1878,7 +1897,7 @@
           if (data.radius !== undefined) setRadius(data.radius);
           if (data.hl) setHl(data.hl);
           if (data.hlOn !== undefined) setHlOn(data.hlOn);
-          if (data.voice !== undefined) { selectedVoice = data.voice; localStorage.setItem('wb_voice', selectedVoice); setupVoices(); document.getElementById('voiceSel').value = selectedVoice; }
+          if (data.voice !== undefined) { selectedVoice = data.voice; safeLS.setItem('wb_voice', selectedVoice); setupVoices(); document.getElementById('voiceSel').value = selectedVoice; }
           setupSettingsUI();
         } catch(err) { alert('Invalid JSON'); }
       };
@@ -2406,7 +2425,7 @@
   window.changeVoice = function(v) {
     if (v === '__custom__') { openVoiceModal(); return; }
     selectedVoice = v;
-    localStorage.setItem('wb_voice', selectedVoice);
+    safeLS.setItem('wb_voice', selectedVoice);
     restartIfPlaying();
   };
 
@@ -2438,11 +2457,11 @@
     if (v) {
       if (!customVoices.find(function(x) { return x.voiceURI === uri; })) {
         customVoices.push({ voiceURI: v.voiceURI, name: v.name, lang: v.lang });
-        localStorage.setItem('wb_custom_voices', JSON.stringify(customVoices));
+        safeLS.setItem('wb_custom_voices', JSON.stringify(customVoices));
         setupVoices();
       }
       selectedVoice = uri;
-      localStorage.setItem('wb_voice', selectedVoice);
+      safeLS.setItem('wb_voice', selectedVoice);
       document.getElementById('voiceSel').value = selectedVoice;
     }
     closeVoiceModal();
@@ -2585,7 +2604,7 @@
   }
   window.toggleAiVoice = function() {
     aiVoiceBoost = !aiVoiceBoost;
-    localStorage.setItem('wb_ai_voice', aiVoiceBoost ? '1' : '0');
+    safeLS.setItem('wb_ai_voice', aiVoiceBoost ? '1' : '0');
     updateAiVoiceUI();
     // re-pick voice immediately so the dropdown reflects the chosen voice
     var sel = document.getElementById('voiceSel');
