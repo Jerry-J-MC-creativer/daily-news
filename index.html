@@ -156,44 +156,8 @@
     try { var k='__l'; window.safeLS.setItem(k,'1'); window.safeLS.removeItem(k); return window.safeLS; }
     catch (e) { var m={}; return { getItem:function(x){return (x in m)?m[x]:null;}, setItem:function(x,v){m[x]=String(v);}, removeItem:function(x){delete m[x];} }; }
   })();
-  // 每次访问随机换背景（使用 safeSession 保证同一会话内一致，刷新则换）
-  var landscapes = [
-    'nature,landscape','mountain,lake','ocean,beach','forest,sunlight',
-    'sunset,clouds','river,valley','flower,meadow','snow,mountain'
-  ];
-  var sessIdx = safeSession.getItem('wb_bg_idx');
-  if (sessIdx === null) {
-    sessIdx = Math.floor(Math.random() * landscapes.length);
-    safeSession.setItem('wb_bg_idx', sessIdx);
-  } else {
-    sessIdx = (+sessIdx + 1 + Math.floor(Math.random() * (landscapes.length - 1))) % landscapes.length;
-    safeSession.setItem('wb_bg_idx', sessIdx);
-  }
-  var bgKeyword = landscapes[sessIdx];
-  // Self-contained landscape SVG background (no network, no text, always loads).
-  var bgPalettes = {
-    'nature,landscape': ['#1e3a5f','#3b6ea5'],
-    'mountain,lake':    ['#16356b','#3b82f6'],
-    'ocean,beach':      ['#0b4d6b','#2aa9c9'],
-    'forest,sunlight':  ['#1f4d2b','#4caf50'],
-    'sunset,clouds':    ['#5b2a4a','#c9638f'],
-    'river,valley':     ['#234d5c','#5cc4ec'],
-    'flower,meadow':    ['#3a4a1f','#9acd32'],
-    'snow,mountain':    ['#2a3a5c','#8aa6bd']
-  };
-  var pal = bgPalettes[bgKeyword] || ['#16356b','#3b82f6'];
-  function landscapeSvg(c1, c2, seed) {
-    var sunx = 0.55 + ((seed % 30) / 100);
-    var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080' viewBox='0 0 1920 1080'>"
-      + "<defs><linearGradient id='sky' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='" + c1 + "'/><stop offset='1' stop-color='" + c2 + "'/></linearGradient></defs>"
-      + "<rect width='1920' height='1080' fill='url(#sky)'/>"
-      + "<circle cx='" + Math.round(1920 * sunx) + "' cy='300' r='90' fill='#ffffff' opacity='0.22'/>"
-      + "<path d='M0,1080 L0,720 L480,560 L960,700 L1440,540 L1920,720 L1920,1080 Z' fill='#ffffff' opacity='0.10'/>"
-      + "<path d='M0,1080 L0,840 L520,720 L1040,840 L1560,700 L1920,860 L1920,1080 Z' fill='#ffffff' opacity='0.14'/>"
-      + "</svg>";
-    return "url(\"data:image/svg+xml," + encodeURIComponent(svg) + "\")";
-  }
-  document.getElementById('bgLayer').style.backgroundImage = landscapeSvg(pal[0], pal[1], sessIdx * 37 + 13);
+  // 使用真实照片作为主页背景（固定 banner.jpg，不再使用 SVG 生成图）
+  document.getElementById('bgLayer').style.backgroundImage = "url('img/banner.jpg')";
 
   // 读取背景开关状态
   var bgOn = safeLS.getItem('wb_home_bg');
@@ -240,7 +204,7 @@
         return { date: fmtDateStr(d.date), file: d.file, badge: '往期', old: true };
       });
       if (days.length) { days[0].badge = '最新'; days[0].old = false; }
-      renderDays(days.slice(0, 3));
+      renderDays(days.slice(0, 2));
     })
     .catch(function(){
       var today = new Date();
