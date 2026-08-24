@@ -156,8 +156,16 @@
     try { var k='__l'; window.safeLS.setItem(k,'1'); window.safeLS.removeItem(k); return window.safeLS; }
     catch (e) { var m={}; return { getItem:function(x){return (x in m)?m[x]:null;}, setItem:function(x,v){m[x]=String(v);}, removeItem:function(x){delete m[x];} }; }
   })();
-  // 使用真实照片作为主页背景（固定 banner.jpg，不再使用 SVG 生成图）
-  document.getElementById('bgLayer').style.backgroundImage = "url('img/banner.jpg')";
+  // 使用真实照片作为主页背景（固定 banner.jpg，不再使用 SVG 生成图）。
+  // 预加载完成后再显示，避免加载过程中的空白/破图闪烁。
+  (function () {
+    var bg = document.getElementById('bgLayer');
+    var src = 'img/banner.jpg';
+    var pre = new Image();
+    pre.onload = function () { bg.style.backgroundImage = "url('" + src + "')"; };
+    pre.onerror = function () { bg.style.backgroundImage = "url('" + src + "')"; };
+    pre.src = src;
+  })();
 
   // 读取背景开关状态
   var bgOn = safeLS.getItem('wb_home_bg');
