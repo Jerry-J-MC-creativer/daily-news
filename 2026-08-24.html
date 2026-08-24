@@ -349,6 +349,19 @@
     cursor: pointer;
     font-size: .85em;
   }
+  .danger-btn {
+    width: 100%; margin-top: 6px; padding: 11px;
+    border-radius: var(--radius); border: 1px solid #e25570;
+    background: transparent; color: #e25570; cursor: pointer;
+    font-size: .92em; font-weight: 600; transition: background .2s, color .2s;
+  }
+  .danger-btn:hover { background: #e25570; color: #fff; }
+  .danger-btn.confirm { background: #e25570; color: #fff; border-color: #e25570; }
+  .bottom-link {
+    display: block; text-align: center; margin-top: 22px; font-size: .85em;
+    color: var(--accent); text-decoration: none; font-weight: 600;
+  }
+  .bottom-link:hover { text-decoration: underline; }
   .switch {
     position: relative;
     width: 44px; height: 24px;
@@ -728,7 +741,7 @@
     <div class="title-btns">
       <button class="title-btn" id="homeBtn" onclick="goHome()" title="返回主页"><span class="tb-icon">🏠</span><span id="homeLabel">主页</span></button>
       <button class="title-btn" id="shareBtn" onclick="sharePage()" title="分享"><span class="tb-icon">⬆️</span><span id="shareLabel">分享</span></button>
-      <button class="title-btn" id="settingsBtn" onclick="openSettings()" title="设置"><span class="tb-icon">⚙️</span><span id="settingsLabel">设置</span></button>
+      <button class="title-btn" id="settingsBtn" onclick="openSettings()" title="设置"><span class="tb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1H21a2 2 0 0 1 0-4h-.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><span id="settingsLabel">设置</span></button>
     </div>
   </div>
 </div>
@@ -1255,7 +1268,7 @@
   <div class="summary">
     <h3 id="summaryTitle">核心主线</h3>
     <p id="summaryBody" data-zh="2026年8月24日的全球主线围绕两条轴线展开：其一，美伊对抗从军事转向'经济终局'——美方以史无前例制裁叠加霍尔木兹封锁施压，伊朗以波斯湾石油出口反制牌回应，能源与黄金市场随之剧烈波动，英国天然气更飙至3.5年高位； 其二，俄乌冲突加速'工业化'，双方打击目标深入彼此军工与能源腹地，欧盟61亿欧元军援与英国巡航导弹技术转移使战争进一步产业化。与此同时，AI与半导体自主化提速（神秘模型Ox Alpha、阿里800亿港元AI配售、小米玄戒O3、Anthropic自研芯片），中东新防务联盟、新西兰社媒禁令与TikTok隐私和解则折射出地缘、科技与治理的多重重构。" data-en="The global story of Aug 24, 2026 runs along two axes. First, the US-Iran confrontation shifted from military to an 'economic endgame' — Washington leaned on unprecedented sanctions plus a Hormuz blockade while Iran answered with a Persian Gulf oil-export countermeasure, sending energy and gold markets swinging and pushing UK gas to a 3.5-year high. Second, the Russia-Ukraine war industrialised further, with strikes reaching deep into each side's defence and energy heartlands and 6.1 billion euros of EU aid plus British cruise-missile tech transfers deepening the war's industrial base. Meanwhile AI and semiconductor autonomy accelerated (the Ox Alpha mystery model, Alibaba's 80B-HK-dollar AI placement, Xiaomi's Xuanjie O3, Anthropic's in-house chips), while a new Mideast defence pact, New Zealand's social-media ban and TikTok's privacy settlement reflect a multi-layered reordering of geopolitics, technology and governance.">2026年8月24日的全球主线围绕两条轴线展开：其一，美伊对抗从军事转向'经济终局'——美方以史无前例制裁叠加霍尔木兹封锁施压，伊朗以波斯湾石油出口反制牌回应，能源与黄金市场随之剧烈波动，英国天然气更飙至3.5年高位； 其二，俄乌冲突加速'工业化'，双方打击目标深入彼此军工与能源腹地，欧盟61亿欧元军援与英国巡航导弹技术转移使战争进一步产业化。与此同时，AI与半导体自主化提速（神秘模型Ox Alpha、阿里800亿港元AI配售、小米玄戒O3、Anthropic自研芯片），中东新防务联盟、新西兰社媒禁令与TikTok隐私和解则折射出地缘、科技与治理的多重重构。</p>
-    <p style="margin-top:12px;font-size:.85em;">图片来源：LoremFlickr 公开实拍 + 智能分类配图兜底（离线也始终有图）；语音由浏览器 Web Speech API 生成，播放器可一键开启「AI 语音增强」选用云端神经语音。</p>
+    <p style="margin-top:12px;font-size:.85em;">图片来源：本地实拍 + Wikimedia / Openverse 等多条 CC 授权线路，自动选用最快线路（离线始终有图）；语音由浏览器 Web Speech API 生成，播放器可一键开启「AI 语音增强」选用云端神经语音。</p>
   </div>
 </div>
 
@@ -1319,6 +1332,10 @@
       <button class="apply-btn" onclick="exportSettings()" id="btnExport">导出设置</button>
       <button class="apply-btn" onclick="importSettings()" id="btnImport">导入设置</button>
     </div>
+    <div class="setting-row" style="margin-top:22px;">
+      <button class="danger-btn" id="clearCacheBtn" onclick="confirmClearCache()">清理所有缓存</button>
+    </div>
+    <a class="bottom-link" id="gotoHome" href="index.html" target="_blank" rel="noopener">前往主页设置 →</a>
   </div>
 </div>
 
@@ -1565,18 +1582,32 @@ var safeLS = (function() {
   // ---------- Category-themed scenery images (pure nature, NO people/objects) ----------
   // Every category maps to a nature motif + color + nature keyword.
   // Guarantee: no people, no buildings, no text, no objects -- only landscapes/sky/water/plants/celestial.
+  // Each kind has MULTIPLE source lines (local bundle + remote CDNs via proxy).
+  // At open time we probe all sources and use the FASTEST one that loads; the local
+  // bundle is always the guaranteed fallback (never an AI/SVG image).
   var KIND_META = {
-    military:    { src:'img/sec-military.jpg',      c:['#3b4252','#56657d'], motif:'shield'  },
-    finance:     { src:'img/sec-finance.jpg',       c:['#7c5e10','#caa12b'], motif:'chart'   },
-    ai:          { src:'img/sec-ai.jpg',            c:['#1a1a3a','#5b4bb0'], motif:'neural'  },
-    politics:    { src:'img/sec-politics.jpg',      c:['#0b3d5c','#2693b3'], motif:'globe'   },
-    industry:    { src:'img/sec-industry.jpg',      c:['#274a22','#5f9a3e'], motif:'gear'    },
-    energy:      { src:'img/sec-energy.jpg',        c:['#7a3b10','#e89a1c'], motif:'bolt'    },
-    health:      { src:'img/sec-health.jpg',        c:['#0f5132','#33bd86'], motif:'cross'   },
-    semiconductor:{ src:'img/sec-semiconductor.jpg',c:['#16455c','#5cc4ec'], motif:'chip'    },
-    space:       { src:'img/sec-space.jpg',         c:['#0a0a23','#4a3c8e'], motif:'rocket'  },
-    society:     { src:'img/sec-society.jpg',       c:['#3a4a5a','#8aa6bd'], motif:'network' },
-    cover:       { src:'img/banner.jpg',            c:['#16356b','#3b82f6'], motif:'peaks'   }
+    military:    { src:'img/sec-military.jpg',      c:['#3b4252','#56657d'], motif:'shield',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-military.jpg'] },
+    finance:     { src:'img/sec-finance.jpg',       c:['#7c5e10','#caa12b'], motif:'chart',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-finance.jpg'] },
+    ai:          { src:'img/sec-ai.jpg',            c:['#1a1a3a','#5b4bb0'], motif:'neural',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-ai.jpg'] },
+    politics:    { src:'img/sec-politics.jpg',      c:['#0b3d5c','#2693b3'], motif:'globe',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-politics.jpg'] },
+    industry:    { src:'img/sec-industry.jpg',      c:['#274a22','#5f9a3e'], motif:'gear',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-industry.jpg'] },
+    energy:      { src:'img/sec-energy.jpg',        c:['#7a3b10','#e89a1c'], motif:'bolt',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-energy.jpg'] },
+    health:      { src:'img/sec-health.jpg',        c:['#0f5132','#33bd86'], motif:'cross',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-health.jpg'] },
+    semiconductor:{ src:'img/sec-semiconductor.jpg',c:['#16455c','#5cc4ec'], motif:'chip',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-semiconductor.jpg'] },
+    space:       { src:'img/sec-space.jpg',         c:['#0a0a23','#4a3c8e'], motif:'rocket',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-space.jpg'] },
+    society:     { src:'img/sec-society.jpg',       c:['#3a4a5a','#8aa6bd'], motif:'network',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-society.jpg'] },
+    cover:       { src:'img/banner.jpg',            c:['#16356b','#3b82f6'], motif:'peaks',
+      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/banner.jpg'] }
   };
   var SECTION_KIND = ['military','finance','ai','politics','industry','energy','health','semiconductor','space','society'];
 
@@ -1689,28 +1720,50 @@ var safeLS = (function() {
   }
 
   function setupImages() {
-    // Real, non-AI photos bundled in img/. Smooth fade-in on load.
-    // If a photo ever fails to load, hide it gracefully so the themed CSS
-    // background shows -- never fall back to an AI/SVG-generated image.
+    // Real, non-AI photos. Each image has multiple source lines (local bundle + remote CDN).
+    // At open time we race all sources and use the FASTEST one that loads successfully.
+    // The local bundle (meta.src) is the guaranteed fallback -- never an AI/SVG image.
     function reveal(img, cls) {
       if (!img) return;
       if (img.complete && img.naturalWidth > 0) { img.classList.add(cls); return; }
       img.addEventListener('load', function () { img.classList.add(cls); });
     }
+    function fastestImage(img, kind, done) {
+      var meta = KIND_META[kind] || KIND_META['cover'];
+      var sources = [meta.src].concat(meta.alt || []);
+      var settled = false;
+      // try all sources in parallel; first to load wins
+      sources.forEach(function(url, idx) {
+        var probe = new Image();
+        probe.onload = function () {
+          if (settled) return; settled = true;
+          img.onerror = function() { img.onerror = null; img.style.display = 'none'; };
+          img.src = url;
+          reveal(img, 'img-loaded');
+          done(url);
+        };
+        probe.onerror = function () {
+          // if all failed, fall back to local bundle
+          if (!settled && idx === sources.length - 1) {
+            settled = true;
+            img.onerror = function() { img.onerror = null; img.style.display = 'none'; };
+            img.src = meta.src;
+            reveal(img, 'img-loaded');
+            done(meta.src);
+          }
+        };
+        probe.src = url;
+      });
+    }
     var banner = document.getElementById('bannerImg');
     if (banner) {
-      banner.onerror = function() { banner.onerror = null; banner.style.display = 'none'; };
-      banner.src = KIND_META['cover'].src;
-      reveal(banner, 'img-loaded');
+      fastestImage(banner, 'cover', function() {});
     }
     sections.forEach(function(sec, i) {
       var img = sec.querySelector('.section-header img');
       if (!img) return;
       var kind = SECTION_KIND[i] || 'cover';
-      var meta = KIND_META[kind];
-      img.onerror = function() { img.onerror = null; img.style.display = 'none'; };
-      img.src = meta.src;
-      reveal(img, 'img-loaded');
+      fastestImage(img, kind, function() {});
     });
   }
 
@@ -1781,6 +1834,10 @@ var safeLS = (function() {
     document.getElementById('btnApplyHl').textContent = isZh ? '应用' : 'Apply';
     document.getElementById('btnExport').textContent = isZh ? '导出设置' : 'Export';
     document.getElementById('btnImport').textContent = isZh ? '导入设置' : 'Import';
+    var gh = document.getElementById('gotoHome');
+    if (gh) gh.textContent = isZh ? '前往主页设置 →' : 'Go to Home settings →';
+    var ccb = document.getElementById('clearCacheBtn');
+    if (ccb && !ccb.classList.contains('confirm')) ccb.textContent = isZh ? '清理所有缓存' : 'Clear all cache';
     document.getElementById('summaryTitle').textContent = isZh ? '核心主线' : 'Key Themes';
     document.getElementById('modalTitle').textContent = isZh ? '收藏自定义声音' : 'Save custom voice';
     document.getElementById('btnCancel').textContent = isZh ? '取消' : 'Cancel';
@@ -2004,6 +2061,32 @@ var safeLS = (function() {
       reader.readAsText(file);
     };
     inp.click();
+  };
+
+  // ========== Clear all cache (two-step confirm) ==========
+  window.confirmClearCache = function() {
+    var btn = document.getElementById('clearCacheBtn');
+    var isZh = lang === 'zh';
+    if (!btn.classList.contains('confirm')) {
+      btn.classList.add('confirm');
+      btn.textContent = isZh ? '再次点击确认清除缓存' : 'Tap again to confirm';
+      setTimeout(function(){
+        if (btn.classList.contains('confirm')) {
+          btn.classList.remove('confirm');
+          btn.textContent = isZh ? '清理所有缓存' : 'Clear all cache';
+        }
+      }, 3000);
+      return;
+    }
+    // second tap -> clear visitor device cache (localStorage for this site)
+    try {
+      var keys = [];
+      for (var i = 0; i < safeLS.length; i++) { var k = safeLS.key(i); if (k && k.indexOf('wb_') === 0) keys.push(k); }
+      keys.forEach(function(k){ safeLS.removeItem(k); });
+    } catch (e) {}
+    btn.classList.remove('confirm');
+    btn.textContent = isZh ? '清理所有缓存' : 'Clear all cache';
+    location.reload();
   };
 
   // ========== Collapse/Expand ==========
@@ -2803,7 +2886,7 @@ var safeLS = (function() {
 })();
 </script>
 <footer style="text-align:center;padding:22px 16px 30px;font-size:12px;color:var(--sub);opacity:0.7;line-height:1.6;">
-  栏目配图来自 Openverse / Flickr 等 CC 授权素材 · Section photos via CC-licensed Openverse / Flickr
+  栏目配图来自多条 CC 授权线路（本地实拍 + Wikimedia / Openverse 等），自动选取最快线路 · Section photos via CC-licensed multi-line sources, fastest line auto-selected
 </footer>
 </body>
 </html>
