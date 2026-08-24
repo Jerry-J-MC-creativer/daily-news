@@ -1562,17 +1562,17 @@ var safeLS = (function() {
   // Every category maps to a nature motif + color + nature keyword.
   // Guarantee: no people, no buildings, no text, no objects -- only landscapes/sky/water/plants/celestial.
   var KIND_META = {
-    military:    { kw:['mountains,fog','mountain,mist'],                c:['#3b4252','#56657d'], motif:'shield'  },
-    finance:     { kw:['golden,field','wheat,field'],                  c:['#7c5e10','#caa12b'], motif:'chart'   },
-    ai:          { kw:['milkyway,stars','aurora,sky'],                 c:['#1a1a3a','#5b4bb0'], motif:'neural'  },
-    politics:    { kw:['horizon,ocean','sea,horizon'],                 c:['#0b3d5c','#2693b3'], motif:'globe'   },
-    industry:    { kw:['rolling,hills','green,hills'],                 c:['#274a22','#5f9a3e'], motif:'gear'    },
-    energy:      { kw:['sun,desert','desert,dune'],                    c:['#7a3b10','#e89a1c'], motif:'bolt'    },
-    health:      { kw:['forest,waterfall','leaf,plant'],               c:['#0f5132','#33bd86'], motif:'cross'   },
-    semiconductor:{ kw:['ice,berg','crystal,rock'],                    c:['#16455c','#5cc4ec'], motif:'chip'    },
-    space:       { kw:['moon,night','galaxy,sky'],                     c:['#0a0a23','#4a3c8e'], motif:'rocket'  },
-    society:     { kw:['sky,clouds','river,stones'],                   c:['#3a4a5a','#8aa6bd'], motif:'network' },
-    cover:       { kw:['mountain,lake','lake,mountain'],               c:['#16356b','#3b82f6'], motif:'peaks'   }
+    military:    { src:'img/sec-military.jpg',      c:['#3b4252','#56657d'], motif:'shield'  },
+    finance:     { src:'img/sec-finance.jpg',       c:['#7c5e10','#caa12b'], motif:'chart'   },
+    ai:          { src:'img/sec-ai.jpg',            c:['#1a1a3a','#5b4bb0'], motif:'neural'  },
+    politics:    { src:'img/sec-politics.jpg',      c:['#0b3d5c','#2693b3'], motif:'globe'   },
+    industry:    { src:'img/sec-industry.jpg',      c:['#274a22','#5f9a3e'], motif:'gear'    },
+    energy:      { src:'img/sec-energy.jpg',        c:['#7a3b10','#e89a1c'], motif:'bolt'    },
+    health:      { src:'img/sec-health.jpg',        c:['#0f5132','#33bd86'], motif:'cross'   },
+    semiconductor:{ src:'img/sec-semiconductor.jpg',c:['#16455c','#5cc4ec'], motif:'chip'    },
+    space:       { src:'img/sec-space.jpg',         c:['#0a0a23','#4a3c8e'], motif:'rocket'  },
+    society:     { src:'img/sec-society.jpg',       c:['#3a4a5a','#8aa6bd'], motif:'network' },
+    cover:       { src:'img/banner.jpg',            c:['#16356b','#3b82f6'], motif:'peaks'   }
   };
   var SECTION_KIND = ['military','finance','ai','politics','industry','energy','health','semiconductor','space','society'];
 
@@ -1685,15 +1685,20 @@ var safeLS = (function() {
   }
 
   function setupImages() {
-    // Self-contained category-themed SVG (data URI): always loads, no network,
-    // no external text/watermarks, and visually corresponds to each topic.
+    // Use real, non-AI scenery photos (bundled in img/). If a photo fails to load,
+    // fall back to the category-themed SVG so the header never appears broken.
     var banner = document.getElementById('bannerImg');
-    if (banner) banner.src = themedImage('cover', 1200, 400);
+    if (banner) {
+      banner.onerror = function() { banner.onerror = null; banner.src = themedImage('cover', 1200, 400); };
+      banner.src = KIND_META['cover'].src;
+    }
     sections.forEach(function(sec, i) {
       var img = sec.querySelector('.section-header img');
       if (!img) return;
       var kind = SECTION_KIND[i] || 'cover';
-      img.src = themedImage(kind, 800, 300);
+      var meta = KIND_META[kind];
+      img.onerror = function() { img.onerror = null; img.src = themedImage(kind, 800, 300); };
+      img.src = meta.src;
     });
   }
 
