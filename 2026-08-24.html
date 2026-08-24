@@ -153,7 +153,10 @@
     object-fit: cover;
     display: block;
     background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 40%, #000) 100%);
+    opacity: 0;
+    transition: opacity .5s ease;
   }
+  .banner.img-loaded { opacity: 1; }
   .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 20px clamp(12px, 4vw, 48px); }
   .global-actions {
     display: flex;
@@ -197,10 +200,11 @@
     inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    opacity: .75;
-    transition: opacity .3s;
+    opacity: 0;
+    transition: opacity .45s ease;
   }
-  .section-header:hover img { opacity: .8; }
+  .section-header img.img-loaded { opacity: .75; }
+  .section-header:hover img.img-loaded { opacity: .8; }
   .section-titlebar {
     position: relative;
     width: 100%;
@@ -1685,20 +1689,28 @@ var safeLS = (function() {
   }
 
   function setupImages() {
-    // Use real, non-AI scenery photos (bundled in img/). If a photo fails to load,
-    // fall back to the category-themed SVG so the header never appears broken.
+    // Real, non-AI photos bundled in img/. Smooth fade-in on load.
+    // If a photo ever fails to load, hide it gracefully so the themed CSS
+    // background shows -- never fall back to an AI/SVG-generated image.
+    function reveal(img, cls) {
+      if (!img) return;
+      if (img.complete && img.naturalWidth > 0) { img.classList.add(cls); return; }
+      img.addEventListener('load', function () { img.classList.add(cls); });
+    }
     var banner = document.getElementById('bannerImg');
     if (banner) {
-      banner.onerror = function() { banner.onerror = null; banner.src = themedImage('cover', 1200, 400); };
+      banner.onerror = function() { banner.onerror = null; banner.style.display = 'none'; };
       banner.src = KIND_META['cover'].src;
+      reveal(banner, 'img-loaded');
     }
     sections.forEach(function(sec, i) {
       var img = sec.querySelector('.section-header img');
       if (!img) return;
       var kind = SECTION_KIND[i] || 'cover';
       var meta = KIND_META[kind];
-      img.onerror = function() { img.onerror = null; img.src = themedImage(kind, 800, 300); };
+      img.onerror = function() { img.onerror = null; img.style.display = 'none'; };
       img.src = meta.src;
+      reveal(img, 'img-loaded');
     });
   }
 
