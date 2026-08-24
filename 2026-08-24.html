@@ -1,0 +1,2797 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日全球要闻｜2026-08-24</title>
+<style>
+  :root {
+    --bg: #f3f4f6;
+    --surface: #ffffff;
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --border: #e5e7eb;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --title-gradient: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    --accent: #2563eb;
+    --radius: 16px;
+    --font-base: 15px;
+    --hl-color: #ffeb3b;
+    --glass: rgba(255,255,255,0.85);
+    --player-bg: rgba(255,255,255,0.92);
+  }
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border: #334155;
+    --shadow: 0 4px 24px rgba(0,0,0,0.35);
+    --glass: rgba(30,41,59,0.85);
+    --player-bg: rgba(30,41,59,0.92);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: var(--font-base);
+    line-height: 1.6;
+    transition: background .3s, color .3s;
+  }
+  .titlebar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--title-gradient);
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: padding .3s, border-radius .3s, box-shadow .3s, margin .3s;
+    width: auto;
+  }
+  .titlebar.scrolled { border-radius: var(--radius); margin: 8px 12px 0; }
+  .titlebar.shrunk { padding: 10px 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+  /* Browser compatibility tip */
+  .browser-tip {
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: .82em;
+    text-align: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .browser-tip svg { width: 16px; height: 16px; flex-shrink: 0; }
+  /* Firefox / older browsers: fallback when backdrop-filter is unsupported */
+  @supports not (backdrop-filter: blur(1px)) {
+    .section-titlebar { background: var(--glass); }
+    .player { background: var(--player-bg); }
+    .settings-panel { background: var(--surface); }
+  }
+  /* Safari 15+ backdrop-filter fix */
+  @supports (-webkit-backdrop-filter: blur(1px)) {
+    .section-titlebar { -webkit-backdrop-filter: blur(12px); }
+    .player { -webkit-backdrop-filter: blur(16px); }
+  }
+  .title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .title-text { font-size: 1.15em; font-weight: 700; letter-spacing: .5px; }
+  .subtitle-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: .85em;
+    opacity: .9;
+  }
+  .gear-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    transition: background .2s;
+  }
+  .gear-btn:hover { background: rgba(255,255,255,0.35); }
+  .title-btns { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; flex-shrink: 0; }
+  .title-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    border: none;
+    background: rgba(255,255,255,0.16);
+    color: #fff;
+    cursor: pointer;
+    font-size: .82em;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: background .2s;
+    white-space: nowrap;
+  }
+  .title-btn:hover { background: rgba(255,255,255,0.28); }
+  .title-btn .tb-icon { font-size: 1.1em; }
+  @media (max-width: 520px) {
+    .title-btn { padding: 4px 7px; font-size: .7em; }
+  }
+  .tts-main-btn {
+    margin-top: 10px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    cursor: pointer;
+    font-size: .9em;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background .2s;
+  }
+  .tts-main-btn:hover { background: rgba(255,255,255,0.3); }
+  .tts-btn-row { margin-top: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .tts-btn-row .tts-main-btn { margin-top: 0; }
+  .tts-reset-btn {
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    cursor: pointer;
+    font-size: .9em;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background .2s;
+  }
+  .tts-reset-btn:hover { background: rgba(255,255,255,0.28); }
+  .banner {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 40%, #000) 100%);
+  }
+  .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 20px clamp(12px, 4vw, 48px); }
+  .global-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .global-actions button {
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-size: .92em;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    transition: all .2s;
+  }
+  .global-actions button:hover { border-color: var(--accent); color: var(--accent); }
+  .section-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+    overflow: hidden;
+    border-left: 5px solid var(--accent);
+  }
+  .section-header {
+    position: relative;
+    cursor: pointer;
+    min-height: 120px;
+    display: flex;
+    align-items: flex-end;
+    border-radius: var(--radius) var(--radius) 0 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 15%, transparent) 0%, color-mix(in srgb, var(--accent) 30%, transparent) 100%);
+  }
+  .section-header img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: .75;
+    transition: opacity .3s;
+  }
+  .section-header:hover img { opacity: .8; }
+  .section-titlebar {
+    position: relative;
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title { font-weight: 700; font-size: 1.05em; display: flex; align-items: center; gap: 8px; }
+  .section-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .icon-btn {
+    height: 38px; padding: 0 16px; width: auto; min-width: 40px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    font-size: .82em;
+    white-space: nowrap;
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .fold-btn, .tts-btn {
+    height: 38px; padding: 0 18px; width: auto; min-width: 88px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: .85em;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+  .fold-btn:hover, .tts-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .fold-btn:active, .tts-btn:active { transform: scale(.94); }
+  .section-body { display: none; padding: 12px 16px 16px; }
+  .section-body.open { display: block; }
+  .item { margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 0;
+  }
+  .item-title { font-weight: 700; flex: 1; }
+  .item-body { display: none; padding: 8px 0 4px 4px; color: var(--text-secondary); font-size: .95em; }
+  .item-body.open { display: block; }
+  .hl-ch { background: var(--hl-color); color: var(--text); border-radius: 2px; padding: 0 1px; }
+  .closing {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-secondary);
+    font-size: .95em;
+  }
+  .summary {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-top: 20px;
+    font-size: .9em;
+    color: var(--text-secondary);
+  }
+  .summary h3 { color: var(--text); margin-bottom: 10px; font-size: 1.1em; }
+  /* Settings panel */
+  .settings-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .settings-overlay.open { display: flex; }
+  .settings-panel {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 420px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  .settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .settings-header h2 { font-size: 1.2em; }
+  .setting-row {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .setting-row label { font-weight: 600; font-size: .9em; }
+  .setting-row select, .setting-row input[type="range"] {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: .9em;
+  }
+  .color-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .color-row input[type="color"] {
+    width: 40px; height: 32px;
+    border: none; border-radius: 6px; cursor: pointer; padding: 0;
+  }
+  .color-row input[type="number"] {
+    width: 56px; padding: 4px 6px;
+    border-radius: 6px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text);
+  }
+  .apply-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    font-size: .85em;
+  }
+  .switch {
+    position: relative;
+    width: 44px; height: 24px;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #cbd5e1;
+    border-radius: 24px;
+    transition: .3s;
+  }
+  .slider:before {
+    content: "";
+    position: absolute;
+    height: 18px; width: 18px;
+    left: 3px; bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: .3s;
+  }
+  input:checked + .slider { background: var(--accent); }
+  input:checked + .slider:before { transform: translateX(20px); }
+  /* Player */
+  .player {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 600px;
+    background: var(--player-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 14px 18px;
+    z-index: 150;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid var(--border);
+  }
+  .player.open { display: flex; }
+  .player-main-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .p-icon-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s, transform .1s;
+    flex-shrink: 0;
+  }
+  .p-icon-btn:hover { background: rgba(128,128,128,0.12); color: var(--accent); }
+  .p-icon-btn:active { transform: scale(0.92); }
+  .p-icon-btn.active { color: var(--accent); background: rgba(37,99,235,0.10); }
+  .p-icon-btn svg { width: 22px; height: 22px; }
+  .p-play-btn {
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    border: none;
+    background: conic-gradient(from 180deg, #f97316, #a855f7, #f97316);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+    transition: transform .1s;
+    flex-shrink: 0;
+  }
+  .p-play-btn:hover { transform: scale(1.05); }
+  .p-play-btn:active { transform: scale(0.96); }
+  .p-play-btn svg { width: 26px; height: 26px; }
+  .p-play-btn #playIcon { margin-left: 3px; }
+  .player-progress-row {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%;
+  }
+  .player-progress {
+    flex: 1;
+    min-width: 0;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    accent-color: var(--accent);
+    transition: background .2s;
+  }
+  .player-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    transition: transform .12s;
+  }
+  .player-progress::-webkit-slider-thumb:active { transform: scale(1.25); }
+  .player-time { font-size: .8em; color: var(--text-secondary); min-width: 36px; text-align: center; }
+  .player-extra-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+  }
+  .player-extra-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .player select {
+    padding: 5px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: .85em;
+    max-width: 120px;
+  }
+  .volume-wrap { position: relative; display: inline-flex; align-items: center; }
+  .volume-wrap .volume-slider {
+    position: absolute;
+    bottom: 32px; left: 50%;
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: bottom center;
+    transition: transform .2s;
+    width: 28px; height: 100px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 10px 0;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow);
+    z-index: 10;
+  }
+  .volume-wrap:hover .volume-slider { transform: translateX(-50%) scaleY(1); }
+  .volume-slider input[type=range][orient=vertical] {
+    -webkit-appearance: slider-vertical;
+    width: 6px; height: 80px;
+    accent-color: var(--accent);
+  }
+  .volume-slider input[type=range] {
+    writing-mode: bt-lr;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 6px; height: 80px;
+    background: var(--border);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+  .volume-slider input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+  }
+  .volume-slider input[type=range]::-moz-range-thumb {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer; border: none;
+  }
+  .vol-btn {
+    height: 38px; padding: 0 10px; width: auto; min-width: 42px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    font-size: .9em;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    flex-shrink: 0;
+  }
+  .vol-btn svg { width: 20px; height: 20px; }
+  .vol-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .player-reset-btn {
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-size: .85em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    transition: border-color .2s, color .2s;
+  }
+  .player-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .player-native-btn {
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-size: .85em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .player-native-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(37, 99, 235, 0.08);
+  }
+  .player-native-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .player.expanded {
+    width: 96%;
+    max-width: 960px;
+    padding: 22px 28px 18px;
+  }
+  .player.expanded .player-main-row { gap: 18px; }
+  .player.expanded .p-icon-btn { width: 44px; height: 44px; }
+  .player.expanded .p-icon-btn svg { width: 26px; height: 26px; }
+  .player.expanded .p-play-btn { width: 72px; height: 72px; }
+  .player.expanded .p-play-btn svg { width: 32px; height: 32px; }
+  .player.expanded .player-progress { height: 12px; }
+  .player.expanded .player-progress::-webkit-slider-thumb { width: 20px; height: 20px; }
+  .player.expanded .player-time { font-size: .9em; }
+  /* Custom voice modal */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 300;
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px;
+    width: 100%; max-width: 360px;
+    box-shadow: var(--shadow);
+  }
+  .modal h3 { margin-bottom: 12px; }
+  .modal select {
+    width: 100%; padding: 8px;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text);
+    margin-bottom: 12px;
+  }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; }
+  .modal-actions button {
+    padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); cursor: pointer;
+  }
+  .modal-actions button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  /* ========== Responsive: Small phones (< 480px) ========== */
+  @media (max-width: 479px) {
+    .container { padding: 10px; }
+    .banner { height: 140px; }
+    .title-text { font-size: 1em; }
+    .subtitle-row { font-size: .78em; }
+    .title-btns { gap: 4px; }
+    .title-btn { padding: 3px 6px; font-size: .65em; }
+    .tts-main-btn, .tts-reset-btn { padding: 6px 12px; font-size: .82em; }
+    .player { width: 98%; bottom: 6px; padding: 10px; gap: 8px; }
+    .player.expanded { padding: 16px 14px 12px; }
+    .section-titlebar { padding: 8px 10px; }
+    .section-title { font-size: .95em; }
+    .icon-btn { height: 34px; padding: 0 12px; font-size: 12.5px; }
+    .fold-btn, .tts-btn { height: 34px; padding: 0 14px; min-width: 78px; font-size: 12.5px; }
+    .global-actions button { padding: 8px 16px; font-size: .85em; }
+    .item-title { font-size: .92em; }
+    .item-body { font-size: .9em; }
+    .settings-panel { padding: 14px; }
+    .modal { padding: 14px; }
+    .p-icon-btn { width: 34px; height: 34px; }
+    .p-icon-btn svg { width: 20px; height: 20px; }
+    .p-play-btn { width: 50px; height: 50px; }
+    .p-play-btn svg { width: 22px; height: 22px; }
+    .player.expanded .p-icon-btn { width: 40px; height: 40px; }
+    .player.expanded .p-play-btn { width: 58px; height: 58px; }
+    .vol-btn { height: 34px; padding: 0 8px; min-width: 34px; font-size: 12px; }
+    .player-reset-btn, .player-native-btn { padding: 6px 10px; font-size: .78em; }
+    .player-extra-group { gap: 6px; }
+  }
+  /* ========== Responsive: Large phones (480px - 767px) ========== */
+  @media (min-width: 480px) and (max-width: 767px) {
+    .container { padding: 14px; }
+    .banner { height: 170px; }
+    .player { width: 96%; bottom: 10px; padding: 12px; }
+    .section-titlebar { padding: 10px 12px; }
+  }
+  /* ========== Responsive: Tablets (768px - 1023px) ========== */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .container { padding: 24px; }
+    .banner { height: 240px; }
+    .title-text { font-size: 1.25em; }
+    .player { max-width: 700px; }
+    .section-title { font-size: 1.1em; }
+  }
+  /* ========== Responsive: Small desktops (1024px - 1439px) ========== */
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .container { padding: 28px 40px; }
+    .banner { height: 280px; }
+    .title-text { font-size: 1.3em; }
+    .player { max-width: 720px; }
+    .section-title { font-size: 1.15em; }
+    .item-title { font-size: 1.05em; }
+  }
+  /* ========== Responsive: Large desktops (1440px - 1919px) ========== */
+  @media (min-width: 1440px) and (max-width: 1919px) {
+    .container { padding: 32px 56px; }
+    .banner { height: 320px; }
+    .title-text { font-size: 1.4em; }
+    .player { max-width: 800px; }
+    .section-title { font-size: 1.2em; }
+    .item-title { font-size: 1.08em; }
+    .section-header { min-height: 140px; }
+  }
+  /* ========== Responsive: Ultra-wide (>= 1920px) ========== */
+  @media (min-width: 1920px) {
+    .container { padding: 40px 80px; max-width: 1600px; }
+    .banner { height: 380px; }
+    .title-text { font-size: 1.5em; }
+    .player { max-width: 900px; padding: 18px 24px; }
+    .section-title { font-size: 1.25em; }
+    .item-title { font-size: 1.1em; }
+    .item-body { font-size: 1em; }
+    .section-header { min-height: 160px; }
+    .global-actions button { padding: 8px 18px; font-size: 1em; }
+    .icon-btn { width: 36px; height: 36px; font-size: 15px; }
+    .fold-btn, .tts-btn { height: 36px; padding: 0 12px; font-size: 14px; }
+    .settings-panel { max-width: 480px; padding: 24px; }
+  }
+  /* ========== Responsive: Extra ultra-wide (>= 2560px) ========== */
+  @media (min-width: 2560px) {
+    .container { padding: 48px 120px; max-width: 1800px; }
+    .banner { height: 440px; }
+    :root { --font-base: 17px; }
+    .player { max-width: 1000px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="titlebar" id="titlebar">
+  <div class="title-row">
+    <div>
+      <div class="title-text" id="pageTitle">每日全球要闻｜2026-08-24（周一）</div>
+      <div class="subtitle-row">
+        <span id="welcomeText">祝您拥有愉快的一天</span>
+        <span id="aiGenText">内容由 AI 生成</span>
+      </div>
+      <div class="tts-btn-row">
+        <button class="tts-main-btn" id="ttsMainBtn" onclick="playAll()">🔊 <span id="ttsMainLabel">全文语音收听</span></button>
+      </div>
+    </div>
+    <div class="title-btns">
+      <button class="title-btn" id="homeBtn" onclick="goHome()" title="返回主页"><span class="tb-icon">🏠</span><span id="homeLabel">主页</span></button>
+      <button class="title-btn" id="shareBtn" onclick="sharePage()" title="分享"><span class="tb-icon">⬆️</span><span id="shareLabel">分享</span></button>
+      <button class="title-btn" id="settingsBtn" onclick="openSettings()" title="设置"><span class="tb-icon">⚙️</span><span id="settingsLabel">设置</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Browser recommendation -->
+<div class="browser-tip" id="browserTip">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+  <span id="browserTipText">建议使用 Safari / Chrome / Edge 等默认浏览器打开，否则可能遇到语音朗读等功能异常。</span>
+</div>
+
+<img class="banner" id="bannerImg" src="" alt="banner" fetchpriority="high" decoding="async">
+
+<div class="container">
+  <div class="global-actions">
+    <button onclick="expandAll()" id="btnExpandAll">展开全部</button>
+    <button onclick="collapseAll()" id="btnCollapseAll">收起全部</button>
+  </div>
+
+
+  <!-- CONTENT_SECTIONS_PLACEHOLDER -->
+    <div class="section-card" id="sec0">
+    <div class="section-header" onclick="toggleSection('sec0')">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="军事" data-en="Military"><span class="section-icon">🎖️</span>军事</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec0')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec0')" id="fold-sec0">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec0')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec0">
+      <div class="item" id="item-sec0-0">
+        <div class="item-title" onclick="toggleItem('item-sec0-0')">
+          <strong data-zh="1. 美伊霍尔木兹博弈升级，美军开辟南部运油通道" data-en="1. US-Iran Hormuz Standoff Escalates as US Opens Southern Oil Corridor">1. 美伊霍尔木兹博弈升级，美军开辟南部运油通道</strong>
+          <button class="fold-btn" id="fold-item-sec0-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="美军8月23日披露已在霍尔木兹海峡南部开辟航运通道，日均运输约1000万桶石油、约为战前一半水平，以缓解全球能源危机，伊朗表态不会坐视。路透数据显示，周末经该海峡的干货船不足20艘，较常态锐减；伊朗最高国安会秘书雷扎伊警告，若美经济战持续，波斯湾与霍尔木兹将再无石油流出，并把配合美制裁的国家视为敌方。值得关注的是：这条航道已成为美伊非对称博弈的核心筹码，其通行量直接决定全球油价与通胀预期。" data-en="The US military said on Aug 23 it had opened a shipping corridor in the southern Strait of Hormuz moving about 10 million barrels of oil a day — roughly half the pre-war level — to ease the global energy crisis, drawing an Iranian pledge not to stand idle. Reuters data showed fewer than 20 commodity vessels transited the strait over the weekend, a sharp drop from normal; Iran's security chief Rezaei warned that if the US economic war continues, no oil will leave the Persian Gulf or Hormuz and countries joining US sanctions will be treated as enemies. Why it matters: this corridor is now the central chip in the asymmetric US-Iran contest, and its throughput sets global oil prices and inflation expectations.">美军8月23日披露已在霍尔木兹海峡南部开辟航运通道，日均运输约1000万桶石油、约为战前一半水平，以缓解全球能源危机，伊朗表态不会坐视。路透数据显示，周末经该海峡的干货船不足20艘，较常态锐减；伊朗最高国安会秘书雷扎伊警告，若美经济战持续，波斯湾与霍尔木兹将再无石油流出，并把配合美制裁的国家视为敌方。值得关注的是：这条航道已成为美伊非对称博弈的核心筹码，其通行量直接决定全球油价与通胀预期。</div>
+      </div>
+      <div class="item" id="item-sec0-1">
+        <div class="item-title" onclick="toggleItem('item-sec0-1')">
+          <strong data-zh="2. 乌克兰深夜打击俄导弹燃料厂与达吉斯坦工业区" data-en="2. Ukraine Strikes Russian Missile-Fuel Plant and Dagestan Industrial Zone">2. 乌克兰深夜打击俄导弹燃料厂与达吉斯坦工业区</strong>
+          <button class="fold-btn" id="fold-item-sec0-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日凌晨，乌总参谋部称其部队打击了罗斯托夫州卡缅斯克-沙赫京斯基的'卡缅斯克联合厂'——俄军工综合体中生产'飓风''龙卷风''旋风-S'多管火箭炮固体燃料的联邦企业，现场起火；几乎同时，乌无人机击中达吉斯坦'丘别'工业园一处约13万平方米的大型综合体并引发大火。这些是深入俄境、针对弹药与工业产能的纵深打击。值得关注的是：乌方把战线推入俄本土能源与军工腹地，正迫使俄方将更多防御资源回缩。" data-en="In the early hours of Aug 24, Ukraine's general staff said its forces hit the Kamenksy Combine in Rostov region — a federal enterprise producing solid rocket fuel for Uragan, Smerch and Tornado-S MLRS — sparking a fire, while Ukrainian drones also struck a roughly 130,000 sqm complex in Dagestan's Tyube industrial park, igniting a major blaze. These are deep strikes inside Russia against ordnance and industrial capacity. Why it matters: by pushing the front into Russia's energy and defence heartland, Kyiv is forcing Moscow to pull more defensive assets homeward.">8月24日凌晨，乌总参谋部称其部队打击了罗斯托夫州卡缅斯克-沙赫京斯基的'卡缅斯克联合厂'——俄军工综合体中生产'飓风''龙卷风''旋风-S'多管火箭炮固体燃料的联邦企业，现场起火；几乎同时，乌无人机击中达吉斯坦'丘别'工业园一处约13万平方米的大型综合体并引发大火。这些是深入俄境、针对弹药与工业产能的纵深打击。值得关注的是：乌方把战线推入俄本土能源与军工腹地，正迫使俄方将更多防御资源回缩。</div>
+      </div>
+      <div class="item" id="item-sec0-2">
+        <div class="item-title" onclick="toggleItem('item-sec0-2')">
+          <strong data-zh="3. 欧盟追加61亿欧元军援，英国分享巡航导弹技术" data-en="3. EU Approves Another 6.1 Billion Euros; UK to Share Cruise-Missile Tech">3. 欧盟追加61亿欧元军援，英国分享巡航导弹技术</strong>
+          <button class="fold-btn" id="fold-item-sec0-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日欧盟批准向乌克兰追加61亿欧元防务支持；伦敦授权MBDA向乌分享英制SCALP/风暴阴影巡航导弹的机密部件数据，以支持乌本土远程导弹生产。克里姆林宫发言人佩斯科夫谴责英方'直接参战'，并警告俄军正着手识别并摧毁乌境内任何导弹生产设施。与此同时，朝方据报已向俄交付逾1500万发炮弹并持续供应短程弹道导弹。值得关注的是：西方军援正从'提供武器'转向'转移生产能力'，战争工业化与国际化同步加深。" data-en="On Aug 24 the EU approved an additional 6.1 billion euros in defence support for Ukraine, while London authorised MBDA to share classified data on British components of the SCALP/Storm Shadow cruise missile to support Ukrainian long-range missile production. Kremlin spokesman Peskov condemned Britain's 'direct participation' and warned Russia is working to identify and destroy any missile production sites in Ukraine. Separately, North Korea has reportedly delivered over 15 million artillery shells to Russia and continues supplying short-range ballistic missiles. Why it matters: Western aid is shifting from supplying weapons to transferring production capacity, deepening both the industrialisation and internationalisation of the war.">8月24日欧盟批准向乌克兰追加61亿欧元防务支持；伦敦授权MBDA向乌分享英制SCALP/风暴阴影巡航导弹的机密部件数据，以支持乌本土远程导弹生产。克里姆林宫发言人佩斯科夫谴责英方'直接参战'，并警告俄军正着手识别并摧毁乌境内任何导弹生产设施。与此同时，朝方据报已向俄交付逾1500万发炮弹并持续供应短程弹道导弹。值得关注的是：西方军援正从'提供武器'转向'转移生产能力'，战争工业化与国际化同步加深。</div>
+      </div>
+      <div class="item" id="item-sec0-3">
+        <div class="item-title" onclick="toggleItem('item-sec0-3')">
+          <strong data-zh="4. 俄单日宣称击落269架乌无人机，美军'布什'号驰援中东" data-en="4. Russia Claims 269 Ukrainian Drones Downed in a Day; USS Bush Heads to Mideast">4. 俄单日宣称击落269架乌无人机，美军'布什'号驰援中东</strong>
+          <button class="fold-btn" id="fold-item-sec0-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="俄国防部8月23日晚通报，当天8时至20时在阿尔汉格尔斯克、别尔哥罗德等多地拦截并击落269架乌无人机；普京称乌方40天持续袭击俄民用物流设施是'冒险'，俄将加强攻势。同日美军'布什'号航母即将部署中东，与已在当地的'华盛顿'号形成双航母战斗群；希腊已将一套'爱国者'防空电池调往克里特岛苏达基地，应对伊朗对欧美基地的威胁。值得关注的是：双方都在为长期高强度消耗重新编排兵力与防空资源。" data-en="Russia's defence ministry said on Aug 23 it intercepted 269 Ukrainian drones between 8am and 8pm across regions including Arkhangelsk and Belgorod; Putin called 40 days of Ukrainian strikes on Russian civilian logistics 'reckless' and vowed stronger offensives. The same day the USS Bush prepared to deploy to the Middle East, joining the USS Washington for a twin-carrier group, while Greece moved a Patriot battery to Souda Bay in Crete against Iranian threats to US/European bases. Why it matters: both sides are rebalancing forces and air-defence assets for a prolonged, high-intensity grind.">俄国防部8月23日晚通报，当天8时至20时在阿尔汉格尔斯克、别尔哥罗德等多地拦截并击落269架乌无人机；普京称乌方40天持续袭击俄民用物流设施是'冒险'，俄将加强攻势。同日美军'布什'号航母即将部署中东，与已在当地的'华盛顿'号形成双航母战斗群；希腊已将一套'爱国者'防空电池调往克里特岛苏达基地，应对伊朗对欧美基地的威胁。值得关注的是：双方都在为长期高强度消耗重新编排兵力与防空资源。</div>
+      </div>
+      <div class="item" id="item-sec0-4">
+        <div class="item-title" onclick="toggleItem('item-sec0-4')">
+          <strong data-zh="5. 以军再袭黎巴嫩南部，中东新防务联盟成形" data-en="5. Israel Strikes Southern Lebanon Again as New Mideast Defence Bloc Takes Shape">5. 以军再袭黎巴嫩南部，中东新防务联盟成形</strong>
+          <button class="fold-btn" id="fold-item-sec0-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日以色列对黎巴嫩南部Ali Taher山脊发动新一轮空袭，俄外交部称以方对黎打击令本已复杂的中东调解更加困难。与此同时，土耳其、巴基斯坦与沙特签署的《麦加共同防务协议》正推动地区安全秩序从单极依附走向多元自主，阿联酋与以色列也扩大军事合作。值得关注的是：旧有美国主导的安全架构正被多条新轴线切割，地区阵营更趋多元，调停难度随之上升。" data-en="On Aug 24 Israel launched a fresh wave of strikes on the Ali Taher ridge in southern Lebanon, which Russia said only complicates an already difficult Middle East mediation. Meanwhile the Mecca Mutual Defence Pact signed by Turkey, Pakistan and Saudi Arabia is pushing the regional order from unilateral dependence toward pluralistic autonomy, while the UAE and Israel broaden military cooperation. Why it matters: the old US-led security architecture is being sliced by multiple new axes, making the regional bloc map more plural and the path to mediation harder.">8月24日以色列对黎巴嫩南部Ali Taher山脊发动新一轮空袭，俄外交部称以方对黎打击令本已复杂的中东调解更加困难。与此同时，土耳其、巴基斯坦与沙特签署的《麦加共同防务协议》正推动地区安全秩序从单极依附走向多元自主，阿联酋与以色列也扩大军事合作。值得关注的是：旧有美国主导的安全架构正被多条新轴线切割，地区阵营更趋多元，调停难度随之上升。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec1">
+    <div class="section-header" onclick="toggleSection('sec1')">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="财经" data-en="Finance &amp; Markets"><span class="section-icon">💵</span>财经</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec1')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec1')" id="fold-sec1">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec1')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec1">
+      <div class="item" id="item-sec1-0">
+        <div class="item-title" onclick="toggleItem('item-sec1-0')">
+          <strong data-zh="1. 现货黄金突破4600美元，上金所Au99.99破千元大关" data-en="1. Spot Gold Tops $4,600; Shanghai Gold Hits 1,000 Yuan a Gram">1. 现货黄金突破4600美元，上金所Au99.99破千元大关</strong>
+          <button class="fold-btn" id="fold-item-sec1-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="现货黄金8月24日交投于4607美元/盎司附近，上周触及4632美元的5月15日以来新高、周涨超5%、连续第三周收涨；上金所Au99.99报1002.50元/克，品牌金饰达1387–1391元/克。高盛称宏观基金加速买入黄金，押注金价升至4800–5500美元；美元指数跌至98.80的三个月低位，美债30年收益率高位、财政部扩大长债回购未能压住长端利率。值得关注的是：黄金同时定价地缘风险、美元走弱与长端利率引发的通胀担忧，三重逻辑支撑比单纯避险更厚。" data-en="Spot gold traded near $4,607 an ounce on Aug 24 after touching $4,632 last week — its highest since May 15 — with a weekly gain above 5% and a third straight up week; Shanghai's Au99.99 closed at 1,002.50 yuan per gram and retail jewellery reached 1,387–1,391 yuan. Goldman Sachs said macro funds are accelerating gold buying, betting on $4,800–$5,500; the dollar index slid to a three-month low of 98.80 while the 30-year Treasury yield stayed elevated despite expanded buybacks. Why it matters: gold is pricing geopolitics, a weaker dollar and inflation fears from long-end yields at once — a triple driver giving this rally a broader base than safe-haven demand alone.">现货黄金8月24日交投于4607美元/盎司附近，上周触及4632美元的5月15日以来新高、周涨超5%、连续第三周收涨；上金所Au99.99报1002.50元/克，品牌金饰达1387–1391元/克。高盛称宏观基金加速买入黄金，押注金价升至4800–5500美元；美元指数跌至98.80的三个月低位，美债30年收益率高位、财政部扩大长债回购未能压住长端利率。值得关注的是：黄金同时定价地缘风险、美元走弱与长端利率引发的通胀担忧，三重逻辑支撑比单纯避险更厚。</div>
+      </div>
+      <div class="item" id="item-sec1-1">
+        <div class="item-title" onclick="toggleItem('item-sec1-1')">
+          <strong data-zh="2. 美股周一全线反弹，但全周仍录得下跌" data-en="2. US Stocks Rebound on Monday but Close the Week Lower">2. 美股周一全线反弹，但全周仍录得下跌</strong>
+          <button class="fold-btn" id="fold-item-sec1-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日美股全线收高：道指涨0.98%报53277.01点，标普500涨0.43%报7674.37点，纳指涨0.43%报26180.45点，特斯拉涨超5%、谷歌涨逾1%。但全周道指跌0.85%、标普跌1.43%、纳指跌2.05%，标普与纳指终结三周连涨。市场聚焦本周英伟达财报、7月PCE通胀数据及美联储主席沃什在杰克逊霍尔的讲话；10年期美债收益率约4.73%。值得关注的是：反弹更多是对前周急跌的修复，在长端利率与中东不确定性压制下，风险偏好仍偏谨慎。" data-en="US equities rose across the board on Aug 24: the Dow gained 0.98% to 53,277.01, the S&amp;P 500 added 0.43% to 7,674.37 and the Nasdaq rose 0.43% to 26,180.45, with Tesla up over 5% and Google over 1%. But for the week the Dow fell 0.85%, the S&amp;P 1.43% and the Nasdaq 2.05%, ending their three-week win streaks. Markets are watching Nvidia's earnings, July PCE inflation and Fed Chair Kevin Warsh's Jackson Hole remarks; the 10-year yield held around 4.73%. Why it matters: Monday's bounce looks like a repair of the prior week's sell-off, with risk appetite still cautious under high long-end yields and Mideast uncertainty.">8月24日美股全线收高：道指涨0.98%报53277.01点，标普500涨0.43%报7674.37点，纳指涨0.43%报26180.45点，特斯拉涨超5%、谷歌涨逾1%。但全周道指跌0.85%、标普跌1.43%、纳指跌2.05%，标普与纳指终结三周连涨。市场聚焦本周英伟达财报、7月PCE通胀数据及美联储主席沃什在杰克逊霍尔的讲话；10年期美债收益率约4.73%。值得关注的是：反弹更多是对前周急跌的修复，在长端利率与中东不确定性压制下，风险偏好仍偏谨慎。</div>
+      </div>
+      <div class="item" id="item-sec1-2">
+        <div class="item-title" onclick="toggleItem('item-sec1-2')">
+          <strong data-zh="3. 油价连涨六日，伊朗'石油反制牌'令清晨跳水" data-en="3. Oil Rises Six Sessions, Then Slips on Iran's Supply Threat">3. 油价连涨六日，伊朗'石油反制牌'令清晨跳水</strong>
+          <button class="fold-btn" id="fold-item-sec1-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="美油8月24日收报86.64美元/桶、周涨5.15%，布油报93.6美元/桶、周涨5.74%，连涨第六日；亚洲买家补冬季库存支撑需求。但清晨亚太盘初，因伊朗总统佩泽希齐扬称应理性摆脱'非战非和'状态、且最高国安会亮出石油出口反制牌，WTI一度跌1.04%至86.16、布油跌1.06%至91.68。值得关注的是：油价的日内双向波动，正是市场在中东供应风险与伊朗反制概率之间反复定价的体现。" data-en="WTI closed at $86.64 a barrel on Aug 24, up 5.15% on the week, and Brent at $93.6, up 5.74%, a sixth straight gain as Asian buyers stocked up for winter demand. But in early Asia trade, after Iran's president called for rationally exiting the 'neither war nor peace' state and the security council brandished an oil-export countermeasure, WTI slipped 1.04% to $86.16 and Brent 1.06% to $91.68. Why it matters: the intraday two-way swings show the market repeatedly repricing between Mideast supply risk and the probability of an Iranian counterstrike.">美油8月24日收报86.64美元/桶、周涨5.15%，布油报93.6美元/桶、周涨5.74%，连涨第六日；亚洲买家补冬季库存支撑需求。但清晨亚太盘初，因伊朗总统佩泽希齐扬称应理性摆脱'非战非和'状态、且最高国安会亮出石油出口反制牌，WTI一度跌1.04%至86.16、布油跌1.06%至91.68。值得关注的是：油价的日内双向波动，正是市场在中东供应风险与伊朗反制概率之间反复定价的体现。</div>
+      </div>
+      <div class="item" id="item-sec1-3">
+        <div class="item-title" onclick="toggleItem('item-sec1-3')">
+          <strong data-zh="4. 美加贸易战开打，加方9月8日起等额反制" data-en="4. US-Canada Trade War Opens; Ottawa's Matching Tariffs Hit Sept 8">4. 美加贸易战开打，加方9月8日起等额反制</strong>
+          <button class="fold-btn" id="fold-item-sec1-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国贸易代表称加拿大拒绝在最后期限前敲定协议，美海关据第338条款对价值200亿美元的加拿大商品加征50%关税，措施8月22日生效。加拿大总理卡尼8月22日宣布等额报复性关税将于9月8日生效，覆盖乳制品、钢铁、家电、纸浆造纸与电子产品等。值得关注的是：第338条款是极少动用的历史条款，其启用意味着美方拓宽关税法律工具箱，对高度依赖跨境产业链的汽车与农业冲击最直接。" data-en="The US trade representative said Canada refused to finalise a deal by the deadline, and US customs imposed 50% tariffs on $20 billion of Canadian goods under Section 338, effective Aug 22. Prime Minister Carney announced on Aug 22 that matching retaliatory tariffs take effect Sept 8, covering dairy, steel, home appliances, pulp and paper, and electronics. Why it matters: Section 338 is a rarely invoked historical provision; its activation signals Washington is widening its tariff toolkit, hitting automotive and agricultural sectors most exposed to cross-border supply chains.">美国贸易代表称加拿大拒绝在最后期限前敲定协议，美海关据第338条款对价值200亿美元的加拿大商品加征50%关税，措施8月22日生效。加拿大总理卡尼8月22日宣布等额报复性关税将于9月8日生效，覆盖乳制品、钢铁、家电、纸浆造纸与电子产品等。值得关注的是：第338条款是极少动用的历史条款，其启用意味着美方拓宽关税法律工具箱，对高度依赖跨境产业链的汽车与农业冲击最直接。</div>
+      </div>
+      <div class="item" id="item-sec1-4">
+        <div class="item-title" onclick="toggleItem('item-sec1-4')">
+          <strong data-zh="5. A股缩量分化，阿里800亿港元配股压低恒生科技" data-en="5. A-Shares Split on Thin Volume; Alibaba's 80B HK Placement Weighs on Tech">5. A股缩量分化，阿里800亿港元配股压低恒生科技</strong>
+          <button class="fold-btn" id="fold-item-sec1-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日A股分化：沪指微涨0.04%报3905点守住3900，深成指涨0.87%、创业板涨1.43%，但两市成交缩至1.89万亿元、时隔近一月再度跌破2万亿；板块剧烈轮动，贵金属涨5.34%领涨，医药跌3.48%、农业重挫超4%。阿里巴巴拟配售800亿港元新股全部投AI，引发融资担忧，恒生科技指数半日跌3.84%。值得关注的是：成交缩量至2万亿下方反映增量资金入场意愿偏弱，期指或延续弱势震荡。" data-en="Chinese A-shares diverged on Aug 24: the Shanghai Composite edged up 0.04% to 3,905, the Shenzhen Component rose 0.87% and the ChiNext 1.43%, but turnover shrank to 1.89 trillion yuan, back below the 2-trillion mark for the first time in a month. Precious metals led with a 5.34% gain while healthcare fell 3.48% and agriculture over 4%. Alibaba's planned 80-billion-HK-dollar AI placement spooked markets, dragging the Hang Seng Tech index down 3.84% intraday. Why it matters: sub-2-trillion turnover shows weak fresh inflows, and index futures may stay range-bound to the downside.">8月24日A股分化：沪指微涨0.04%报3905点守住3900，深成指涨0.87%、创业板涨1.43%，但两市成交缩至1.89万亿元、时隔近一月再度跌破2万亿；板块剧烈轮动，贵金属涨5.34%领涨，医药跌3.48%、农业重挫超4%。阿里巴巴拟配售800亿港元新股全部投AI，引发融资担忧，恒生科技指数半日跌3.84%。值得关注的是：成交缩量至2万亿下方反映增量资金入场意愿偏弱，期指或延续弱势震荡。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec2">
+    <div class="section-header" onclick="toggleSection('sec2')">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="AI与科技" data-en="AI &amp; Technology"><span class="section-icon">🤖</span>AI与科技</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec2')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec2')" id="fold-sec2">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec2')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec2">
+      <div class="item" id="item-sec2-0">
+        <div class="item-title" onclick="toggleItem('item-sec2-0')">
+          <strong data-zh="1. 神秘模型'牛来'Ox Alpha冲至全球第二，疑为智谱新作" data-en="1. Mystery Model 'Ox Alpha' Jumps to No.2 Worldwide, Rumored to Be Zhipu's New Release">1. 神秘模型'牛来'Ox Alpha冲至全球第二，疑为智谱新作</strong>
+          <button class="fold-btn" id="fold-item-sec2-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="一款代号Ox Alpha的匿名模型8月20日低调上架OpenRouter，上下文窗口约104.8万Token、最大输出13.1万Token，支持文本、图像与视频输入，预览期免费调用；上周周调用量达11.6万亿Token冲至全球第二。前百度/阿里高管分析称其大概率是智谱尚未发布的GLM-5.3视觉版（或GLM-5.5），置信度70–80%，背后提供方每日算力储备约100万亿Token。值得关注的是：匿名'隐身模型'自带惊人算力储备，侧面反映大模型迭代正在提速。" data-en="An anonymous model codenamed Ox Alpha quietly appeared on OpenRouter on Aug 20 with a roughly 1.048-million-token context, 131k max output, and text/image/video input, free during preview; its weekly calls hit 11.6 trillion tokens to rank No.2 globally. A former Baidu/Alibaba executive estimated it is most likely Zhipu's unreleased GLM-5.3 vision model (or GLM-5.5), with 70–80% confidence, backed by a provider holding about 100 trillion tokens of daily compute. Why it matters: a stealth model shipping with staggering reserved compute signals that the pace of large-model iteration is accelerating.">一款代号Ox Alpha的匿名模型8月20日低调上架OpenRouter，上下文窗口约104.8万Token、最大输出13.1万Token，支持文本、图像与视频输入，预览期免费调用；上周周调用量达11.6万亿Token冲至全球第二。前百度/阿里高管分析称其大概率是智谱尚未发布的GLM-5.3视觉版（或GLM-5.5），置信度70–80%，背后提供方每日算力储备约100万亿Token。值得关注的是：匿名'隐身模型'自带惊人算力储备，侧面反映大模型迭代正在提速。</div>
+      </div>
+      <div class="item" id="item-sec2-1">
+        <div class="item-title" onclick="toggleItem('item-sec2-1')">
+          <strong data-zh="2. 阿里视频大模型Wan3.0正式上线" data-en="2. Alibaba's Wan3.0 Video Model Goes Live">2. 阿里视频大模型Wan3.0正式上线</strong>
+          <button class="fold-btn" id="fold-item-sec2-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日阿里巴巴视频生成大模型Wan3.0正式上线，行业底座持续升级。此前阿里宣布拟配售800亿港元新股，所得款项净额100%用于投资全栈AI能力与加强AI基础设施建设，一小时内即获超额认购，彰显资本市场对国内AI基建的信心。值得关注的是：模型层与算力层的同步加码，正把中国AI竞争从'模型刷榜'推向'基建+应用'的双轮驱动。" data-en="On Aug 24 Alibaba's video-generation model Wan3.0 went live, further upgrading the industry's foundation layer. Earlier Alibaba announced an 80-billion-HK-dollar new-share placement whose net proceeds will go entirely into full-stack AI capability and infrastructure, oversubscribed within an hour — a vote of confidence in China's AI build-out. Why it matters: simultaneous scaling of model and compute layers is shifting China's AI race from leaderboard sprints to a two-wheel drive of infrastructure plus applications.">8月24日阿里巴巴视频生成大模型Wan3.0正式上线，行业底座持续升级。此前阿里宣布拟配售800亿港元新股，所得款项净额100%用于投资全栈AI能力与加强AI基础设施建设，一小时内即获超额认购，彰显资本市场对国内AI基建的信心。值得关注的是：模型层与算力层的同步加码，正把中国AI竞争从'模型刷榜'推向'基建+应用'的双轮驱动。</div>
+      </div>
+      <div class="item" id="item-sec2-2">
+        <div class="item-title" onclick="toggleItem('item-sec2-2')">
+          <strong data-zh="3. Anthropic挖来谷歌TPU之父组建自研芯片团队" data-en="3. Anthropic Hires Google's TPU Creator to Build Its Own Chips">3. Anthropic挖来谷歌TPU之父组建自研芯片团队</strong>
+          <button class="fold-btn" id="fold-item-sec2-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日报道，谷歌TPU项目创始人兼前七代负责人Amir Salek已加入Anthropic算力团队，负责组建自研AI定制芯片设计团队，标志其自研芯片计划进入实质推进阶段。Anthropic预计2026年计算资源投入约190亿美元，并已与三星接洽2nm制程合作可能；此前其与Fractile、博通等多方合作锁定2027年约3.5GW的TPU容量。值得关注的是：头部大模型公司'去英伟达化'已从口号走向组织与产能布局。" data-en="Reports on Aug 24 said Amir Salek, founder of Google's TPU project and leader of its first seven generations, has joined Anthropic's compute team to build an in-house custom-chip design group, moving its self-developed chip plan into execution. Anthropic is projected to spend about $19 billion on compute in 2026 and has approached Samsung on possible 2nm cooperation, after securing roughly 3.5GW of TPU capacity for 2027 via Fractile, Broadcom and others. Why it matters: top model labs are turning 'de-Nvidia' from sloganeering into real organisational and capacity bets.">8月24日报道，谷歌TPU项目创始人兼前七代负责人Amir Salek已加入Anthropic算力团队，负责组建自研AI定制芯片设计团队，标志其自研芯片计划进入实质推进阶段。Anthropic预计2026年计算资源投入约190亿美元，并已与三星接洽2nm制程合作可能；此前其与Fractile、博通等多方合作锁定2027年约3.5GW的TPU容量。值得关注的是：头部大模型公司'去英伟达化'已从口号走向组织与产能布局。</div>
+      </div>
+      <div class="item" id="item-sec2-3">
+        <div class="item-title" onclick="toggleItem('item-sec2-3')">
+          <strong data-zh="4. 中国AI大模型周调用量连续17周超美国居首" data-en="4. China's AI Model Weekly Usage Leads US for 17th Straight Week">4. 中国AI大模型周调用量连续17周超美国居首</strong>
+          <button class="fold-btn" id="fold-item-sec2-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="OpenRouter最新测算显示，上周（8月17–23日）全球AI大模型总调用量93.3万亿Token、环比增23.9%；其中中国大模型达40.48万亿Token、环比增9.88%，美国仅9.66万亿、环比降5.85%，中国连续17周超过美国稳居全球首位。前五中中国占四席，DeepSeek-V4-Flash正式版连续三周第一（11.6万亿），Ox Alpha冲至前二。值得关注的是：调用量结构变化比论文与榜单更能反映真实产业渗透。" data-en="OpenRouter data show global AI model usage reached 93.3 trillion tokens last week (Aug 17–23), up 23.9% week-on-week; Chinese models accounted for 40.48 trillion (up 9.88%) versus the US's 9.66 trillion (down 5.85%), with China leading for the 17th straight week. China took four of the top five spots — DeepSeek-V4-Flash held No.1 for a third week at 11.6 trillion and Ox Alpha reached No.2. Why it matters: usage structure reveals real industrial penetration better than papers or leaderboards.">OpenRouter最新测算显示，上周（8月17–23日）全球AI大模型总调用量93.3万亿Token、环比增23.9%；其中中国大模型达40.48万亿Token、环比增9.88%，美国仅9.66万亿、环比降5.85%，中国连续17周超过美国稳居全球首位。前五中中国占四席，DeepSeek-V4-Flash正式版连续三周第一（11.6万亿），Ox Alpha冲至前二。值得关注的是：调用量结构变化比论文与榜单更能反映真实产业渗透。</div>
+      </div>
+      <div class="item" id="item-sec2-4">
+        <div class="item-title" onclick="toggleItem('item-sec2-4')">
+          <strong data-zh="5. 英伟达AI服务器被曝将涨价逾15%" data-en="5. Nvidia AI Servers Reportedly Set to Rise More Than 15% in Price">5. 英伟达AI服务器被曝将涨价逾15%</strong>
+          <button class="fold-btn" id="fold-item-sec2-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="据知情人士透露，多家英伟达最大客户已被告知，受内存芯片成本飙升影响，搭载英伟达AI芯片的服务器很多将涨价逾15%；此轮涨价适用于明年年初交付的系统，包括搭载旗舰级Vera Rubin和Grace Blackwell芯片的机型，具体涨幅取决于芯片代际与内存配置。值得关注的是：算力成本压力将沿产业链向云厂商与终端客户传导，也可能加速客户自研芯片与多元采购。" data-en="People familiar with the matter said several of Nvidia's largest customers have been told that, owing to surging memory-chip costs, many servers carrying Nvidia AI chips will rise more than 15% in price; the increase applies to systems delivered early next year, including those with the flagship Vera Rubin and Grace Blackwell chips, with the exact hike depending on chip generation and memory configuration. Why it matters: compute-cost pressure will pass down to cloud providers and end customers and may speed customers' own-chip and multi-sourcing strategies.">据知情人士透露，多家英伟达最大客户已被告知，受内存芯片成本飙升影响，搭载英伟达AI芯片的服务器很多将涨价逾15%；此轮涨价适用于明年年初交付的系统，包括搭载旗舰级Vera Rubin和Grace Blackwell芯片的机型，具体涨幅取决于芯片代际与内存配置。值得关注的是：算力成本压力将沿产业链向云厂商与终端客户传导，也可能加速客户自研芯片与多元采购。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec3">
+    <div class="section-header" onclick="toggleSection('sec3')">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="国际政治" data-en="International Politics"><span class="section-icon">🌍</span>国际政治</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec3')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec3')" id="fold-sec3">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec3')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec3">
+      <div class="item" id="item-sec3-0">
+        <div class="item-title" onclick="toggleItem('item-sec3-0')">
+          <strong data-zh="1. 美公布'史上最大'对伊制裁，伊朗讽为'绝望'之举" data-en="1. US Unveils 'Largest Ever' Iran Sanctions; Tehran Calls Them 'Desperate'">1. 美公布'史上最大'对伊制裁，伊朗讽为'绝望'之举</strong>
+          <button class="fold-btn" id="fold-item-sec3-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国财长贝森特8月24日14:00 EDT召开记者会，公布针对伊朗的'史上最大规模'经济制裁方案，称冲突进入'终局'、目标是切断支撑伊朗政权的每一条经济生命线。伊朗外长阿拉格齐在Telegram视频中讽刺此举是'绝望'表现，称军事行动未果才重弹老调，极限施压同样会失败；最高国安会秘书雷扎伊警告配合美制裁国视为敌、波斯湾将无石油流出。值得关注的是：美方将施压重心从军事转向经济，但伊朗手握海峡航运筹码，博弈远未结束。" data-en="Treasury Secretary Bessent held a press conference at 14:00 EDT on Aug 24 to unveil what he called the 'largest ever' sanctions package against Iran, saying the conflict had entered its 'endgame' and the goal was to sever every economic lifeline sustaining the regime. Iran's foreign minister Araqchi mocked this on Telegram as a sign of 'desperation' after military failure, insisting maximal pressure will again fail; security chief Rezaei warned that countries joining US sanctions will be treated as enemies and no oil will leave the Gulf. Why it matters: Washington has shifted from military to economic pressure, but Iran's strait card means the contest is far from over.">美国财长贝森特8月24日14:00 EDT召开记者会，公布针对伊朗的'史上最大规模'经济制裁方案，称冲突进入'终局'、目标是切断支撑伊朗政权的每一条经济生命线。伊朗外长阿拉格齐在Telegram视频中讽刺此举是'绝望'表现，称军事行动未果才重弹老调，极限施压同样会失败；最高国安会秘书雷扎伊警告配合美制裁国视为敌、波斯湾将无石油流出。值得关注的是：美方将施压重心从军事转向经济，但伊朗手握海峡航运筹码，博弈远未结束。</div>
+      </div>
+      <div class="item" id="item-sec3-1">
+        <div class="item-title" onclick="toggleItem('item-sec3-1')">
+          <strong data-zh="2. 巴基斯坦陆军参谋长访德黑兰斡旋，中国呼吁政治解决" data-en="2. Pakistan's Army Chief Visits Tehran to Mediate; China Urges Political Solution">2. 巴基斯坦陆军参谋长访德黑兰斡旋，中国呼吁政治解决</strong>
+          <button class="fold-btn" id="fold-item-sec3-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="巴基斯坦陆军参谋长阿西姆·穆尼尔8月24日抵德黑兰，与伊方讨论美制裁威胁等近期事态，意在恢复地区和平与安全；伊斯兰堡此前一直参与冲突调停。中国方面，王毅8月23–24日会见访华的科威特外交大臣杰拉赫时强调，无论分歧多大都应在谈判桌上找出路，停火止战既已迈出就不该走回头路，支持科威特维护主权与主权的努力。值得关注的是：多方并行斡旋凸显地区国家不愿被单一强权议程裹挟。" data-en="Pakistan's army chief Asim Munir arrived in Tehran on Aug 24 to discuss recent developments including the US sanctions threat, aiming to restore regional peace; Islamabad has long been involved in mediation. On the Chinese side, Wang Yi told visiting Kuwaiti Foreign Minister Al-Jarrah on Aug 23–24 that no matter how deep the differences, they should be resolved at the negotiating table, and that once a ceasefire begins it must not be reversed. Why it matters: parallel mediation by multiple parties shows regional states refusing to be captive to any single power's agenda.">巴基斯坦陆军参谋长阿西姆·穆尼尔8月24日抵德黑兰，与伊方讨论美制裁威胁等近期事态，意在恢复地区和平与安全；伊斯兰堡此前一直参与冲突调停。中国方面，王毅8月23–24日会见访华的科威特外交大臣杰拉赫时强调，无论分歧多大都应在谈判桌上找出路，停火止战既已迈出就不该走回头路，支持科威特维护主权与主权的努力。值得关注的是：多方并行斡旋凸显地区国家不愿被单一强权议程裹挟。</div>
+      </div>
+      <div class="item" id="item-sec3-2">
+        <div class="item-title" onclick="toggleItem('item-sec3-2')">
+          <strong data-zh="3. 叙以在美国斡旋下于约旦面对面会谈" data-en="3. Syria and Israel Hold US-Brokered Face-to-Face Talks in Jordan">3. 叙以在美国斡旋下于约旦面对面会谈</strong>
+          <button class="fold-btn" id="fold-item-sec3-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月23日，在美方协调下，叙利亚与以色列高级代表团赴约旦举行面对面会谈，试图缓和长期紧张的双边关系。叙方消息人士称，叙利亚不会接受损害主权的协议，戈兰高地属叙固有领土，但现阶段不宜讨论最终归属，当前最迫切诉求是以军撤回到2024年12月8日前的控制线、完整重启执行1974年《部队脱离接触协议》。2026年以色列已在叙发动57次军事袭击。值得关注的是：口头会谈距离落地成果仍有不小距离，撤军与领土分歧仍是硬骨头。" data-en="On Aug 23, under US coordination, senior Syrian and Israeli delegations met face to face in Jordan to ease long-standing tensions. Syrian sources said Damascus will accept no sovereignty-harming deal, that the Golan Heights are inherently Syrian, though final status should wait; the immediate priority is an Israeli pullback to the pre-Dec-8-2024 line and full revival of the 1974 disengagement accord. Israel has carried out 57 strikes in Syria in 2026. Why it matters: verbal talks remain far from outcomes, with withdrawal and territory still the hard bones.">8月23日，在美方协调下，叙利亚与以色列高级代表团赴约旦举行面对面会谈，试图缓和长期紧张的双边关系。叙方消息人士称，叙利亚不会接受损害主权的协议，戈兰高地属叙固有领土，但现阶段不宜讨论最终归属，当前最迫切诉求是以军撤回到2024年12月8日前的控制线、完整重启执行1974年《部队脱离接触协议》。2026年以色列已在叙发动57次军事袭击。值得关注的是：口头会谈距离落地成果仍有不小距离，撤军与领土分歧仍是硬骨头。</div>
+      </div>
+      <div class="item" id="item-sec3-3">
+        <div class="item-title" onclick="toggleItem('item-sec3-3')">
+          <strong data-zh="4. 泽连斯基称乌克兰不具备战时选举条件" data-en="4. Zelensky Says Ukraine Not Ready for Wartime Elections">4. 泽连斯基称乌克兰不具备战时选举条件</strong>
+          <button class="fold-btn" id="fold-item-sec3-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="乌克兰总统泽连斯基8月23日表示，乌克兰尚不具备在战时举行选举的条件，若当前情况下举行选举将面临国家分裂的巨大危险；选举前提是伙伴国能提供确保选举安全与合法的具体条件，让前线军人及海外数百万公民能安全参选。泽连斯基的总统任期早在2024年已结束，但乌现行法律禁止战时状态选举。值得关注的是：战时政治秩序的松动正成为影响西方援助持续性的潜在变量。" data-en="President Zelenskyy said on Aug 23 that Ukraine is not ready to hold elections during wartime and that doing so now would risk splitting the country; elections require partners to provide concrete conditions for safe and lawful voting so front-line troops and millions abroad can participate. His term ended in 2024, but Ukrainian law bars elections under martial law. Why it matters: cracks in the wartime political order are becoming a potential variable in the sustainability of Western aid.">乌克兰总统泽连斯基8月23日表示，乌克兰尚不具备在战时举行选举的条件，若当前情况下举行选举将面临国家分裂的巨大危险；选举前提是伙伴国能提供确保选举安全与合法的具体条件，让前线军人及海外数百万公民能安全参选。泽连斯基的总统任期早在2024年已结束，但乌现行法律禁止战时状态选举。值得关注的是：战时政治秩序的松动正成为影响西方援助持续性的潜在变量。</div>
+      </div>
+      <div class="item" id="item-sec3-4">
+        <div class="item-title" onclick="toggleItem('item-sec3-4')">
+          <strong data-zh="5. 韩国总统李在明支持率降至任内新低" data-en="5. South Korean President Lee's Approval Hits Record Low">5. 韩国总统李在明支持率降至任内新低</strong>
+          <button class="fold-btn" id="fold-item-sec3-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="韩国民调机构'真实计量器'8月24日发布民调显示，总统李在明的施政好评率降至40.2%，连续第六周下降，刷新其任内最低纪录。在经济承压、产业转型与外交平衡的多重背景下，国内政治氛围趋紧。值得关注的是：主要经济体领导人的民意走弱，往往与能源价格、通胀及地缘风险的外溢相互叠加，成为全球不确定性的微观注脚。" data-en="South Korean pollster Realmeter reported on Aug 24 that President Lee Jae-myung's approval fell to 40.2%, a sixth straight weekly decline and a record low for his term, amid economic pressure, industrial transition and diplomatic balancing. Why it matters: softening approval for major-economy leaders tends to compound with energy prices, inflation and geopolitical spillover, a microcosm of global uncertainty.">韩国民调机构'真实计量器'8月24日发布民调显示，总统李在明的施政好评率降至40.2%，连续第六周下降，刷新其任内最低纪录。在经济承压、产业转型与外交平衡的多重背景下，国内政治氛围趋紧。值得关注的是：主要经济体领导人的民意走弱，往往与能源价格、通胀及地缘风险的外溢相互叠加，成为全球不确定性的微观注脚。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec4">
+    <div class="section-header" onclick="toggleSection('sec4')">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="产业商业" data-en="Industry &amp; Business"><span class="section-icon">🏭</span>产业商业</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec4')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec4')" id="fold-sec4">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec4')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec4">
+      <div class="item" id="item-sec4-0">
+        <div class="item-title" onclick="toggleItem('item-sec4-0')">
+          <strong data-zh="1. 阿里巴巴拟配售800亿港元新股，全部投入AI基建" data-en="1. Alibaba Plans 80 Billion HK Dollars Placement, All for AI Infrastructure">1. 阿里巴巴拟配售800亿港元新股，全部投入AI基建</strong>
+          <button class="fold-btn" id="fold-item-sec4-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="阿里巴巴8月23日宣布拟向美国境外非美国人士配售新股，总额800亿港元，为2019年港股上市以来首次，所得款项净额100%用于投资全栈AI能力、加强AI基础设施建设，启动后一小时内即获超额认购。阿里2027财年一季度云外部商业化收入同比增45%（22季新高），AI相关产品收入连续12季三位数增长。值得关注的是：头部互联网企业正把融资直接转化为算力护城河，AI基建军备竞赛白热化。" data-en="Alibaba announced on Aug 23 a proposed 80-billion-HK-dollar new-share placement to non-US persons — its first since the 2019 Hong Kong listing — with net proceeds entirely for full-stack AI capability and infrastructure, oversubscribed within an hour. In fiscal Q1 2027 its cloud external revenue rose 45% year-on-year (a 22-quarter high) and AI-product revenue grew triple digits for a 12th straight quarter. Why it matters: top internet firms are converting fundraising directly into compute moats as the AI-infrastructure arms race intensifies.">阿里巴巴8月23日宣布拟向美国境外非美国人士配售新股，总额800亿港元，为2019年港股上市以来首次，所得款项净额100%用于投资全栈AI能力、加强AI基础设施建设，启动后一小时内即获超额认购。阿里2027财年一季度云外部商业化收入同比增45%（22季新高），AI相关产品收入连续12季三位数增长。值得关注的是：头部互联网企业正把融资直接转化为算力护城河，AI基建军备竞赛白热化。</div>
+      </div>
+      <div class="item" id="item-sec4-1">
+        <div class="item-title" onclick="toggleItem('item-sec4-1')">
+          <strong data-zh="2. 长江存储科创板IPO受理，拟募330亿元扩产" data-en="2. YMTC's STAR Market IPO Accepted; 33 Billion Yuan Planned for Expansion">2. 长江存储科创板IPO受理，拟募330亿元扩产</strong>
+          <button class="fold-btn" id="fold-item-sec4-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="上交所8月21日晚披露，长江存储控股股份有限公司科创板IPO申请已获受理，拟公开发行不低于19.8亿股、募资330亿元用于产线建设升级与技术研发。招商证券认为，上市后扩产节奏有望加速，直接拉动国内存储产业链景气上行；SEMI预计全球半导体设备市场正增长将延续至2029年，国产先进逻辑与存储产线扩产提速、国产化率持续提升。值得关注的是：国产存储龙头登陆资本市场，是半导体自主化的重要里程碑。" data-en="The Shanghai exchange disclosed on Aug 21 that Yangtze Memory Technologies Holding's STAR Market IPO has been accepted, with a planned issuance of at least 1.98 billion shares raising 33 billion yuan for capacity upgrades and R&amp;D. China Merchants Securities said listing should accelerate expansion and lift the domestic memory chain; SEMI sees positive semiconductor-equipment growth through 2029 with rising localisation. Why it matters: a domestic memory champion hitting the capital market is a milestone for semiconductor self-reliance.">上交所8月21日晚披露，长江存储控股股份有限公司科创板IPO申请已获受理，拟公开发行不低于19.8亿股、募资330亿元用于产线建设升级与技术研发。招商证券认为，上市后扩产节奏有望加速，直接拉动国内存储产业链景气上行；SEMI预计全球半导体设备市场正增长将延续至2029年，国产先进逻辑与存储产线扩产提速、国产化率持续提升。值得关注的是：国产存储龙头登陆资本市场，是半导体自主化的重要里程碑。</div>
+      </div>
+      <div class="item" id="item-sec4-2">
+        <div class="item-title" onclick="toggleItem('item-sec4-2')">
+          <strong data-zh="3. 腾讯阿里资本开支飙升，大厂竞速算力护城河" data-en="3. Tencent and Alibaba Capex Surge as Giants Race for Compute Moats">3. 腾讯阿里资本开支飙升，大厂竞速算力护城河</strong>
+          <button class="fold-btn" id="fold-item-sec4-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="国盛证券研报指出，互联网大厂竞速搭建算力护城河：腾讯2026年二季度资本开支达527.84亿元、同比增176%；阿里2027财年一季度资本开支676.78亿元、同比增75%，AI基础设施投入明显加速，主因智能体带动CPU算力需求及芯片组件涨价。受模型、Agent与细分场景推动，AI需求曲线仍在上扬，国产芯导入进程加速。值得关注的是：算力正从'成本中心'变为'战略资产'，大厂资产负债表深度绑定AI成败。" data-en="Guosheng Securities notes internet giants racing to build compute moats: Tencent's Q2 2026 capex hit 52.784 billion yuan, up 176% year-on-year, while Alibaba's fiscal Q1 capex reached 67.678 billion, up 75%, with AI-infrastructure spending accelerating on agent-driven CPU demand and pricier chips. AI demand keeps climbing on models, agents and verticals, speeding domestic-chip adoption. Why it matters: compute is shifting from cost center to strategic asset, tying balance sheets to AI outcomes.">国盛证券研报指出，互联网大厂竞速搭建算力护城河：腾讯2026年二季度资本开支达527.84亿元、同比增176%；阿里2027财年一季度资本开支676.78亿元、同比增75%，AI基础设施投入明显加速，主因智能体带动CPU算力需求及芯片组件涨价。受模型、Agent与细分场景推动，AI需求曲线仍在上扬，国产芯导入进程加速。值得关注的是：算力正从'成本中心'变为'战略资产'，大厂资产负债表深度绑定AI成败。</div>
+      </div>
+      <div class="item" id="item-sec4-3">
+        <div class="item-title" onclick="toggleItem('item-sec4-3')">
+          <strong data-zh="4. 反垄断与监管密集：TikTok隐私和解、robotaxi上路" data-en="4. Antitrust and Regulation in Focus: TikTok Privacy Deal, Robotaxi on Roads">4. 反垄断与监管密集：TikTok隐私和解、robotaxi上路</strong>
+          <button class="fold-btn" id="fold-item-sec4-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="据道琼斯，TikTok与美国司法部就儿童隐私诉讼达成4亿美元和解（3亿即时支付+1亿后续）；加州总检察长拟迫使Paramount-Warner剥离电视频道并保留电影工作室独立；亚马逊无方向盘、无踏板robotaxi开始在美收费运营，为全球首家；Live Nation反垄断案经白宫两次会议后保留Ticketmaster；快时尚巨头Shein香港IPO目标270亿美元估值。值得关注的是：平台监管正从'事后罚单'转向'结构性拆分与准入约束'。" data-en="Per Dow Jones, TikTok reached a $400 million settlement with the US Justice Department over children's privacy ($300m immediate, $100m later); California's AG wants Paramount-Warner to divest TV channels while keeping the studio independent; Amazon's steering-wheel-free, pedal-free robotaxi began charging fares in the US, a global first; Live Nation kept Ticketmaster after two White House meetings; Shein's Hong Kong IPO targets a $27 billion valuation. Why it matters: platform regulation is shifting from after-the-fact fines to structural break-ups and access constraints.">据道琼斯，TikTok与美国司法部就儿童隐私诉讼达成4亿美元和解（3亿即时支付+1亿后续）；加州总检察长拟迫使Paramount-Warner剥离电视频道并保留电影工作室独立；亚马逊无方向盘、无踏板robotaxi开始在美收费运营，为全球首家；Live Nation反垄断案经白宫两次会议后保留Ticketmaster；快时尚巨头Shein香港IPO目标270亿美元估值。值得关注的是：平台监管正从'事后罚单'转向'结构性拆分与准入约束'。</div>
+      </div>
+      <div class="item" id="item-sec4-4">
+        <div class="item-title" onclick="toggleItem('item-sec4-4')">
+          <strong data-zh="5. 国产金属3D打印出口增76%，固态电池首立国际标准" data-en="5. China's Metal 3D-Printer Exports Jump 76%; Solid-State Battery Gets First Global Standard">5. 国产金属3D打印出口增76%，固态电池首立国际标准</strong>
+          <button class="fold-btn" id="fold-item-sec4-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="海关数据显示，2026上半年国产工业级金属3D打印设备出口金额同比增长76%，欧洲与东南亚贡献87%，海外订单首次超过国内，交付周期约1个月领先海外同行3个月。同期，中国提出的《电动汽车驱动用二次锂离子电池 固态电池应用指南、测试项目及条件》在IEC成功立项，为固态电池领域全球首个国际标准。值得关注的是：高端装备出海与标准话语权的同步提升，是中国制造向价值链上游移动的缩影。" data-en="Customs data show China's industrial metal 3D-printer exports rose 76% in the first half of 2026, with Europe and Southeast Asia contributing 87% and overseas orders surpassing domestic for the first time, at about one-month lead times versus three months abroad. Separately, China's IEC proposal on solid-state battery application guidelines and testing became the world's first international standard for the field. Why it matters: high-end equipment going global alongside standard-setting power marks Chinese manufacturing moving up the value chain.">海关数据显示，2026上半年国产工业级金属3D打印设备出口金额同比增长76%，欧洲与东南亚贡献87%，海外订单首次超过国内，交付周期约1个月领先海外同行3个月。同期，中国提出的《电动汽车驱动用二次锂离子电池 固态电池应用指南、测试项目及条件》在IEC成功立项，为固态电池领域全球首个国际标准。值得关注的是：高端装备出海与标准话语权的同步提升，是中国制造向价值链上游移动的缩影。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec5">
+    <div class="section-header" onclick="toggleSection('sec5')">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="能源与气候" data-en="Energy &amp; Climate"><span class="section-icon">⚡</span>能源与气候</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec5')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec5')" id="fold-sec5">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec5')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec5">
+      <div class="item" id="item-sec5-0">
+        <div class="item-title" onclick="toggleItem('item-sec5-0')">
+          <strong data-zh="1. 油价连涨六日，伊朗反制牌令清晨跳水" data-en="1. Oil's Six-Day Rally; Iran's Supply Card Triggers Pre-Dawn Dip">1. 油价连涨六日，伊朗反制牌令清晨跳水</strong>
+          <button class="fold-btn" id="fold-item-sec5-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="美油8月24日收报86.64美元/桶、周涨5.15%，布油报93.6美元/桶、周涨5.74%，连涨第六日；中东紧张导致的供应收缩，叠加亚洲买家为冬季补库形成的需求支撑共同推升油价。但清晨亚太盘初，因伊朗亮出石油出口反制牌，WTI一度跌1.04%至86.16、布油跌1.06%至91.68。值得关注的是：霍尔木兹通行量与伊朗反制表态，已成为全球能源价格的'压力计'。" data-en="WTI closed at $86.64 a barrel, up 5.15% on the week, and Brent at $93.6, up 5.74%, a sixth straight gain as Mideast supply tightness met Asian buyers' winter stockpiling. But in early Asia trade Iran's oil-export countermeasure card pushed WTI down 1.04% to $86.16 and Brent 1.06% to $91.68. Why it matters: Hormuz throughput and Iran's counter-threats have become the pressure gauge of global energy prices.">美油8月24日收报86.64美元/桶、周涨5.15%，布油报93.6美元/桶、周涨5.74%，连涨第六日；中东紧张导致的供应收缩，叠加亚洲买家为冬季补库形成的需求支撑共同推升油价。但清晨亚太盘初，因伊朗亮出石油出口反制牌，WTI一度跌1.04%至86.16、布油跌1.06%至91.68。值得关注的是：霍尔木兹通行量与伊朗反制表态，已成为全球能源价格的'压力计'。</div>
+      </div>
+      <div class="item" id="item-sec5-1">
+        <div class="item-title" onclick="toggleItem('item-sec5-1')">
+          <strong data-zh="2. 英国天然气飙至3.5年高位，德国储气仅50.2%" data-en="2. UK Gas Hits 3.5-Year High as German Storage Sits at 50.2%">2. 英国天然气飙至3.5年高位，德国储气仅50.2%</strong>
+          <button class="fold-btn" id="fold-item-sec5-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="冬季供应担忧推动英国天然气价格8月22日收于3.5年来最强水平：NBP现货涨1.7%至164便士/therm，2026年冬季交付合约涨1%至同价。欧洲最大储气国德国的库存仅50.2%、为至少2011年来最低；欧洲现货电价则因可再生发电预期大增而大跌，德国日前电价跌40%至101.49欧元/MWh、法国跌34%至100.62欧元/MWh。值得关注的是：储气偏低与电价波动，预示今冬欧洲能源安全仍脆弱。" data-en="Winter-supply fears lifted UK gas to its strongest close in 3.5 years on Aug 22: the NBP spot rose 1.7% to 164 p/therm and the Winter 2026 contract 1% to the same. Germany — home to Europe's largest storage — was only 50.2% full, the lowest since at least 2011; European spot power slumped on renewable-generation expectations, with German day-ahead down 40% to 101.49 EUR/MWh and French down 34% to 100.62. Why it matters: low storage and volatile power signal a still-fragile European energy security this winter.">冬季供应担忧推动英国天然气价格8月22日收于3.5年来最强水平：NBP现货涨1.7%至164便士/therm，2026年冬季交付合约涨1%至同价。欧洲最大储气国德国的库存仅50.2%、为至少2011年来最低；欧洲现货电价则因可再生发电预期大增而大跌，德国日前电价跌40%至101.49欧元/MWh、法国跌34%至100.62欧元/MWh。值得关注的是：储气偏低与电价波动，预示今冬欧洲能源安全仍脆弱。</div>
+      </div>
+      <div class="item" id="item-sec5-2">
+        <div class="item-title" onclick="toggleItem('item-sec5-2')">
+          <strong data-zh="3. 巴基斯坦50°C极端高温，气候危机逼民众排队购冰" data-en="3. 50°C Heat in Pakistan as Climate Crisis Pushes Families to Queue for Ice">3. 巴基斯坦50°C极端高温，气候危机逼民众排队购冰</strong>
+          <button class="fold-btn" id="fold-item-sec5-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="据卫报报道，巴基斯坦Nasirabad地区气温高达50°C，电力有限、通风不佳，许多家庭清晨便在冰厂外排起长队，用桶与塑料袋购冰以熬过酷热。当地12岁孩童称'不带冰回家，我们怎么忍受家里的热、怎么喝下像烧开的水'。值得关注的是：极端高温正从'气象新闻'变成日常生存挑战，气候适应的公平性缺口在发展中国家尤为尖锐。" data-en="The Guardian reports temperatures in Nasirabad, Pakistan reached 50°C, with limited power and poor ventilation forcing families to queue at ice factories at dawn, carrying buckets and plastic bags to endure the heat; a 12-year-old said without ice they cannot bear the home heat or drink water 'like it is boiling'. Why it matters: extreme heat is becoming a daily survival challenge, and the equity gap in climate adaptation is sharpest in developing countries.">据卫报报道，巴基斯坦Nasirabad地区气温高达50°C，电力有限、通风不佳，许多家庭清晨便在冰厂外排起长队，用桶与塑料袋购冰以熬过酷热。当地12岁孩童称'不带冰回家，我们怎么忍受家里的热、怎么喝下像烧开的水'。值得关注的是：极端高温正从'气象新闻'变成日常生存挑战，气候适应的公平性缺口在发展中国家尤为尖锐。</div>
+      </div>
+      <div class="item" id="item-sec5-3">
+        <div class="item-title" onclick="toggleItem('item-sec5-3')">
+          <strong data-zh="4. 全球燃机订单Q2达38GW创单季纪录" data-en="4. Global Gas-Turbine Orders Hit 38GW in Q2, a Single-Quarter Record">4. 全球燃机订单Q2达38GW创单季纪录</strong>
+          <button class="fold-btn" id="fold-item-sec5-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="机构最新研报显示，2026年第二季度全球燃气轮机订单达38GW，刷新单季度历史纪录，美国市场贡献近半数；当前全球燃机行业呈高需求、紧交付局面，GE Vernova交出大幅超预期的中期成绩单，反映供不应求。值得关注的是：在可再生能源波动与AI数据中心用电激增背景下，燃气轮机作为灵活调峰电源需求走强，但也凸显能源转型期对传统化石调峰的阶段性依赖。" data-en="The latest research shows global gas-turbine orders reached 38GW in Q2 2026, a single-quarter record with the US contributing nearly half; the industry faces high demand and tight delivery, and GE Vernova's beat-expectations interim results reflect shortages. Why it matters: with renewable volatility and surging AI data-center power demand, gas turbines as flexible peakers are in demand — yet this also highlights a transitional reliance on fossil peaking capacity.">机构最新研报显示，2026年第二季度全球燃气轮机订单达38GW，刷新单季度历史纪录，美国市场贡献近半数；当前全球燃机行业呈高需求、紧交付局面，GE Vernova交出大幅超预期的中期成绩单，反映供不应求。值得关注的是：在可再生能源波动与AI数据中心用电激增背景下，燃气轮机作为灵活调峰电源需求走强，但也凸显能源转型期对传统化石调峰的阶段性依赖。</div>
+      </div>
+      <div class="item" id="item-sec5-4">
+        <div class="item-title" onclick="toggleItem('item-sec5-4')">
+          <strong data-zh="5. 新能源板块当日走弱，固态电池国标立项利好中长期" data-en="5. New-Energy Stocks Slip; Solid-State Battery Standard Aids the Long Term">5. 新能源板块当日走弱，固态电池国标立项利好中长期</strong>
+          <button class="fold-btn" id="fold-item-sec5-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日A股新能源链条承压：新能源车板块跌1.23%、光伏概念跌1.04%、储能概念跌0.98%，宁德时代微跌0.83%，主力资金净流出明显；锂电与光伏在前期上涨后获利了结。与此同时，中国主导的固态电池IEC国际标准成功立项，被视为下一代电池重要方向。值得关注的是：短期情绪退潮不改技术爬坡趋势，固态电池标准落地将为中长期产业化扫清规则障碍。" data-en="China's new-energy chain weakened on Aug 24: the EV sector fell 1.23%, photovoltaics 1.04% and storage 0.98%, with CATL down 0.83% and clear main-fund outflows as investors took profits. Meantime, China-led solid-state-battery IEC standardisation was approved as a key next-generation direction. Why it matters: a short-term sentiment pullback does not reverse the tech climb, and the standard clears rule-making hurdles for mid-to-long-term industrialisation.">8月24日A股新能源链条承压：新能源车板块跌1.23%、光伏概念跌1.04%、储能概念跌0.98%，宁德时代微跌0.83%，主力资金净流出明显；锂电与光伏在前期上涨后获利了结。与此同时，中国主导的固态电池IEC国际标准成功立项，被视为下一代电池重要方向。值得关注的是：短期情绪退潮不改技术爬坡趋势，固态电池标准落地将为中长期产业化扫清规则障碍。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec6">
+    <div class="section-header" onclick="toggleSection('sec6')">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="医疗健康" data-en="Health &amp; Medicine"><span class="section-icon">🏥</span>医疗健康</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec6')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec6')" id="fold-sec6">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec6')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec6">
+      <div class="item" id="item-sec6-0">
+        <div class="item-title" onclick="toggleItem('item-sec6-0')">
+          <strong data-zh="1. 阿里达摩院肝癌AI模型登《自然·医学》揪出15例漏诊" data-en="1. Damo Academy Liver-Cancer AI Published in Nature Medicine, Finds 15 Missed Cases">1. 阿里达摩院肝癌AI模型登《自然·医学》揪出15例漏诊</strong>
+          <button class="fold-btn" id="fold-item-sec6-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日，阿里达摩院联合盛京医院研发的肝癌诊断AI模型DAMO LiON相关论文登上《自然·医学》。该模型通过增强CT精准识别约1厘米微小病灶，两个月真实世界试验辅助阅片1万多名患者、发现15例原本被漏诊的恶性肿瘤；医生使用AI后阅片时间减少27%、恶性肿瘤敏感性提高11.5%。值得关注的是：AI辅助诊断正从'锦上添花'走向'补齐人眼盲区'，尤其惠及基层与早筛场景。" data-en="On Aug 24, a liver-cancer diagnostic AI model, DAMO LiON, co-developed by Alibaba's Damo Academy and Shengjing Hospital, was published in Nature Medicine. Using contrast CT it pinpoints roughly 1cm lesions; in a two-month real-world trial it assisted reading of over 10,000 patients and found 15 malignancies originally missed, cutting reading time 27% and raising cancer sensitivity 11.5%. Why it matters: AI diagnosis is moving from nice-to-have to plugging human blind spots, especially in primary care and screening.">8月24日，阿里达摩院联合盛京医院研发的肝癌诊断AI模型DAMO LiON相关论文登上《自然·医学》。该模型通过增强CT精准识别约1厘米微小病灶，两个月真实世界试验辅助阅片1万多名患者、发现15例原本被漏诊的恶性肿瘤；医生使用AI后阅片时间减少27%、恶性肿瘤敏感性提高11.5%。值得关注的是：AI辅助诊断正从'锦上添花'走向'补齐人眼盲区'，尤其惠及基层与早筛场景。</div>
+      </div>
+      <div class="item" id="item-sec6-1">
+        <div class="item-title" onclick="toggleItem('item-sec6-1')">
+          <strong data-zh="2. 8月FDA多款重磅新药获批" data-en="2. FDA Clears Several Blockbuster Drugs in August">2. 8月FDA多款重磅新药获批</strong>
+          <button class="fold-btn" id="fold-item-sec6-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月FDA密集批准多款重磅新药：Moderna的mRNA流感疫苗mFLUSIVA（mRNA-1010）获批用于50岁及以上成人，总体相对疫苗效力26.6%；百时美施贵宝Zenbexus（iberdomide）联合方案获加速批准用于复发/难治性多发性骨髓瘤，MRD阴性完全缓解率41%（对照组21%）；Lantheus的Tauklarify（florquinitau F18）获批作为阿尔茨海默病tau蛋白PET显像剂。值得关注的是：创新机制、靶向蛋白降解与精准治疗正成为新药主线。" data-en="The FDA cleared several blockbusters in August: Moderna's mRNA flu vaccine mFLUSIVA (mRNA-1010) for adults 50+, with 26.6% relative vaccine efficacy; Bristol Myers Squibb's Zenbexus (iberdomide) combo won accelerated approval in relapsed/refractory multiple myeloma with 41% MRD-negative CR versus 21%; and Lantheus's Tauklarify (florquinitau F18) as a tau-PET agent for Alzheimer's. Why it matters: novel mechanisms, targeted protein degradation and precision therapy are becoming the new-drug mainstream.">8月FDA密集批准多款重磅新药：Moderna的mRNA流感疫苗mFLUSIVA（mRNA-1010）获批用于50岁及以上成人，总体相对疫苗效力26.6%；百时美施贵宝Zenbexus（iberdomide）联合方案获加速批准用于复发/难治性多发性骨髓瘤，MRD阴性完全缓解率41%（对照组21%）；Lantheus的Tauklarify（florquinitau F18）获批作为阿尔茨海默病tau蛋白PET显像剂。值得关注的是：创新机制、靶向蛋白降解与精准治疗正成为新药主线。</div>
+      </div>
+      <div class="item" id="item-sec6-2">
+        <div class="item-title" onclick="toggleItem('item-sec6-2')">
+          <strong data-zh="3. 国产EGFR/c-Met双抗ADC ALK202首次公布临床数据" data-en="3. China's EGFR/c-Met Bispecific ADC ALK202 Reports First Clinical Data">3. 国产EGFR/c-Met双抗ADC ALK202首次公布临床数据</strong>
+          <button class="fold-btn" id="fold-item-sec6-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="2026世界肺癌大会（WCLC）上，安领科生物首次公布EGFR/c-Met双抗ADC ALK202治疗晚期实体瘤的I期数据，为全球第二款同类双抗ADC。研究纳入52例患者，EGFR突变型非鳞非小细胞肺癌肿瘤缩小率33.3%、疾病控制率88.9%；较高剂量组缩小率42.9%、控制率92.9%，安全性可控。目前该药正开展II期研究。值得关注的是：双抗ADC以'双靶点+抗体偶联'提升疗效窗口，是实体瘤抗体药物的重要演进方向。" data-en="At the 2026 World Conference on Lung Cancer, Allink Biotech presented first-in-human Phase I data for ALK202, an EGFR/c-Met bispecific ADC and the world's second of its kind. Among 52 patients, EGFR-mutant non-squamous NSCLC showed a 33.3% tumour-shrinkage rate and 88.9% disease-control rate; a higher-dose cohort reached 42.9% and 92.9% with manageable safety. A Phase II is underway. Why it matters: bispecific ADCs widen the therapeutic window via dual targeting plus conjugation — a key evolution in solid-tumour antibodies.">2026世界肺癌大会（WCLC）上，安领科生物首次公布EGFR/c-Met双抗ADC ALK202治疗晚期实体瘤的I期数据，为全球第二款同类双抗ADC。研究纳入52例患者，EGFR突变型非鳞非小细胞肺癌肿瘤缩小率33.3%、疾病控制率88.9%；较高剂量组缩小率42.9%、控制率92.9%，安全性可控。目前该药正开展II期研究。值得关注的是：双抗ADC以'双靶点+抗体偶联'提升疗效窗口，是实体瘤抗体药物的重要演进方向。</div>
+      </div>
+      <div class="item" id="item-sec6-3">
+        <div class="item-title" onclick="toggleItem('item-sec6-3')">
+          <strong data-zh="4. FDA快速通道与多项创新疗法进展" data-en="4. FDA Fast Track and Multiple Innovative-Therapy Milestones">4. FDA快速通道与多项创新疗法进展</strong>
+          <button class="fold-btn" id="fold-item-sec6-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="BlossomHill的泛EGFR抑制剂BH-30643获FDA快速通道资格，用于第三代EGFR药后C797S耐药突变肺癌，具脑活性；Ultragenyx的DTX401获FDA加速批准，成首个GSDIa基因疗法（定价270万美元）；Biogen的LEQEMBI皮下注射版8月24日迎PDUFA；OncoSil内放疗设备经人道豁免获批用于不可手术远端胆管癌，联合化疗局部控制率90.5%、中位生存期15.8月延至18.2月。值得关注的是：罕见病基因疗法与便捷给药剂型正快速兑现临床价值。" data-en="BlossomHill's pan-EGFR inhibitor BH-30643 gained FDA fast-track status for C797S resistance-mutant lung cancer with brain activity; Ultragenyx's DTX401 won accelerated approval as the first GSDIa gene therapy (priced $2.7m); Biogen's subcutaneous LEQEMBI faced its Aug 24 PDUFA; OncoSil's brachytherapy device was cleared via humanitarian exemption for unresectable distal cholangiocarcinoma, lifting local control to 90.5% and median survival from 15.8 to 18.2 months. Why it matters: rare-disease gene therapy and convenient delivery formats are rapidly converting into clinical value.">BlossomHill的泛EGFR抑制剂BH-30643获FDA快速通道资格，用于第三代EGFR药后C797S耐药突变肺癌，具脑活性；Ultragenyx的DTX401获FDA加速批准，成首个GSDIa基因疗法（定价270万美元）；Biogen的LEQEMBI皮下注射版8月24日迎PDUFA；OncoSil内放疗设备经人道豁免获批用于不可手术远端胆管癌，联合化疗局部控制率90.5%、中位生存期15.8月延至18.2月。值得关注的是：罕见病基因疗法与便捷给药剂型正快速兑现临床价值。</div>
+      </div>
+      <div class="item" id="item-sec6-4">
+        <div class="item-title" onclick="toggleItem('item-sec6-4')">
+          <strong data-zh="5. 《自然·医学》绘出RAS抑制剂耐药地图" data-en="5. Nature Medicine Maps RAS-Inhibitor Resistance to Guide Combination Therapy">5. 《自然·医学》绘出RAS抑制剂耐药地图</strong>
+          <button class="fold-btn" id="fold-item-sec6-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="《自然·医学》发表观点文章，系统梳理泛RAS抑制剂daraxonrasib的获得性耐药机制：研究分析44例胰腺癌患者循环肿瘤DNA（ctDNA），59%出现可检测到的获得性遗传耐药，最常见为KRAS扩增（36%），此外还有RAF相关改变、HER2扩增、PI3K-mTOR信号激活与MYC相关变异。值得关注的是：耐药图谱为后续联合用药策略提供路线图，也提示单药靶向在实体瘤中易遇天花板。" data-en="Nature Medicine published an analysis of acquired resistance to the pan-RAS inhibitor daraxonrasib: among 44 pancreatic-cancer patients' ctDNA, 59% showed detectable acquired resistance, most commonly KRAS amplification (36%), plus RAF alterations, HER2 amplification and PI3K-mTOR or MYC activation. Why it matters: the resistance map guides combination strategies and shows single-agent targeting hits a ceiling in solid tumours.">《自然·医学》发表观点文章，系统梳理泛RAS抑制剂daraxonrasib的获得性耐药机制：研究分析44例胰腺癌患者循环肿瘤DNA（ctDNA），59%出现可检测到的获得性遗传耐药，最常见为KRAS扩增（36%），此外还有RAF相关改变、HER2扩增、PI3K-mTOR信号激活与MYC相关变异。值得关注的是：耐药图谱为后续联合用药策略提供路线图，也提示单药靶向在实体瘤中易遇天花板。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec7">
+    <div class="section-header" onclick="toggleSection('sec7')">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="半导体与硬件" data-en="Semiconductors &amp; Hardware"><span class="section-icon">💻</span>半导体与硬件</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec7')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec7')" id="fold-sec7">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec7')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec7">
+      <div class="item" id="item-sec7-0">
+        <div class="item-title" onclick="toggleItem('item-sec7-0')">
+          <strong data-zh="1. 小米发布玄戒O3旗舰SoC，安兔兔破522万分" data-en="1. Xiaomi Unveils Xuanjie O3 SoC, Tops 5.22 Million on AnTuTu">1. 小米发布玄戒O3旗舰SoC，安兔兔破522万分</strong>
+          <button class="fold-btn" id="fold-item-sec7-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日小米发布面向最高端产品的AI旗舰SoC玄戒O3：安兔兔跑分达522万、成为首个突破500万分的旗舰芯片；CPU十核全大核、多核提升60%，GPU首发G2-Ultra NX性能提升85%，全球首款支持LPDDR6、内存带宽113.8GB/s（较O1提升48%），NPU面向MiMo端侧大模型深度适配、200TOPS算力。小米18 Fold将首发搭载，9月上市。值得关注的是：国产移动SoC在端侧AI算力与内存带宽上正快速逼近国际旗舰。" data-en="On Aug 24 Xiaomi unveiled its top-tier AI flagship SoC, Xuanjie O3, scoring 5.22 million on AnTuTu — the first flagship past 5 million; its 10-core all-big CPU lifts multi-core 60%, the G2-Ultra NX GPU is up 85%, it is the first to support LPDDR6 at 113.8GB/s bandwidth (48% over O1), and its 200TOPS NPU is tuned for on-device MiMo models. The Xiaomi 18 Fold debuts it in September. Why it matters: China's mobile SoCs are rapidly closing on international flagships in on-device AI compute and bandwidth.">8月24日小米发布面向最高端产品的AI旗舰SoC玄戒O3：安兔兔跑分达522万、成为首个突破500万分的旗舰芯片；CPU十核全大核、多核提升60%，GPU首发G2-Ultra NX性能提升85%，全球首款支持LPDDR6、内存带宽113.8GB/s（较O1提升48%），NPU面向MiMo端侧大模型深度适配、200TOPS算力。小米18 Fold将首发搭载，9月上市。值得关注的是：国产移动SoC在端侧AI算力与内存带宽上正快速逼近国际旗舰。</div>
+      </div>
+      <div class="item" id="item-sec7-1">
+        <div class="item-title" onclick="toggleItem('item-sec7-1')">
+          <strong data-zh="2. 澜起科技PCIe 6.0 Retimer通过PCI-SIG认证" data-en="2. Montage's PCIe 6.0 Retimer Passes PCI-SIG Certification">2. 澜起科技PCIe 6.0 Retimer通过PCI-SIG认证</strong>
+          <button class="fold-btn" id="fold-item-sec7-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日澜起科技宣布其PCIe 6.x/CXL 3.x Retimer（M88RT61632）通过国际PCI-SIG系列严苛认证、列入官方供应商名录，支持64GT/s、36dB信道损耗补偿，打破该领域长期由美国厂商主导的格局。该芯片是AI服务器高速互连的核心环节。值得关注的是：国产高速互连芯片获得国际权威认证，意味着在AI服务器'血管'环节具备了与国际巨头同台竞技的资格。" data-en="On Aug 24 Montage Technology said its PCIe 6.x/CXL 3.x Retimer (M88RT61632) passed PCI-SIG's rigorous certification and joined the official integrators list, supporting 64GT/s and 36dB channel-loss compensation, breaking long US dominance. The chip is core to AI-server high-speed interconnect. Why it matters: a Chinese high-speed interconnect chip earning international certification means it can compete with global giants in the 'veins' of AI servers.">8月24日澜起科技宣布其PCIe 6.x/CXL 3.x Retimer（M88RT61632）通过国际PCI-SIG系列严苛认证、列入官方供应商名录，支持64GT/s、36dB信道损耗补偿，打破该领域长期由美国厂商主导的格局。该芯片是AI服务器高速互连的核心环节。值得关注的是：国产高速互连芯片获得国际权威认证，意味着在AI服务器'血管'环节具备了与国际巨头同台竞技的资格。</div>
+      </div>
+      <div class="item" id="item-sec7-2">
+        <div class="item-title" onclick="toggleItem('item-sec7-2')">
+          <strong data-zh="3. 华为昇腾成AI算力国产化核心主力" data-en="3. Huawei Ascend Becomes the Backbone of Domestic AI Compute">3. 华为昇腾成AI算力国产化核心主力</strong>
+          <button class="fold-btn" id="fold-item-sec7-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="分析指出，华为昇腾依托达芬奇架构与全栈软硬件一体化能力，成为国内万卡级超大规模集群部署主力，广泛进入运营商、政府及互联网大厂算力采购体系，支撑国家级智算中心大规模建设。受供应链约束，产能释放存在上限，但其在国产替代中的枢纽地位稳固。值得关注的是：在地缘限制下，昇腾生态的成熟度直接决定中国AI算力的自主天花板。" data-en="Analysis notes Huawei's Ascend, built on the Da Vinci architecture and full-stack software-hardware integration, has become the mainstay of domestic 10,000-card cluster deployments, widely entering carriers', government and big-tech procurement and supporting national AI-compute centers. Supply-chain constraints cap capacity, but its hub role in localisation is firm. Why it matters: under geopolitical limits, the maturity of the Ascend ecosystem sets the ceiling for China's autonomous AI compute.">分析指出，华为昇腾依托达芬奇架构与全栈软硬件一体化能力，成为国内万卡级超大规模集群部署主力，广泛进入运营商、政府及互联网大厂算力采购体系，支撑国家级智算中心大规模建设。受供应链约束，产能释放存在上限，但其在国产替代中的枢纽地位稳固。值得关注的是：在地缘限制下，昇腾生态的成熟度直接决定中国AI算力的自主天花板。</div>
+      </div>
+      <div class="item" id="item-sec7-3">
+        <div class="item-title" onclick="toggleItem('item-sec7-3')">
+          <strong data-zh="4. 北京君正港交所挂牌，长江存储扩产拉动产业链" data-en="4. Ingenic Lists in Hong Kong; YMTC Expansion Lifts the Chain">4. 北京君正港交所挂牌，长江存储扩产拉动产业链</strong>
+          <button class="fold-btn" id="fold-item-sec7-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="北京君正集成电路8月25日H股正式在港交所主板挂牌，搭建'A+H'两地上市平台，公司形成存储、计算、模拟三大芯片矩阵，覆盖汽车电子、工业控制、AIoT与智能安防。与此同时长江存储IPO受理募330亿元扩产，机构预计将直接拉动国内存储产业链景气上行、材料与设备订单增长。值得关注的是：资本与产能双线并进，正夯实国产半导体'设计—制造—材料'的完整闭环。" data-en="Ingenic's H-shares list on the Hong Kong exchange on Aug 25, building an A+H platform, with memory, compute and analog chip matrices spanning auto, industrial, AIoT and security. Meanwhile YMTC's 33-billion-yuan IPO is set to lift the domestic memory chain and material/equipment orders. Why it matters: capital and capacity advancing together are cementing a complete domestic 'design-fab-materials' semiconductor loop.">北京君正集成电路8月25日H股正式在港交所主板挂牌，搭建'A+H'两地上市平台，公司形成存储、计算、模拟三大芯片矩阵，覆盖汽车电子、工业控制、AIoT与智能安防。与此同时长江存储IPO受理募330亿元扩产，机构预计将直接拉动国内存储产业链景气上行、材料与设备订单增长。值得关注的是：资本与产能双线并进，正夯实国产半导体'设计—制造—材料'的完整闭环。</div>
+      </div>
+      <div class="item" id="item-sec7-4">
+        <div class="item-title" onclick="toggleItem('item-sec7-4')">
+          <strong data-zh="5. 摩尔线程发布MTT S5000推理白皮书" data-en="5. Moore Threads Releases MTT S5000 Inference Whitepaper">5. 摩尔线程发布MTT S5000推理白皮书</strong>
+          <button class="fold-btn" id="fold-item-sec7-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日摩尔线程正式发布《MTT S5000 Prefill-as-a-Service技术白皮书》，基于旗舰级AI训推一体智算卡构建长上下文推理新范式，面向AI Agent、代码生成等场景。国产AI算力芯片加速迭代，带动芯片设计需求增长，科创芯片设计ETF近一月获超6亿元资金净流入。值得关注的是：在英伟达服务器涨价预期下，国产推理卡的性价比与供给确定性正获得更多资本青睐。" data-en="On Aug 24 Moore Threads released the MTT S5000 Prefill-as-a-Service whitepaper, building a long-context inference paradigm on its flagship training-inference card for AI agents and code generation. Faster domestic AI-chip iteration is lifting design demand, with a sci-tech chip-design ETF taking over 600 million yuan of inflows in a month. Why it matters: with Nvidia server-price hikes expected, domestic inference cards' cost-to-performance and supply certainty are winning more capital.">8月24日摩尔线程正式发布《MTT S5000 Prefill-as-a-Service技术白皮书》，基于旗舰级AI训推一体智算卡构建长上下文推理新范式，面向AI Agent、代码生成等场景。国产AI算力芯片加速迭代，带动芯片设计需求增长，科创芯片设计ETF近一月获超6亿元资金净流入。值得关注的是：在英伟达服务器涨价预期下，国产推理卡的性价比与供给确定性正获得更多资本青睐。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec8">
+    <div class="section-header" onclick="toggleSection('sec8')">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="航天与空间" data-en="Space &amp; Aerospace"><span class="section-icon">🚀</span>航天与空间</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec8')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec8')" id="fold-sec8">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec8')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec8">
+      <div class="item" id="item-sec8-0">
+        <div class="item-title" onclick="toggleItem('item-sec8-0')">
+          <strong data-zh="1. 嫦娥七号不满足发射条件，延期至2027年" data-en="1. Chang'e-7 Delayed to 2027 as Launch Conditions Not Met">1. 嫦娥七号不满足发射条件，延期至2027年</strong>
+          <button class="fold-btn" id="fold-item-sec8-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="中国载人航天工程办公室8月23日宣布，嫦娥七号任务因北部湾热带低气压影响不满足发射条件，不能在2026年预定窗口实施，预计推迟至2027年择机发射；器箭组合体此前已完成垂直转运，原定最早8月24日从文昌发射。其着陆点为Shackleton环形山 rim，需特定太阳光照几何，发射窗口每月约一周。值得关注的是：探月窗口的'先到先得'特性，使一次延期可能牵动后续月球科研与资源探测节奏。" data-en="The China Manned Space Agency said on Aug 23 that Chang'e-7 cannot meet launch conditions this year due to a tropical depression over the Gulf of Tonkin and is delayed to 2027; the rocket-stack had been rolled out, with the earliest launch set for Aug 24 from Wenchang. Its landing site on the rim of Shackleton crater needs specific solar-illumination geometry, leaving windows of about a week per month. Why it matters: lunar windows are first-come-first-served, so one delay can ripple through later science and resource-exploration schedules.">中国载人航天工程办公室8月23日宣布，嫦娥七号任务因北部湾热带低气压影响不满足发射条件，不能在2026年预定窗口实施，预计推迟至2027年择机发射；器箭组合体此前已完成垂直转运，原定最早8月24日从文昌发射。其着陆点为Shackleton环形山 rim，需特定太阳光照几何，发射窗口每月约一周。值得关注的是：探月窗口的'先到先得'特性，使一次延期可能牵动后续月球科研与资源探测节奏。</div>
+      </div>
+      <div class="item" id="item-sec8-1">
+        <div class="item-title" onclick="toggleItem('item-sec8-1')">
+          <strong data-zh="2. 朱雀三号陆地回收成功，着陆后起火致箭体倾倒" data-en="2. Zhuque-3 Lands on Land but Catches Fire and Topples After Touchdown">2. 朱雀三号陆地回收成功，着陆后起火致箭体倾倒</strong>
+          <button class="fold-btn" id="fold-item-sec8-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月19日朱雀三号遥二火箭在东风商业航天创新试验区完成我国首次入轨级一子级陆地回收，使中国成为第二个同时掌握陆地与海上两种回收技术的国家。但着陆后箭体底部残余甲烷与氧气被引燃，损坏着陆腿并致箭体倾倒——类似SpaceX猎鹰9号B1086在2025年3月的近况。回收本身（四腿、近中心、甘肃境内约390公里落点）仍被视为重大成就。值得关注的是：'能回收'只是入场券，'能复用、能盈利'才是商业航天竞争核心。" data-en="On Aug 19 Zhuque-3's second flight achieved China's first orbital-class first-stage land recovery, making it the second country to master both land and sea recovery. But residual methane and oxygen at the base ignited after touchdown, damaging a leg and toppling the vehicle — akin to SpaceX's Falcon 9 B1086 in March 2025. The landing itself (four legs, near dead-center, ~390km downrange in Gansu) remains a major achievement. Why it matters: recovery is just the ticket; reusability and profitability are the real commercial-space contest.">8月19日朱雀三号遥二火箭在东风商业航天创新试验区完成我国首次入轨级一子级陆地回收，使中国成为第二个同时掌握陆地与海上两种回收技术的国家。但着陆后箭体底部残余甲烷与氧气被引燃，损坏着陆腿并致箭体倾倒——类似SpaceX猎鹰9号B1086在2025年3月的近况。回收本身（四腿、近中心、甘肃境内约390公里落点）仍被视为重大成就。值得关注的是：'能回收'只是入场券，'能复用、能盈利'才是商业航天竞争核心。</div>
+      </div>
+      <div class="item" id="item-sec8-2">
+        <div class="item-title" onclick="toggleItem('item-sec8-2')">
+          <strong data-zh="3. 俄'联盟-2.1b'发射，SpaceX年内第100次轨道任务" data-en="3. Russia Launches Soyuz-2.1b; SpaceX Hits 100th Orbital Mission of 2026">3. 俄'联盟-2.1b'发射，SpaceX年内第100次轨道任务</strong>
+          <button class="fold-btn" id="fold-item-sec8-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="俄罗斯空天军8月24日5:40在普列谢茨克发射场成功发射'联盟-2.1b'中型运载火箭，搭载俄国防部所需航天器，属例行军事航天任务。另一边，SpaceX于8月22日由猎鹰9号从范登堡发射27颗Starlink卫星，完成2026年年内第100次轨道发射（99次猎鹰9号+1次重型），助推器第9次飞行，Starlink在轨卫星已超11000颗。值得关注的是：发射频次的国别差距，正成为太空能力对比的新标尺。" data-en="Russia's space forces launched a Soyuz-2.1b medium-lift rocket from Plesetsk at 5:40 on Aug 24 carrying a defence-ministry spacecraft, a routine military spaceflight. On the other side, SpaceX's Aug 22 Falcon 9 lofted 27 Starlink satellites for its 100th orbital launch of 2026 (99 Falcon 9s plus one Heavy), with a ninth-flight booster, and Starlink now exceeds 11,000 operational satellites. Why it matters: the gap in launch cadence between nations is becoming a new yardstick of space power.">俄罗斯空天军8月24日5:40在普列谢茨克发射场成功发射'联盟-2.1b'中型运载火箭，搭载俄国防部所需航天器，属例行军事航天任务。另一边，SpaceX于8月22日由猎鹰9号从范登堡发射27颗Starlink卫星，完成2026年年内第100次轨道发射（99次猎鹰9号+1次重型），助推器第9次飞行，Starlink在轨卫星已超11000颗。值得关注的是：发射频次的国别差距，正成为太空能力对比的新标尺。</div>
+      </div>
+      <div class="item" id="item-sec8-3">
+        <div class="item-title" onclick="toggleItem('item-sec8-3')">
+          <strong data-zh="4. 文昌国际航空航天论坛开幕，聚焦可复用火箭产业化" data-en="4. Wenchang Aerospace Forum Opens, Focus on Reusable-Rocket Industrialisation">4. 文昌国际航空航天论坛开幕，聚焦可复用火箭产业化</strong>
+          <button class="fold-btn" id="fold-item-sec8-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="2026文昌国际航空航天论坛8月24–26日在海南文昌举办，集中展示海南航天产业成果，聚焦可复用火箭产业化新风口，旨在构建火箭链、卫星链、数据链及'航天+'产业生态。中国已成全球首个同时掌握海上网系回收与陆地着陆腿回收的国家；航天驭星总工程师曹梦指出，未来竞争拼的是周转率，并呼吁加快沿海发射场与监管标准建设。值得关注的是：从单点技术突破到产业集群，中国商业航天正迈入'规模化供给'阶段。" data-en="The 2026 Wenchang International Aerospace Forum runs Aug 24–26 in Hainan, showcasing local space achievements and focusing on reusable-rocket industrialisation to build rocket, satellite and data chains plus a 'space+' ecosystem. China is now the first country to master both sea-net and land-leg recovery; AST Space Chief Engineer Cao Meng said future competition is about turnover rate and called for faster coastal-launch-site and regulatory standards. Why it matters: from point breakthroughs to industrial clusters, China's commercial space is entering a scale-supply phase.">2026文昌国际航空航天论坛8月24–26日在海南文昌举办，集中展示海南航天产业成果，聚焦可复用火箭产业化新风口，旨在构建火箭链、卫星链、数据链及'航天+'产业生态。中国已成全球首个同时掌握海上网系回收与陆地着陆腿回收的国家；航天驭星总工程师曹梦指出，未来竞争拼的是周转率，并呼吁加快沿海发射场与监管标准建设。值得关注的是：从单点技术突破到产业集群，中国商业航天正迈入'规模化供给'阶段。</div>
+      </div>
+      <div class="item" id="item-sec8-4">
+        <div class="item-title" onclick="toggleItem('item-sec8-4')">
+          <strong data-zh="5. NASA被要求制定商业月球物流与机器人登火架构" data-en="5. NASA Told to Draft Commercial Lunar-Logistics and Robotic Mars Architecture">5. NASA被要求制定商业月球物流与机器人登火架构</strong>
+          <button class="fold-btn" id="fold-item-sec8-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="据央视，美总统特朗普8月20日签署备忘录，提出到2030年美国太空运输靶场与设施应支持每年超1000次发射与再入任务，要求推动联邦发射场向商业用户开放、鼓励公私合作，并加快许可与环境审查；NASA还被要求制定商业化月球物流架构，探索商业机器人登陆火星及商业载人往返火星的相关架构。值得关注的是：政策正把商业力量更深地嵌入深空探索的'运输层'。" data-en="Per CCTV, President Trump signed a memo on Aug 20 setting a 2030 goal for US range infrastructure to support over 1,000 launches and re-entries a year, opening federal ranges to commercial users, encouraging public-private partnerships and speeding permits; NASA was told to draft a commercial lunar-logistics architecture and explore commercial robotic and crewed Mars architectures. Why it matters: policy is embedding commercial players deeper into the 'transport layer' of deep-space exploration.">据央视，美总统特朗普8月20日签署备忘录，提出到2030年美国太空运输靶场与设施应支持每年超1000次发射与再入任务，要求推动联邦发射场向商业用户开放、鼓励公私合作，并加快许可与环境审查；NASA还被要求制定商业化月球物流架构，探索商业机器人登陆火星及商业载人往返火星的相关架构。值得关注的是：政策正把商业力量更深地嵌入深空探索的'运输层'。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec9">
+    <div class="section-header" onclick="toggleSection('sec9')">
+      <img src="" alt="" loading="lazy" decoding="async" onerror="this.style.opacity='0'">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="社会与舆情" data-en="Society &amp; Public Opinion"><span class="section-icon">📱</span>社会与舆情</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec9')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec9')" id="fold-sec9">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec9')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec9">
+      <div class="item" id="item-sec9-0">
+        <div class="item-title" onclick="toggleItem('item-sec9-0')">
+          <strong data-zh="1. 网信办整治娱乐团播乱象，处置7200余间违规直播间" data-en="1. Cyberspace Regulator Cracks Down on Live-Stream 'Team Shows'">1. 网信办整治娱乐团播乱象，处置7200余间违规直播间</strong>
+          <button class="fold-btn" id="fold-item-sec9-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="'清朗·网络娱乐团播乱象整治'专项行动启动以来，中央网信办紧盯内容低俗不良、规则设计刺激打赏、侵害未成年人权益等突出问题，累计处置违规直播间7200余个、严惩违规账号2200余个，并指导平台清退处置一批问题严重的团播MCN机构。值得关注的是：监管从'个案处罚'转向'生态治理'，直播打赏的诱导机制正被纳入合规审查。" data-en="Since the 'Clear and Bright' campaign against chaotic live-stream 'team shows' began, the Cyberspace Administration has targeted vulgar content, tip-baiting rule designs and minors' rights violations, shutting down over 7,200 non-compliant live rooms, punishing more than 2,200 accounts and pushing platforms to expel serious-offender MCN agencies. Why it matters: regulation is shifting from case-by-case penalties to ecosystem governance, pulling tip-inducement mechanisms into compliance review.">'清朗·网络娱乐团播乱象整治'专项行动启动以来，中央网信办紧盯内容低俗不良、规则设计刺激打赏、侵害未成年人权益等突出问题，累计处置违规直播间7200余个、严惩违规账号2200余个，并指导平台清退处置一批问题严重的团播MCN机构。值得关注的是：监管从'个案处罚'转向'生态治理'，直播打赏的诱导机制正被纳入合规审查。</div>
+      </div>
+      <div class="item" id="item-sec9-1">
+        <div class="item-title" onclick="toggleItem('item-sec9-1')">
+          <strong data-zh="2. 微博'大批AI博主停更'登顶热搜，内容泡沫现退潮" data-en="2. Weibo's 'AI Creators Mass-Quitting' Tops Trends as Content Bubble Recedes">2. 微博'大批AI博主停更'登顶热搜，内容泡沫现退潮</strong>
+          <button class="fold-btn" id="fold-item-sec9-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月24日'大批AI博主停更了'冲上微博热搜第一，泛知识、AI教程等领域出现大规模退潮，标志AI内容泡沫破裂与行业理性回归。与此同时，月之暗面Kimi官微宣布第一代多模态模型K2.5本月底退役、2.8万亿参数K3已开源接棒。值得关注的是：当生成式AI从'新鲜感'进入'实用期'，流量驱动的低质内容正被市场自然出清。" data-en="On Aug 24 'large numbers of AI creators are quitting' topped Weibo's trends as pan-knowledge and AI-tutorial circles saw a mass pullback, signalling the bursting of an AI-content bubble and a return to rationality; meanwhile Moonshot's Kimi said its first multimodal model K2.5 retires this month, with the 2.8-trillion-parameter K3 open-sourced as successor. Why it matters: as generative AI moves from novelty to utility, traffic-driven low-quality content is being naturally cleared by the market.">8月24日'大批AI博主停更了'冲上微博热搜第一，泛知识、AI教程等领域出现大规模退潮，标志AI内容泡沫破裂与行业理性回归。与此同时，月之暗面Kimi官微宣布第一代多模态模型K2.5本月底退役、2.8万亿参数K3已开源接棒。值得关注的是：当生成式AI从'新鲜感'进入'实用期'，流量驱动的低质内容正被市场自然出清。</div>
+      </div>
+      <div class="item" id="item-sec9-2">
+        <div class="item-title" onclick="toggleItem('item-sec9-2')">
+          <strong data-zh="3. 新西兰拟立法禁止16岁以下使用社交媒体" data-en="3. New Zealand to Ban Under-16s from Social Media">3. 新西兰拟立法禁止16岁以下使用社交媒体</strong>
+          <button class="fold-btn" id="fold-item-sec9-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="据卫报，新西兰总理Luxon表示其政党将向议会提交法案，寻求禁止16岁以下儿童使用社交媒体，对不合规平台最高处以全球营收10%的罚款；法案将要求平台采取合理步骤核验用户年龄，包括既有账户信息、面部技术与数字身份凭证。值得关注的是：未成年人网络保护正从'家长责任'转向'平台强制义务'，全球监管趋严成趋势。" data-en="The Guardian reports New Zealand PM Luxon will introduce a bill seeking to ban under-16s from social media, with fines up to 10% of global revenue for non-compliant platforms; it would require reasonable age-verification steps including account info, facial tech and digital ID. Why it matters: minors' online protection is shifting from parental duty to mandatory platform obligation, part of a global tightening trend.">据卫报，新西兰总理Luxon表示其政党将向议会提交法案，寻求禁止16岁以下儿童使用社交媒体，对不合规平台最高处以全球营收10%的罚款；法案将要求平台采取合理步骤核验用户年龄，包括既有账户信息、面部技术与数字身份凭证。值得关注的是：未成年人网络保护正从'家长责任'转向'平台强制义务'，全球监管趋严成趋势。</div>
+      </div>
+      <div class="item" id="item-sec9-3">
+        <div class="item-title" onclick="toggleItem('item-sec9-3')">
+          <strong data-zh="4. 《大型个人信息处理者保护规定》征求意见" data-en="4. Draft Rules for Large Personal-Information Handlers Published for Comment">4. 《大型个人信息处理者保护规定》征求意见</strong>
+          <button class="fold-btn" id="fold-item-sec9-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="财新报道，国家网信部门发布《大型个人信息处理者个人信息保护规定（征求意见稿）》，要求大型处理者采取加密、去标识化、访问控制、匿名化等措施保障安全，可应用国家网络身份认证公共服务，鼓励使用数据标签标识技术、通过个人信息保护认证。值得关注的是：在AI与高频交互时代，个人信息保护从'事后追责'前置为'设计即合规'，是大模型治理的关键一环。" data-en="Caixin reports the cyberspace regulator published draft rules for large personal-information handlers, requiring encryption, de-identification, access control and anonymisation, with use of the national identity-authentication service and encouragement of data-labeling and certification. Why it matters: in the AI and high-frequency-interaction era, personal-information protection moves from after-the-fact liability to 'compliant by design' — a key piece of model governance.">财新报道，国家网信部门发布《大型个人信息处理者个人信息保护规定（征求意见稿）》，要求大型处理者采取加密、去标识化、访问控制、匿名化等措施保障安全，可应用国家网络身份认证公共服务，鼓励使用数据标签标识技术、通过个人信息保护认证。值得关注的是：在AI与高频交互时代，个人信息保护从'事后追责'前置为'设计即合规'，是大模型治理的关键一环。</div>
+      </div>
+      <div class="item" id="item-sec9-4">
+        <div class="item-title" onclick="toggleItem('item-sec9-4')">
+          <strong data-zh="5. 战地记者唐师曾逝世引悼念，社交平台承载集体记忆" data-en="5. Veteran War Correspondent Tang Shizeng's Death Mourned Online">5. 战地记者唐师曾逝世引悼念，社交平台承载集体记忆</strong>
+          <button class="fold-btn" id="fold-item-sec9-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="8月23日，知名战地记者唐师曾在北京病逝享年65岁，其微博前一天仍在更新，逝世消息登热搜引发公众悼念。同日微博平台因韩沛颖、刘浩存争议、AI博主停更潮等事件持续成为公共议题场。值得关注的是：社交媒体既是舆论交锋的竞技场，也是公众情感与集体记忆的容器，其公共性正在被多重事件反复定义。" data-en="On Aug 23 veteran war correspondent Tang Shizeng died in Beijing at 65; his Weibo had updated the day before, and his passing topped trends as the public mourned. The same day Weibo stayed a public-issue arena amid the Han Peiying/Liu Haocun dispute and the AI-creator quitting wave. Why it matters: social media is both a contest field for opinion and a vessel for public emotion and collective memory, its publicness continually redefined by overlapping events.">8月23日，知名战地记者唐师曾在北京病逝享年65岁，其微博前一天仍在更新，逝世消息登热搜引发公众悼念。同日微博平台因韩沛颖、刘浩存争议、AI博主停更潮等事件持续成为公共议题场。值得关注的是：社交媒体既是舆论交锋的竞技场，也是公众情感与集体记忆的容器，其公共性正在被多重事件反复定义。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing" id="closingText" data-zh="世界很大，今天的故事只是其中一角。愿你在了解远方的同时，也不忘照顾好身边的生活，多一份理解，少一分焦虑，安稳地度过这一天。" data-en="The world is vast, and today's stories are only a sliver of it. May you stay informed about distant events while tending to the life around you — with a little more understanding and a little less anxiety, and a steady day.">世界很大，今天的故事只是其中一角。愿你在了解远方的同时，也不忘照顾好身边的生活，多一份理解，少一分焦虑，安稳地度过这一天。</div>
+
+  <div class="summary">
+    <h3 id="summaryTitle">核心主线</h3>
+    <p id="summaryBody" data-zh="2026年8月24日的全球主线围绕两条轴线展开：其一，美伊对抗从军事转向'经济终局'——美方以史无前例制裁叠加霍尔木兹封锁施压，伊朗以波斯湾石油出口反制牌回应，能源与黄金市场随之剧烈波动，英国天然气更飙至3.5年高位； 其二，俄乌冲突加速'工业化'，双方打击目标深入彼此军工与能源腹地，欧盟61亿欧元军援与英国巡航导弹技术转移使战争进一步产业化。与此同时，AI与半导体自主化提速（神秘模型Ox Alpha、阿里800亿港元AI配售、小米玄戒O3、Anthropic自研芯片），中东新防务联盟、新西兰社媒禁令与TikTok隐私和解则折射出地缘、科技与治理的多重重构。" data-en="The global story of Aug 24, 2026 runs along two axes. First, the US-Iran confrontation shifted from military to an 'economic endgame' — Washington leaned on unprecedented sanctions plus a Hormuz blockade while Iran answered with a Persian Gulf oil-export countermeasure, sending energy and gold markets swinging and pushing UK gas to a 3.5-year high. Second, the Russia-Ukraine war industrialised further, with strikes reaching deep into each side's defence and energy heartlands and 6.1 billion euros of EU aid plus British cruise-missile tech transfers deepening the war's industrial base. Meanwhile AI and semiconductor autonomy accelerated (the Ox Alpha mystery model, Alibaba's 80B-HK-dollar AI placement, Xiaomi's Xuanjie O3, Anthropic's in-house chips), while a new Mideast defence pact, New Zealand's social-media ban and TikTok's privacy settlement reflect a multi-layered reordering of geopolitics, technology and governance.">2026年8月24日的全球主线围绕两条轴线展开：其一，美伊对抗从军事转向'经济终局'——美方以史无前例制裁叠加霍尔木兹封锁施压，伊朗以波斯湾石油出口反制牌回应，能源与黄金市场随之剧烈波动，英国天然气更飙至3.5年高位； 其二，俄乌冲突加速'工业化'，双方打击目标深入彼此军工与能源腹地，欧盟61亿欧元军援与英国巡航导弹技术转移使战争进一步产业化。与此同时，AI与半导体自主化提速（神秘模型Ox Alpha、阿里800亿港元AI配售、小米玄戒O3、Anthropic自研芯片），中东新防务联盟、新西兰社媒禁令与TikTok隐私和解则折射出地缘、科技与治理的多重重构。</p>
+    <p style="margin-top:12px;font-size:.85em;">图片来源：LoremFlickr 公开实拍 + 智能分类配图兜底（离线也始终有图）；语音由浏览器 Web Speech API 生成，播放器可一键开启「AI 语音增强」选用云端神经语音。</p>
+  </div>
+</div>
+
+<!-- Settings -->
+<div class="settings-overlay" id="settingsOverlay" onclick="if(event.target===this)closeSettings()">
+  <div class="settings-panel">
+    <div class="settings-header">
+      <h2 id="settingsTitle">设置</h2>
+      <button class="icon-btn" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="setting-row">
+      <label id="lblLang">语言</label>
+      <select id="selLang" onchange="setLang(this.value)">
+        <option value="zh">简体中文</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+    <div class="setting-row">
+      <label id="lblTheme">主题</label>
+      <select id="selTheme" onchange="setTheme(this.value)">
+        <option value="auto">跟随系统</option>
+        <option value="light">浅色</option>
+        <option value="dark">深色</option>
+      </select>
+    </div>
+    <div class="setting-row">
+      <label id="lblAccent">主题色</label>
+      <div class="color-row">
+        <input type="color" id="accentColor" value="#2563eb" onchange="setAccent(this.value)">
+        <input type="number" id="accentR" min="0" max="255" placeholder="R">
+        <input type="number" id="accentG" min="0" max="255" placeholder="G">
+        <input type="number" id="accentB" min="0" max="255" placeholder="B">
+        <button class="apply-btn" onclick="applyRGBAccent()" id="btnApplyAccent">应用</button>
+      </div>
+    </div>
+    <div class="setting-row">
+      <label id="lblFont">字号</label>
+      <input type="range" id="rngFont" min="12" max="22" value="15" oninput="setFont(this.value)">
+      <span id="fontVal">15px</span>
+    </div>
+    <div class="setting-row">
+      <label id="lblRadius">圆角大小</label>
+      <input type="range" id="rngRadius" min="0" max="32" value="16" oninput="setRadius(this.value)">
+      <span id="radiusVal">16px</span>
+    </div>
+    <div class="setting-row">
+      <label id="lblHl">高光显示</label>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <label class="switch">
+          <input type="checkbox" id="chkHl" checked onchange="setHlOn(this.checked)">
+          <span class="slider"></span>
+        </label>
+        <input type="color" id="hlColor" value="#ffeb3b" onchange="setHl(this.value)">
+        <input type="number" id="hlR" min="0" max="255" placeholder="R">
+        <input type="number" id="hlG" min="0" max="255" placeholder="G">
+        <input type="number" id="hlB" min="0" max="255" placeholder="B">
+        <button class="apply-btn" onclick="applyRGBHl()" id="btnApplyHl">应用</button>
+      </div>
+    </div>
+    <div class="setting-row" style="justify-content:flex-end;gap:8px;margin-top:8px;">
+      <button class="apply-btn" onclick="exportSettings()" id="btnExport">导出设置</button>
+      <button class="apply-btn" onclick="importSettings()" id="btnImport">导入设置</button>
+    </div>
+  </div>
+</div>
+
+<!-- Player -->
+<div class="player" id="player">
+  <div class="player-main-row">
+    <button class="p-icon-btn" id="shuffleBtn" onclick="toggleShuffle()" title="随机">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M3 4l5 5"/></svg>
+    </button>
+    <button class="p-icon-btn" onclick="prevItem()" title="上一则">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm11 12l-8-6 8-6v12z"/></svg>
+    </button>
+    <button class="p-icon-btn" onclick="seekBy(-10)" title="后退 10 秒">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 17.5L7 12l4.5-5.5"/><path d="M7 12h10"/><text x="12" y="22" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">10</text></svg>
+    </button>
+    <button class="p-play-btn" id="playPauseBtn" onclick="togglePlay()" title="播放/暂停">
+      <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+    <button class="p-icon-btn" onclick="seekBy(30)" title="前进 30 秒">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 17.5L17 12l-4.5-5.5"/><path d="M17 12H7"/><text x="12" y="22" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">30</text></svg>
+    </button>
+    <button class="p-icon-btn" onclick="nextItem()" title="下一则">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8-6-8-6v12zm9-12h2v12h-2z"/></svg>
+    </button>
+    <button class="p-icon-btn" id="repeatBtn" onclick="toggleRepeat()" title="循环">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2.5l3 3-3 3M2 12a10 10 0 0115-8.5M7 21.5l-3-3 3-3M22 12a10 10 0 01-15 8.5"/></svg>
+    </button>
+  </div>
+  <div class="player-progress-row">
+    <span class="player-time" id="curTime">0:00</span>
+    <input type="range" class="player-progress" id="playerProgress" value="0" min="0" max="100" step="0.1" oninput="previewSeek(this.value)" onchange="seekProgress(this.value)">
+    <span class="player-time" id="totTime">0:00</span>
+  </div>
+  <div class="player-extra-row">
+    <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置"><span id="playerResetLabel">重置</span></button>
+    <div class="player-extra-group">
+      <select id="voiceSel" onchange="changeVoice(this.value)">
+        <option value="">默认语音</option>
+        <option value="__custom__">➕ 自定义声音…</option>
+      </select>
+      <select id="speedSel" onchange="setSpeed(this.value)">
+        <option value="0.5">0.5x</option>
+        <option value="0.75">0.75x</option>
+        <option value="1" selected>1x</option>
+        <option value="1.25">1.25x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+      </select>
+      <div class="volume-wrap">
+        <button class="vol-btn" id="volBtn" title="音量">
+          <svg id="volHighIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 000-6.5v1.75a2.75 2.75 0 010 4.75V12zm3-6.5a8 8 0 000 11.5v-1.75a6.25 6.25 0 010-8V5.5z"/></svg>
+          <svg id="volMuteIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M16.5 12l4.5-4.5-1.5-1.5L15 10.5 10.5 6 9 7.5l4.5 4.5L9 16.5l1.5 1.5 4.5-4.5 4.5 4.5 1.5-1.5L16.5 12zM3 9v6h4l5 5V4L7 9H3z"/></svg>
+          <span id="volLabel">音量</span>
+        </button>
+        <div class="volume-slider">
+          <input type="range" id="volRange" min="0" max="100" value="100" orient="vertical" oninput="previewVolume(this.value/100)" onchange="setVolume(this.value/100)">
+        </div>
+      </div>
+      <button class="player-native-btn" id="aiVoiceBtn" onclick="toggleAiVoice()" title="AI 语音增强：自动选用云端神经语音并优化音色"><span id="aiVoiceLabel">AI 语音</span></button>
+      <button class="player-native-btn" id="nativeBtn" onclick="toggleNativeMode()" title="切换系统原生播放模式"><span id="nativeLabel">智能分块</span></button>
+      <button class="p-icon-btn" id="playerExpandBtn" onclick="togglePlayerSize()" title="放大播放器">
+        <svg id="expandIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3m11-5v3a2 2 0 002 2h3"/></svg>
+        <svg id="shrinkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2V3M3 16h3a2 2 0 012 2v3m11-5h-3a2 2 0 01-2-2v-3"/></svg>
+      </button>
+    </div>
+    <button class="p-icon-btn" onclick="stopAll()" title="关闭">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="player-chapter" id="playerChapter" style="width:100%;font-size:12px;color:var(--text-secondary);text-align:center;margin-top:2px;min-height:16px;"></div>
+  <div class="player-hint" id="playerHint" style="width:100%;font-size:11px;color:var(--text-secondary);opacity:.7;text-align:center;margin-top:4px;">💡 建议使用默认浏览器打开，语音朗读更稳定</div>
+</div>
+<!-- Custom voice modal -->
+<div class="modal-overlay" id="voiceModal" onclick="if(event.target===this)closeVoiceModal()">
+  <div class="modal">
+    <h3 id="modalTitle">收藏自定义声音</h3>
+    <select id="modalVoiceSel"></select>
+    <div class="modal-actions">
+      <button onclick="closeVoiceModal()" id="btnCancel">取消</button>
+      <button class="primary" onclick="saveCustomVoice()" id="btnSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Safe storage wrapper: localStorage throws a SecurityError on file:// (opaque
+// origin) in Chrome/Edge, which would crash init(). Fall back to in-memory.
+var safeLS = (function() {
+  try {
+    var __k = '__wb_ls_probe__';
+    window.localStorage.setItem(__k, '1');
+    window.localStorage.removeItem(__k);
+    return window.localStorage;
+  } catch (e) {
+    var __mem = {};
+    return {
+      getItem: function(k) { return (Object.prototype.hasOwnProperty.call(__mem, k)) ? __mem[k] : null; },
+      setItem: function(k, v) { __mem[k] = String(v); },
+      removeItem: function(k) { delete __mem[k]; }
+    };
+  }
+})();
+(function() {
+  'use strict';
+
+  // ========== Date Seed Rotation ==========
+  var seed = new Date().getFullYear()*10000 + (new Date().getMonth()+1)*100 + new Date().getDate();
+  var dayNames = ['周日','周一','周二','周三','周四','周五','周六'];
+  var dayNamesEn = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var today = new Date();
+  var dateStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var weekDay = dayNames[today.getDay()];
+  var weekDayEn = dayNamesEn[today.getDay()];
+
+  var welcomes = [
+    {zh:'愿今日资讯为您带来收获', en:'May today\'s news bring you value'},
+    {zh:'欢迎阅读今日全球要闻', en:'Welcome to today\'s global briefing'},
+    {zh:'新的一天，从了解世界开始', en:'Start your day by understanding the world'},
+    {zh:'保持好奇，保持关注', en:'Stay curious, stay informed'},
+    {zh:'信息是洞察世界的窗口', en:'Information is a window into the world'},
+    {zh:'探索世界，从这里出发', en:'Explore the world from here'},
+    {zh:'愿知识照亮前路', en:'May knowledge light your way'},
+    {zh:'今日事，今日知', en:'Today\'s affairs, today known'}
+  ];
+  var closings = [
+    {zh:'今日全球要闻已结束，感谢您的阅读', en:'Today\'s briefing ends here. Thank you for reading'},
+    {zh:'资讯有价，思考无价，明日再会', en:'News has value, thinking is priceless. See you tomorrow'},
+    {zh:'世界瞬息万变，我们始终关注', en:'The world changes fast; we keep watching'},
+    {zh:'感谢您的阅读，愿明日更好', en:'Thanks for reading. May tomorrow be better'},
+    {zh:'知全局者，方行稳致远', en:'Know the whole to walk steady and far'},
+    {zh:'新闻有终点，思考无止境', en:'News ends, thinking never does'},
+    {zh:'愿您在信息的海洋中找到方向', en:'May you find direction in the sea of information'},
+    {zh:'今日落幕，明朝再启', en:'Today closes; tomorrow begins'}
+  ];
+  var gradients = [
+    'linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%)',
+    'linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%)',
+    'linear-gradient(135deg, #312e81 0%, #6366f1 100%)',
+    'linear-gradient(135deg, #064e3b 0%, #10b981 100%)',
+    'linear-gradient(135deg, #7c2d12 0%, #f59e0b 100%)',
+    'linear-gradient(135deg, #581c87 0%, #d946ef 100%)',
+    'linear-gradient(135deg, #3b0764 0%, #8b5cf6 100%)',
+    'linear-gradient(135deg, #1e1b4b 0%, #ec4899 100%)'
+  ];
+  var bannerKeywords = ['nature,landscape','mountain,lake','ocean,beach','forest,sunlight','sunset,clouds','river,valley','flower,meadow','snow,mountain'];
+
+  var welcome = welcomes[seed % welcomes.length];
+  var closing = closings[seed % closings.length];
+  var gradient = gradients[seed % gradients.length];
+  var bannerKw = bannerKeywords[seed % bannerKeywords.length];
+
+  document.documentElement.style.setProperty('--title-gradient', gradient);
+
+  // ========== BUILTIN PREFS from user-prefs.json ==========
+  var BUILTIN_PREFS = {"lang":"zh","theme":"auto","accent":"#2563eb","font":15,"radius":16,"voice":"","hl":"#ffeb3b","hlOn":true};
+
+  // ========== State ==========
+  var lang = safeLS.getItem('wb_lang') || BUILTIN_PREFS.lang || 'zh';
+  var theme = safeLS.getItem('wb_theme') || BUILTIN_PREFS.theme || 'auto';
+  var accent = safeLS.getItem('wb_accent') || BUILTIN_PREFS.accent || '#2563eb';
+  var fontSize = parseInt(safeLS.getItem('wb_font') || BUILTIN_PREFS.font || 15);
+  var radius = parseInt(safeLS.getItem('wb_radius') || BUILTIN_PREFS.radius || 16);
+  var hlColor = safeLS.getItem('wb_hl') || BUILTIN_PREFS.hl || '#ffeb3b';
+  var hlOn = (safeLS.getItem('wb_hl_on') !== null ? safeLS.getItem('wb_hl_on') : (BUILTIN_PREFS.hlOn !== undefined ? BUILTIN_PREFS.hlOn : true)) === 'true' || (safeLS.getItem('wb_hl_on') !== null ? safeLS.getItem('wb_hl_on') : (BUILTIN_PREFS.hlOn !== undefined ? BUILTIN_PREFS.hlOn : true)) === true;
+  var customVoices = JSON.parse(safeLS.getItem('wb_custom_voices') || '[]');
+  var selectedVoice = safeLS.getItem('wb_voice') || BUILTIN_PREFS.voice || '';
+
+  var sections = document.querySelectorAll('.section-card');
+  var sectionData = [];
+  var isPlaying = false, isPaused = false, currentUtt = null, currentQueue = [];
+  var currentSectionIdx = 0, currentItemIdx = 0, currentMode = 'all'; // 'all' or 'section'
+  var playbackRate = 1;
+  var volume = 1;
+  var speakOffset = 0, charMap = [], highlightSpans = [], currentBodyEl = null;
+  var chunks = [], chunkIdx = 0; // text chunking for Chrome TTS silence bug
+  var nativeMode = false; // toggle: false=chunked mode, true=single native utterance
+  // Refined progress: track chars across the whole queue for smooth, fine-grained bar + time.
+  var totalQueueChars = 0, playedChars = 0, currentItemChars = 0, intraChar = 0;
+  var CPS = 4.8; // approx chars/sec for zh TTS at rate 1 (used for time estimate)
+  function fmtTime(s) { s = Math.max(0, Math.floor(s)); var m = Math.floor(s/60), ss = s % 60; return m + ':' + (ss < 10 ? '0' : '') + ss; }
+  function computeQueueChars() {
+    var total = 0;
+    if (currentMode === 'section' && sectionData[currentSectionIdx]) {
+      sectionData[currentSectionIdx].items.forEach(function(it) { total += it.text.length; });
+    } else {
+      sectionData.forEach(function(s) { s.items.forEach(function(it) { total += it.text.length; }); });
+    }
+    return total;
+  }
+  // AI voice enhancement: auto-pick the best neural/cloud voice + warmer pitch.
+  // Defaults ON (user wants better-than-system voice); can be turned off in player.
+  var aiVoiceBoost = safeLS.getItem('wb_ai_voice') !== '0';
+  var AI_BOOST_PITCH = 1.08;
+  var lastHlTime = 0, lastHlEl = null; // highlight throttle + dedup scroll
+  var isSeeking = false; // true while user drags the progress bar
+  var shuffleMode = false, repeatMode = false;
+
+  function init() {
+    // Browser compatibility: adjust tip text for WeChat / in-app browsers
+    var ua = navigator.userAgent || '';
+    var isWeChat = /MicroMessenger/i.test(ua);
+    var isQQ = /QQ\//i.test(ua);
+    var isWeibo = /Weibo/i.test(ua);
+    var isInApp = isWeChat || isQQ || isWeibo || /WebView/i.test(ua);
+    var tipEl = document.getElementById('browserTip');
+    var tipText = document.getElementById('browserTipText');
+    if (tipEl && tipText) {
+      if (isInApp) {
+        tipText.textContent = (lang === 'zh'
+          ? '检测到内置浏览器，语音朗读等功能可能受限。建议点击右上角「在浏览器中打开」使用 Safari / Chrome / Edge 获得完整体验。'
+          : 'In-app browser detected. Voice features may be limited. Please open in Safari / Chrome / Edge for full experience.');
+        tipEl.style.background = '#fff3cd';
+        tipEl.style.color = '#856404';
+        tipEl.style.borderColor = '#ffeaa7';
+      } else if (!window.speechSynthesis) {
+        tipText.textContent = (lang === 'zh'
+          ? '当前浏览器不支持语音朗读（Web Speech API）。建议更换为 Safari / Chrome / Edge。'
+          : 'Your browser does not support text-to-speech (Web Speech API). Please use Safari / Chrome / Edge.');
+        tipEl.style.background = '#fee2e2';
+        tipEl.style.color = '#991b1b';
+        tipEl.style.borderColor = '#fecaca';
+      } else {
+        // Normal browser: hide the tip after 6s
+        setTimeout(function(){ if(tipEl) tipEl.style.display='none'; }, 6000);
+      }
+    }
+    applyLang();
+    applyTheme();
+    applyAccent();
+    applyFont();
+    applyRadius();
+    applyHl();
+    applyHlOn();
+    setupImages();
+    setupSectionButtonLabels();
+    setupSettingsUI();
+    setupVoices();
+    updateAiVoiceUI();
+    setupScroll();
+    setupExitCleanup();
+  }
+
+  // ---------- Category-themed scenery images (pure nature, NO people/objects) ----------
+  // Every category maps to a nature motif + color + nature keyword.
+  // Guarantee: no people, no buildings, no text, no objects -- only landscapes/sky/water/plants/celestial.
+  var KIND_META = {
+    military:    { src:'img/sec-military.jpg',      c:['#3b4252','#56657d'], motif:'shield'  },
+    finance:     { src:'img/sec-finance.jpg',       c:['#7c5e10','#caa12b'], motif:'chart'   },
+    ai:          { src:'img/sec-ai.jpg',            c:['#1a1a3a','#5b4bb0'], motif:'neural'  },
+    politics:    { src:'img/sec-politics.jpg',      c:['#0b3d5c','#2693b3'], motif:'globe'   },
+    industry:    { src:'img/sec-industry.jpg',      c:['#274a22','#5f9a3e'], motif:'gear'    },
+    energy:      { src:'img/sec-energy.jpg',        c:['#7a3b10','#e89a1c'], motif:'bolt'    },
+    health:      { src:'img/sec-health.jpg',        c:['#0f5132','#33bd86'], motif:'cross'   },
+    semiconductor:{ src:'img/sec-semiconductor.jpg',c:['#16455c','#5cc4ec'], motif:'chip'    },
+    space:       { src:'img/sec-space.jpg',         c:['#0a0a23','#4a3c8e'], motif:'rocket'  },
+    society:     { src:'img/sec-society.jpg',       c:['#3a4a5a','#8aa6bd'], motif:'network' },
+    cover:       { src:'img/banner.jpg',            c:['#16356b','#3b82f6'], motif:'peaks'   }
+  };
+  var SECTION_KIND = ['military','finance','ai','politics','industry','energy','health','semiconductor','space','society'];
+
+  function svgMotif(kind, w, h) {
+    // Distinct, text-free geometric icon per category so images correspond to the topic.
+    var cx = w * 0.5, cy = h * 0.5, s = Math.min(w, h);
+    var m = '';
+    function line(x1, y1, x2, y2, o) { return "<line x1='" + x1 + "' y1='" + y1 + "' x2='" + x2 + "' y2='" + y2 + "' stroke='#fff' stroke-width='" + (s*0.012).toFixed(2) + "' opacity='" + (o||0.16) + "'/>"; }
+    function circ(x, y, r, o) { return "<circle cx='" + x + "' cy='" + y + "' r='" + r + "' fill='#fff' opacity='" + (o||0.16) + "'/>"; }
+    function rect(x, y, ww, hh, o) { return "<rect x='" + x + "' y='" + y + "' width='" + ww + "' height='" + hh + "' fill='#fff' opacity='" + (o||0.16) + "'/>"; }
+    function poly(pts, o) { return "<polygon points='" + pts + "' fill='#fff' opacity='" + (o||0.16) + "'/>"; }
+    switch (kind) {
+      case 'shield':
+        m += poly(cx + "," + (cy - s*0.30) + " " + (cx + s*0.26) + "," + (cy - s*0.20) + " " + (cx + s*0.26) + "," + (cy + s*0.06) + " " + cx + "," + (cy + s*0.30) + " " + (cx - s*0.26) + "," + (cy + s*0.06) + " " + (cx - s*0.26) + "," + (cy - s*0.20), 0.18);
+        m += line(cx, cy - s*0.22, cx, cy + s*0.22, 0.16);
+        m += line(cx - s*0.18, cy, cx + s*0.18, cy, 0.16);
+        break;
+      case 'chart':
+        for (var b = 0; b < 5; b++) { var bh = s * (0.12 + 0.06 * b); m += rect(cx - s*0.34 + b*s*0.16, cy + s*0.30 - bh, s*0.10, bh, 0.18); }
+        m += line(cx - s*0.34, cy - s*0.04, cx + s*0.34, cy - s*0.28, 0.20);
+        break;
+      case 'neural':
+        var nn = [[cx - s*0.28, cy - s*0.18], [cx + s*0.05, cy - s*0.30], [cx + s*0.30, cy - s*0.05], [cx - s*0.05, cy + s*0.02], [cx + s*0.10, cy + s*0.28], [cx - s*0.30, cy + s*0.22]];
+        var ne = [[0,1],[1,2],[0,3],[3,4],[2,4],[3,5],[1,3]];
+        ne.forEach(function(e){ m += line(nn[e[0]][0], nn[e[0]][1], nn[e[1]][0], nn[e[1]][1], 0.14); });
+        nn.forEach(function(p){ m += circ(p[0], p[1], s*0.035, 0.22); });
+        break;
+      case 'globe':
+        m += circ(cx, cy, s*0.30, 0.16);
+        m += "<ellipse cx='" + cx + "' cy='" + cy + "' rx='" + (s*0.13).toFixed(1) + "' ry='" + (s*0.30).toFixed(1) + "' fill='none' stroke='#fff' stroke-width='" + (s*0.012).toFixed(2) + "' opacity='0.16'/>";
+        m += line(cx - s*0.30, cy, cx + s*0.30, cy, 0.16);
+        m += line(cx - s*0.21, cy - s*0.21, cx + s*0.21, cy - s*0.21, 0.14);
+        m += line(cx - s*0.21, cy + s*0.21, cx + s*0.21, cy + s*0.21, 0.14);
+        break;
+      case 'gear':
+        m += circ(cx, cy, s*0.24, 0.16);
+        m += circ(cx, cy, s*0.12, 0.18);
+        for (var g = 0; g < 8; g++) { var ang = g * Math.PI / 4; m += line(cx + Math.cos(ang)*s*0.24, cy + Math.sin(ang)*s*0.24, cx + Math.cos(ang)*s*0.36, cy + Math.sin(ang)*s*0.36, 0.16); }
+        break;
+      case 'bolt':
+        m += poly((cx + s*0.10) + "," + (cy - s*0.32) + " " + (cx - s*0.18) + "," + (cy + s*0.02) + " " + (cx - s*0.02) + "," + (cy + s*0.02) + " " + (cx - s*0.12) + "," + (cy + s*0.32) + " " + (cx + s*0.20) + "," + (cy - s*0.04) + " " + (cx + s*0.04) + "," + (cy - s*0.04), 0.20);
+        break;
+      case 'cross':
+        m += rect(cx - s*0.07, cy - s*0.30, s*0.14, s*0.60, 0.20);
+        m += rect(cx - s*0.30, cy - s*0.07, s*0.60, s*0.14, 0.20);
+        break;
+      case 'chip':
+        m += rect(cx - s*0.22, cy - s*0.22, s*0.44, s*0.44, 0.16);
+        m += rect(cx - s*0.12, cy - s*0.12, s*0.24, s*0.24, 0.20);
+        for (var p = 0; p < 4; p++) { var off = (p - 1.5) * s * 0.12; m += line(cx + off, cy - s*0.22, cx + off, cy - s*0.34, 0.18); m += line(cx + off, cy + s*0.22, cx + off, cy + s*0.34, 0.18); m += line(cx - s*0.22, cy + off, cx - s*0.34, cy + off, 0.18); m += line(cx + s*0.22, cy + off, cx + s*0.34, cy + off, 0.18); }
+        break;
+      case 'rocket':
+        m += poly(cx + "," + (cy - s*0.32) + " " + (cx + s*0.14) + "," + (cy - s*0.02) + " " + (cx + s*0.14) + "," + (cy + s*0.18) + " " + (cx - s*0.14) + "," + (cy + s*0.18) + " " + (cx - s*0.14) + "," + (cy - s*0.02), 0.18);
+        m += circ(cx, cy - s*0.10, s*0.05, 0.22);
+        m += poly((cx - s*0.14) + "," + (cy + s*0.18) + " " + (cx - s*0.26) + "," + (cy + s*0.34) + " " + (cx - s*0.06) + "," + (cy + s*0.20), 0.18);
+        m += poly((cx + s*0.14) + "," + (cy + s*0.18) + " " + (cx + s*0.26) + "," + (cy + s*0.34) + " " + (cx + s*0.06) + "," + (cy + s*0.20), 0.18);
+        m += line(cx, cy + s*0.18, cx, cy + s*0.36, 0.18);
+        break;
+      case 'network':
+        var nw = [[cx - s*0.26, cy - s*0.20], [cx + s*0.22, cy - s*0.26], [cx + s*0.30, cy + s*0.10], [cx - s*0.10, cy + s*0.04], [cx - s*0.02, cy - s*0.02], [cx + s*0.02, cy + s*0.28], [cx - s*0.30, cy + s*0.22]];
+        var we = [[0,4],[4,1],[1,2],[2,4],[4,3],[3,6],[4,5],[5,2],[0,3]];
+        we.forEach(function(e){ m += line(nw[e[0]][0], nw[e[0]][1], nw[e[1]][0], nw[e[1]][1], 0.13); });
+        nw.forEach(function(p){ m += circ(p[0], p[1], s*0.03, 0.20); });
+        break;
+      case 'peaks':
+      default:
+        m += poly("0," + h + " 0," + (h*0.62) + " " + (w*0.30) + "," + (h*0.38) + " " + (w*0.55) + "," + (h*0.56) + " " + (w*0.78) + "," + (h*0.34) + " " + w + "," + (h*0.58) + " " + w + "," + h, 0.16);
+        m += poly("0," + h + " 0," + (h*0.80) + " " + (w*0.25) + "," + (h*0.66) + " " + (w*0.5) + "," + (h*0.78) + " " + (w*0.75) + "," + (h*0.62) + " " + w + "," + (h*0.82) + " " + w + "," + h, 0.14);
+        break;
+    }
+    return m;
+  }
+
+  function themedImage(kind, w, h) {
+    var meta = KIND_META[kind] || KIND_META['cover'];
+    var col = meta.c;
+    var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='" + w + "' height='" + h + "' viewBox='0 0 " + w + " " + h + "'>" +
+      "<defs>" +
+        "<linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>" +
+          "<stop offset='0' stop-color='" + col[0] + "'/><stop offset='1' stop-color='" + col[1] + "'/>" +
+        "</linearGradient>" +
+        "<radialGradient id='r' cx='0.74' cy='0.26' r='0.9'>" +
+          "<stop offset='0' stop-color='rgba(255,255,255,0.30)'/><stop offset='1' stop-color='rgba(255,255,255,0)'/>" +
+        "</radialGradient>" +
+      "</defs>" +
+      "<rect width='" + w + "' height='" + h + "' fill='url(#g)'/>" +
+      "<rect width='" + w + "' height='" + h + "' fill='url(#r)'/>" +
+      svgMotif(meta.motif, w, h) +
+      "</svg>";
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }
+
+  // Try each URL in turn; if all fail (or time out), fall back to a guaranteed category-themed nature SVG.
+  function loadWithFallback(img, sources, finalUri, timeout) {
+    var i = 0;
+    function tryNext() {
+      if (i >= sources.length) { img.src = finalUri; return; }
+      var url = sources[i++];
+      var settled = false;
+      var timer = setTimeout(function() {
+        if (settled) return; settled = true;
+        img.onload = null; img.onerror = null;
+        tryNext();
+      }, timeout || 3500);
+      img.onload = function() { if (settled) return; settled = true; clearTimeout(timer); img.onerror = null; };
+      img.onerror = function() { if (settled) return; settled = true; clearTimeout(timer); tryNext(); };
+      img.src = url;
+    }
+    tryNext();
+  }
+
+  function setupImages() {
+    // Use real, non-AI scenery photos (bundled in img/). If a photo fails to load,
+    // fall back to the category-themed SVG so the header never appears broken.
+    var banner = document.getElementById('bannerImg');
+    if (banner) {
+      banner.onerror = function() { banner.onerror = null; banner.src = themedImage('cover', 1200, 400); };
+      banner.src = KIND_META['cover'].src;
+    }
+    sections.forEach(function(sec, i) {
+      var img = sec.querySelector('.section-header img');
+      if (!img) return;
+      var kind = SECTION_KIND[i] || 'cover';
+      var meta = KIND_META[kind];
+      img.onerror = function() { img.onerror = null; img.src = themedImage(kind, 800, 300); };
+      img.src = meta.src;
+    });
+  }
+
+  function foldLabel(isOpen) {
+    return lang === 'zh' ? (isOpen ? '折叠' : '展开') : (isOpen ? 'Collapse' : 'Expand');
+  }
+  var FOLD_EXPAND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M6 9l6 6 6-6"/></svg>';
+  var FOLD_COLLAPSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M18 15l-6-6-6 6"/></svg>';
+  var READ_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 000-6.5v1.75a2.75 2.75 0 010 4.75V12zm3-6.5a8 8 0 000 11.5v-1.75a6.25 6.25 0 010-8V5.5z"/></svg>';
+  function foldBtnHtml(isOpen) {
+    var icon = isOpen ? FOLD_COLLAPSE_ICON : FOLD_EXPAND_ICON;
+    return icon + '<span>' + foldLabel(isOpen) + '</span>';
+  }
+  function relabelAllButtons() {
+    document.querySelectorAll('.section-card').forEach(function(card) {
+      var body = card.querySelector('.section-body');
+      var open = body && body.classList.contains('open');
+      var acts = card.querySelectorAll('.section-actions .fold-btn');
+      if (acts.length >= 1) acts[0].innerHTML = FOLD_EXPAND_ICON + '<span>' + (lang==='zh'?'展开':'Expand') + '</span>';
+      if (acts.length >= 2) acts[1].innerHTML = foldBtnHtml(open);
+      var tts = card.querySelector('.tts-btn');
+      if (tts) tts.innerHTML = READ_ICON + '<span>' + (lang==='zh'?'朗读':'Read') + '</span>';
+    });
+    document.querySelectorAll('.item').forEach(function(item) {
+      var body = item.querySelector('.item-body');
+      var open = body && body.classList.contains('open');
+      var b = item.querySelector('.item-title .fold-btn');
+      if (b) b.innerHTML = foldBtnHtml(open);
+    });
+  }
+
+  function setupSectionButtonLabels() {
+    // Auto-apply visible text labels to all section/item buttons on load,
+    // so even generated HTML without text still shows labels (idempotent).
+    relabelAllButtons();
+  }
+
+  function applyLang() {
+    var isZh = lang === 'zh';
+    document.getElementById('pageTitle').textContent = (isZh ? '每日全球要闻｜' : 'Daily Global Brief｜') + dateStr + '（' + (isZh ? weekDay : weekDayEn) + '）';
+    document.getElementById('welcomeText').textContent = isZh ? welcome.zh : welcome.en;
+    document.getElementById('aiGenText').textContent = isZh ? '内容由 AI 生成' : 'Content generated by AI';
+    document.getElementById('ttsMainLabel').textContent = isZh ? '全文语音收听' : 'Listen to all';
+    document.getElementById('homeLabel').textContent = isZh ? '主页' : 'Home';
+    document.getElementById('shareLabel').textContent = isZh ? '分享' : 'Share';
+    document.getElementById('settingsLabel').textContent = isZh ? '设置' : 'Settings';
+    document.getElementById('playerResetLabel').textContent = isZh ? '重置' : 'Reset';
+    document.getElementById('volLabel').textContent = isZh ? '音量' : 'Vol';
+    var peb = document.getElementById('playerExpandBtn');
+    if (peb) peb.title = isZh ? '放大/缩小播放器' : 'Enlarge/Shrink player';
+    updateAiVoiceUI();
+    var nativeLabel = document.getElementById('nativeLabel');
+    var nativeBtn = document.getElementById('nativeBtn');
+    if (nativeLabel && nativeBtn) {
+      nativeLabel.textContent = nativeMode ? (isZh ? '系统原生' : 'Native') : (isZh ? '智能分块' : 'Chunked');
+    }
+    document.getElementById('closingText').textContent = '—— ' + (isZh ? closing.zh : closing.en) + ' ——';
+    document.getElementById('btnExpandAll').textContent = isZh ? '展开全部' : 'Expand all';
+    document.getElementById('btnCollapseAll').textContent = isZh ? '收起全部' : 'Collapse all';
+    document.getElementById('settingsTitle').textContent = isZh ? '设置' : 'Settings';
+    document.getElementById('lblLang').textContent = isZh ? '语言' : 'Language';
+    document.getElementById('lblTheme').textContent = isZh ? '主题' : 'Theme';
+    document.getElementById('lblAccent').textContent = isZh ? '主题色' : 'Accent color';
+    document.getElementById('lblFont').textContent = isZh ? '字号' : 'Font size';
+    document.getElementById('lblRadius').textContent = isZh ? '圆角大小' : 'Corner radius';
+    document.getElementById('lblHl').textContent = isZh ? '高光显示' : 'Highlight';
+    document.getElementById('btnApplyAccent').textContent = isZh ? '应用' : 'Apply';
+    document.getElementById('btnApplyHl').textContent = isZh ? '应用' : 'Apply';
+    document.getElementById('btnExport').textContent = isZh ? '导出设置' : 'Export';
+    document.getElementById('btnImport').textContent = isZh ? '导入设置' : 'Import';
+    document.getElementById('summaryTitle').textContent = isZh ? '核心主线' : 'Key Themes';
+    document.getElementById('modalTitle').textContent = isZh ? '收藏自定义声音' : 'Save custom voice';
+    document.getElementById('btnCancel').textContent = isZh ? '取消' : 'Cancel';
+    document.getElementById('btnSave').textContent = isZh ? '保存' : 'Save';
+    document.querySelectorAll('.section-title').forEach(function(el) {
+      if (!el.dataset.zh && !el.dataset.en) return;
+      var icon = el.querySelector('.section-icon');
+      var iconHTML = icon ? icon.outerHTML : '';
+      el.innerHTML = iconHTML + (isZh ? (el.dataset.zh || '') : (el.dataset.en || ''));
+    });
+    document.querySelectorAll('.item-title strong').forEach(function(el) {
+      if (!el.dataset.zh && !el.dataset.en) return;
+      el.textContent = isZh ? (el.dataset.zh || '') : (el.dataset.en || '');
+    });
+    document.querySelectorAll('.item-body').forEach(function(el) {
+      if (!el.dataset.zh && !el.dataset.en) return;
+      el.textContent = isZh ? (el.dataset.zh || '') : (el.dataset.en || '');
+    });
+    var sb = document.getElementById('summaryBody');
+    if (sb && sb.dataset.zh) sb.textContent = isZh ? sb.dataset.zh : (sb.dataset.en || sb.dataset.zh);
+    relabelAllButtons();
+  }
+
+  window.goHome = function() { location.href = 'index.html'; };
+  window.sharePage = function() {
+    var url = location.href;
+    if (navigator.share) {
+      navigator.share({ title: document.title, url: url }).catch(function() {});
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(
+        function() { alert((lang === 'zh' ? '链接已复制：' : 'Link copied: ') + url); },
+        function() { prompt(lang === 'zh' ? '请手动复制链接：' : 'Copy this link:', url); }
+      );
+    } else {
+      prompt(lang === 'zh' ? '请手动复制链接：' : 'Copy this link:', url);
+    }
+  };
+  window.togglePlayerSize = function() {
+    var p = document.getElementById('player');
+    var expanded = p.classList.toggle('expanded');
+    var expandIcon = document.getElementById('expandIcon');
+    var shrinkIcon = document.getElementById('shrinkIcon');
+    if (expandIcon && shrinkIcon) {
+      expandIcon.style.display = expanded ? 'none' : 'inline-block';
+      shrinkIcon.style.display = expanded ? 'inline-block' : 'none';
+    }
+    var b = document.getElementById('playerExpandBtn');
+    if (b) b.title = expanded ? (lang === 'zh' ? '缩小播放器' : 'Shrink player') : (lang === 'zh' ? '放大播放器' : 'Enlarge player');
+  };
+
+  function applyTheme() {
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var effective = theme === 'auto' ? (prefersDark ? 'dark' : 'light') : theme;
+    document.documentElement.setAttribute('data-theme', effective);
+  }
+
+  function applyAccent() {
+    document.documentElement.style.setProperty('--accent', accent);
+    var rgb = hexToRgb(accent);
+    document.getElementById('accentColor').value = accent;
+    if (rgb) { document.getElementById('accentR').value = rgb.r; document.getElementById('accentG').value = rgb.g; document.getElementById('accentB').value = rgb.b; }
+  }
+
+  function applyFont() {
+    document.documentElement.style.setProperty('--font-base', fontSize + 'px');
+    document.getElementById('rngFont').value = fontSize;
+    document.getElementById('fontVal').textContent = fontSize + 'px';
+  }
+
+  function applyRadius() {
+    var r = Math.max(4, Math.min(32, parseInt(radius) || 16));
+    document.documentElement.style.setProperty('--radius', r + 'px');
+    document.getElementById('rngRadius').value = r;
+    document.getElementById('radiusVal').textContent = r + 'px';
+  }
+
+  function applyHl() {
+    document.documentElement.style.setProperty('--hl-color', hlColor);
+    document.getElementById('hlColor').value = hlColor;
+    var rgb = hexToRgb(hlColor);
+    if (rgb) { document.getElementById('hlR').value = rgb.r; document.getElementById('hlG').value = rgb.g; document.getElementById('hlB').value = rgb.b; }
+  }
+
+  function applyHlOn() {
+    document.getElementById('chkHl').checked = !!hlOn;
+  }
+
+  function setupSettingsUI() {
+    document.getElementById('selLang').value = lang;
+    document.getElementById('selTheme').value = theme;
+  }
+
+  function setupVoices() {
+    if (!window.speechSynthesis) return;
+    var sel = document.getElementById('voiceSel');
+    if (!sel) return;
+    while (sel.options.length > 2) sel.remove(2);
+    customVoices.forEach(function(v) {
+      var opt = document.createElement('option');
+      opt.value = v.voiceURI;
+      opt.textContent = (lang==='zh'?'自定义: ':'Custom: ') + v.name;
+      sel.appendChild(opt);
+    });
+    var preferred = findPreferredVoices();
+    if (preferred.length) {
+      var group = document.createElement('optgroup');
+      group.label = lang === 'zh' ? 'AI 语音' : 'AI Voices';
+      preferred.forEach(function(x) {
+        var opt = document.createElement('option');
+        opt.value = x.voice.voiceURI;
+        opt.textContent = (lang==='zh' ? x.pref.gender + ' · ' : '') + x.pref.name;
+        group.appendChild(opt);
+      });
+      sel.appendChild(group);
+    }
+    if (selectedVoice) {
+      var stillExists = Array.from(sel.options).some(function(o){ return o.value === selectedVoice; });
+      if (stillExists) sel.value = selectedVoice;
+    }
+  }
+
+  function setupScroll() {
+    var titlebar = document.getElementById('titlebar');
+    var banner = document.getElementById('bannerImg');
+    if (typeof IntersectionObserver !== 'undefined') {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            titlebar.classList.remove('scrolled');
+          } else {
+            titlebar.classList.add('scrolled');
+          }
+        });
+      }, { threshold: 0 });
+      if (banner) observer.observe(banner);
+    }
+
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 30) {
+        titlebar.classList.add('shrunk');
+      } else {
+        titlebar.classList.remove('shrunk');
+      }
+    });
+  }
+
+  function setupExitCleanup() {
+    function cleanup() {
+      safeLS.setItem('wb_lang', lang);
+      safeLS.setItem('wb_theme', theme);
+      safeLS.setItem('wb_accent', accent);
+      safeLS.setItem('wb_font', fontSize);
+      safeLS.setItem('wb_radius', radius);
+      safeLS.setItem('wb_hl', hlColor);
+      safeLS.setItem('wb_hl_on', hlOn);
+      safeLS.setItem('wb_custom_voices', JSON.stringify(customVoices));
+      safeLS.setItem('wb_voice', selectedVoice);
+      stopAll();
+    }
+    window.addEventListener('pagehide', cleanup);
+    window.addEventListener('beforeunload', cleanup);
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) cleanup();
+    });
+  }
+
+  // ========== Settings actions ==========
+  window.openSettings = function() { document.getElementById('settingsOverlay').classList.add('open'); };
+  window.closeSettings = function() { document.getElementById('settingsOverlay').classList.remove('open'); };
+  window.setLang = function(v) { lang = v; safeLS.setItem('wb_lang', lang); applyLang(); setupVoices(); };
+  window.setTheme = function(v) { theme = v; safeLS.setItem('wb_theme', theme); applyTheme(); };
+  window.setAccent = function(v) { accent = v; safeLS.setItem('wb_accent', accent); applyAccent(); };
+  window.applyRGBAccent = function() {
+    var r = document.getElementById('accentR').value;
+    var g = document.getElementById('accentG').value;
+    var b = document.getElementById('accentB').value;
+    if (r!=='' && g!=='' && b!=='') { accent = rgbToHex(+r,+g,+b); setAccent(accent); }
+  };
+  window.setFont = function(v) { fontSize = +v; safeLS.setItem('wb_font', fontSize); applyFont(); };
+  window.setRadius = function(v) { radius = +v; safeLS.setItem('wb_radius', radius); applyRadius(); };
+  window.setHl = function(v) { hlColor = v; safeLS.setItem('wb_hl', hlColor); applyHl(); };
+  window.setHlOn = function(v) { hlOn = !!v; safeLS.setItem('wb_hl_on', hlOn); applyHlOn(); };
+  window.applyRGBHl = function() {
+    var r = document.getElementById('hlR').value;
+    var g = document.getElementById('hlG').value;
+    var b = document.getElementById('hlB').value;
+    if (r!=='' && g!=='' && b!=='') { hlColor = rgbToHex(+r,+g,+b); setHl(hlColor); }
+  };
+  window.exportSettings = function() {
+    var data = { lang, theme, accent, font: fontSize, radius, voice: selectedVoice, hl: hlColor, hlOn };
+    var blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'daily-news-settings.json';
+    a.click();
+  };
+  window.importSettings = function() {
+    var inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = '.json';
+    inp.onchange = function() {
+      var file = inp.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          var data = JSON.parse(e.target.result);
+          if (data.lang) setLang(data.lang);
+          if (data.theme) setTheme(data.theme);
+          if (data.accent) setAccent(data.accent);
+          if (data.font) setFont(data.font);
+          if (data.radius !== undefined) setRadius(data.radius);
+          if (data.hl) setHl(data.hl);
+          if (data.hlOn !== undefined) setHlOn(data.hlOn);
+          if (data.voice !== undefined) { selectedVoice = data.voice; safeLS.setItem('wb_voice', selectedVoice); setupVoices(); document.getElementById('voiceSel').value = selectedVoice; }
+          setupSettingsUI();
+        } catch(err) { alert('Invalid JSON'); }
+      };
+      reader.readAsText(file);
+    };
+    inp.click();
+  };
+
+  // ========== Collapse/Expand ==========
+  window.toggleSection = function(idOrEl) {
+    var card = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
+    if (!card) return;
+    var body = card.querySelector('.section-body');
+    if (!body) { body = card.nextElementSibling; }
+    if (!body) return;
+    body.classList.toggle('open');
+    var btns = card.querySelectorAll('.section-actions .fold-btn');
+    if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(body.classList.contains('open'));
+  };
+  window.toggleItem = function(idOrEl) {
+    var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
+    if (!item) return;
+    var body = item.querySelector('.item-body');
+    if (!body) { body = item.nextElementSibling; }
+    if (!body) return;
+    body.classList.toggle('open');
+    var btn = item.querySelector('.fold-btn');
+    if (btn) btn.innerHTML = foldBtnHtml(body.classList.contains('open'));
+  };
+  window.expandSectionItems = function(idOrEl) {
+    var section = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl.closest('.section-card');
+    if (!section) return;
+    var bodies = section.querySelectorAll('.item-body');
+    var anyClosed = Array.from(bodies).some(function(b) { return !b.classList.contains('open'); });
+    bodies.forEach(function(b) { b.classList.toggle('open', anyClosed); });
+    section.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(anyClosed); });
+  };
+  window.expandAll = function() {
+    document.querySelectorAll('.section-body').forEach(function(b) { b.classList.add('open'); });
+    document.querySelectorAll('.section-actions').forEach(function(actions) {
+      var btns = actions.querySelectorAll('.fold-btn');
+      if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(true);
+    });
+    document.querySelectorAll('.item-body').forEach(function(b) { b.classList.add('open'); });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(true); });
+  };
+  window.collapseAll = function() {
+    document.querySelectorAll('.section-body').forEach(function(b) { b.classList.remove('open'); });
+    document.querySelectorAll('.section-actions').forEach(function(actions) {
+      var btns = actions.querySelectorAll('.fold-btn');
+      if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(false);
+    });
+    document.querySelectorAll('.item-body').forEach(function(b) { b.classList.remove('open'); });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(false); });
+  };
+
+  // ========== TTS ==========
+  // Curated list of 20 preferred AI/neural voices (5 zhM, 5 zhF, 5 enM, 5 enF).
+  // The browser must expose these (usually Microsoft Online/Natural voices on Windows/Edge).
+  // If you need guaranteed cloud AI voices, integrate Azure/Google/ElevenLabs TTS with an API key.
+  var PREFERRED_VOICES = [
+    // Chinese male
+    {name:'Yunxi',   lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Yunjian', lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Yunxia',  lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Kangkang',lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Yunhao',  lang:'zh', gender:lang==='zh'?'男':'M'},
+    // Chinese female
+    {name:'Xiaoxiao',lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaoyi',  lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaochen',lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaohan', lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaomeng',lang:'zh', gender:lang==='zh'?'女':'F'},
+    // English male
+    {name:'Guy',        lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Christopher',lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Eric',       lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Steffan',    lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Brandon',    lang:'en', gender:lang==='zh'?'男':'M'},
+    // English female
+    {name:'Jenny',   lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Michelle',lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Ava',     lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Emma',    lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Ana',     lang:'en', gender:lang==='zh'?'女':'F'}
+  ];
+
+  function voiceQuality(v) {
+    var n = (v.name || '').toLowerCase();
+    if (/neural|online|natural|premium|enhanced/.test(n)) return 3;
+    if (/microsoft|azure|google|amazon/.test(n)) return 2;
+    return 1;
+  }
+  function scoreVoice(v, pref) {
+    var n = (v.name || '').toLowerCase();
+    var pName = pref.name.toLowerCase();
+    var score = 0;
+    if (n.indexOf(pName) !== -1) score += 100;
+    else if (n.indexOf(pName.replace(/[^a-z]/g,'')) !== -1) score += 80;
+    if (v.lang && v.lang.toLowerCase().indexOf(pref.lang) === 0) score += 10;
+    score += voiceQuality(v) * 5;
+    return score;
+  }
+  function findPreferredVoices() {
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return [];
+    var out = [];
+    PREFERRED_VOICES.forEach(function(pref) {
+      var best = null, bestScore = 0;
+      voices.forEach(function(v) {
+        var s = scoreVoice(v, pref);
+        if (s > bestScore) { bestScore = s; best = v; }
+      });
+      if (best && bestScore >= 80) {
+        out.push({voice: best, pref: pref});
+      }
+    });
+    var seen = {};
+    return out.filter(function(x) {
+      if (seen[x.voice.voiceURI]) return false;
+      seen[x.voice.voiceURI] = true;
+      return true;
+    });
+  }
+  function bestVoiceByLang(prefix) {
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return null;
+    var preferred = findPreferredVoices().filter(function(x) { return x.voice.lang.toLowerCase().indexOf(prefix) === 0; });
+    if (preferred.length) return preferred[0].voice;
+    var pool = voices.filter(function(v) { return v.lang && v.lang.toLowerCase().indexOf(prefix) === 0; });
+    if (!pool.length) pool = voices.slice();
+    pool.sort(function(a, b) { return voiceQuality(b) - voiceQuality(a); });
+    return pool[0];
+  }
+  function bestChineseVoice() { return bestVoiceByLang('zh'); }
+  function getVoice() {
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return null;
+    if (selectedVoice) {
+      var found = voices.find(function(v) { return v.voiceURI === selectedVoice; });
+      if (found) return found;
+    }
+    var prefix = lang === 'en' ? 'en' : 'zh';
+    if (aiVoiceBoost) {
+      var best = bestVoiceByLang(prefix);
+      if (best) return best;
+    }
+    var match = voices.find(function(v) { return v.lang && v.lang.toLowerCase().indexOf(prefix) === 0; });
+    return match || voices[0] || null;
+  }
+
+  function buildTextFromSection(secIdx) {
+    var sec = sections[secIdx];
+    var titleEl = sec.querySelector('.section-title');
+    var title = (titleEl && titleEl.dataset[lang]) ? titleEl.dataset[lang] : titleEl.textContent;
+    var items = sec.querySelectorAll('.item');
+    var parts = [title];
+    items.forEach(function(item) {
+      var strong = item.querySelector('.item-title strong');
+      var t = (strong && strong.dataset[lang]) ? strong.dataset[lang] : strong.textContent;
+      var bEl = item.querySelector('.item-body');
+      var b = (bEl && bEl.dataset[lang]) ? bEl.dataset[lang] : bEl.textContent;
+      parts.push(t + '。' + b);
+    });
+    return parts.join('。');
+  }
+
+  function wrapTextForHighlight(bodyEl) {
+    // reset first
+    clearHighlight(bodyEl);
+    if (!hlOn) return [];
+    var walker = document.createTreeWalker(bodyEl, NodeFilter.SHOW_TEXT, null, false);
+    var textNodes = [];
+    var n;
+    while ((n = walker.nextNode())) { textNodes.push(n); }
+    var map = []; // {span, char}
+    textNodes.forEach(function(node) {
+      var parent = node.parentNode;
+      var text = node.textContent;
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < text.length; i++) {
+        var span = document.createElement('span');
+        span.className = 'hl-ch';
+        span.textContent = text[i];
+        span.style.background = 'transparent';
+        frag.appendChild(span);
+        map.push({span: span, char: text[i]});
+      }
+      parent.replaceChild(frag, node);
+    });
+    return map;
+  }
+
+  function clearHighlight(bodyEl) {
+    if (!bodyEl) return;
+    var spans = bodyEl.querySelectorAll('.hl-ch');
+    spans.forEach(function(span) {
+      var text = document.createTextNode(span.textContent);
+      span.parentNode.replaceChild(text, span);
+    });
+    // normalize
+    bodyEl.normalize();
+  }
+
+  function highlightCharAt(map, idx) {
+    if (!map || !map.length) return;
+    var now = Date.now();
+    if (now - lastHlTime < 120) return;
+    lastHlTime = now;
+    map.forEach(function(m) { m.span.style.background = 'transparent'; });
+    if (idx < 0 || idx >= map.length) return;
+    var start = idx, end = idx;
+    var punct = /[\s\n\r\t，。！？、；：""''（）【】《》.,;:!?()'"\-\/\[\]]/;
+    while (start > 0 && !punct.test(map[start-1].char)) start--;
+    while (end < map.length - 1 && !punct.test(map[end+1].char)) end++;
+    for (var i = start; i <= end; i++) {
+      map[i].span.style.background = 'var(--hl-color)';
+    }
+    // Do not auto-scroll: let the user freely scroll while listening.
+  }
+
+  // Split long text into chunks
+  // Split long text into chunks to avoid Chrome ~15s silence bug
+  function splitIntoChunks(text, maxChars) {
+    var parts = text.split(/([。！？.!?]\s*)/);
+    var out = [], cur = '';
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i];
+      if (!p) continue;
+      if (cur.length + p.length > maxChars && cur.length > 0) {
+        out.push(cur);
+        cur = p;
+      } else {
+        cur += p;
+      }
+    }
+    if (cur) out.push(cur);
+    var result = [];
+    out.forEach(function(c) {
+      while (c.length > maxChars) {
+        result.push(c.slice(0, maxChars));
+        c = c.slice(maxChars);
+      }
+      if (c) result.push(c);
+    });
+    return result.length ? result : [text];
+  }
+
+  function startSpeaking(text, bodyEl) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    currentBodyEl = bodyEl;
+    charMap = bodyEl ? wrapTextForHighlight(bodyEl) : [];
+    currentItemChars = text.length;
+    intraChar = 0;
+    if (nativeMode) {
+      // Native mode: single utterance (no chunking)
+      var utt = new SpeechSynthesisUtterance(text);
+      utt.lang = lang === 'zh' ? 'zh-CN' : 'en-US';
+      utt.rate = playbackRate;
+      utt.volume = volume;
+      utt.pitch = aiVoiceBoost ? AI_BOOST_PITCH : 1;
+      var v = getVoice();
+      if (v) utt.voice = v;
+      currentUtt = utt;
+      speakOffset = 0;
+      utt.onboundary = function(e) {
+        if (e.name === 'word' || e.name === 'sentence') {
+          var globalIdx = e.charIndex;
+          intraChar = globalIdx;
+          if (charMap.length && hlOn) {
+            highlightCharAt(charMap, globalIdx);
+          }
+          updateProgressUI();
+        }
+      };
+      utt.onend = function() {
+        if (currentUtt !== utt) return;
+        if (charMap.length) clearHighlight(currentBodyEl);
+        onItemEnd();
+      };
+      utt.onerror = function() {
+        if (currentUtt !== utt) return;
+        if (charMap.length) clearHighlight(currentBodyEl);
+        onItemEnd();
+      };
+      window.speechSynthesis.speak(utt);
+      isPlaying = true; isPaused = false;
+      updatePlayerUI();
+    } else {
+      // Chunked mode: split into short chunks to avoid Chrome 15s silence bug
+      chunks = splitIntoChunks(text, 150);
+      chunkIdx = 0;
+      speakOffset = 0;
+      updateProgressUI();
+      speakCurrentChunk();
+    }
+  }
+
+  function speakCurrentChunk() {
+    if (chunkIdx >= chunks.length) {
+      if (charMap.length) clearHighlight(currentBodyEl);
+      onItemEnd();
+      return;
+    }
+    updateProgressUI();
+    var text = chunks[chunkIdx];
+    var utt = new SpeechSynthesisUtterance(text);
+    utt.lang = lang === 'zh' ? 'zh-CN' : 'en-US';
+    utt.rate = playbackRate;
+    utt.volume = volume;
+    utt.pitch = aiVoiceBoost ? AI_BOOST_PITCH : 1;
+    var v = getVoice();
+    if (v) utt.voice = v;
+    currentUtt = utt;
+
+    utt.onboundary = function(e) {
+      if (e.name === 'word' || e.name === 'sentence') {
+        var globalIdx = speakOffset + e.charIndex;
+        intraChar = globalIdx;
+        if (charMap.length && hlOn) {
+          highlightCharAt(charMap, globalIdx);
+        }
+        updateProgressUI();
+      }
+    };
+    utt.onend = function() {
+      if (currentUtt !== utt) return;
+      speakOffset += text.length;
+      intraChar = speakOffset;
+      chunkIdx++;
+      updateProgressUI();
+      speakCurrentChunk();
+    };
+    utt.onerror = function() {
+      if (currentUtt !== utt) return;
+      speakOffset += text.length;
+      intraChar = speakOffset;
+      chunkIdx++;
+      updateProgressUI();
+      speakCurrentChunk();
+    };
+    window.speechSynthesis.speak(utt);
+    isPlaying = true; isPaused = false;
+    updatePlayerUI();
+  }
+
+  function onItemEnd() {
+    playedChars += currentItemChars;
+    if (currentMode === 'all') {
+      currentItemIdx++;
+      if (currentItemIdx >= sectionData[currentSectionIdx].items.length) {
+        currentSectionIdx++;
+        currentItemIdx = 0;
+      }
+      if (currentSectionIdx >= sectionData.length) {
+        if (repeatMode) { currentSectionIdx = 0; currentItemIdx = 0; }
+        else { stopAll(); return; }
+      }
+      playCurrentQueue();
+    } else if (currentMode === 'section') {
+      currentItemIdx++;
+      if (currentItemIdx >= sectionData[currentSectionIdx].items.length) {
+        if (repeatMode) { currentItemIdx = 0; }
+        else { stopAll(); return; }
+      }
+      playCurrentQueue();
+    }
+  }
+
+  function playCurrentQueue() {
+    if (currentSectionIdx >= sectionData.length) { stopAll(); return; }
+    var sec = sectionData[currentSectionIdx];
+    if (currentItemIdx >= sec.items.length) { currentSectionIdx++; currentItemIdx = 0; playCurrentQueue(); return; }
+    var item = sec.items[currentItemIdx];
+    var secEl = sections[currentSectionIdx];
+    var body = secEl.querySelector('.section-body');
+    if (!body.classList.contains('open')) body.classList.add('open');
+    var itemBody = item.el.querySelector('.item-body');
+    if (!itemBody.classList.contains('open')) itemBody.classList.add('open');
+    var chapEl = document.getElementById('playerChapter');
+    if (chapEl) chapEl.textContent = sec.title + ' - ' + (currentItemIdx+1);
+    startSpeaking(item.text, itemBody);
+  }
+
+  function buildQueue() {
+    sectionData = [];
+    sections.forEach(function(sec) {
+      var titleEl = sec.querySelector('.section-title');
+      var title = (titleEl && titleEl.dataset[lang]) ? titleEl.dataset[lang] : (titleEl ? titleEl.textContent : '');
+      var items = [];
+      sec.querySelectorAll('.item').forEach(function(item) {
+        var strong = item.querySelector('.item-title strong');
+        var t = (strong && strong.dataset[lang]) ? strong.dataset[lang] : (strong ? strong.textContent : '');
+        var bEl = item.querySelector('.item-body');
+        var b = (bEl && bEl.dataset[lang]) ? bEl.dataset[lang] : (bEl ? bEl.textContent : '');
+        items.push({ text: t + '。' + b, el: item });
+      });
+      sectionData.push({ title: title, items: items });
+    });
+  }
+
+  function ttsUnavailableAlert() {
+    var msg = lang === 'zh'
+      ? '当前浏览器或环境不支持语音朗读。建议用 Safari / Chrome / Edge 打开。'
+      : 'Text-to-speech is not supported in this browser. Please use Safari / Chrome / Edge.';
+    alert(msg);
+  }
+  window.playAll = function() {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
+    buildQueue();
+    if (!sectionData.length) return;
+    currentMode = 'all';
+    currentSectionIdx = 0; currentItemIdx = 0;
+    playedChars = 0;
+    totalQueueChars = computeQueueChars();
+    document.getElementById('player').classList.add('open');
+    playCurrentQueue();
+  };
+
+  window.playSection = function(idx) {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
+    buildQueue();
+    idx = +idx;
+    if (idx < 0 || idx >= sectionData.length) return;
+    currentMode = 'section';
+    currentSectionIdx = idx; currentItemIdx = 0;
+    playedChars = 0;
+    totalQueueChars = computeQueueChars();
+    document.getElementById('player').classList.add('open');
+    playCurrentQueue();
+  };
+  // Alias for generated HTML buttons that use speakSection()
+  window.speakSection = window.playSection;
+
+  window.stopAll = function() {
+    currentUtt = null; // set null BEFORE cancel so stale onend/onerror get ignored
+    chunks = []; chunkIdx = 0;
+    totalQueueChars = 0; playedChars = 0; intraChar = 0;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    isPlaying = false; isPaused = false;
+    if (currentBodyEl) clearHighlight(currentBodyEl);
+    document.getElementById('player').classList.remove('open');
+    var prog = document.getElementById('playerProgress');
+    if (prog) { prog.value = 0; prog.disabled = false; }
+    var cur = document.getElementById('curTime');
+    var tot = document.getElementById('totTime');
+    if (cur) cur.textContent = '0:00';
+    if (tot) tot.textContent = '0:00';
+  };
+
+  // 暂停并重置语音播放：立即停止合成、清除高光、收起播放器，并把播放进度归零（下次点击「全文语音收听」从第一节第一条重新开始）
+  window.resetSpeech = function() {
+    stopAll();
+    currentMode = null;
+    currentSectionIdx = 0; currentItemIdx = 0;
+    var prog = document.getElementById('playerProgress');
+    if (prog) { prog.value = 0; }
+    var cur = document.getElementById('curTime');
+    var tot = document.getElementById('totTime');
+    if (cur) cur.textContent = '0:00';
+    if (tot) tot.textContent = '0:00';
+    var chap = document.getElementById('playerChapter');
+    if (chap) chap.textContent = '--';
+    updatePlayerUI();
+  };
+
+  window.togglePlay = function() {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
+    if (isPlaying && !isPaused) {
+      window.speechSynthesis.pause();
+      isPaused = true;
+    } else if (isPaused) {
+      window.speechSynthesis.resume();
+      isPaused = false;
+    } else {
+      // restart all
+      playAll();
+    }
+    updatePlayerUI();
+  };
+
+  function updateVolIcon() {
+    var high = document.getElementById('volHighIcon');
+    var mute = document.getElementById('volMuteIcon');
+    var label = document.getElementById('volLabel');
+    if (high && mute) {
+      if (volume === 0) { high.style.display = 'none'; mute.style.display = 'inline-block'; }
+      else { high.style.display = 'inline-block'; mute.style.display = 'none'; }
+    }
+    if (label) label.textContent = lang === 'zh' ? '音量' : 'Vol';
+  }
+
+  // called continuously
+  // called continuously while dragging the volume slider: update value + icon only,
+  // do NOT restart speech here (restarting on every input causes choppy repeated audio)
+  window.previewVolume = function(v) {
+    volume = Math.max(0, Math.min(1, +v));
+    updateVolIcon();
+  };
+
+  // restart current item with new settings (rate/volume/voice)
+  function restartIfPlaying() {
+    if (isPlaying && !isPaused && currentBodyEl) {
+      var sec = sectionData[currentSectionIdx];
+      var item = sec.items[currentItemIdx];
+      currentUtt = null;
+      chunks = []; chunkIdx = 0;
+      window.speechSynthesis.cancel();
+      setTimeout(function() { startSpeaking(item.text, currentBodyEl); }, 80);
+    }
+  }
+
+  window.setSpeed = function(v) {
+    playbackRate = +v;
+    restartIfPlaying();
+  };
+
+  window.setVolume = function(v) {
+    volume = Math.max(0, Math.min(1, +v));
+    updateVolIcon();
+    restartIfPlaying();
+  };
+
+  window.changeVoice = function(v) {
+    if (v === '__custom__') { openVoiceModal(); return; }
+    selectedVoice = v;
+    safeLS.setItem('wb_voice', selectedVoice);
+    restartIfPlaying();
+  };
+
+  window.openVoiceModal = function() {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
+    var sel = document.getElementById('modalVoiceSel');
+    sel.innerHTML = '';
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) {
+      var opt = document.createElement('option');
+      opt.textContent = lang === 'zh' ? '暂无可选声音，请稍后再试' : 'No voices available, please try again later';
+      sel.appendChild(opt);
+    } else {
+      voices.forEach(function(v) {
+        var opt = document.createElement('option');
+        opt.value = v.voiceURI;
+        opt.textContent = v.name + ' (' + v.lang + ')';
+        sel.appendChild(opt);
+      });
+    }
+    document.getElementById('voiceModal').classList.add('open');
+  };
+  window.closeVoiceModal = function() { document.getElementById('voiceModal').classList.remove('open'); };
+  window.saveCustomVoice = function() {
+    var sel = document.getElementById('modalVoiceSel');
+    var uri = sel.value;
+    var voices = speechSynthesis.getVoices();
+    var v = voices.find(function(x) { return x.voiceURI === uri; });
+    if (v) {
+      if (!customVoices.find(function(x) { return x.voiceURI === uri; })) {
+        customVoices.push({ voiceURI: v.voiceURI, name: v.name, lang: v.lang });
+        safeLS.setItem('wb_custom_voices', JSON.stringify(customVoices));
+        setupVoices();
+      }
+      selectedVoice = uri;
+      safeLS.setItem('wb_voice', selectedVoice);
+      document.getElementById('voiceSel').value = selectedVoice;
+    }
+    closeVoiceModal();
+  };
+
+  function updatePlayerUI() {
+    var playIcon = document.getElementById('playIcon');
+    var pauseIcon = document.getElementById('pauseIcon');
+    if (playIcon && pauseIcon) {
+      if (isPlaying && !isPaused) {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'inline-block';
+      } else {
+        playIcon.style.display = 'inline-block';
+        pauseIcon.style.display = 'none';
+      }
+    }
+  }
+
+  // Playback control helpers
+  window.toggleShuffle = function() {
+    shuffleMode = !shuffleMode;
+    var btn = document.getElementById('shuffleBtn');
+    if (btn) {
+      if (shuffleMode) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  };
+  window.toggleRepeat = function() {
+    repeatMode = !repeatMode;
+    var btn = document.getElementById('repeatBtn');
+    if (btn) {
+      if (repeatMode) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  };
+  function recalcPlayedChars() {
+    playedChars = 0;
+    if (currentMode === 'section' && sectionData[currentSectionIdx]) {
+      for (var i = 0; i < currentItemIdx; i++) playedChars += sectionData[currentSectionIdx].items[i].text.length;
+    } else {
+      for (var s = 0; s < currentSectionIdx; s++) {
+        sectionData[s].items.forEach(function(it){ playedChars += it.text.length; });
+      }
+      if (sectionData[currentSectionIdx]) {
+        for (var i = 0; i < currentItemIdx; i++) playedChars += sectionData[currentSectionIdx].items[i].text.length;
+      }
+    }
+  }
+  window.seekBy = function(seconds) {
+    if (nativeMode || !chunks.length) return;
+    var charJump = Math.floor(seconds * CPS * playbackRate);
+    var targetOffset = Math.max(0, Math.min(speakOffset + intraChar + charJump, totalQueueChars));
+    var acc = 0, targetIdx = 0;
+    for (var i = 0; i < chunks.length; i++) {
+      if (acc + chunks[i].length > targetOffset) { targetIdx = i; break; }
+      acc += chunks[i].length;
+      targetIdx = i + 1;
+    }
+    targetIdx = Math.max(0, Math.min(targetIdx, chunks.length - 1));
+    speakOffset = 0;
+    for (var j = 0; j < targetIdx; j++) speakOffset += chunks[j].length;
+    intraChar = speakOffset;
+    chunkIdx = targetIdx;
+    if (currentBodyEl) charMap = wrapTextForHighlight(currentBodyEl);
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    currentUtt = null;
+    updateProgressUI();
+    speakCurrentChunk();
+  };
+  window.prevItem = function() {
+    if (!sectionData.length) return;
+    currentItemIdx--;
+    if (currentItemIdx < 0) {
+      currentSectionIdx--;
+      if (currentSectionIdx < 0) {
+        if (currentMode === 'section') { currentSectionIdx = 0; currentItemIdx = 0; }
+        else { currentSectionIdx = sectionData.length - 1; }
+      }
+      if (currentSectionIdx >= 0 && sectionData[currentSectionIdx]) {
+        currentItemIdx = sectionData[currentSectionIdx].items.length - 1;
+      }
+    }
+    if (currentSectionIdx < 0) currentSectionIdx = 0;
+    if (currentItemIdx < 0) currentItemIdx = 0;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    chunks = []; chunkIdx = 0; speakOffset = 0; intraChar = 0;
+    if (currentBodyEl) clearHighlight(currentBodyEl);
+    recalcPlayedChars();
+    playCurrentQueue();
+  };
+  window.nextItem = function() {
+    if (!sectionData.length) return;
+    if (shuffleMode) {
+      var randS = Math.floor(Math.random() * sectionData.length);
+      var randI = Math.floor(Math.random() * sectionData[randS].items.length);
+      currentSectionIdx = randS; currentItemIdx = randI;
+    } else {
+      currentItemIdx++;
+      if (currentSectionIdx >= sectionData.length || currentItemIdx >= sectionData[currentSectionIdx].items.length) {
+        currentItemIdx = 0;
+        currentSectionIdx++;
+        if (currentMode === 'section' || currentSectionIdx >= sectionData.length) {
+          if (repeatMode) { currentSectionIdx = 0; }
+          else { stopAll(); return; }
+        }
+      }
+    }
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    chunks = []; chunkIdx = 0; speakOffset = 0; intraChar = 0;
+    if (currentBodyEl) clearHighlight(currentBodyEl);
+    recalcPlayedChars();
+    playCurrentQueue();
+  };
+
+  window.toggleNativeMode = function() {
+    nativeMode = !nativeMode;
+    var btn = document.getElementById('nativeBtn');
+    var lbl = document.getElementById('nativeLabel');
+    if (nativeMode) {
+      btn.classList.add('active');
+      lbl.textContent = lang === 'zh' ? '系统原生' : 'Native';
+    } else {
+      btn.classList.remove('active');
+      lbl.textContent = lang === 'zh' ? '智能分块' : 'Chunked';
+    }
+  };
+
+  function updateAiVoiceUI() {
+    var btn = document.getElementById('aiVoiceBtn');
+    var lbl = document.getElementById('aiVoiceLabel');
+    if (!btn) return;
+    if (aiVoiceBoost) {
+      btn.classList.add('active');
+      lbl.textContent = lang === 'zh' ? 'AI 已增强' : 'AI On';
+    } else {
+      btn.classList.remove('active');
+      lbl.textContent = lang === 'zh' ? 'AI 语音' : 'AI Voice';
+    }
+  }
+  window.toggleAiVoice = function() {
+    aiVoiceBoost = !aiVoiceBoost;
+    safeLS.setItem('wb_ai_voice', aiVoiceBoost ? '1' : '0');
+    updateAiVoiceUI();
+    // re-pick voice immediately so the dropdown reflects the chosen voice
+    var sel = document.getElementById('voiceSel');
+    if (sel && aiVoiceBoost && !selectedVoice) {
+      var best = bestChineseVoice();
+      if (best) sel.value = best.voiceURI;
+    }
+    if (isPlaying) restartIfPlaying();
+  };
+
+  function updateProgressUI() {
+    var prog = document.getElementById('playerProgress');
+    var cur = document.getElementById('curTime');
+    var tot = document.getElementById('totTime');
+    if (!prog) return;
+    if (totalQueueChars > 0) {
+      // Fine-grained: char-level position across the whole queue
+      var pos = playedChars + intraChar;
+      var pct = (pos / totalQueueChars) * 100;
+      prog.value = Math.max(0, Math.min(100, pct));
+      prog.disabled = false;
+      var totalSec = totalQueueChars / CPS / playbackRate;
+      var elapSec = pos / CPS / playbackRate;
+      if (cur) cur.textContent = fmtTime(elapSec);
+      if (tot) tot.textContent = fmtTime(totalSec);
+    } else if (nativeMode || !chunks.length) {
+      prog.value = 0;
+      prog.disabled = true;
+      if (cur) cur.textContent = '--';
+      if (tot) tot.textContent = '--';
+    } else {
+      prog.disabled = false;
+      var pct2 = chunks.length ? (chunkIdx / chunks.length) * 100 : 0;
+      prog.value = pct2;
+      if (cur) cur.textContent = String(chunkIdx + 1);
+      if (tot) tot.textContent = String(chunks.length);
+    }
+  }
+
+  window.previewSeek = function(val) {
+    isSeeking = true;
+    var cur = document.getElementById('curTime');
+    if (cur && totalQueueChars) {
+      var elapSec = (val / 100) * totalQueueChars / CPS / playbackRate;
+      cur.textContent = fmtTime(elapSec);
+    }
+  };
+
+  window.seekProgress = function(val) {
+    isSeeking = false;
+    if (nativeMode || !chunks.length) return;
+    var targetIdx = Math.floor((val / 100) * chunks.length);
+    targetIdx = Math.max(0, Math.min(targetIdx, chunks.length - 1));
+
+    // Stop current playback
+    currentUtt = null;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+
+    // Recalculate speakOffset from start up to target chunk
+    speakOffset = 0;
+    for (var i = 0; i < targetIdx; i++) {
+      speakOffset += chunks[i].length;
+    }
+    intraChar = speakOffset;
+
+    chunkIdx = targetIdx;
+
+    // Rebuild highlight map for the new position
+    if (currentBodyEl) {
+      charMap = wrapTextForHighlight(currentBodyEl);
+    }
+
+    updateProgressUI();
+    speakCurrentChunk();
+  };
+
+  // ========== Utils ==========
+  function hexToRgb(hex) {
+    var m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+    return m ? { r: parseInt(m[1],16), g: parseInt(m[2],16), b: parseInt(m[3],16) } : null;
+  }
+  function rgbToHex(r,g,b) {
+    return '#' + [r,g,b].map(function(x) { var h = Math.max(0,Math.min(255,Math.round(x))).toString(16); return h.length===1?'0'+h:h; }).join('');
+  }
+
+  // Chrome bug workaround: speechSynthesis goes silent ~15s into long utterances.
+  // Text chunking (splitIntoChunks) is the primary fix; this keepalive is secondary insurance.
+  setInterval(function() {
+    if (window.speechSynthesis && speechSynthesis.speaking && !speechSynthesis.paused && isPlaying && !isPaused) {
+      speechSynthesis.pause();
+      speechSynthesis.resume();
+    }
+  }, 8000);
+
+  init();
+})();
+</script>
+<footer style="text-align:center;padding:22px 16px 30px;font-size:12px;color:var(--sub);opacity:0.7;line-height:1.6;">
+  栏目配图来自 Openverse / Flickr 等 CC 授权素材 · Section photos via CC-licensed Openverse / Flickr
+</footer>
+</body>
+</html>
