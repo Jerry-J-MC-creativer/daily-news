@@ -9,6 +9,7 @@
     --bg: #f5f7fa; --card: rgba(255,255,255,0.92); --text: #1a1a2e; --sub: #6b7280;
     --accent: #4f6ef7; --border: rgba(255,255,255,0.4);
     --shadow: rgba(0,0,0,0.08); --hero-text: #fff; --hero-sub: rgba(255,255,255,0.85);
+    --radius: 16px; --font-base: 15px; --title-color: #ffffff;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -24,6 +25,7 @@
     background: var(--bg); color: var(--text);
     display: flex; flex-direction: column; align-items: center;
     position: relative; overflow-x: hidden;
+    font-size: var(--font-base);
   }
 
   /* 全屏背景图 */
@@ -41,21 +43,24 @@
   /* 内容层 */
   .content { position: relative; z-index: 1; width: 100%; max-width: 680px; padding: 48px 20px; }
 
-  /* 右上角开关 */
+  /* 右上角：背景开关 + 设置按钮 */
   .top-bar {
     position: fixed; top: 16px; right: 16px; z-index: 10;
     display: flex; align-items: center; gap: 10px;
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
     background: var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border); border-radius: 999px;
-    padding: 6px 14px; font-size: 13px; color: var(--sub);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 7px 14px; font-size: 13px; color: var(--sub);
     box-shadow: 0 2px 12px var(--shadow); transition: background .3s;
     cursor: pointer; user-select: none;
   }
-  .top-bar:hover { background: var(--card); }
+  .pill:hover { background: var(--card); }
+  .pill svg { width: 16px; height: 16px; display: block; }
   .toggle-track {
     width: 36px; height: 20px; border-radius: 999px;
-    background: var(--sub); position: relative; transition: background .25s;
-    flex-shrink: 0;
+    background: var(--sub); position: relative; transition: background .25s; flex-shrink: 0;
   }
   .toggle-track.on { background: var(--accent); }
   .toggle-thumb {
@@ -69,7 +74,8 @@
   .hero { text-align: center; margin-bottom: 40px; }
   .hero h1 {
     font-size: clamp(24px, 5vw, 36px); font-weight: 800; letter-spacing: 2px;
-    color: var(--hero-text); text-shadow: 0 2px 16px rgba(0,0,0,.35);
+    color: var(--title-color); text-shadow: 0 2px 16px rgba(0,0,0,.35);
+    transition: color .3s;
   }
   .hero p {
     color: var(--hero-sub); margin-top: 12px; font-size: 15px;
@@ -81,7 +87,7 @@
   a.day-card {
     display: flex; align-items: center; justify-content: space-between;
     background: var(--card); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border); border-radius: 16px;
+    border: 1px solid var(--border); border-radius: var(--radius);
     padding: 20px 24px; text-decoration: none;
     color: var(--text); transition: transform .15s, box-shadow .15s, background .3s;
   }
@@ -101,7 +107,7 @@
   /* 空状态 */
   .empty {
     text-align: center; padding: 40px; color: var(--sub); font-size: 14px;
-    background: var(--card); backdrop-filter: blur(12px); border-radius: 16px;
+    background: var(--card); backdrop-filter: blur(12px); border-radius: var(--radius);
   }
 
   /* Footer */
@@ -111,12 +117,82 @@
   }
   footer a { color: var(--hero-sub); text-decoration: underline; }
 
+  /* ===== 设置面板 ===== */
+  .settings-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+    display: none; align-items: flex-start; justify-content: flex-end;
+  }
+  .settings-overlay.open { display: flex; }
+  .settings-panel {
+    width: 100%; max-width: 380px; max-height: 100vh; overflow-y: auto;
+    background: var(--card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid var(--border);
+    box-shadow: -8px 0 32px rgba(0,0,0,0.18);
+    padding: 22px 22px 30px;
+    animation: slideIn .25s ease;
+  }
+  @keyframes slideIn { from { transform: translateX(30px); opacity: .6; } to { transform: translateX(0); opacity: 1; } }
+  .settings-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .settings-header h2 { font-size: 1.2em; font-weight: 800; }
+  .icon-btn {
+    width: 34px; height: 34px; border-radius: var(--radius);
+    border: 1px solid var(--border); background: transparent; color: var(--text);
+    cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .setting-row { margin-bottom: 18px; }
+  .setting-row .row-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .setting-row label { font-weight: 600; font-size: .92em; }
+  .setting-row .hint { font-size: .76em; color: var(--sub); margin-top: 6px; line-height: 1.5; }
+  .setting-row .color-sub {
+    display: block; font-size: .72em; color: var(--sub); margin-top: 6px; line-height: 1.4;
+  }
+  .color-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .color-row input[type="color"] { width: 40px; height: 32px; border: none; border-radius: 8px; cursor: pointer; padding: 0; }
+  .color-row input[type="text"] {
+    width: 92px; padding: 5px 8px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: .85em;
+  }
+  .range-row { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+  .range-row input[type="range"] { flex: 1; accent-color: var(--accent); }
+  .range-row .val { font-size: .88em; color: var(--sub); min-width: 46px; text-align: right; }
+  .switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute; cursor: pointer; inset: 0; background: #cbd5e1;
+    border-radius: 24px; transition: .3s;
+  }
+  .slider:before {
+    content: ""; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px;
+    background: white; border-radius: 50%; transition: .3s;
+  }
+  input:checked + .slider { background: var(--accent); }
+  input:checked + .slider:before { transform: translateX(20px); }
+
+  .danger-btn {
+    width: 100%; margin-top: 6px; padding: 11px;
+    border-radius: var(--radius); border: 1px solid #e25570;
+    background: transparent; color: #e25570; cursor: pointer;
+    font-size: .92em; font-weight: 600; transition: background .2s, color .2s;
+  }
+  .danger-btn:hover { background: #e25570; color: #fff; }
+  .danger-btn.confirm { background: #e25570; color: #fff; border-color: #e25570; }
+  .bottom-link {
+    display: block; text-align: center; margin-top: 22px; font-size: .85em;
+    color: var(--accent); text-decoration: none; font-weight: 600;
+  }
+  .bottom-link:hover { text-decoration: underline; }
+
   /* 移动端 */
   @media (max-width: 480px) {
     .content { padding: 36px 14px; }
-    .top-bar { top: 10px; right: 10px; padding: 5px 10px; font-size: 12px; }
+    .top-bar { top: 10px; right: 10px; gap: 8px; }
+    .pill { padding: 6px 11px; font-size: 12px; }
     a.day-card { padding: 16px 18px; }
     .day-card .date { font-size: 15px; }
+    .settings-panel { max-width: 100%; }
   }
 </style>
 </head>
@@ -124,15 +200,22 @@
   <!-- 全屏风景背景 -->
   <div class="bg-layer" id="bgLayer"></div>
 
-  <!-- 背景开关 -->
-  <div class="top-bar" id="bgToggle" title="切换背景图">
-    <span>背景</span>
-    <div class="toggle-track on" id="toggleTrack"><div class="toggle-thumb"></div></div>
+  <!-- 右上角：背景开关 + 设置按钮 -->
+  <div class="top-bar">
+    <div class="pill" id="bgToggle" title="切换背景图">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span id="bgLabel">背景</span>
+      <div class="toggle-track on" id="toggleTrack"><div class="toggle-thumb"></div></div>
+    </div>
+    <div class="pill" id="settingsBtn" title="设置">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span id="settingsLabel">设置</span>
+    </div>
   </div>
 
   <div class="content">
     <div class="hero">
-      <h1>每日全球要闻</h1>
+      <h1 id="heroTitle">每日全球要闻</h1>
       <p>十大领域 · 全球动态 · 每日更新</p>
       <p style="font-size:13px;color:var(--hero-sub);opacity:.9;margin-top:10px;">💡 建议使用 Safari / Chrome / Edge 等默认浏览器打开，体验更完整</p>
     </div>
@@ -145,42 +228,305 @@
     </footer>
   </div>
 
+<!-- 设置面板 -->
+<div class="settings-overlay" id="settingsOverlay" onclick="if(event.target===this)closeSettings()">
+  <div class="settings-panel">
+    <div class="settings-header">
+      <h2 id="settingsTitle">设置</h2>
+      <button class="icon-btn" onclick="closeSettings()" title="关闭">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- 1) 背景开关 -->
+    <div class="setting-row">
+      <div class="row-head">
+        <label id="lblBg">页面背景</label>
+        <label class="switch">
+          <input type="checkbox" id="chkBg" checked onchange="setBg(this.checked)">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- 2) 主题色（大标题文字颜色） -->
+    <div class="setting-row">
+      <div class="row-head">
+        <label id="lblTitleColor">大标题文字颜色</label>
+        <label class="switch">
+          <input type="checkbox" id="chkTitleColor" onchange="setTitleColorOn(this.checked)">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="color-row">
+        <input type="color" id="titleColor" value="#ffffff" onchange="setTitleColor(this.value)">
+        <input type="text" id="titleColorHex" value="#ffffff" onchange="setTitleColor(this.value)">
+      </div>
+      <span class="color-sub" id="titleColorSub">未设置主题色时，大标题颜色会随背景明暗自动取白/黑</span>
+    </div>
+
+    <!-- 3) 每次进入刷新背景 -->
+    <div class="setting-row">
+      <div class="row-head">
+        <label id="lblRefresh">每次进入刷新背景</label>
+        <label class="switch">
+          <input type="checkbox" id="chkRefresh" checked onchange="setRefresh(this.checked)">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <p class="hint" id="refreshHint">若关闭该开关，则背景图片每天仅刷新一次。</p>
+    </div>
+
+    <!-- 4) 圆角弧度 -->
+    <div class="setting-row">
+      <label id="lblRadius">按钮与圆角弧度</label>
+      <div class="range-row">
+        <input type="range" id="rngRadius" min="0" max="32" value="16" oninput="setRadius(this.value)">
+        <span class="val" id="radiusVal">16px</span>
+      </div>
+    </div>
+
+    <!-- 5) 字体大小 -->
+    <div class="setting-row">
+      <label id="lblFont">字体大小</label>
+      <div class="range-row">
+        <input type="range" id="rngFont" min="12" max="22" value="15" oninput="setFont(this.value)">
+        <span class="val" id="fontVal">15px</span>
+      </div>
+    </div>
+
+    <!-- 清理缓存 -->
+    <div class="setting-row" style="margin-top:24px;">
+      <button class="danger-btn" id="clearCacheBtn" onclick="confirmClearCache()">清理所有缓存</button>
+    </div>
+
+    <!-- 前往每日新闻 -->
+    <a class="bottom-link" id="gotoNews" href="2026-08-24.html" target="_blank" rel="noopener">前往每日新闻 →</a>
+  </div>
+</div>
+
 <script>
 (function(){
-  // Safe storage wrappers: file:// (opaque origin) throws on safeSession/safeLS.
-  var safeSession = (function() {
-    try { var k='__s'; window.safeSession.setItem(k,'1'); window.safeSession.removeItem(k); return window.safeSession; }
-    catch (e) { var m={}; return { getItem:function(x){return (x in m)?m[x]:null;}, setItem:function(x,v){m[x]=String(v);}, removeItem:function(x){delete m[x];} }; }
-  })();
   var safeLS = (function() {
-    try { var k='__l'; window.safeLS.setItem(k,'1'); window.safeLS.removeItem(k); return window.safeLS; }
+    try { var k='__l'; window.localStorage.setItem(k,'1'); window.localStorage.removeItem(k); return window.localStorage; }
     catch (e) { var m={}; return { getItem:function(x){return (x in m)?m[x]:null;}, setItem:function(x,v){m[x]=String(v);}, removeItem:function(x){delete m[x];} }; }
-  })();
-  // 使用真实照片作为主页背景（固定 banner.jpg，不再使用 SVG 生成图）。
-  // 预加载完成后再显示，避免加载过程中的空白/破图闪烁。
-  (function () {
-    var bg = document.getElementById('bgLayer');
-    var src = 'img/banner.jpg';
-    var pre = new Image();
-    pre.onload = function () { bg.style.backgroundImage = "url('" + src + "')"; };
-    pre.onerror = function () { bg.style.backgroundImage = "url('" + src + "')"; };
-    pre.src = src;
   })();
 
-  // 读取背景开关状态
-  var bgOn = safeLS.getItem('wb_home_bg');
-  if (bgOn === null) bgOn = '1';
-  function setBgState(on) {
-    var layer = document.getElementById('bgLayer');
-    var track = document.getElementById('toggleTrack');
-    if (on) { layer.classList.remove('hidden'); track.classList.add('on'); }
-    else { layer.classList.add('hidden'); track.classList.remove('on'); }
-    safeLS.setItem('wb_home_bg', on ? '1' : '0');
+  var isZh = (navigator.language || 'zh').toLowerCase().indexOf('zh') === 0;
+
+  // ---- 颜色工具 ----
+  function hexToRgb(hex) {
+    hex = (hex || '').replace('#','');
+    if (hex.length === 3) hex = hex.split('').map(function(c){return c+c;}).join('');
+    if (hex.length !== 6) return null;
+    return { r: parseInt(hex.substr(0,2),16), g: parseInt(hex.substr(2,2),16), b: parseInt(hex.substr(4,2),16) };
   }
-  setBgState(bgOn === '1');
+  function rgbLuminance(hex) {
+    var c = hexToRgb(hex); if (!c) return 1;
+    var f = function(v){ v/=255; return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); };
+    return 0.2126*f(c.r) + 0.7152*f(c.g) + 0.0722*f(c.b);
+  }
+  function isLight(hex) { return rgbLuminance(hex) > 0.5; }
+  function invert(hex) {
+    var c = hexToRgb(hex); if (!c) return '#000000';
+    var inv = function(v){ return 255 - v; };
+    return '#' + [inv(c.r),inv(c.g),inv(c.b)].map(function(v){ return ('0'+v.toString(16)).slice(-2); }).join('');
+  }
+
+  // ---- 背景 ----
+  var bgSources = ['img/banner.jpg'];
+  var bgFileDateKey = 'wb_home_bg_date';
+  var bgFileKey = 'wb_home_bg_file';
+
+  function pickBackground() {
+    // refresh-on-visit ON -> always use first source (fixed banner)
+    // refresh OFF -> once per day reused file
+    var refresh = safeLS.getItem('wb_home_refresh');
+    if (refresh === null) refresh = '1';
+    if (refresh === '0') {
+      var today = new Date().toISOString().slice(0,10);
+      var storedDate = safeLS.getItem(bgFileDateKey);
+      var storedFile = safeLS.getItem(bgFileKey);
+      if (storedDate === today && storedFile) return storedFile;
+      var pick = bgSources[Math.floor(Math.random()*bgSources.length)];
+      safeLS.setItem(bgFileDateKey, today);
+      safeLS.setItem(bgFileKey, pick);
+      return pick;
+    }
+    return bgSources[0];
+  }
+
+  function applyBackground() {
+    var on = safeLS.getItem('wb_home_bg');
+    if (on === null) on = '1';
+    var bg = document.getElementById('bgLayer');
+    if (on === '1') {
+      bg.classList.remove('hidden');
+      document.getElementById('toggleTrack').classList.add('on');
+      document.getElementById('chkBg').checked = true;
+      var src = pickBackground();
+      var pre = new Image();
+      pre.onload = function(){ bg.style.backgroundImage = "url('" + src + "')"; };
+      pre.onerror = function(){ bg.style.backgroundImage = "url('" + src + "')"; };
+      pre.src = src;
+    } else {
+      bg.classList.add('hidden');
+      document.getElementById('toggleTrack').classList.remove('on');
+      document.getElementById('chkBg').checked = false;
+    }
+    updateTitleColor();
+  }
+
+  // ---- 大标题颜色自适应 ----
+  function updateTitleColor() {
+    var on = safeLS.getItem('wb_home_bg');
+    if (on === null) on = '1';
+    var titleEl = document.getElementById('heroTitle');
+    var colorOn = safeLS.getItem('wb_home_titlecolor_on');
+    var themeColor = safeLS.getItem('wb_home_titlecolor');
+    if (colorOn === '1' && themeColor) {
+      // 有主题色：自动检测主题色深浅，并对比背景
+      if (on === '1') {
+        var bgDark = isBgDark();
+        if (isLight(themeColor)) {
+          // 浅色主题色，背景黑 -> 不使用主题色，用白色
+          titleEl.style.color = bgDark ? '#ffffff' : invert(themeColor);
+        } else {
+          // 深色主题色，背景白 -> 不使用主题色，用黑色
+          titleEl.style.color = bgDark ? invert(themeColor) : '#000000';
+        }
+      } else {
+        // 无背景：按主题色自身亮度决定用主题色还是反色
+        titleEl.style.color = isLight(themeColor) ? '#1a1a2e' : themeColor;
+      }
+    } else {
+      // 无主题色：背景黑->白字，背景白->黑字
+      titleEl.style.color = (on === '1' && isBgDark()) ? '#ffffff' : '#000000';
+    }
+    safeLS.setItem('wb_home_titlecolor_cur', titleEl.style.color);
+  }
+
+  function isBgDark() {
+    // 主页固定 banner 为深色山脉图，叠加暗色渐变 -> 视为深色
+    return true;
+  }
+
+  // ---- 设置动作 ----
+  window.setBg = function(on) {
+    safeLS.setItem('wb_home_bg', on ? '1' : '0');
+    applyBackground();
+  };
+  window.setTitleColorOn = function(on) {
+    safeLS.setItem('wb_home_titlecolor_on', on ? '1' : '0');
+    if (on && !safeLS.getItem('wb_home_titlecolor')) {
+      var v = document.getElementById('titleColor').value;
+      safeLS.setItem('wb_home_titlecolor', v);
+    }
+    updateTitleColor();
+  };
+  window.setTitleColor = function(v) {
+    if (!/^#[0-9a-fA-F]{6}$/.test(v)) v = '#ffffff';
+    document.getElementById('titleColor').value = v;
+    document.getElementById('titleColorHex').value = v;
+    safeLS.setItem('wb_home_titlecolor', v);
+    safeLS.setItem('wb_home_titlecolor_on', '1');
+    document.getElementById('chkTitleColor').checked = true;
+    updateTitleColor();
+  };
+  window.setRefresh = function(on) {
+    safeLS.setItem('wb_home_refresh', on ? '1' : '0');
+    if (on === '1') { safeLS.removeItem(bgFileDateKey); safeLS.removeItem(bgFileKey); }
+    applyBackground();
+  };
+  window.setRadius = function(v) {
+    v = Math.max(0, Math.min(32, parseInt(v) || 16));
+    document.documentElement.style.setProperty('--radius', v + 'px');
+    document.getElementById('rngRadius').value = v;
+    document.getElementById('radiusVal').textContent = v + 'px';
+    safeLS.setItem('wb_home_radius', v);
+  };
+  window.setFont = function(v) {
+    v = Math.max(12, Math.min(22, parseInt(v) || 15));
+    document.documentElement.style.setProperty('--font-base', v + 'px');
+    document.getElementById('rngFont').value = v;
+    document.getElementById('fontVal').textContent = v + 'px';
+    safeLS.setItem('wb_home_font', v);
+  };
+  window.openSettings = function() {
+    document.getElementById('settingsOverlay').classList.add('open');
+    syncSettingsUI();
+  };
+  window.closeSettings = function() { document.getElementById('settingsOverlay').classList.remove('open'); };
+
+  window.confirmClearCache = function() {
+    var btn = document.getElementById('clearCacheBtn');
+    if (!btn.classList.contains('confirm')) {
+      btn.classList.add('confirm');
+      btn.textContent = isZh ? '再次点击确认清除缓存' : 'Tap again to confirm';
+      setTimeout(function(){
+        if (btn.classList.contains('confirm')) {
+          btn.classList.remove('confirm');
+          btn.textContent = isZh ? '清理所有缓存' : 'Clear all cache';
+        }
+      }, 3000);
+      return;
+    }
+    // 二次确认 -> 清除
+    safeLS.removeItem('wb_home_bg'); safeLS.removeItem('wb_home_bg_date'); safeLS.removeItem('wb_home_bg_file');
+    safeLS.removeItem('wb_home_refresh'); safeLS.removeItem('wb_home_titlecolor');
+    safeLS.removeItem('wb_home_titlecolor_on'); safeLS.removeItem('wb_home_titlecolor_cur');
+    safeLS.removeItem('wb_home_radius'); safeLS.removeItem('wb_home_font');
+    btn.classList.remove('confirm');
+    btn.textContent = isZh ? '清理所有缓存' : 'Clear all cache';
+    location.reload();
+  };
+
+  function syncSettingsUI() {
+    document.getElementById('chkBg').checked = (safeLS.getItem('wb_home_bg') || '1') === '1';
+    var colorOn = safeLS.getItem('wb_home_titlecolor_on');
+    var themeColor = safeLS.getItem('wb_home_titlecolor') || '#ffffff';
+    document.getElementById('chkTitleColor').checked = colorOn === '1';
+    document.getElementById('titleColor').value = themeColor;
+    document.getElementById('titleColorHex').value = themeColor;
+    document.getElementById('chkRefresh').checked = (safeLS.getItem('wb_home_refresh') || '1') === '1';
+    var r = safeLS.getItem('wb_home_radius'); if (r!==null) { document.getElementById('rngRadius').value=r; document.getElementById('radiusVal').textContent=r+'px'; document.documentElement.style.setProperty('--radius', r+'px'); }
+    var f = safeLS.getItem('wb_home_font'); if (f!==null) { document.getElementById('rngFont').value=f; document.getElementById('fontVal').textContent=f+'px'; document.documentElement.style.setProperty('--font-base', f+'px'); }
+    if (isZh) {
+      document.getElementById('bgLabel').textContent='背景';
+      document.getElementById('settingsLabel').textContent='设置';
+      document.getElementById('settingsTitle').textContent='设置';
+      document.getElementById('lblBg').textContent='页面背景';
+      document.getElementById('lblTitleColor').textContent='大标题文字颜色';
+      document.getElementById('titleColorSub').textContent='未设置主题色时，大标题颜色会随背景明暗自动取白/黑';
+      document.getElementById('lblRefresh').textContent='每次进入刷新背景';
+      document.getElementById('refreshHint').textContent='若关闭该开关，则背景图片每天仅刷新一次。';
+      document.getElementById('lblRadius').textContent='按钮与圆角弧度';
+      document.getElementById('lblFont').textContent='字体大小';
+      document.getElementById('gotoNews').textContent='前往每日新闻 →';
+    } else {
+      document.getElementById('bgLabel').textContent='Background';
+      document.getElementById('settingsLabel').textContent='Settings';
+      document.getElementById('settingsTitle').textContent='Settings';
+      document.getElementById('lblBg').textContent='Page background';
+      document.getElementById('lblTitleColor').textContent='Title text color';
+      document.getElementById('titleColorSub').textContent='With no theme color, the title auto uses white/black by background brightness';
+      document.getElementById('lblRefresh').textContent='Refresh background each visit';
+      document.getElementById('refreshHint').textContent='If off, the background refreshes only once per day.';
+      document.getElementById('lblRadius').textContent='Button & corner radius';
+      document.getElementById('lblFont').textContent='Font size';
+      document.getElementById('gotoNews').textContent='Go to Daily News →';
+    }
+  }
+
+  // 背景开关点击
   document.getElementById('bgToggle').addEventListener('click', function(){
-    setBgState(document.getElementById('bgLayer').classList.contains('hidden'));
+    setBg(document.getElementById('bgLayer').classList.contains('hidden'));
   });
+  document.getElementById('settingsBtn').addEventListener('click', openSettings);
+
+  // 初始化
+  applyBackground();
+  syncSettingsUI();
 
   // 动态生成日期列表
   function pad(n){ return n<10 ? '0'+n : ''+n; }
@@ -202,7 +548,6 @@
         '<span class="arrow">→</span></div></a>';
     }).join('');
   }
-  // 优先用 dates.json（只列真实存在的文件，避免 404）；失败则回退本地推算（兼容 file://）
   var manifestPromise = (typeof fetch === 'function')
     ? fetch('dates.json', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : Promise.reject(); })
     : Promise.reject();
@@ -213,6 +558,7 @@
       });
       if (days.length) { days[0].badge = '最新'; days[0].old = false; }
       renderDays(days.slice(0, 2));
+      if (days[0]) document.getElementById('gotoNews').href = days[0].file;
     })
     .catch(function(){
       var today = new Date();
@@ -228,11 +574,9 @@
         badge: '往期', old: true
       });
       renderDays(days);
+      document.getElementById('gotoNews').href = days[0].file;
     });
 })();
 </script>
-<footer style="text-align:center;padding:22px 16px 30px;font-size:12px;color:var(--sub);opacity:0.7;line-height:1.6;">
-  栏目配图来自 Openverse / Flickr 等 CC 授权素材 · Section photos via CC-licensed Openverse / Flickr
-</footer>
 </body>
 </html>
