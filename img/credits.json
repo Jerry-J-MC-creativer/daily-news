@@ -75,5 +75,40 @@
     "creator": "☻☺",
     "license": "by-sa",
     "source": "https://live.staticflickr.com/2624/4168519380_736b094771_b.jpg"
+  },
+  "bg-1.jpg": {
+    "file": "bg-1.jpg",
+    "title": "Lake Sylvester during the sunrise, Kahurangi, New Zealand",
+    "creator": "Michal Klajban",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Lake_Sylvester_during_the_sunrise,_Kahurangi,_New_Zealand.jpg"
+  },
+  "bg-2.jpg": {
+    "file": "bg-2.jpg",
+    "title": "Sunrise at Maligne lake",
+    "creator": "Sergey Pesterev",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Sunrise_at_Maligne_lake.jpg"
+  },
+  "bg-3.jpg": {
+    "file": "bg-3.jpg",
+    "title": "Sunrise in Pieniny, Poland 02",
+    "creator": "Pudelek",
+    "license": "CC BY-SA 4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Sunrise_in_Pieniny,_Poland_02.jpg"
+  },
+  "bg-4.jpg": {
+    "file": "bg-4.jpg",
+    "title": "Ocean cliff sunset (Unsplash)",
+    "creator": "Sweet Ice Cream Photography",
+    "license": "CC0",
+    "source": "https://commons.wikimedia.org/wiki/File:Ocean_cliff_sunset_(Unsplash).jpg"
+  },
+  "bg-5.jpg": {
+    "file": "bg-5.jpg",
+    "title": "Utah Dunes Landscape - West Desert District",
+    "creator": "Bureau of Land Management - Utah/Bob Wick",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Utah_Dunes_Landscape_-_West_Desert_District.jpg"
   }
 }
