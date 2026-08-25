@@ -190,7 +190,9 @@
   .bottom-link:hover { text-decoration: underline; }
 
   /* 主题色填充 */
-  .theme-fill-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+  #themeFillRow, .theme-fill-row { display: flex; flex-direction: column; align-items: stretch; gap: 10px; }
+  #themeFillRow .row-head, .theme-fill-row .row-head { width: 100%; }
+  .theme-fill-actions { display: flex; justify-content: flex-start; gap: 8px; margin-top: 4px; }
   .fill-btn {
     padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: .82em; font-weight: 600;
     border: 1px solid var(--accent); background: var(--accent); color: #fff;
