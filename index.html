@@ -125,15 +125,23 @@
   }
   .settings-overlay.open { display: flex; }
   .settings-panel {
-    width: 100%; max-width: 380px; max-height: 100vh; overflow-y: auto;
+    display: flex; flex-direction: column;
+    width: 100%; max-width: 380px; max-height: 100vh;
     background: var(--card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-left: 1px solid var(--border);
+    border-radius: var(--radius);
     box-shadow: -8px 0 32px rgba(0,0,0,0.18);
-    padding: 22px 22px 30px;
+    padding: 0; overflow: hidden;
     animation: slideIn .25s ease;
   }
+  .settings-scroll { flex: 1 1 auto; overflow-y: auto; padding: 0 22px 18px; }
+  .settings-footer { flex-shrink: 0; display: flex; justify-content: flex-end; gap: 10px; padding: 14px 22px; border-top: 1px solid var(--border); background: var(--card); }
+  .settings-footer .exit-btn { padding: 9px 16px; border-radius: var(--radius); cursor: pointer; font-size: .9em; font-weight: 600; border: 1px solid var(--border); background: transparent; color: var(--text); }
+  .settings-footer .exit-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .settings-footer .save-btn { border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+  .settings-footer .save-btn:hover { filter: brightness(1.08); color: #fff; }
   @keyframes slideIn { from { transform: translateX(30px); opacity: .6; } to { transform: translateX(0); opacity: 1; } }
-  .settings-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .settings-header { display: flex; justify-content: space-between; align-items: center; margin: 0; padding: 22px 22px 14px; flex-shrink: 0; }
   .settings-header h2 { font-size: 1.2em; font-weight: 800; }
   .icon-btn {
     width: 34px; height: 34px; border-radius: var(--radius);
@@ -259,6 +267,7 @@
       </button>
     </div>
 
+    <div class="settings-scroll">
     <!-- 跨网页设置 -->
     <div class="cross-webpage-group" id="crossWebpageGroup">
       <div class="cw-header">
@@ -355,7 +364,13 @@
     </div>
 
     <!-- 前往每日新闻 -->
-    <a class="bottom-link" id="gotoNews" href="2026-08-24.html" target="_blank" rel="noopener">前往每日新闻 →</a>
+    <a class="bottom-link" id="gotoNews" href="2026-08-24.html" target="_blank" rel="noopener">前往每日新闻的设置界面 →</a>
+    </div><!-- /settings-scroll -->
+
+    <div class="settings-footer">
+      <button class="exit-btn" id="exitNoSave" onclick="closeSettingsDiscard()">不保存退出</button>
+      <button class="exit-btn save-btn" id="exitSave" onclick="closeSettings()">保存并退出</button>
+    </div>
   </div>
 </div>
 
@@ -531,13 +546,37 @@
     safeLS.setItem('wb_lang', v);
     applyLang();
   };
+  var settingsSnapshot = null;
+  function snapshotSettings() {
+    settingsSnapshot = {};
+    try {
+      for (var i = 0; i < safeLS.length; i++) {
+        var k = safeLS.key(i);
+        if (k && k.indexOf('wb_') === 0) settingsSnapshot[k] = safeLS.getItem(k);
+      }
+    } catch (e) {}
+  }
+  function restoreSettings() {
+    if (!settingsSnapshot) return;
+    for (var k in settingsSnapshot) {
+      if (!settingsSnapshot.hasOwnProperty(k)) continue;
+      if (settingsSnapshot[k] === null) safeLS.removeItem(k);
+      else safeLS.setItem(k, settingsSnapshot[k]);
+    }
+  }
   window.openSettings = function() {
+    snapshotSettings();
     document.getElementById('settingsOverlay').classList.add('open');
     syncSettingsUI();
     applyFillStyle();
     updateFillButtons();
   };
   window.closeSettings = function() { document.getElementById('settingsOverlay').classList.remove('open'); };
+  window.closeSettingsDiscard = function() {
+    restoreSettings();
+    applyBackground(); applyLang(); syncSettingsUI(); applyFillStyle(); updateFillButtons();
+    document.getElementById('settingsOverlay').classList.remove('open');
+  };
 
   window.confirmClearCache = function() {
     var btn = document.getElementById('clearCacheBtn');
@@ -726,7 +765,7 @@
       document.getElementById('lblFont').textContent='字体大小';
       document.getElementById('lblCrossWebpage').textContent='跨网页设置';
       document.getElementById('subCrossWebpage').textContent='以下设置在主页与每日新闻之间同步';
-      document.getElementById('gotoNews').textContent='前往每日新闻 →';
+      document.getElementById('gotoNews').textContent='前往每日新闻的设置界面 →';
     } else {
       document.getElementById('settingsLabel').textContent='Settings';
       document.getElementById('settingsTitle').textContent='Settings';
@@ -739,7 +778,7 @@
       document.getElementById('lblFont').textContent='Font size';
       document.getElementById('lblCrossWebpage').textContent='Cross-webpage settings';
       document.getElementById('subCrossWebpage').textContent='These settings sync between the homepage and daily news';
-      document.getElementById('gotoNews').textContent='Go to Daily News →';
+      document.getElementById('gotoNews').textContent='Daily News Settings →';
     }
     updateFillBtnLang();
   }
@@ -753,6 +792,7 @@
   syncSettingsUI();
   applyFillStyle();
   updateFillButtons();
+  if (location.hash === '#open-settings') openSettings();
 
   // 动态生成日期列表
   function pad(n){ return n<10 ? '0'+n : ''+n; }
@@ -789,7 +829,7 @@
       });
       if (days.length) { days[0].badge = '最新'; days[0].old = false; }
       renderDays(days.slice(0, 2));
-      if (days[0]) document.getElementById('gotoNews').href = days[0].file;
+      if (days[0]) document.getElementById('gotoNews').href = days[0].file + '#open-settings';
     })
     .catch(function(){
       var today = new Date();
@@ -805,7 +845,7 @@
         badge: '往期', old: true
       });
       renderDays(days);
-      document.getElementById('gotoNews').href = days[0].file;
+      document.getElementById('gotoNews').href = days[0].file + '#open-settings';
     });
 
   // 与每日新闻实时同步语言/圆角/字号（跨标签页，共用同一偏好键）
