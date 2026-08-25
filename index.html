@@ -536,14 +536,12 @@
     var week = ['周日','周一','周二','周三','周四','周五','周六'][date.getDay()];
     return ymd + '（' + week + '）';
   }
-  var META = '军事 · 财经 · AI 与科技 · 国际政治 等 10 个领域';
   var list = document.getElementById('dayList');
   function renderDays(days){
     if (!days.length) { list.innerHTML = '<div class="empty">暂无可读的要闻，请稍后再来。</div>'; return; }
     list.innerHTML = days.map(function(it){
       return '<a class="day-card" href="' + it.file + '">' +
-        '<div class="left"><span class="date">' + it.date + '</span>' +
-        '<span class="meta">' + META + '</span></div>' +
+        '<div class="left"><span class="date">' + it.date + '</span></div>' +
         '<div class="badge-wrap"><span class="badge' + (it.old?' old':'') + '">' + it.badge + '</span>' +
         '<span class="arrow">→</span></div></a>';
     }).join('');
