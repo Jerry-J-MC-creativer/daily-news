@@ -584,7 +584,11 @@
     : Promise.reject();
   manifestPromise
     .then(function(manifest){
-      var days = (manifest.dates || []).map(function(d){
+      // 健壮处理：dates 可能是数组、单个对象、或缺失——统一规整为数组后再 map
+      var raw = manifest && manifest.dates;
+      var arr = Array.isArray(raw) ? raw
+              : (raw && typeof raw === 'object' && raw.date ? [raw] : []);
+      var days = arr.map(function(d){
         return { date: fmtDateStr(d.date), file: d.file, badge: '往期', old: true };
       });
       if (days.length) { days[0].badge = '最新'; days[0].old = false; }
