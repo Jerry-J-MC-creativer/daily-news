@@ -349,25 +349,16 @@
     cursor: pointer;
     font-size: .85em;
   }
-  /* 跨网页设置分组 */
-  .cross-webpage-group {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 12px;
-    margin-bottom: 16px;
-    background: transparent;
-  }
-  .cw-header { margin-bottom: 10px; }
-  .cw-title { font-weight: 700; font-size: 1.05em; color: var(--text); display: block; }
-  .cw-sub { font-size: .78em; color: var(--text); opacity: .7; display: block; margin-top: 2px; }
-  .cw-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+  /* 跨网页设置（分散在各处，不单独成组） */
+  .cw-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; margin-top: 14px; width: 100%; flex-basis: 100%; }
   .fill-btn {
     padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: .82em; font-weight: 600;
     border: 1px solid var(--accent); background: var(--accent); color: #fff;
   }
   .fill-btn:hover { filter: brightness(1.08); }
   .fill-btn.active { box-shadow: inset 0 0 0 2px rgba(255,255,255,.7); filter: brightness(1.14); }
-  .common-setting { transition: background .25s ease, color .25s ease; border-radius: var(--radius); padding: 8px; margin: 0 -2px; }
+  .common-setting { transition: background .25s ease, color .25s ease; border-radius: var(--radius); padding: 10px 12px; margin: 0 0 12px 0; }
+  .common-setting label { color: inherit; }
   .danger-btn {
     width: 100%; margin-top: 6px; padding: 11px;
     border-radius: var(--radius); border: 1px solid #e25570;
@@ -771,7 +762,7 @@
   <span id="browserTipText">建议使用 Safari / Chrome / Edge 等默认浏览器打开，否则可能遇到语音朗读等功能异常。</span>
 </div>
 
-<img class="banner" id="bannerImg" src="" alt="banner" fetchpriority="high" decoding="async">
+<img class="banner" id="bannerImg" src="img/banner.jpg" alt="banner" fetchpriority="high" decoding="async">
 
 <div class="container">
   <div class="global-actions">
@@ -1292,42 +1283,16 @@
       <button class="icon-btn" onclick="closeSettings()">✕</button>
     </div>
 
-    <!-- 跨网页设置 -->
-    <div class="cross-webpage-group" id="crossWebpageGroup">
-      <div class="cw-header">
-        <span class="cw-title" id="lblCrossWebpage" data-zh="跨网页设置" data-en="Cross-webpage settings">跨网页设置</span>
-        <span class="cw-sub" id="subCrossWebpage" data-zh="以下设置在主页与每日新闻之间同步" data-en="These settings sync between the homepage and daily news">以下设置在主页与每日新闻之间同步</span>
-      </div>
-      <div class="setting-row common-setting">
-        <label id="lblLang">语言</label>
-        <select id="selLang" onchange="setLang(this.value)">
-          <option value="zh">简体中文</option>
-          <option value="en">English</option>
-        </select>
-      </div>
-      <div class="setting-row common-setting">
-        <label id="lblAccent">主题色</label>
-        <div class="color-row">
-          <input type="color" id="accentColor" value="#2563eb" onchange="setAccent(this.value)">
-          <input type="number" id="accentR" min="0" max="255" placeholder="R">
-          <input type="number" id="accentG" min="0" max="255" placeholder="G">
-          <input type="number" id="accentB" min="0" max="255" placeholder="B">
-          <button class="apply-btn" onclick="applyRGBAccent()" id="btnApplyAccent">应用</button>
-        </div>
-      </div>
-      <div class="setting-row common-setting">
-        <label id="lblFont">字号</label>
-        <input type="range" id="rngFont" min="12" max="22" value="15" oninput="setFont(this.value)">
-        <span id="fontVal">15px</span>
-      </div>
-      <div class="setting-row common-setting">
-        <label id="lblRadius">圆角大小</label>
-        <input type="range" id="rngRadius" min="0" max="32" value="16" oninput="setRadius(this.value)">
-        <span id="radiusVal">16px</span>
-      </div>
+    <!-- 语言：跨网页同步 -->
+    <div class="setting-row common-setting">
+      <label id="lblLang">语言</label>
+      <select id="selLang" onchange="setLang(this.value)">
+        <option value="zh">简体中文</option>
+        <option value="en">English</option>
+      </select>
       <div class="cw-actions">
-        <button class="fill-btn" id="fillThisBtn" onclick="applyThemeFill('this')" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
-        <button class="fill-btn" id="fillAllBtn" onclick="applyThemeFill('all')" data-zh="用于所有" data-en="Use for all">用于所有</button>
+        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
       </div>
     </div>
 
@@ -1339,6 +1304,49 @@
         <option value="dark">深色</option>
       </select>
     </div>
+
+    <!-- 主题色：跨网页同步 -->
+    <div class="setting-row common-setting">
+      <label id="lblAccent">主题色</label>
+      <div class="color-row">
+        <input type="color" id="accentColor" value="#2563eb" onchange="setAccent(this.value)">
+        <input type="number" id="accentR" min="0" max="255" placeholder="R">
+        <input type="number" id="accentG" min="0" max="255" placeholder="G">
+        <input type="number" id="accentB" min="0" max="255" placeholder="B">
+        <button class="apply-btn" onclick="applyRGBAccent()" id="btnApplyAccent">应用</button>
+      </div>
+      <div class="cw-actions">
+        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      </div>
+    </div>
+
+    <!-- 字号：跨网页同步 -->
+    <div class="setting-row common-setting">
+      <label id="lblFont">字号</label>
+      <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:flex-end;">
+        <input type="range" id="rngFont" min="12" max="22" value="15" oninput="setFont(this.value)">
+        <span id="fontVal">15px</span>
+      </div>
+      <div class="cw-actions">
+        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      </div>
+    </div>
+
+    <!-- 圆角大小：跨网页同步 -->
+    <div class="setting-row common-setting">
+      <label id="lblRadius">圆角大小</label>
+      <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:flex-end;">
+        <input type="range" id="rngRadius" min="0" max="32" value="16" oninput="setRadius(this.value)">
+        <span id="radiusVal">16px</span>
+      </div>
+      <div class="cw-actions">
+        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      </div>
+    </div>
+
     <div class="setting-row">
       <label id="lblHl">高光显示</label>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
@@ -1614,28 +1622,17 @@ var safeLS = (function() {
   // At open time we probe all sources and use the FASTEST one that loads; the local
   // bundle is always the guaranteed fallback (never an AI/SVG image).
   var KIND_META = {
-    military:    { src:'img/sec-military.jpg',      c:['#3b4252','#56657d'], motif:'shield',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-military.jpg'] },
-    finance:     { src:'img/sec-finance.jpg',       c:['#7c5e10','#caa12b'], motif:'chart',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-finance.jpg'] },
-    ai:          { src:'img/sec-ai.jpg',            c:['#1a1a3a','#5b4bb0'], motif:'neural',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-ai.jpg'] },
-    politics:    { src:'img/sec-politics.jpg',      c:['#0b3d5c','#2693b3'], motif:'globe',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-politics.jpg'] },
-    industry:    { src:'img/sec-industry.jpg',      c:['#274a22','#5f9a3e'], motif:'gear',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-industry.jpg'] },
-    energy:      { src:'img/sec-energy.jpg',        c:['#7a3b10','#e89a1c'], motif:'bolt',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-energy.jpg'] },
-    health:      { src:'img/sec-health.jpg',        c:['#0f5132','#33bd86'], motif:'cross',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-health.jpg'] },
-    semiconductor:{ src:'img/sec-semiconductor.jpg',c:['#16455c','#5cc4ec'], motif:'chip',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-semiconductor.jpg'] },
-    space:       { src:'img/sec-space.jpg',         c:['#0a0a23','#4a3c8e'], motif:'rocket',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-space.jpg'] },
-    society:     { src:'img/sec-society.jpg',       c:['#3a4a5a','#8aa6bd'], motif:'network',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/sec-society.jpg'] },
-    cover:       { src:'img/banner.jpg',            c:['#16356b','#3b82f6'], motif:'peaks',
-      alt:['https://images.weserv.nl/?url=commons.wikimedia.org/wiki/Special:FilePath/banner.jpg'] }
+    military:    { src:'img/sec-military.jpg',      c:['#3b4252','#56657d'], motif:'shield',      alt:[] },
+    finance:     { src:'img/sec-finance.jpg',       c:['#7c5e10','#caa12b'], motif:'chart',       alt:[] },
+    ai:          { src:'img/sec-ai.jpg',            c:['#1a1a3a','#5b4bb0'], motif:'neural',      alt:[] },
+    politics:    { src:'img/sec-politics.jpg',      c:['#0b3d5c','#2693b3'], motif:'globe',       alt:[] },
+    industry:    { src:'img/sec-industry.jpg',      c:['#274a22','#5f9a3e'], motif:'gear',        alt:[] },
+    energy:      { src:'img/sec-energy.jpg',        c:['#7a3b10','#e89a1c'], motif:'bolt',        alt:[] },
+    health:      { src:'img/sec-health.jpg',        c:['#0f5132','#33bd86'], motif:'cross',       alt:[] },
+    semiconductor:{ src:'img/sec-semiconductor.jpg',c:['#16455c','#5cc4ec'], motif:'chip',        alt:[] },
+    space:       { src:'img/sec-space.jpg',         c:['#0a0a23','#4a3c8e'], motif:'rocket',      alt:[] },
+    society:     { src:'img/sec-society.jpg',       c:['#3a4a5a','#8aa6bd'], motif:'network',     alt:[] },
+    cover:       { src:'img/banner.jpg',            c:['#16356b','#3b82f6'], motif:'peaks',       alt:[] }
   };
   var SECTION_KIND = ['military','finance','ai','politics','industry','energy','health','semiconductor','space','society'];
 
@@ -1758,26 +1755,39 @@ var safeLS = (function() {
     }
     function fastestImage(img, kind, done) {
       var meta = KIND_META[kind] || KIND_META['cover'];
+      // 优先使用本地已审核的实拍图，避免远程无效/占位图抢先导致空白或文字图
+      function setLocal() {
+        img.onerror = function() {
+          img.onerror = null;
+          var fallback = themedImage(kind, 800, 400);
+          img.src = fallback;
+          reveal(img, 'img-loaded');
+          done(fallback);
+        };
+        img.src = meta.src;
+        reveal(img, 'img-loaded');
+        done(meta.src);
+      }
+      if ((meta.alt || []).length === 0) {
+        setLocal();
+        return;
+      }
+      // 若未来配置了可信远程源，仅在本地图失败后才尝试
       var sources = [meta.src].concat(meta.alt || []);
       var settled = false;
-      // try all sources in parallel; first to load wins
       sources.forEach(function(url, idx) {
         var probe = new Image();
         probe.onload = function () {
           if (settled) return; settled = true;
-          img.onerror = function() { img.onerror = null; img.style.display = 'none'; };
+          img.onerror = function() { setLocal(); };
           img.src = url;
           reveal(img, 'img-loaded');
           done(url);
         };
         probe.onerror = function () {
-          // if all failed, fall back to local bundle
           if (!settled && idx === sources.length - 1) {
             settled = true;
-            img.onerror = function() { img.onerror = null; img.style.display = 'none'; };
-            img.src = meta.src;
-            reveal(img, 'img-loaded');
-            done(meta.src);
+            setLocal();
           }
         };
         probe.src = url;
@@ -1878,6 +1888,30 @@ var safeLS = (function() {
     if (nl < 0 || nl > 100) nl = hsl.l;
     return hslToHex(hsl.h, hsl.s, nl);
   }
+  // 在保持色相（H）基本不变的前提下，自动将填充色推向可读 contrast
+  function lum(hex) {
+    var c = hexToRgb(hex); if (!c) return 1;
+    var f = function(v){ v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b);
+  }
+  function contrastRatio(a, b) {
+    var l1 = lum(a) + 0.05, l2 = lum(b) + 0.05;
+    return l1 > l2 ? l1 / l2 : l2 / l1;
+  }
+  function optimizeFill(fill, fg, minRatio) {
+    minRatio = minRatio || 4.5;
+    if (contrastRatio(fill, fg) >= minRatio) return fill;
+    var c = hexToRgb(fill); if (!c) return fill;
+    var hsl = rgbToHsl(c.r, c.g, c.b);
+    var step = isLight(fg) ? -2 : 2;
+    for (var i = 0; i < 30; i++) {
+      hsl.l += step;
+      if (hsl.l < 0 || hsl.l > 100) break;
+      var candidate = hslToHex(hsl.h, hsl.s, hsl.l);
+      if (contrastRatio(candidate, fg) >= minRatio) return candidate;
+    }
+    return fill;
+  }
   function themeFillKeyThis() { return PAGE_TAG === 'home' ? 'wb_theme_fill_home' : 'wb_theme_fill_news'; }
   function currentFillScope() {
     if (safeLS.getItem('wb_theme_fill_off') === '1') return '';
@@ -1895,30 +1929,24 @@ var safeLS = (function() {
     var rows = document.querySelectorAll('.common-setting');
     var scope = currentFillScope();
     if (!scope) {
-      rows.forEach(function(r){
-        r.style.background=''; r.style.color='';
-        r.querySelectorAll('select,input,button,.apply-btn,.slider').forEach(function(c){ c.style.background=''; c.style.color=''; c.style.borderColor=''; });
-      });
+      rows.forEach(function(r){ r.style.background = ''; r.style.color = ''; });
       return;
     }
     var accent = getThemeColor();
     var dark = !isLight(accent);
     var fill = adjustLightness(accent, dark ? -10 : 10);
     var fg = dark ? '#ffffff' : '#1a1a1a';
+    fill = optimizeFill(fill, fg, 4.5);
     rows.forEach(function(r){
       r.style.background = fill;
-      r.querySelectorAll('select,input,button,.apply-btn,.slider').forEach(function(c){
-        c.style.background = fill;
-        c.style.color = fg;
-        c.style.borderColor = 'transparent';
-      });
+      r.style.color = fg;
     });
   }
   function updateFillButtons() {
     var scope = currentFillScope();
-    var bAll = document.getElementById('fillAllBtn'), bThis = document.getElementById('fillThisBtn');
-    if (bAll) bAll.classList.toggle('active', scope === 'all');
-    if (bThis) bThis.classList.toggle('active', scope === 'this');
+    document.querySelectorAll('.fill-btn[data-scope]').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-scope') === scope);
+    });
   }
   window.applyThemeFill = function(scope) {
     var all = 'wb_theme_fill_all', thisK = themeFillKeyThis(), off = 'wb_theme_fill_off';
@@ -1928,6 +1956,14 @@ var safeLS = (function() {
     else { safeLS.setItem(thisK, '1'); safeLS.removeItem(all); }
     applyFillStyle(); updateFillButtons();
   };
+
+  function updateFillBtnLang() {
+    var isZh = lang === 'zh';
+    document.querySelectorAll('.fill-btn[data-scope]').forEach(function(b){
+      var key = isZh ? 'data-zh' : 'data-en';
+      if (b.hasAttribute(key)) b.textContent = b.getAttribute(key);
+    });
+  }
 
   function applyLang() {
     var isZh = lang === 'zh';
@@ -1958,10 +1994,7 @@ var safeLS = (function() {
     document.getElementById('lblFont').textContent = isZh ? '字号' : 'Font size';
     document.getElementById('lblRadius').textContent = isZh ? '圆角大小' : 'Corner radius';
     document.getElementById('lblHl').textContent = isZh ? '高光显示' : 'Highlight';
-    document.getElementById('lblCrossWebpage').textContent = isZh ? '跨网页设置' : 'Cross-webpage settings';
-    document.getElementById('subCrossWebpage').textContent = isZh ? '以下设置在主页与每日新闻之间同步' : 'These settings sync between the homepage and daily news';
-    document.getElementById('fillThisBtn').textContent = isZh ? '仅用于该网页' : 'This page only';
-    document.getElementById('fillAllBtn').textContent = isZh ? '用于所有' : 'Use for all';
+    updateFillBtnLang();
     document.getElementById('btnApplyAccent').textContent = isZh ? '应用' : 'Apply';
     document.getElementById('btnApplyHl').textContent = isZh ? '应用' : 'Apply';
     document.getElementById('btnExport').textContent = isZh ? '导出设置' : 'Export';
