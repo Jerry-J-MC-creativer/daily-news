@@ -594,11 +594,26 @@
   function applyFillStyle() {
     var rows = document.querySelectorAll('.common-setting');
     var scope = currentFillScope();
-    if (!scope) { rows.forEach(function(r){ r.style.background=''; r.style.color=''; }); return; }
+    if (!scope) {
+      rows.forEach(function(r){
+        r.style.background=''; r.style.color='';
+        r.querySelectorAll('select,input,button,.apply-btn,.slider').forEach(function(c){ c.style.background=''; c.style.color=''; c.style.borderColor=''; });
+      });
+      return;
+    }
     var accent = getThemeColor();
     var dark = !isLight(accent);
     var fill = adjustLightness(accent, dark ? -10 : 10);
-    rows.forEach(function(r){ r.style.background = fill; r.style.color = dark ? '#ffffff' : ''; });
+    var fg = dark ? '#ffffff' : '#1a1a1a';
+    rows.forEach(function(r){
+      r.style.background = fill;
+      r.style.color = fg;
+      r.querySelectorAll('select,input,button,.apply-btn,.slider').forEach(function(c){
+        c.style.background = fill;
+        c.style.color = fg;
+        c.style.borderColor = 'transparent';
+      });
+    });
   }
   function updateFillButtons() {
     var scope = currentFillScope();
