@@ -197,6 +197,7 @@
   }
   .fill-btn:hover { border-color: var(--accent); color: var(--accent); }
   .fill-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .common-setting { transition: background .25s ease, color .25s ease; border-radius: var(--radius); }
 
   /* 移动端 */
   @media (max-width: 480px) {
@@ -247,7 +248,7 @@
     </div>
 
     <!-- 0) 语言切换（与每日新闻同步 wb_lang） -->
-    <div class="setting-row">
+    <div class="setting-row common-setting">
       <label id="lblLang">语言</label>
       <select id="selLang" onchange="setLang(this.value)">
         <option value="zh">简体中文</option>
@@ -267,7 +268,7 @@
     </div>
 
     <!-- 2) 主题色（大标题文字颜色） -->
-    <div class="setting-row">
+    <div class="setting-row common-setting">
       <div class="row-head">
         <label id="lblTitleColor">大标题文字颜色</label>
         <label class="switch">
@@ -295,7 +296,7 @@
     </div>
 
     <!-- 4) 圆角弧度 -->
-    <div class="setting-row">
+    <div class="setting-row common-setting">
       <label id="lblRadius">按钮与圆角弧度</label>
       <div class="range-row">
         <input type="range" id="rngRadius" min="0" max="32" value="16" oninput="setRadius(this.value)">
@@ -304,7 +305,7 @@
     </div>
 
     <!-- 5) 字体大小 -->
-    <div class="setting-row">
+    <div class="setting-row common-setting">
       <label id="lblFont">字体大小</label>
       <div class="range-row">
         <input type="range" id="rngFont" min="12" max="22" value="15" oninput="setFont(this.value)">
@@ -478,6 +479,7 @@
     safeLS.setItem('wb_home_titlecolor_on', '1');
     document.getElementById('chkTitleColor').checked = true;
     updateTitleColor();
+    applyFillStyle();
   };
   window.setRefresh = function(on) {
     safeLS.setItem('wb_home_refresh', on ? '1' : '0');
@@ -590,14 +592,13 @@
     return safeLS.getItem('wb_home_titlecolor') || '#4f6ef7';
   }
   function applyFillStyle() {
-    var row = document.getElementById('themeFillRow'); if (!row) return;
+    var rows = document.querySelectorAll('.common-setting');
     var scope = currentFillScope();
-    if (!scope) { row.style.background = ''; row.style.color = ''; return; }
+    if (!scope) { rows.forEach(function(r){ r.style.background=''; r.style.color=''; }); return; }
     var accent = getThemeColor();
     var dark = !isLight(accent);
     var fill = adjustLightness(accent, dark ? -10 : 10);
-    row.style.background = fill;
-    row.style.color = dark ? '#ffffff' : '';
+    rows.forEach(function(r){ r.style.background = fill; r.style.color = dark ? '#ffffff' : ''; });
   }
   function updateFillButtons() {
     var scope = currentFillScope();
@@ -650,7 +651,7 @@
       document.getElementById('lblRadius').textContent='按钮与圆角弧度';
       document.getElementById('lblFont').textContent='字体大小';
       document.getElementById('lblThemeFill').textContent='主题色填充';
-      document.getElementById('themeFillSub').textContent='按主题色深浅自动填充本区背景（浅+10亮 / 深-10亮）';
+      document.getElementById('themeFillSub').textContent='用主题色填充新闻与主页共用的功能项（语言/圆角/字体/主题色）背景（浅+10亮 / 深-10亮）';
       document.getElementById('fillThisBtn').textContent='仅用于该网页';
       document.getElementById('fillAllBtn').textContent='用于所有';
       document.getElementById('gotoNews').textContent='前往每日新闻 →';
@@ -665,7 +666,7 @@
       document.getElementById('lblRadius').textContent='Button & corner radius';
       document.getElementById('lblFont').textContent='Font size';
       document.getElementById('lblThemeFill').textContent='Theme color fill';
-      document.getElementById('themeFillSub').textContent='Auto-fills this area with the theme color (light +10 / dark −10 lightness)';
+      document.getElementById('themeFillSub').textContent='Fills the settings shared with the news & home pages (language, radius, font, theme color) with the theme color (light +10 / dark −10 lightness)';
       document.getElementById('fillThisBtn').textContent='This page only';
       document.getElementById('fillAllBtn').textContent='For all';
       document.getElementById('gotoNews').textContent='Go to Daily News →';
