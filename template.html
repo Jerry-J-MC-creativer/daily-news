@@ -102,8 +102,9 @@
   .gear-btn:hover { background: rgba(255,255,255,0.35); }
   .title-btns { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; flex-shrink: 0; }
   .title-btn {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 8px 14px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    width: 100px;
+    padding: 8px 12px;
     border-radius: var(--radius);
     border: none;
     background: rgba(255,255,255,0.16);
@@ -303,14 +304,23 @@
     width: 100%;
     max-width: 420px;
     max-height: 85vh;
-    overflow-y: auto;
-    padding: 20px;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    padding: 0;
   }
+  .settings-scroll { flex: 1 1 auto; overflow-y: auto; padding: 0 20px 16px; }
+  .settings-footer { flex-shrink: 0; display: flex; justify-content: flex-end; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--border); background: var(--surface); }
+  .settings-footer .exit-btn { padding: 9px 16px; border-radius: var(--radius); cursor: pointer; font-size: .9em; font-weight: 600; border: 1px solid var(--border); background: transparent; color: var(--text); }
+  .settings-footer .exit-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .settings-footer .save-btn { border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+  .settings-footer .save-btn:hover { filter: brightness(1.08); color: #fff; }
   .settings-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin: 0;
+    padding: 20px 20px 12px;
+    flex-shrink: 0;
   }
   .settings-header h2 { font-size: 1.2em; }
   .setting-row {
@@ -664,7 +674,7 @@
     .global-actions button { padding: 8px 16px; font-size: .85em; }
     .item-title { font-size: .92em; }
     .item-body { font-size: .9em; }
-    .settings-panel { padding: 14px; }
+    .settings-panel { padding: 0; }
     .modal { padding: 14px; }
     .p-icon-btn { width: 34px; height: 34px; }
     .p-icon-btn svg { width: 20px; height: 20px; }
@@ -723,7 +733,7 @@
     .global-actions button { padding: 8px 18px; font-size: 1em; }
     .icon-btn { width: 36px; height: 36px; font-size: 15px; }
     .fold-btn, .tts-btn { height: 36px; padding: 0 12px; font-size: 14px; }
-    .settings-panel { max-width: 480px; padding: 24px; }
+    .settings-panel { max-width: 480px; padding: 0; }
   }
   /* ========== Responsive: Extra ultra-wide (>= 2560px) ========== */
   @media (min-width: 2560px) {
@@ -791,6 +801,7 @@
       <button class="icon-btn" onclick="closeSettings()">✕</button>
     </div>
 
+    <div class="settings-scroll">
     <!-- 语言：跨网页同步 -->
     <div class="setting-row common-setting">
       <label id="lblLang">语言</label>
@@ -877,7 +888,13 @@
     <div class="setting-row" style="margin-top:22px;">
       <button class="danger-btn" id="clearCacheBtn" onclick="confirmClearCache()">清理所有缓存</button>
     </div>
-    <a class="bottom-link" id="gotoHome" href="index.html" target="_blank" rel="noopener">前往主页设置 →</a>
+    <a class="bottom-link" id="gotoHome" href="index.html#open-settings" target="_blank" rel="noopener">前往主页设置界面 →</a>
+    </div><!-- /settings-scroll -->
+
+    <div class="settings-footer">
+      <button class="exit-btn" id="exitNoSave" onclick="closeSettingsDiscard()">不保存退出</button>
+      <button class="exit-btn save-btn" id="exitSave" onclick="closeSettings()">保存并退出</button>
+    </div>
   </div>
 </div>
 
@@ -1301,10 +1318,16 @@ var safeLS = (function() {
         probe.src = url;
       });
     }
-    var banner = document.getElementById('bannerImg');
-    if (banner) {
-      fastestImage(banner, 'cover', function() {});
+    function dailyHeroImage() {
+      var pool = ['img/bg-1.jpg','img/bg-2.jpg','img/bg-3.jpg','img/bg-4.jpg','img/bg-5.jpg','img/banner.jpg'];
+      var m = location.pathname.match(/\d{4}-\d{2}-\d{2}/);
+      var key = m ? m[0]
+              : ((typeof dateStr === 'string' && /\d{4}-\d{2}-\d{2}/.test(dateStr)) ? dateStr : 'default');
+      var h = 0; for (var i = 0; i < key.length; i++) { h = (h * 31 + key.charCodeAt(i)) >>> 0; }
+      return pool[h % pool.length];
     }
+    var banner = document.getElementById('bannerImg');
+    if (banner) { banner.src = dailyHeroImage(); }
     sections.forEach(function(sec, i) {
       var img = sec.querySelector('.section-header img');
       if (!img) return;
@@ -1508,7 +1531,11 @@ var safeLS = (function() {
     document.getElementById('btnExport').textContent = isZh ? '导出设置' : 'Export';
     document.getElementById('btnImport').textContent = isZh ? '导入设置' : 'Import';
     var gh = document.getElementById('gotoHome');
-    if (gh) gh.textContent = isZh ? '前往主页设置 →' : 'Go to Home settings →';
+    if (gh) {
+      gh.textContent = isZh ? '前往主页设置界面 →' : 'Go to Home settings →';
+      var ghBase = location.pathname.indexOf('/news-site/') >= 0 ? '../index.html' : 'index.html';
+      gh.href = ghBase + '#open-settings';
+    }
     var ccb = document.getElementById('clearCacheBtn');
     if (ccb && !ccb.classList.contains('confirm')) ccb.textContent = isZh ? '清理所有缓存' : 'Clear all cache';
     document.getElementById('summaryTitle').textContent = isZh ? '核心主线' : 'Key Themes';
@@ -1680,8 +1707,22 @@ var safeLS = (function() {
   }
 
   // ========== Settings actions ==========
-  window.openSettings = function() { document.getElementById('settingsOverlay').classList.add('open'); applyFillStyle(); updateFillButtons(); };
+  var settingsSnapshot = null;
+  function snapshotSettings() {
+    settingsSnapshot = {};
+    try { for (var i = 0; i < safeLS.length; i++) { var k = safeLS.key(i); if (k && k.indexOf('wb_') === 0) settingsSnapshot[k] = safeLS.getItem(k); } } catch (e) {}
+  }
+  function restoreSettings() {
+    if (!settingsSnapshot) return;
+    for (var k in settingsSnapshot) { if (!settingsSnapshot.hasOwnProperty(k)) continue; if (settingsSnapshot[k] === null) safeLS.removeItem(k); else safeLS.setItem(k, settingsSnapshot[k]); }
+  }
+  function reapplyAll() {
+    try { applyTheme(); applyAccent(); applyFont(); applyRadius(); applyHl(); applyHlOn(); applyLang(); applyFillStyle(); updateFillButtons(); } catch (e) {}
+  }
+  window.openSettings = function() { snapshotSettings(); document.getElementById('settingsOverlay').classList.add('open'); applyFillStyle(); updateFillButtons(); };
   window.closeSettings = function() { document.getElementById('settingsOverlay').classList.remove('open'); };
+  window.closeSettingsDiscard = function() { restoreSettings(); reapplyAll(); document.getElementById('settingsOverlay').classList.remove('open'); };
+  if (location.hash === '#open-settings') openSettings();
   window.setLang = function(v) { lang = v; safeLS.setItem('wb_lang', lang); applyLang(); setupVoices(); };
   window.setTheme = function(v) { theme = v; safeLS.setItem('wb_theme', theme); applyTheme(); };
   window.setAccent = function(v) { accent = v; safeLS.setItem('wb_accent', accent); applyAccent(); applyFillStyle(); };
