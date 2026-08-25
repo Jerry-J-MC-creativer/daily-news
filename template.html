@@ -1388,12 +1388,16 @@ var safeLS = (function() {
   }
   function themeFillKeyThis() { return PAGE_TAG === 'home' ? 'wb_theme_fill_home' : 'wb_theme_fill_news'; }
   function currentFillScope() {
+    if (safeLS.getItem('wb_theme_fill_off') === '1') return '';
     if (safeLS.getItem('wb_theme_fill_all') === '1') return 'all';
     if (safeLS.getItem(themeFillKeyThis()) === '1') return 'this';
-    return '';
+    return 'all'; // 默认开启
   }
   function getThemeColor() {
-    return safeLS.getItem('wb_accent') || '#2563eb';
+    var a = safeLS.getItem('wb_accent');
+    // 若用户把主题色设成白色/接近白色，填充会不可见，回退到页面默认主题色
+    if (a && a.toLowerCase() !== '#ffffff' && a.toLowerCase() !== '#fff') return a;
+    return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#2563eb';
   }
   function applyFillStyle() {
     var rows = document.querySelectorAll('.common-setting');
@@ -1425,8 +1429,9 @@ var safeLS = (function() {
     if (bThis) bThis.classList.toggle('active', scope === 'this');
   }
   window.applyThemeFill = function(scope) {
-    var all = 'wb_theme_fill_all', thisK = themeFillKeyThis();
-    if (currentFillScope() === scope) { safeLS.removeItem(all); safeLS.removeItem(thisK); }
+    var all = 'wb_theme_fill_all', thisK = themeFillKeyThis(), off = 'wb_theme_fill_off';
+    safeLS.removeItem(off);
+    if (currentFillScope() === scope) { safeLS.setItem(off, '1'); }
     else if (scope === 'all') { safeLS.setItem(all, '1'); safeLS.removeItem(thisK); }
     else { safeLS.setItem(thisK, '1'); safeLS.removeItem(all); }
     applyFillStyle(); updateFillButtons();
