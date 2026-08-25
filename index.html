@@ -189,6 +189,15 @@
   }
   .bottom-link:hover { text-decoration: underline; }
 
+  /* 主题色填充 */
+  .theme-fill-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+  .fill-btn {
+    padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: .82em; font-weight: 600;
+    border: 1px solid var(--border); background: transparent; color: var(--text);
+  }
+  .fill-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .fill-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
   /* 移动端 */
   @media (max-width: 480px) {
     .content { padding: 36px 14px; }
@@ -300,6 +309,18 @@
       <div class="range-row">
         <input type="range" id="rngFont" min="12" max="22" value="15" oninput="setFont(this.value)">
         <span class="val" id="fontVal">15px</span>
+      </div>
+    </div>
+
+    <!-- 主题色填充 -->
+    <div class="setting-row" id="themeFillRow">
+      <div class="row-head">
+        <label id="lblThemeFill">主题色填充</label>
+        <span class="color-sub" id="themeFillSub">按主题色深浅自动填充本区背景（浅+10亮 / 深-10亮）</span>
+      </div>
+      <div class="theme-fill-actions">
+        <button class="fill-btn" id="fillThisBtn" onclick="applyThemeFill('this')">仅用于该网页</button>
+        <button class="fill-btn" id="fillAllBtn" onclick="applyThemeFill('all')">用于所有</button>
       </div>
     </div>
 
@@ -487,6 +508,8 @@
   window.openSettings = function() {
     document.getElementById('settingsOverlay').classList.add('open');
     syncSettingsUI();
+    applyFillStyle();
+    updateFillButtons();
   };
   window.closeSettings = function() { document.getElementById('settingsOverlay').classList.remove('open'); };
 
@@ -511,6 +534,83 @@
     btn.classList.remove('confirm');
     btn.textContent = isZh ? '清理所有缓存' : 'Clear all cache';
     location.reload();
+  };
+
+  // ---- 主题色填充 ----
+  var PAGE_TAG = 'home';
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0; }
+    else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h /= 6;
+    }
+    return { h: h * 360, s: s * 100, l: l * 100 };
+  }
+  function hslToHex(h, s, l) {
+    h /= 360; s /= 100; l /= 100;
+    var r, g, b;
+    if (s === 0) { r = g = b = l; }
+    else {
+      var hue2rgb = function(p, q, t) {
+        if (t < 0) t += 1; if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 2;
+        return p;
+      };
+      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      var p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1/3); g = hue2rgb(p, q, h); b = hue2rgb(p, q, h - 1/3);
+    }
+    var to = function(x) { return ('0' + Math.round(x * 255).toString(16)).slice(-2); };
+    return '#' + to(r) + to(g) + to(b);
+  }
+  // 亮度按 ±10 个百分点调整；若已到边界无法继续增减，则保持原亮度
+  function adjustLightness(hex, delta) {
+    var c = hexToRgb(hex); if (!c) return hex;
+    var hsl = rgbToHsl(c.r, c.g, c.b);
+    var nl = hsl.l + delta;
+    if (nl < 0 || nl > 100) nl = hsl.l;
+    return hslToHex(hsl.h, hsl.s, nl);
+  }
+  function themeFillKeyThis() { return PAGE_TAG === 'home' ? 'wb_theme_fill_home' : 'wb_theme_fill_news'; }
+  function currentFillScope() {
+    if (safeLS.getItem('wb_theme_fill_all') === '1') return 'all';
+    if (safeLS.getItem(themeFillKeyThis()) === '1') return 'this';
+    return '';
+  }
+  function getThemeColor() {
+    return safeLS.getItem('wb_home_titlecolor') || '#4f6ef7';
+  }
+  function applyFillStyle() {
+    var row = document.getElementById('themeFillRow'); if (!row) return;
+    var scope = currentFillScope();
+    if (!scope) { row.style.background = ''; row.style.color = ''; return; }
+    var accent = getThemeColor();
+    var dark = !isLight(accent);
+    var fill = adjustLightness(accent, dark ? -10 : 10);
+    row.style.background = fill;
+    row.style.color = dark ? '#ffffff' : '';
+  }
+  function updateFillButtons() {
+    var scope = currentFillScope();
+    var bAll = document.getElementById('fillAllBtn'), bThis = document.getElementById('fillThisBtn');
+    if (bAll) bAll.classList.toggle('active', scope === 'all');
+    if (bThis) bThis.classList.toggle('active', scope === 'this');
+  }
+  window.applyThemeFill = function(scope) {
+    var all = 'wb_theme_fill_all', thisK = themeFillKeyThis();
+    if (currentFillScope() === scope) { safeLS.removeItem(all); safeLS.removeItem(thisK); }
+    else if (scope === 'all') { safeLS.setItem(all, '1'); safeLS.removeItem(thisK); }
+    else { safeLS.setItem(thisK, '1'); safeLS.removeItem(all); }
+    applyFillStyle(); updateFillButtons();
   };
 
   function applyLang() {
@@ -549,6 +649,10 @@
       document.getElementById('refreshHint').textContent='若关闭该开关，则背景图片每天仅刷新一次。';
       document.getElementById('lblRadius').textContent='按钮与圆角弧度';
       document.getElementById('lblFont').textContent='字体大小';
+      document.getElementById('lblThemeFill').textContent='主题色填充';
+      document.getElementById('themeFillSub').textContent='按主题色深浅自动填充本区背景（浅+10亮 / 深-10亮）';
+      document.getElementById('fillThisBtn').textContent='仅用于该网页';
+      document.getElementById('fillAllBtn').textContent='用于所有';
       document.getElementById('gotoNews').textContent='前往每日新闻 →';
     } else {
       document.getElementById('settingsLabel').textContent='Settings';
@@ -560,6 +664,10 @@
       document.getElementById('refreshHint').textContent='If off, the background refreshes only once per day.';
       document.getElementById('lblRadius').textContent='Button & corner radius';
       document.getElementById('lblFont').textContent='Font size';
+      document.getElementById('lblThemeFill').textContent='Theme color fill';
+      document.getElementById('themeFillSub').textContent='Auto-fills this area with the theme color (light +10 / dark −10 lightness)';
+      document.getElementById('fillThisBtn').textContent='This page only';
+      document.getElementById('fillAllBtn').textContent='For all';
       document.getElementById('gotoNews').textContent='Go to Daily News →';
     }
   }
@@ -571,6 +679,8 @@
   applyBackground();
   applyLang();
   syncSettingsUI();
+  applyFillStyle();
+  updateFillButtons();
 
   // 动态生成日期列表
   function pad(n){ return n<10 ? '0'+n : ''+n; }
