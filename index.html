@@ -347,26 +347,40 @@
   }
 
   // ---- 背景 ----
-  var bgSources = ['img/banner.jpg'];
+  var bgSources = [
+    'img/bg-1.jpg','img/bg-2.jpg','img/bg-3.jpg','img/bg-4.jpg','img/bg-5.jpg'
+  ];
   var bgFileDateKey = 'wb_home_bg_date';
   var bgFileKey = 'wb_home_bg_file';
 
   function pickBackground() {
-    // refresh-on-visit ON -> always use first source (fixed banner)
-    // refresh OFF -> once per day reused file
+    // refresh ON -> new random wallpaper each visit (avoid same twice in a row)
+    // refresh OFF -> one wallpaper per calendar day
     var refresh = safeLS.getItem('wb_home_refresh');
     if (refresh === null) refresh = '1';
+    var last = safeLS.getItem(bgFileKey) || '';
+    function choose() {
+      var n = bgSources.length;
+      if (n <= 1) return bgSources[0] || '';
+      var pick = bgSources[Math.floor(Math.random() * n)];
+      for (var guard = 0; pick === last && guard < 10; guard++) {
+        pick = bgSources[Math.floor(Math.random() * n)];
+      }
+      return pick;
+    }
     if (refresh === '0') {
       var today = new Date().toISOString().slice(0,10);
       var storedDate = safeLS.getItem(bgFileDateKey);
       var storedFile = safeLS.getItem(bgFileKey);
       if (storedDate === today && storedFile) return storedFile;
-      var pick = bgSources[Math.floor(Math.random()*bgSources.length)];
+      var pick = choose();
       safeLS.setItem(bgFileDateKey, today);
       safeLS.setItem(bgFileKey, pick);
       return pick;
     }
-    return bgSources[0];
+    var pick = choose();
+    safeLS.setItem(bgFileKey, pick);
+    return pick;
   }
 
   function applyBackground() {
@@ -446,7 +460,7 @@
   };
   window.setRefresh = function(on) {
     safeLS.setItem('wb_home_refresh', on ? '1' : '0');
-    if (on === '1') { safeLS.removeItem(bgFileDateKey); safeLS.removeItem(bgFileKey); }
+    if (on) { safeLS.removeItem(bgFileDateKey); safeLS.removeItem(bgFileKey); }
     applyBackground();
   };
   window.setRadius = function(v) {
