@@ -354,10 +354,10 @@
   .theme-fill-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
   .fill-btn {
     padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: .82em; font-weight: 600;
-    border: 1px solid var(--border); background: transparent; color: var(--text);
+    border: 1px solid var(--accent); background: var(--accent); color: #fff;
   }
-  .fill-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .fill-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .fill-btn:hover { filter: brightness(1.08); }
+  .fill-btn.active { box-shadow: inset 0 0 0 2px rgba(255,255,255,.7); filter: brightness(1.14); }
   .common-setting { transition: background .25s ease, color .25s ease; border-radius: var(--radius); }
   .danger-btn {
     width: 100%; margin-top: 6px; padding: 11px;
@@ -1400,7 +1400,6 @@ var safeLS = (function() {
     var fg = dark ? '#ffffff' : '#1a1a1a';
     rows.forEach(function(r){
       r.style.background = fill;
-      r.style.color = fg;
       r.querySelectorAll('select,input,button,.apply-btn,.slider').forEach(function(c){
         c.style.background = fill;
         c.style.color = fg;
