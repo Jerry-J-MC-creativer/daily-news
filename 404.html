@@ -84,18 +84,32 @@
     <footer>每日全球要闻</footer>
   </div>
 <script>
-/* 所有链接默认新标签页打开，除了“返回主页” */
+/* 所有链接默认新标签页打开，除了「返回主页」和页内锚点（用委托监听，覆盖动态生成的链接） */
 (function(){
-  try {
-    document.querySelectorAll('a[href]').forEach(function(a){
-      var h = a.getAttribute('href') || '';
-      if (h.charAt(0) === '#') return;                                   // 页内锚点不新开
-      if (h === 'index.html') return;                                    // 返回主页不新开
-      if (/返回主页|返回首页|back[\s-]?home/i.test(a.textContent)) return; // 返回主页按钮不新开
-      a.setAttribute('target', '_blank');
-      a.setAttribute('rel', 'noopener');
-    });
-  } catch(e) {}
+  function isHomeLink(a){
+    var h = (a.getAttribute('href')||'').trim();
+    if (h === 'index.html' || h.indexOf('index.html#') === 0) return true;
+    var t = (a.textContent||'').trim();
+    if (/返回主页|返回首页|back[\s-]?home/i.test(t)) return true;
+    return false;
+  }
+  document.addEventListener('click', function(e){
+    if (e.defaultPrevented) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return; // 保留系统自带的新开/下载手势
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var a = t.closest('a');
+    if (!a) return;
+    var h = (a.getAttribute('href')||'').trim();
+    if (!h) return;
+    if (h.charAt(0) === '#') return;                                   // 页内锚点
+    if (/^(mailto:|tel:|javascript:)/i.test(h)) return;                // 邮箱/电话/脚本链接
+    if (a.hasAttribute('download')) return;                            // 下载（如导出设置）
+    if ((a.getAttribute('target')||'').toLowerCase() === '_self') return;
+    if (isHomeLink(a)) return;                                         // 返回主页不新开
+    e.preventDefault();
+    window.open(h, '_blank', 'noopener');
+  }, true);
 })();
 </script>
 </body>
