@@ -225,6 +225,12 @@
     color: var(--accent); text-decoration: none; font-weight: 600;
   }
   .bottom-link:hover { text-decoration: underline; }
+  .bottom-row {
+    display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap;
+    margin-top: 22px;
+  }
+  .bottom-row .bottom-link { display: inline-block; margin-top: 0; }
+  .prank-btn { background: none; border: none; font: inherit; cursor: pointer; padding: 0; }
 
   /* 跨网页设置分组 */
   .cross-webpage-group {
@@ -394,8 +400,11 @@
 
     <!-- 前往每日新闻 -->
     <a class="bottom-link" id="gotoNews" href="2026-08-24.html" target="_blank" rel="noopener">前往每日新闻的设置界面 →</a>
-    <!-- 前往正在开发的区域 -->
-    <a class="bottom-link" id="gotoDev" href="dev-area.html" target="_blank" rel="noopener">前往正在开发的区域 →</a>
+    <!-- 前往测试版 + 千万别点（恶搞跳转按钮，点开自动跳 B 站 Rickroll） -->
+    <div class="bottom-row">
+      <button type="button" class="bottom-link prank-btn" id="neverBtn" onclick="window.location.href='https://www.bilibili.com/video/BV1GJ411x7h7/'">千万别点</button>
+      <a class="bottom-link" id="gotoDev" href="dev-area.html" target="_blank" rel="noopener">前往测试版➡</a>
+    </div>
     </div><!-- /settings-scroll -->
 
     <div class="settings-footer">
@@ -833,7 +842,7 @@
       document.getElementById('lblCrossWebpage').textContent='跨网页设置';
       document.getElementById('subCrossWebpage').textContent='以下设置在主页与每日新闻之间同步';
       document.getElementById('gotoNews').textContent='前往每日新闻的设置界面 →';
-      document.getElementById('gotoDev').textContent='前往正在开发的区域 →';
+      document.getElementById('gotoDev').textContent='前往测试版➡';
     } else {
       document.getElementById('settingsLabel').textContent='Settings';
       document.getElementById('settingsTitle').textContent='Settings';
@@ -847,7 +856,7 @@
       document.getElementById('lblCrossWebpage').textContent='Cross-webpage settings';
       document.getElementById('subCrossWebpage').textContent='These settings sync between the homepage and daily news';
       document.getElementById('gotoNews').textContent='Daily News Settings →';
-      document.getElementById('gotoDev').textContent='Development Area →';
+      document.getElementById('gotoDev').textContent='Test Version ➡';
     }
     updateFillBtnLang();
   }
