@@ -1,0 +1,3110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日全球要闻｜2026-08-26</title>
+<style>
+  :root {
+    --bg: #f3f4f6;
+    --surface: #ffffff;
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --border: #e5e7eb;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --title-gradient: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    --accent: #2563eb;
+    --radius: 16px;
+    --font-base: 15px;
+    --hl-color: #ffeb3b;
+    --glass: rgba(255,255,255,0.85);
+    --player-bg: rgba(255,255,255,0.92);
+  }
+  [data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border: #334155;
+    --shadow: 0 4px 24px rgba(0,0,0,0.35);
+    --glass: rgba(30,41,59,0.85);
+    --player-bg: rgba(30,41,59,0.92);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: var(--font-base);
+    line-height: 1.6;
+    transition: background .3s, color .3s;
+  }
+  .titlebar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--title-gradient);
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: padding .3s, border-radius .3s, box-shadow .3s, margin .3s;
+    width: auto;
+  }
+  .titlebar.scrolled { border-radius: var(--radius); margin: 8px 12px 0; }
+  .titlebar.shrunk { padding: 10px 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+  /* Browser compatibility tip */
+  .browser-tip {
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: .82em;
+    text-align: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .browser-tip svg { width: 16px; height: 16px; flex-shrink: 0; }
+  /* Firefox / older browsers: fallback when backdrop-filter is unsupported */
+  @supports not (backdrop-filter: blur(1px)) {
+    .section-titlebar { background: var(--glass); }
+    .player { background: var(--player-bg); }
+    .settings-panel { background: var(--surface); }
+  }
+  /* Safari 15+ backdrop-filter fix */
+  @supports (-webkit-backdrop-filter: blur(1px)) {
+    .section-titlebar { -webkit-backdrop-filter: blur(12px); }
+    .player { -webkit-backdrop-filter: blur(16px); }
+  }
+  .title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .title-text { font-size: 1.15em; font-weight: 700; letter-spacing: .5px; }
+  .subtitle-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: .85em;
+    opacity: .9;
+  }
+  .gear-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    transition: background .2s;
+  }
+  .gear-btn:hover { background: rgba(255,255,255,0.35); }
+  .title-btns { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; flex-shrink: 0; }
+  .title-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    width: 100px;
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    border: none;
+    background: rgba(255,255,255,0.16);
+    color: #fff;
+    cursor: pointer;
+    font-size: .82em;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: background .2s;
+    white-space: nowrap;
+  }
+  .title-btn:hover { background: rgba(255,255,255,0.28); }
+  .title-btn .tb-icon { font-size: 1.1em; }
+  @media (max-width: 520px) {
+    .title-btn { padding: 4px 7px; font-size: .7em; }
+  }
+  .tts-main-btn {
+    margin-top: 10px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    cursor: pointer;
+    font-size: .9em;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background .2s;
+  }
+  .tts-main-btn:hover { background: rgba(255,255,255,0.3); }
+  .tts-btn-row { margin-top: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .tts-btn-row .tts-main-btn { margin-top: 0; }
+  .tts-reset-btn {
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    cursor: pointer;
+    font-size: .9em;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: background .2s;
+  }
+  .tts-reset-btn:hover { background: rgba(255,255,255,0.28); }
+  .banner {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 40%, #000) 100%);
+    opacity: 0;
+    transition: opacity .5s ease;
+  }
+  .banner.img-loaded { opacity: 1; }
+  .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 20px clamp(12px, 4vw, 48px); }
+  .global-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .global-actions button {
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-size: .92em;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    transition: all .2s;
+  }
+  .global-actions button:hover { border-color: var(--accent); color: var(--accent); }
+  .section-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+    overflow: hidden;
+    border-left: 5px solid var(--accent);
+  }
+  .section-header {
+    position: relative;
+    cursor: pointer;
+    min-height: 120px;
+    display: flex;
+    align-items: flex-end;
+    border-radius: var(--radius) var(--radius) 0 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 15%, transparent) 0%, color-mix(in srgb, var(--accent) 30%, transparent) 100%);
+  }
+  .section-header img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity .45s ease;
+  }
+  .section-header img.img-loaded { opacity: .75; }
+  .section-header:hover img.img-loaded { opacity: .8; }
+  .section-titlebar {
+    position: relative;
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title { font-weight: 700; font-size: 1.05em; display: flex; align-items: center; gap: 8px; }
+  .section-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .icon-btn {
+    height: 38px; padding: 0 16px; width: auto; min-width: 40px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    font-size: .82em;
+    white-space: nowrap;
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+  .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .fold-btn, .tts-btn {
+    height: 38px; padding: 0 18px; width: auto; min-width: 88px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: .85em;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+  .fold-btn:hover, .tts-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .fold-btn:active, .tts-btn:active { transform: scale(.94); }
+  .section-body { display: none; padding: 12px 16px 16px; }
+  .section-body.open { display: block; }
+  .item { margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 0;
+  }
+  .item-title { font-weight: 700; flex: 1; }
+  .item-body { display: none; padding: 8px 0 4px 4px; color: var(--text-secondary); font-size: .95em; }
+  .item-body.open { display: block; }
+  .hl-ch { background: var(--hl-color); color: var(--text); border-radius: 2px; padding: 0 1px; }
+  .closing {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-secondary);
+    font-size: .95em;
+  }
+  .summary {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-top: 20px;
+    font-size: .9em;
+    color: var(--text-secondary);
+  }
+  .summary h3 { color: var(--text); margin-bottom: 10px; font-size: 1.1em; }
+  /* Settings panel */
+  .settings-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .settings-overlay.open { display: flex; }
+  .settings-panel {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 420px;
+    max-height: 85vh;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+  }
+  .settings-scroll { flex: 1 1 auto; overflow-y: auto; padding: 0 20px 16px; }
+  .settings-footer { flex-shrink: 0; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--border); background: var(--surface); }
+  .settings-footer .cache-hint { flex-basis: 100%; font-size: .74em; line-height: 1.5; opacity: .72; margin-bottom: 4px; color: var(--text); }
+  .settings-footer .exit-btn { padding: 9px 16px; border-radius: var(--radius); cursor: pointer; font-size: .9em; font-weight: 600; border: 1px solid var(--border); background: transparent; color: var(--text); }
+  .settings-footer .exit-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .settings-footer .save-btn { border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+  .settings-footer .save-btn:hover { filter: brightness(1.08); color: #fff; }
+  .settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 20px 20px 12px;
+    flex-shrink: 0;
+  }
+  .settings-header h2 { font-size: 1.2em; }
+  .setting-row {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .setting-row label { font-weight: 600; font-size: .9em; }
+  .setting-row select, .setting-row input[type="range"] {
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: .9em;
+  }
+  .color-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .color-row input[type="color"] {
+    width: 40px; height: 32px;
+    border: none; border-radius: 6px; cursor: pointer; padding: 0;
+  }
+  .color-row input[type="number"] {
+    width: 56px; padding: 4px 6px;
+    border-radius: 6px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text);
+  }
+  .apply-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    font-size: .85em;
+  }
+  /* 跨网页设置（分散在各处，不单独成组） */
+  .cw-actions { display: flex; flex-direction: row; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 14px; width: 100%; flex-basis: 100%; }
+  .fill-btn {
+    padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: .82em; font-weight: 600;
+    border: 1px solid var(--accent); background: var(--accent); color: #fff;
+  }
+  .fill-btn:hover { filter: brightness(1.08); }
+  .fill-btn.active { box-shadow: inset 0 0 0 2px rgba(255,255,255,.7); filter: brightness(1.14); }
+  .common-setting { transition: background .25s ease, color .25s ease; border-radius: var(--radius); padding: 10px 12px; margin: 0 0 12px 0; }
+  .common-setting label { color: inherit; }
+  .danger-btn {
+    width: 100%; margin-top: 6px; padding: 11px;
+    border-radius: var(--radius); border: 1px solid #e25570;
+    background: transparent; color: #e25570; cursor: pointer;
+    font-size: .92em; font-weight: 600; transition: background .2s, color .2s;
+  }
+  .danger-btn:hover { background: #e25570; color: #fff; }
+  .danger-btn.confirm { background: #e25570; color: #fff; border-color: #e25570; }
+  .bottom-link {
+    display: block; text-align: center; margin-top: 22px; font-size: .85em;
+    color: var(--accent); text-decoration: none; font-weight: 600;
+  }
+  .bottom-link:hover { text-decoration: underline; }
+  .switch {
+    position: relative;
+    width: 44px; height: 24px;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #cbd5e1;
+    border-radius: 24px;
+    transition: .3s;
+  }
+  .slider:before {
+    content: "";
+    position: absolute;
+    height: 18px; width: 18px;
+    left: 3px; bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: .3s;
+  }
+  input:checked + .slider { background: var(--accent); }
+  input:checked + .slider:before { transform: translateX(20px); }
+  /* Player */
+  .player {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 600px;
+    background: var(--player-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 14px 18px;
+    z-index: 150;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid var(--border);
+  }
+  .player.open { display: flex; }
+  .player-main-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .p-icon-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s, transform .1s;
+    flex-shrink: 0;
+  }
+  .p-icon-btn:hover { background: rgba(128,128,128,0.12); color: var(--accent); }
+  .p-icon-btn:active { transform: scale(0.92); }
+  .p-icon-btn.active { color: var(--accent); background: rgba(37,99,235,0.10); }
+  .p-icon-btn svg { width: 22px; height: 22px; }
+  .p-play-btn {
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    border: none;
+    background: conic-gradient(from 180deg, #f97316, #a855f7, #f97316);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+    transition: transform .1s;
+    flex-shrink: 0;
+  }
+  .p-play-btn:hover { transform: scale(1.05); }
+  .p-play-btn:active { transform: scale(0.96); }
+  .p-play-btn svg { width: 26px; height: 26px; }
+  .p-play-btn #playIcon { margin-left: 3px; }
+  .player-progress-row {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%;
+  }
+  .player-progress {
+    flex: 1;
+    min-width: 0;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    accent-color: var(--accent);
+    transition: background .2s;
+  }
+  .player-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    transition: transform .12s;
+  }
+  .player-progress::-webkit-slider-thumb:active { transform: scale(1.25); }
+  .player-time { font-size: .8em; color: var(--text-secondary); min-width: 36px; text-align: center; }
+  .player-extra-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+  }
+  .player-extra-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .player select {
+    padding: 5px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: .85em;
+    max-width: 120px;
+  }
+  .volume-wrap { position: relative; display: inline-flex; align-items: center; }
+  .volume-wrap .volume-slider {
+    position: absolute;
+    bottom: 32px; left: 50%;
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: bottom center;
+    transition: transform .2s;
+    width: 28px; height: 100px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 10px 0;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow);
+    z-index: 10;
+  }
+  .volume-wrap:hover .volume-slider { transform: translateX(-50%) scaleY(1); }
+  .volume-slider input[type=range][orient=vertical] {
+    -webkit-appearance: slider-vertical;
+    width: 6px; height: 80px;
+    accent-color: var(--accent);
+  }
+  .volume-slider input[type=range] {
+    writing-mode: bt-lr;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 6px; height: 80px;
+    background: var(--border);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+  .volume-slider input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+  }
+  .volume-slider input[type=range]::-moz-range-thumb {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer; border: none;
+  }
+  .vol-btn {
+    height: 38px; padding: 0 10px; width: auto; min-width: 42px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    font-size: .9em;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    flex-shrink: 0;
+  }
+  .vol-btn svg { width: 20px; height: 20px; }
+  .vol-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .player-reset-btn {
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-size: .85em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    transition: border-color .2s, color .2s;
+  }
+  .player-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .player-native-btn {
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-size: .85em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    transition: border-color .2s, color .2s, background .2s;
+  }
+  .player-native-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(37, 99, 235, 0.08);
+  }
+  .player-native-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .player.expanded {
+    width: 96%;
+    max-width: 960px;
+    padding: 22px 28px 18px;
+  }
+  .player.expanded .player-main-row { gap: 18px; }
+  .player.expanded .p-icon-btn { width: 44px; height: 44px; }
+  .player.expanded .p-icon-btn svg { width: 26px; height: 26px; }
+  .player.expanded .p-play-btn { width: 72px; height: 72px; }
+  .player.expanded .p-play-btn svg { width: 32px; height: 32px; }
+  .player.expanded .player-progress { height: 12px; }
+  .player.expanded .player-progress::-webkit-slider-thumb { width: 20px; height: 20px; }
+  .player.expanded .player-time { font-size: .9em; }
+  /* Custom voice modal */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 300;
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px;
+    width: 100%; max-width: 360px;
+    box-shadow: var(--shadow);
+  }
+  .modal h3 { margin-bottom: 12px; }
+  .modal select {
+    width: 100%; padding: 8px;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text);
+    margin-bottom: 12px;
+  }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 8px; }
+  .modal-actions button {
+    padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); cursor: pointer;
+  }
+  .modal-actions button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  /* ========== Responsive: Small phones (< 480px) ========== */
+  @media (max-width: 479px) {
+    .container { padding: 10px; }
+    .banner { height: 140px; }
+    .title-text { font-size: 1em; }
+    .subtitle-row { font-size: .78em; }
+    .title-btns { gap: 4px; }
+    .title-btn { padding: 3px 6px; font-size: .65em; }
+    .tts-main-btn, .tts-reset-btn { padding: 6px 12px; font-size: .82em; }
+    .player { width: 98%; bottom: 6px; padding: 10px; gap: 8px; }
+    .player.expanded { padding: 16px 14px 12px; }
+    .section-titlebar { padding: 8px 10px; }
+    .section-title { font-size: .95em; }
+    .icon-btn { height: 34px; padding: 0 12px; font-size: 12.5px; }
+    .fold-btn, .tts-btn { height: 34px; padding: 0 14px; min-width: 78px; font-size: 12.5px; }
+    .global-actions button { padding: 8px 16px; font-size: .85em; }
+    .item-title { font-size: .92em; }
+    .item-body { font-size: .9em; }
+    .settings-panel { padding: 0; }
+    .modal { padding: 14px; }
+    .p-icon-btn { width: 34px; height: 34px; }
+    .p-icon-btn svg { width: 20px; height: 20px; }
+    .p-play-btn { width: 50px; height: 50px; }
+    .p-play-btn svg { width: 22px; height: 22px; }
+    .player.expanded .p-icon-btn { width: 40px; height: 40px; }
+    .player.expanded .p-play-btn { width: 58px; height: 58px; }
+    .vol-btn { height: 34px; padding: 0 8px; min-width: 34px; font-size: 12px; }
+    .player-reset-btn, .player-native-btn { padding: 6px 10px; font-size: .78em; }
+    .player-extra-group { gap: 6px; }
+  }
+  /* ========== Responsive: Large phones (480px - 767px) ========== */
+  @media (min-width: 480px) and (max-width: 767px) {
+    .container { padding: 14px; }
+    .banner { height: 170px; }
+    .player { width: 96%; bottom: 10px; padding: 12px; }
+    .section-titlebar { padding: 10px 12px; }
+  }
+  /* ========== Responsive: Tablets (768px - 1023px) ========== */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .container { padding: 24px; }
+    .banner { height: 240px; }
+    .title-text { font-size: 1.25em; }
+    .player { max-width: 700px; }
+    .section-title { font-size: 1.1em; }
+  }
+  /* ========== Responsive: Small desktops (1024px - 1439px) ========== */
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .container { padding: 28px 40px; }
+    .banner { height: 280px; }
+    .title-text { font-size: 1.3em; }
+    .player { max-width: 720px; }
+    .section-title { font-size: 1.15em; }
+    .item-title { font-size: 1.05em; }
+  }
+  /* ========== Responsive: Large desktops (1440px - 1919px) ========== */
+  @media (min-width: 1440px) and (max-width: 1919px) {
+    .container { padding: 32px 56px; }
+    .banner { height: 320px; }
+    .title-text { font-size: 1.4em; }
+    .player { max-width: 800px; }
+    .section-title { font-size: 1.2em; }
+    .item-title { font-size: 1.08em; }
+    .section-header { min-height: 140px; }
+  }
+  /* ========== Responsive: Ultra-wide (>= 1920px) ========== */
+  @media (min-width: 1920px) {
+    .container { padding: 40px 80px; max-width: 1600px; }
+    .banner { height: 380px; }
+    .title-text { font-size: 1.5em; }
+    .player { max-width: 900px; padding: 18px 24px; }
+    .section-title { font-size: 1.25em; }
+    .item-title { font-size: 1.1em; }
+    .item-body { font-size: 1em; }
+    .section-header { min-height: 160px; }
+    .global-actions button { padding: 8px 18px; font-size: 1em; }
+    .icon-btn { width: 36px; height: 36px; font-size: 15px; }
+    .fold-btn, .tts-btn { height: 36px; padding: 0 12px; font-size: 14px; }
+    .settings-panel { max-width: 480px; padding: 0; }
+  }
+  /* ========== Responsive: Extra ultra-wide (>= 2560px) ========== */
+  @media (min-width: 2560px) {
+    .container { padding: 48px 120px; max-width: 1800px; }
+    .banner { height: 440px; }
+    :root { --font-base: 17px; }
+    .player { max-width: 1000px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="titlebar" id="titlebar">
+  <div class="title-row">
+    <div>
+      <div class="title-text" id="pageTitle">每日全球要闻｜2026-08-26（星期三）</div>
+      <div class="subtitle-row">
+        <span id="welcomeText">祝您拥有愉快的一天</span>
+        <span id="aiGenText">内容由 AI 生成</span>
+      </div>
+      <div class="tts-btn-row">
+        <button class="tts-main-btn" id="ttsMainBtn" onclick="playAll()">🔊 <span id="ttsMainLabel">全文语音收听</span></button>
+      </div>
+    </div>
+    <div class="title-btns">
+      <button class="title-btn" id="homeBtn" onclick="goHome()" title="返回主页"><span class="tb-icon">🏠</span><span id="homeLabel">主页</span></button>
+      <button class="title-btn" id="shareBtn" onclick="sharePage()" title="分享"><span class="tb-icon">⬆️</span><span id="shareLabel">分享</span></button>
+      <button class="title-btn" id="settingsBtn" onclick="openSettings()" title="设置"><span class="tb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1H21a2 2 0 0 1 0-4h-.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><span id="settingsLabel">设置</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Browser recommendation -->
+<div class="browser-tip" id="browserTip">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+  <span id="browserTipText">建议使用 Safari / Chrome / Edge 等默认浏览器打开，否则可能遇到语音朗读等功能异常。</span>
+</div>
+
+<img class="banner" id="bannerImg" src="img/banner.jpg" alt="banner" fetchpriority="high" decoding="async">
+
+<div class="container">
+  <div class="global-actions">
+    <button onclick="expandAll()" id="btnExpandAll">展开全部</button>
+    <button onclick="collapseAll()" id="btnCollapseAll">收起全部</button>
+  </div>
+
+
+  <!-- CONTENT_SECTIONS_PLACEHOLDER -->
+    <div class="section-card" id="sec0">
+    <div class="section-header" onclick="toggleSection('sec0')">
+      <img src="" alt="" loading="lazy" decoding="async">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="军事" data-en="Military"><span class="section-icon">🎖️</span>军事</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec0')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec0')" id="fold-sec0">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec0')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec0">
+      <div class="item" id="item-sec0-0">
+        <div class="item-title" onclick="toggleItem('item-sec0-0')">
+          <strong data-zh="1. 美高层称「暂不对伊朗动武」，但保留随时打击选项" data-en="1. US Says It Will Hold Off on Strikes Against Iran For Now">1. 美高层称「暂不对伊朗动武」，但保留随时打击选项</strong>
+          <button class="fold-btn" id="fold-item-sec0-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国国务卿鲁比奥表示，美方目前暂不采取对伊朗的军事打击，但强调若伊方越过红线，美国保留「随时、任意规模」的打击能力；与此同时，CENTCOM 确认霍尔木兹海峡此前布设的水雷已全部清除，通道恢复通行。值得关注的是：美方把博弈主轴从「军事打击」后撤半步，转向以经济制裁与航运管制施压，给外交留出缓冲但并未解除战争风险。" data-en="Secretary of State Rubio said the US is holding off on military strikes against Iran for now but stressed it retains the ability to strike at any time, at any scale if Tehran crosses red lines; CENTCOM separately confirmed all mines previously laid in the Strait of Hormuz have been cleared and transit has resumed. Why it matters: Washington is stepping the military option half a pace back, leaning instead on economic sanctions and shipping controls to pressure Tehran, buying diplomatic room without lifting the war risk.">美国国务卿鲁比奥表示，美方目前暂不采取对伊朗的军事打击，但强调若伊方越过红线，美国保留「随时、任意规模」的打击能力；与此同时，CENTCOM 确认霍尔木兹海峡此前布设的水雷已全部清除，通道恢复通行。值得关注的是：美方把博弈主轴从「军事打击」后撤半步，转向以经济制裁与航运管制施压，给外交留出缓冲但并未解除战争风险。</div>
+      </div>
+      <div class="item" id="item-sec0-1">
+        <div class="item-title" onclick="toggleItem('item-sec0-1')">
+          <strong data-zh="2. 30余国筹组「志愿联盟」拟战后驻军乌克兰，俄称「不可接受」" data-en="2. 30+ Nations Plan Volunteer Coalition to Station Troops in Ukraine Post-Ceasefire">2. 30余国筹组「志愿联盟」拟战后驻军乌克兰，俄称「不可接受」</strong>
+          <button class="fold-btn" id="fold-item-sec0-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="据外交消息，逾30个国家正磋商组建「志愿联盟」，计划在乌俄达成停火后向乌克兰派驻稳定部队；莫斯科回应称任何外国战斗部队进驻乌克兰都「不可接受」，并警告将视其为直接介入。值得关注的是：驻军安排本质上是停火保障与势力范围之争，俄方红线使战后安全架构仍是最大不确定项。" data-en="Per diplomatic sources, more than 30 countries are discussing a Volunteer Coalition to station stabilisation forces in Ukraine after a Russia-Ukraine ceasefire; Moscow responded that any foreign combat troops in Ukraine would be unacceptable and warned it would treat the move as direct intervention. Why it matters: the troop question is fundamentally about ceasefire guarantees and spheres of influence, and Russia's red line leaves the post-war security architecture the single biggest unknown.">据外交消息，逾30个国家正磋商组建「志愿联盟」，计划在乌俄达成停火后向乌克兰派驻稳定部队；莫斯科回应称任何外国战斗部队进驻乌克兰都「不可接受」，并警告将视其为直接介入。值得关注的是：驻军安排本质上是停火保障与势力范围之争，俄方红线使战后安全架构仍是最大不确定项。</div>
+      </div>
+      <div class="item" id="item-sec0-2">
+        <div class="item-title" onclick="toggleItem('item-sec0-2')">
+          <strong data-zh="3. 伊朗与阿曼同意共建霍尔木兹安全走廊并联合扫雷" data-en="3. Iran and Oman Agree Joint Hormuz Security Corridor and Demining">3. 伊朗与阿曼同意共建霍尔木兹安全走廊并联合扫雷</strong>
+          <button class="fold-btn" id="fold-item-sec0-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="伊朗与阿曼达成协议，共同建立霍尔木兹海峡安全通行走廊，并开展联合扫雷与护航协作，意在降低误判与航运中断风险。此前该水道因水雷与「黑名单」执法长期被视为不安全。值得关注的是：由地区国家自行搭建通道安全机制，是把航道秩序从单边威慑拉回多边协调的一次尝试，但执行仍取决于各方政治意愿。" data-en="Iran and Oman reached an agreement to jointly build a secure transit corridor through the Strait of Hormuz and conduct coordinated demining and escort cooperation, aiming to cut miscalculation and shipping-disruption risk after the waterway was long deemed unsafe by mines and blacklist enforcement. Why it matters: a region-led corridor mechanism is an attempt to pull channel order back from unilateral deterrence to multilateral coordination, but enforcement still hinges on political will.">伊朗与阿曼达成协议，共同建立霍尔木兹海峡安全通行走廊，并开展联合扫雷与护航协作，意在降低误判与航运中断风险。此前该水道因水雷与「黑名单」执法长期被视为不安全。值得关注的是：由地区国家自行搭建通道安全机制，是把航道秩序从单边威慑拉回多边协调的一次尝试，但执行仍取决于各方政治意愿。</div>
+      </div>
+      <div class="item" id="item-sec0-3">
+        <div class="item-title" onclick="toggleItem('item-sec0-3')">
+          <strong data-zh="4. 波音获131亿美元 F-15 全周期保障不定额合同" data-en="4. Boeing Wins $13.123B IDIQ F-15 Life-Cycle Support Contract">4. 波音获131亿美元 F-15 全周期保障不定额合同</strong>
+          <button class="fold-btn" id="fold-item-sec0-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国空军授予波音一份最高131.23亿美元的不定额交付（IDIQ）合同，覆盖 F-15 机队的长期维护、升级与备件保障，确保这款服役数十年的战机持续形成战斗力。值得关注的是：在不定的大额保障合同背后，是美军在高端平台存量老化下、以「延寿+可持续保障」替代大规模换装的成本逻辑。" data-en="The US Air Force awarded Boeing an indefinite-delivery/indefinite-quantity IDIQ contract worth up to $13.123 billion covering long-term F-15 fleet maintenance, upgrades and spares, keeping the decades-old fighter combat-capable. Why it matters: behind the large sustainment award is a cost logic of life-extension plus sustainment replacing mass recapitalisation as high-end platforms age.">美国空军授予波音一份最高131.23亿美元的不定额交付（IDIQ）合同，覆盖 F-15 机队的长期维护、升级与备件保障，确保这款服役数十年的战机持续形成战斗力。值得关注的是：在不定的大额保障合同背后，是美军在高端平台存量老化下、以「延寿+可持续保障」替代大规模换装的成本逻辑。</div>
+      </div>
+      <div class="item" id="item-sec0-4">
+        <div class="item-title" onclick="toggleItem('item-sec0-4')">
+          <strong data-zh="5. CIA 局长乘 C-17 秘密访莫斯科，释放美俄渠道信号" data-en="5. CIA Director Ratcliffe Secretly Flew C-17 to Moscow, Signaling US-Russia Channel">5. CIA 局长乘 C-17 秘密访莫斯科，释放美俄渠道信号</strong>
+          <button class="fold-btn" id="fold-item-sec0-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="据多家媒体报道，中央情报局局长拉特克利夫曾秘密搭乘 C-17 运输机飞抵莫斯科，与俄方就乌克兰、军控与中东事务进行接触；此行未列入公开日程。值得关注的是：情报首脑的非常规直接接触，通常被解读为双方在危机管控上保留「最高层级备用热线」，也为可能的谈判铺设低调渠道。" data-en="Multiple outlets report CIA Director Ratcliffe secretly flew a C-17 transport to Moscow for contacts with Russian counterparts on Ukraine, arms control and the Middle East, in a trip kept off public schedules. Why it matters: an intelligence chief's unconventional direct contact is usually read as preserving a top-level back channel for crisis management and laying a low-profile route toward possible talks.">据多家媒体报道，中央情报局局长拉特克利夫曾秘密搭乘 C-17 运输机飞抵莫斯科，与俄方就乌克兰、军控与中东事务进行接触；此行未列入公开日程。值得关注的是：情报首脑的非常规直接接触，通常被解读为双方在危机管控上保留「最高层级备用热线」，也为可能的谈判铺设低调渠道。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec1">
+    <div class="section-header" onclick="toggleSection('sec1')">
+      <img src="" alt="" loading="lazy" decoding="async">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="财经" data-en="Finance &amp; Markets"><span class="section-icon">💵</span>财经</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec1')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec1')" id="fold-sec1">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec1')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec1">
+      <div class="item" id="item-sec1-0">
+        <div class="item-title" onclick="toggleItem('item-sec1-0')">
+          <strong data-zh="1. 七月FOMC纪要偏鹰，9:3按兵不动、三人主张加息" data-en="1. July FOMC Minutes Hawkish: 9-3 Hold, Three Dissenters Wanted a Hike">1. 七月FOMC纪要偏鹰，9:3按兵不动、三人主张加息</strong>
+          <button class="fold-btn" id="fold-item-sec1-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="美联储7月会议纪要显示，联邦公开市场委员会以9比3投票维持利率不变（联邦基金利率3.50%–3.75%），但有三名委员主张加息，凸显对通胀黏性的担忧；市场对9月降息预期明显降温。值得关注的是：在关税推升输入性成本、财政扩张未止的背景下，美联储内部「抗通胀」与「稳就业」的分歧正在扩大。" data-en="The Fed's July minutes showed the FOMC held rates unchanged at 3.50%-3.75% by a 9-3 vote, but three members dissented in favour of a hike, underscoring worries over sticky inflation and cooling markets' September-cut bets. Why it matters: with tariffs lifting import costs and fiscal expansion unabated, the Fed's fight-inflation versus protect-jobs split is widening.">美联储7月会议纪要显示，联邦公开市场委员会以9比3投票维持利率不变（联邦基金利率3.50%–3.75%），但有三名委员主张加息，凸显对通胀黏性的担忧；市场对9月降息预期明显降温。值得关注的是：在关税推升输入性成本、财政扩张未止的背景下，美联储内部「抗通胀」与「稳就业」的分歧正在扩大。</div>
+      </div>
+      <div class="item" id="item-sec1-1">
+        <div class="item-title" onclick="toggleItem('item-sec1-1')">
+          <strong data-zh="2. 美股集体下挫，纳指跌逾2%、布油一度涨逾6%" data-en="2. US Stocks Slide; Nasdaq Off Over 2%, Brent Spiked Over 6%">2. 美股集体下挫，纳指跌逾2%、布油一度涨逾6%</strong>
+          <button class="fold-btn" id="fold-item-sec1-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="受地缘与利率双重压制，美股当日集体走弱：标普500跌1.43%、纳指跌2.05%、道指跌0.85%；大宗商品剧烈波动，布伦特原油一度涨6.63%至94.39美元、现货黄金涨4.21%至4623.94美元。值得关注的是：风险资产与避险资产同步剧烈波动，反映市场对「滞胀+地缘」组合的高度敏感。" data-en="Pressured by geopolitics and rates, US equities fell across the board - S&amp;P 500 -1.43%, Nasdaq -2.05%, Dow -0.85% - while commodities swung hard: Brent spiked 6.63% to $94.39 and spot gold rose 4.21% to $4,623.94. Why it matters: risk and haven assets both whipsawed, reflecting acute market sensitivity to a stagflation-plus-geopolitics mix.">受地缘与利率双重压制，美股当日集体走弱：标普500跌1.43%、纳指跌2.05%、道指跌0.85%；大宗商品剧烈波动，布伦特原油一度涨6.63%至94.39美元、现货黄金涨4.21%至4623.94美元。值得关注的是：风险资产与避险资产同步剧烈波动，反映市场对「滞胀+地缘」组合的高度敏感。</div>
+      </div>
+      <div class="item" id="item-sec1-2">
+        <div class="item-title" onclick="toggleItem('item-sec1-2')">
+          <strong data-zh="3. 美财政部将长债回购规模翻倍，30年期收益率报5.34%" data-en="3. Treasury Doubles Long-Bond Buybacks; 30Y Yield at 5.34%">3. 美财政部将长债回购规模翻倍，30年期收益率报5.34%</strong>
+          <button class="fold-btn" id="fold-item-sec1-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国财政部宣布将长期国债回购操作规模翻倍，以压低长端收益率、改善市场流动性；30年期国债收益率报5.34%，仍处高位。新任美联储主席沃什将于周五在杰克逊霍尔发表主旨演讲，市场屏息以待。值得关注的是：财政端的「借新还旧+回购」正与货币端形成微妙博弈，长端利率成为政策传导的关键观察点。" data-en="The US Treasury doubled the size of its long-bond buyback operations to suppress long-end yields and improve market liquidity; the 30-year yield stood at 5.34%, still elevated. New Fed Chair Warsh delivers the Jackson Hole keynote Friday. Why it matters: the fiscal roll-over plus buyback push is quietly contesting with monetary policy, and the long end is now the key transmission gauge.">美国财政部宣布将长期国债回购操作规模翻倍，以压低长端收益率、改善市场流动性；30年期国债收益率报5.34%，仍处高位。新任美联储主席沃什将于周五在杰克逊霍尔发表主旨演讲，市场屏息以待。值得关注的是：财政端的「借新还旧+回购」正与货币端形成微妙博弈，长端利率成为政策传导的关键观察点。</div>
+      </div>
+      <div class="item" id="item-sec1-3">
+        <div class="item-title" onclick="toggleItem('item-sec1-3')">
+          <strong data-zh="4. 美国对加拿大输美商品加征50%关税，涉2760亿加元" data-en="4. US Imposes 50% Tariffs on Canadian Goods, Covering C$276B">4. 美国对加拿大输美商品加征50%关税，涉2760亿加元</strong>
+          <button class="fold-btn" id="fold-item-sec1-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国对价值约2760亿加元（约2000亿美元）的加拿大输美商品加征50%关税，涵盖汽车、钢铁与铝等关键品类，美加贸易摩擦全面升级；加元承压，渥太华考虑以限制对美能源出口作为反制。值得关注的是：北美供应链最深的汽车与金属环节首当其冲，关税的直接成本将沿产业链向两国消费者与制造商传导。" data-en="The US imposed 50% tariffs on about C$276 billion of Canadian exports - autos, steel and aluminium among them - escalating US-Canada friction; the loonie came under pressure and Ottawa is weighing a curb on energy exports to the US as retaliation. Why it matters: the deepest cross-border supply-chain links, autos and metals, are hit first, and the tariff cost passes straight to consumers and manufacturers on both sides.">美国对价值约2760亿加元（约2000亿美元）的加拿大输美商品加征50%关税，涵盖汽车、钢铁与铝等关键品类，美加贸易摩擦全面升级；加元承压，渥太华考虑以限制对美能源出口作为反制。值得关注的是：北美供应链最深的汽车与金属环节首当其冲，关税的直接成本将沿产业链向两国消费者与制造商传导。</div>
+      </div>
+      <div class="item" id="item-sec1-4">
+        <div class="item-title" onclick="toggleItem('item-sec1-4')">
+          <strong data-zh="5. 本周聚焦英伟达财报、杰克逊霍尔与七月PCE" data-en="5. Week Ahead: Nvidia Earnings, Jackson Hole and July PCE">5. 本周聚焦英伟达财报、杰克逊霍尔与七月PCE</strong>
+          <button class="fold-btn" id="fold-item-sec1-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="市场本周聚焦三件大事：英伟达发布季度财报（AI算力需求的关键风向标）、美联储主席沃什在杰克逊霍尔的全球央行年会主旨演讲、以及周五公布的七月个人消费支出（PCE）通胀数据。值得关注的是：在「AI叙事」与「利率路径」两条主线交汇处，任何一项不及预期都可能放大跨资产波动。" data-en="Markets this week hinge on three events: Nvidia's quarterly earnings as a key read on AI-compute demand, Fed Chair Warsh's Jackson Hole keynote, and Friday's July PCE inflation print. Why it matters: where the AI narrative and the rate path meet, any single miss could amplify cross-asset volatility.">市场本周聚焦三件大事：英伟达发布季度财报（AI算力需求的关键风向标）、美联储主席沃什在杰克逊霍尔的全球央行年会主旨演讲、以及周五公布的七月个人消费支出（PCE）通胀数据。值得关注的是：在「AI叙事」与「利率路径」两条主线交汇处，任何一项不及预期都可能放大跨资产波动。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec2">
+    <div class="section-header" onclick="toggleSection('sec2')">
+      <img src="" alt="" loading="lazy" decoding="async">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="AI与科技" data-en="AI &amp; Technology"><span class="section-icon">🤖</span>AI与科技</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec2')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec2')" id="fold-sec2">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec2')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec2">
+      <div class="item" id="item-sec2-0">
+        <div class="item-title" onclick="toggleItem('item-sec2-0')">
+          <strong data-zh="1. OpenAI 自研推理 ASIC「Jalapeño」携手博通，能效据称超 GB300" data-en="1. OpenAI's In-House Inference ASIC Jalapeno with Broadcom, Said to Beat GB300 on Perf/Watt">1. OpenAI 自研推理 ASIC「Jalapeño」携手博通，能效据称超 GB300</strong>
+          <button class="fold-btn" id="fold-item-sec2-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="据 SemiAnalysis，OpenAI 正与博通合作开发代号为「Jalapeño」的推理专用芯片（ASIC），在性能功耗比上据称超越英伟达 GB300；这是头部大模型公司把算力命脉从外部采购转向自研的又一标志性动作。值得关注的是：当模型厂商亲自下场造芯，「算力—模型」垂直整合将重塑云厂商与芯片供应商的议价格局。" data-en="Per SemiAnalysis, OpenAI is developing an inference ASIC codenamed Jalapeno with Broadcom that reportedly beats Nvidia's GB300 on performance per watt - another landmark of top labs taking their compute destiny in-house. Why it matters: as model makers build their own silicon, compute-to-model vertical integration reshapes the bargaining power of clouds and chip suppliers.">据 SemiAnalysis，OpenAI 正与博通合作开发代号为「Jalapeño」的推理专用芯片（ASIC），在性能功耗比上据称超越英伟达 GB300；这是头部大模型公司把算力命脉从外部采购转向自研的又一标志性动作。值得关注的是：当模型厂商亲自下场造芯，「算力—模型」垂直整合将重塑云厂商与芯片供应商的议价格局。</div>
+      </div>
+      <div class="item" id="item-sec2-1">
+        <div class="item-title" onclick="toggleItem('item-sec2-1')">
+          <strong data-zh="2. 英伟达 Vera Rubin 平台全面量产，Groq 3 LPX 同步投产" data-en="2. Nvidia Vera Rubin Platform Enters Full Production; Groq 3 LPX Also in Volume">2. 英伟达 Vera Rubin 平台全面量产，Groq 3 LPX 同步投产</strong>
+          <button class="fold-btn" id="fold-item-sec2-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="英伟达 Vera Rubin 平台进入全面量产，主打更高密度与更低每 Token 成本的下一代 AI 机架；Groq 同步将其 3 LPX 低延迟推理芯片投入量产。值得关注的是：算力供给端在「堆规模」之外加速「提能效」，推理成本的下行将直接利好应用层爆发。" data-en="Nvidia's Vera Rubin platform entered full production as the next-gen AI rack targeting higher density and lower cost per token, while Groq put its low-latency 3 LPX inference chip into volume output. Why it matters: on the supply side, beyond scaling up comes raising efficiency, and falling inference cost directly fuels the application layer.">英伟达 Vera Rubin 平台进入全面量产，主打更高密度与更低每 Token 成本的下一代 AI 机架；Groq 同步将其 3 LPX 低延迟推理芯片投入量产。值得关注的是：算力供给端在「堆规模」之外加速「提能效」，推理成本的下行将直接利好应用层爆发。</div>
+      </div>
+      <div class="item" id="item-sec2-2">
+        <div class="item-title" onclick="toggleItem('item-sec2-2')">
+          <strong data-zh="3. 苹果与阿里合作训练面向中国市场的定制模型" data-en="3. Apple Trains China-Specific Model with Alibaba">3. 苹果与阿里合作训练面向中国市场的定制模型</strong>
+          <button class="fold-btn" id="fold-item-sec2-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="苹果正与阿里巴巴合作，训练一款专为中国市场定制的本地化大模型，以符合数据本地化与监管合规要求，并提升中文场景下的体验。值得关注的是：在监管与地缘政治双重约束下，跨国科技巨头正以「本地伙伴+本地模型」模式拆解全球统一产品的合规难题。" data-en="Apple is working with Alibaba to train a China-specific localised model that meets data-localisation and regulatory requirements while improving the Chinese-language experience. Why it matters: under regulatory and geopolitical constraints, multinationals are unpicking the compliance riddle of one global product via a local partner plus local model pattern.">苹果正与阿里巴巴合作，训练一款专为中国市场定制的本地化大模型，以符合数据本地化与监管合规要求，并提升中文场景下的体验。值得关注的是：在监管与地缘政治双重约束下，跨国科技巨头正以「本地伙伴+本地模型」模式拆解全球统一产品的合规难题。</div>
+      </div>
+      <div class="item" id="item-sec2-3">
+        <div class="item-title" onclick="toggleItem('item-sec2-3')">
+          <strong data-zh="4. 阿里通义千问 Qwen3.8-Flash-Next（1250亿参数）8月26日开源" data-en="4. Alibaba's Qwen3.8-Flash-Next 125B Open-Sourced on Aug 26">4. 阿里通义千问 Qwen3.8-Flash-Next（1250亿参数）8月26日开源</strong>
+          <button class="fold-btn" id="fold-item-sec2-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="阿里通义千问于8月26日开源 Qwen3.8-Flash-Next，参数规模约1250亿，主打高性价比的多语言与长上下文推理，进一步充实开源大模型阵营。值得关注的是：头部厂商「以开源换生态」的策略持续，开源与闭源的能力差距正快速收敛。" data-en="Alibaba's Qwen open-sourced Qwen3.8-Flash-Next on Aug 26 at roughly 125B parameters, targeting cost-efficient multilingual and long-context reasoning and further thickening the open-model field. Why it matters: top labs keep trading openness for ecosystem, and the capability gap between open and closed models is closing fast.">阿里通义千问于8月26日开源 Qwen3.8-Flash-Next，参数规模约1250亿，主打高性价比的多语言与长上下文推理，进一步充实开源大模型阵营。值得关注的是：头部厂商「以开源换生态」的策略持续，开源与闭源的能力差距正快速收敛。</div>
+      </div>
+      <div class="item" id="item-sec2-4">
+        <div class="item-title" onclick="toggleItem('item-sec2-4')">
+          <strong data-zh="5. Black Forest Labs 发布多模态模型 FLUX 3" data-en="5. Black Forest Labs Launches Multimodal FLUX 3">5. Black Forest Labs 发布多模态模型 FLUX 3</strong>
+          <button class="fold-btn" id="fold-item-sec2-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="Stable Diffusion 原班团队创立的 Black Forest Labs 发布多模态模型 FLUX 3，强化图像与文本的联合理解与生成能力。值得关注的是：生成式多模态正从「单一模态增强」走向「跨模态统一」，为设计、广告与内容生产提供新的自动化底座。" data-en="Black Forest Labs - founded by the original Stable Diffusion team - launched the multimodal FLUX 3, strengthening joint image-text understanding and generation. Why it matters: generative multimodality is moving from single-modality enhancement to cross-modal unification, a new automation base for design, ads and content.">Stable Diffusion 原班团队创立的 Black Forest Labs 发布多模态模型 FLUX 3，强化图像与文本的联合理解与生成能力。值得关注的是：生成式多模态正从「单一模态增强」走向「跨模态统一」，为设计、广告与内容生产提供新的自动化底座。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec3">
+    <div class="section-header" onclick="toggleSection('sec3')">
+      <img src="" alt="" loading="lazy" decoding="async">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="国际政治" data-en="International Politics"><span class="section-icon">🌍</span>国际政治</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec3')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec3')" id="fold-sec3">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec3')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec3">
+      <div class="item" id="item-sec3-0">
+        <div class="item-title" onclick="toggleItem('item-sec3-0')">
+          <strong data-zh="1. 美伊博弈转向「经济战」，贝森特扩大次级制裁至60实体、5行业" data-en="1. US-Iran Contest Turns to Economic War; Bessent Widens Secondary Sanctions to 60 Entities, 5 Sectors">1. 美伊博弈转向「经济战」，贝森特扩大次级制裁至60实体、5行业</strong>
+          <button class="fold-btn" id="fold-item-sec3-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="美财长贝森特宣布扩大对与伊朗有商业往来者的次级制裁，涵盖数字资产、科技、黄金、航空与航运五大行业、约60个实体，意在切断伊朗的美元通道；美方称经济战进入「终局」，但暂未直接点名中国金融机构，为后续谈判留有余地。值得关注的是：制裁从「点名企业」升级为「行业全覆盖」，把金融威慑的网收得更密。" data-en="Treasury Secretary Bessent widened secondary sanctions on Iran-linked parties to about 60 entities across five sectors - digital assets, technology, gold, aviation and shipping - aiming to sever Tehran's dollar access; Washington called it an endgame but stopped short of naming Chinese banks, leaving room for later talks. Why it matters: sanctions escalated from named firms to whole-sector coverage, tightening the financial-deterrence net.">美财长贝森特宣布扩大对与伊朗有商业往来者的次级制裁，涵盖数字资产、科技、黄金、航空与航运五大行业、约60个实体，意在切断伊朗的美元通道；美方称经济战进入「终局」，但暂未直接点名中国金融机构，为后续谈判留有余地。值得关注的是：制裁从「点名企业」升级为「行业全覆盖」，把金融威慑的网收得更密。</div>
+      </div>
+      <div class="item" id="item-sec3-1">
+        <div class="item-title" onclick="toggleItem('item-sec3-1')">
+          <strong data-zh="2. 阿联酋全面切断与伊朗的贸易与金融往来" data-en="2. UAE Cuts All Trade and Financial Ties with Iran">2. 阿联酋全面切断与伊朗的贸易与金融往来</strong>
+          <button class="fold-btn" id="fold-item-sec3-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="阿联酋宣布全面切断与伊朗的贸易与金融往来，作为对地区安全局势的回应；此举将显著压缩伊朗在海湾地区的转口与结算通道。值得关注的是：作为伊朗传统的重要经贸伙伴，阿联酋的「切割」比制裁本身更具实质冲击，也反映海湾国家对局势外溢的担忧。" data-en="The UAE announced it is cutting all trade and financial ties with Iran in response to regional security, which will sharply shrink Tehran's Gulf re-export and settlement channels. Why it matters: as a traditional major economic partner, the UAE's cut hits harder than sanctions alone and signals Gulf states' fears of spillover.">阿联酋宣布全面切断与伊朗的贸易与金融往来，作为对地区安全局势的回应；此举将显著压缩伊朗在海湾地区的转口与结算通道。值得关注的是：作为伊朗传统的重要经贸伙伴，阿联酋的「切割」比制裁本身更具实质冲击，也反映海湾国家对局势外溢的担忧。</div>
+      </div>
+      <div class="item" id="item-sec3-2">
+        <div class="item-title" onclick="toggleItem('item-sec3-2')">
+          <strong data-zh="3. 中国反对美对伊单边制裁，称其「非法」" data-en="3. China Opposes US Unilateral Iran Sanctions as Illegal">3. 中国反对美对伊单边制裁，称其「非法」</strong>
+          <button class="fold-btn" id="fold-item-sec3-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="中国外交部表示反对美国对伊朗的单边制裁，称其违反国际法、属非法单边行径，并呼吁通过对话解决分歧；中方强调维护与伊朗的正常经贸合作。值得关注的是：在「长臂管辖」问题上，主要大国立场分歧加深，全球金融治理体系的多极化张力进一步显现。" data-en="China's foreign ministry opposed the US unilateral Iran sanctions as illegal and a violation of international law, urging dialogue and stressing it will maintain normal economic cooperation with Tehran. Why it matters: on long-arm jurisdiction, major powers' divides deepen and the multipolar tension in global financial governance becomes more visible.">中国外交部表示反对美国对伊朗的单边制裁，称其违反国际法、属非法单边行径，并呼吁通过对话解决分歧；中方强调维护与伊朗的正常经贸合作。值得关注的是：在「长臂管辖」问题上，主要大国立场分歧加深，全球金融治理体系的多极化张力进一步显现。</div>
+      </div>
+      <div class="item" id="item-sec3-3">
+        <div class="item-title" onclick="toggleItem('item-sec3-3')">
+          <strong data-zh="4. 巴基斯坦居中斡旋，穆尼尔将军传话美伊" data-en="4. Pakistan Mediates as Gen. Munir Carries Messages Between US and Iran">4. 巴基斯坦居中斡旋，穆尼尔将军传话美伊</strong>
+          <button class="fold-btn" id="fold-item-sec3-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="巴基斯坦陆军参谋长穆尼尔将军在美伊之间扮演斡旋角色，据报曾将美方的讯息带往德黑兰，试图为制裁危机降温。值得关注的是：地区中等国家主动充当「信使」，反映美伊直接沟通渠道不畅，也凸显第三方调停在危机管控中的现实价值。" data-en="Pakistan's army chief Gen. Munir played mediator between Washington and Tehran, reportedly carrying a US message to Tehran to cool the sanctions crisis. Why it matters: a regional middle power volunteering as courier shows direct US-Iran channels are weak and underscores the real value of third-party mediation in crisis management.">巴基斯坦陆军参谋长穆尼尔将军在美伊之间扮演斡旋角色，据报曾将美方的讯息带往德黑兰，试图为制裁危机降温。值得关注的是：地区中等国家主动充当「信使」，反映美伊直接沟通渠道不畅，也凸显第三方调停在危机管控中的现实价值。</div>
+      </div>
+      <div class="item" id="item-sec3-4">
+        <div class="item-title" onclick="toggleItem('item-sec3-4')">
+          <strong data-zh="5. 中国援引阻断立法反制欧盟《外国补贴条例》" data-en="5. China Invokes Blocking Statute Against EU Foreign Subsidies Regulation">5. 中国援引阻断立法反制欧盟《外国补贴条例》</strong>
+          <button class="fold-btn" id="fold-item-sec3-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="针对欧盟《外国补贴条例》（FSR）对中国企业的调查与限制，中国援引阻断立法予以反制，禁止境内主体遵守相关域外措施；双方经贸摩擦再添制度性工具。值得关注的是：当补贴与公平竞争成为新的贸易战场，「法律武器化」正成为大国博弈的常态手段。" data-en="In response to the EU's Foreign Subsidies Regulation FSR investigations and restrictions on Chinese firms, China invoked a blocking statute forbidding domestic entities from complying with the extraterritorial measures, adding an institutional tool to bilateral friction. Why it matters: as subsidies and fair competition become a new trade battlefield, weaponised law is now routine in great-power rivalry.">针对欧盟《外国补贴条例》（FSR）对中国企业的调查与限制，中国援引阻断立法予以反制，禁止境内主体遵守相关域外措施；双方经贸摩擦再添制度性工具。值得关注的是：当补贴与公平竞争成为新的贸易战场，「法律武器化」正成为大国博弈的常态手段。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec4">
+    <div class="section-header" onclick="toggleSection('sec4')">
+      <img src="" alt="" loading="lazy" decoding="async">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="产业商业" data-en="Industry &amp; Business"><span class="section-icon">🏭</span>产业商业</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec4')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec4')" id="fold-sec4">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec4')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec4">
+      <div class="item" id="item-sec4-0">
+        <div class="item-title" onclick="toggleItem('item-sec4-0')">
+          <strong data-zh="1. 美国《SEARCH 法案》拟将谷歌搜索救济措施法典化" data-en="1. US SEARCH Act Would Codify Google Search Remedies">1. 美国《SEARCH 法案》拟将谷歌搜索救济措施法典化</strong>
+          <button class="fold-btn" id="fold-item-sec4-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国国会推进《SEARCH 法案》，拟将针对谷歌搜索的反垄断救济措施以立法形式固定下来，防止未来行政机关放松执行；该法案聚焦搜索市场的公平接入与互操作性。值得关注的是：把司法救济上升为成文法，意味着平台监管的「去行政化」与长期化，科技巨头的合规边界被进一步钉死。" data-en="The US Congress is advancing the SEARCH Act to codify antitrust remedies against Google Search into law, preventing future administrations from easing enforcement, focusing on fair access and interoperability in search. Why it matters: lifting judicial remedies into statute de-administrates and entrenches platform regulation, further nailing down big-tech compliance boundaries.">美国国会推进《SEARCH 法案》，拟将针对谷歌搜索的反垄断救济措施以立法形式固定下来，防止未来行政机关放松执行；该法案聚焦搜索市场的公平接入与互操作性。值得关注的是：把司法救济上升为成文法，意味着平台监管的「去行政化」与长期化，科技巨头的合规边界被进一步钉死。</div>
+      </div>
+      <div class="item" id="item-sec4-1">
+        <div class="item-title" onclick="toggleItem('item-sec4-1')">
+          <strong data-zh="2. 新泽西《FAIR 法案》禁止算法设定租金" data-en="2. New Jersey FAIR Act Bans Algorithmic Rent-Setting">2. 新泽西《FAIR 法案》禁止算法设定租金</strong>
+          <button class="fold-btn" id="fold-item-sec4-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="新泽西州通过《FAIR 法案》，禁止房东使用算法统一设定租金，直指此类工具推高住房成本、挤压租户议价空间的问题；违规将面临处罚。值得关注的是：针对「算法定价」的立法从反垄断走向消费者保护，算法在民生领域的公平性正被纳入强制监管。" data-en="New Jersey passed the FAIR Act banning landlords from using algorithms to set rents, targeting tools that raise housing costs and squeeze tenants' bargaining room, with penalties for violations. Why it matters: legislation against algorithmic pricing is moving from antitrust to consumer protection, pulling algorithmic fairness in daily life into mandatory oversight.">新泽西州通过《FAIR 法案》，禁止房东使用算法统一设定租金，直指此类工具推高住房成本、挤压租户议价空间的问题；违规将面临处罚。值得关注的是：针对「算法定价」的立法从反垄断走向消费者保护，算法在民生领域的公平性正被纳入强制监管。</div>
+      </div>
+      <div class="item" id="item-sec4-2">
+        <div class="item-title" onclick="toggleItem('item-sec4-2')">
+          <strong data-zh="3. 中国市场监管总局集中查处6起「内卷式」反垄断案" data-en="3. China's SAMR Probes 6 Antitrust Cases Against Involution-Style Competition">3. 中国市场监管总局集中查处6起「内卷式」反垄断案</strong>
+          <button class="fold-btn" id="fold-item-sec4-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="中国市场监管总局集中披露6起反垄断案件，指向光伏、锂电隔膜、汽车零配件、煤炭物流等领域的「内卷式」恶性竞争，其中腾讯音乐与喜马拉雅合并附条件获批、TCL中环与道恩等案件在查。值得关注的是：监管从「事后处罚」转向「结构性矫正」，引导产业从价格战走向高质量发展。" data-en="China's SAMR disclosed six antitrust cases targeting involution-style cut-throat competition in photovoltaics, lithium separator, auto parts and coal logistics, with Tencent Music-Himalaya's merger cleared with conditions and TCL Zhonghuan-Daonen among those under review. Why it matters: regulation is shifting from after-the-fact penalties to structural correction, steering industries from price wars to high-quality growth.">中国市场监管总局集中披露6起反垄断案件，指向光伏、锂电隔膜、汽车零配件、煤炭物流等领域的「内卷式」恶性竞争，其中腾讯音乐与喜马拉雅合并附条件获批、TCL中环与道恩等案件在查。值得关注的是：监管从「事后处罚」转向「结构性矫正」，引导产业从价格战走向高质量发展。</div>
+      </div>
+      <div class="item" id="item-sec4-3">
+        <div class="item-title" onclick="toggleItem('item-sec4-3')">
+          <strong data-zh="4. TransDigm 在司法部阻拦后放弃收购 Stellant Systems" data-en="4. TransDigm Abandons Stellant Systems Buy After DOJ Block">4. TransDigm 在司法部阻拦后放弃收购 Stellant Systems</strong>
+          <button class="fold-btn" id="fold-item-sec4-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="航空零部件巨头 TransDigm 在美国司法部以反垄断为由阻止其收购 Stellant Systems 后，宣布放弃该交易；这桩并购因涉及关键防务供应链而受到严格审查。值得关注的是：在国防与航空供应链高度集中的背景下，监管机构对「扼住咽喉」式并购的容忍度显著下降。" data-en="Aerospace-parts giant TransDigm dropped its acquisition of Stellant Systems after the DOJ blocked it on antitrust grounds; the deal drew strict review for touching critical defence-supply chains. Why it matters: amid concentrated defence and aerospace supply chains, regulators' tolerance for chokepoint mergers has clearly fallen.">航空零部件巨头 TransDigm 在美国司法部以反垄断为由阻止其收购 Stellant Systems 后，宣布放弃该交易；这桩并购因涉及关键防务供应链而受到严格审查。值得关注的是：在国防与航空供应链高度集中的背景下，监管机构对「扼住咽喉」式并购的容忍度显著下降。</div>
+      </div>
+      <div class="item" id="item-sec4-4">
+        <div class="item-title" onclick="toggleItem('item-sec4-4')">
+          <strong data-zh="5. 欧盟法院裁定突击检查时企业邮件受保护" data-en="5. EU Court Rules Business Emails Protected in Dawn Raids">5. 欧盟法院裁定突击检查时企业邮件受保护</strong>
+          <button class="fold-btn" id="fold-item-sec4-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="欧盟法院（CJEU）裁定，竞争监管机构在突击检查中须保护企业的律师—客户保密邮件，不得随意调阅；这一裁决为受查企业划定了取证边界。值得关注的是：在反垄断执法强化的同时，司法对企业程序性权利的保障同步收紧，执法的「度」更受约束。" data-en="The EU Court of Justice ruled that competition enforcers must protect attorney-client privileged emails in dawn raids and may not freely read them, drawing a boundary for evidence-gathering. Why it matters: even as antitrust enforcement intensifies, the judiciary is tightening protection of firms' procedural rights, constraining how far raids may go.">欧盟法院（CJEU）裁定，竞争监管机构在突击检查中须保护企业的律师—客户保密邮件，不得随意调阅；这一裁决为受查企业划定了取证边界。值得关注的是：在反垄断执法强化的同时，司法对企业程序性权利的保障同步收紧，执法的「度」更受约束。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec5">
+    <div class="section-header" onclick="toggleSection('sec5')">
+      <img src="" alt="" loading="lazy" decoding="async">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="能源与气候" data-en="Energy &amp; Climate"><span class="section-icon">⚡</span>能源与气候</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec5')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec5')" id="fold-sec5">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec5')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec5">
+      <div class="item" id="item-sec5-0">
+        <div class="item-title" onclick="toggleItem('item-sec5-0')">
+          <strong data-zh="1. 制裁力度不及预期，油价回落：布油-4%至88.58、WTI-3%至82.36" data-en="1. Softer-Than-Expected Sanctions Ease Oil: Brent -4% to 88.58, WTI -3% to 82.36">1. 制裁力度不及预期，油价回落：布油-4%至88.58、WTI-3%至82.36</strong>
+          <button class="fold-btn" id="fold-item-sec5-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="因市场对美伊制裁「力度不及预期」的判断，原油价格从高位回落：布伦特跌约4%至88.58美元、WTI跌约3%至82.36美元；尽管霍尔木兹仍存不确定性，但实体船运未中断缓解了供应焦虑。值得关注的是：油价正从「地缘风险溢价」主导，转向由库存、制裁落地程度与情绪共同定价。" data-en="As markets judged US-Iran sanctions softer than expected, oil pulled back from highs - Brent -4% to $88.58 and WTI -3% to $82.36; physical shipping through Hormuz, though uncertain, has not stopped, easing supply anxiety. Why it matters: oil has shifted from a geopolitical risk-premium regime to pricing by inventories, sanction reality and sentiment together.">因市场对美伊制裁「力度不及预期」的判断，原油价格从高位回落：布伦特跌约4%至88.58美元、WTI跌约3%至82.36美元；尽管霍尔木兹仍存不确定性，但实体船运未中断缓解了供应焦虑。值得关注的是：油价正从「地缘风险溢价」主导，转向由库存、制裁落地程度与情绪共同定价。</div>
+      </div>
+      <div class="item" id="item-sec5-1">
+        <div class="item-title" onclick="toggleItem('item-sec5-1')">
+          <strong data-zh="2. 欧洲电价上扬：德国日前电价+8.6%至153.65欧元" data-en="2. European Power Rises: German Day-Ahead +8.6% to 153.65 Euros">2. 欧洲电价上扬：德国日前电价+8.6%至153.65欧元</strong>
+          <button class="fold-btn" id="fold-item-sec5-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="受风力与光照偏弱、部分核电检修延迟影响，欧洲电价普遍上扬：德国日前电价涨8.6%至153.65欧元/兆瓦时、法国涨4%至159.84欧元。值得关注的是：在能源转型期，可再生能源出力波动与化石/核电退役叠加，使欧洲电价的短期弹性显著放大。" data-en="Weak wind and solar plus delayed nuclear maintenance pushed European power higher - German day-ahead rose 8.6% to EUR 153.65/MWh and French +4% to EUR 159.84. Why it matters: in the energy transition, volatile renewables combined with fossil/nuclear retirements amplify Europe's short-term power-price elasticity.">受风力与光照偏弱、部分核电检修延迟影响，欧洲电价普遍上扬：德国日前电价涨8.6%至153.65欧元/兆瓦时、法国涨4%至159.84欧元。值得关注的是：在能源转型期，可再生能源出力波动与化石/核电退役叠加，使欧洲电价的短期弹性显著放大。</div>
+      </div>
+      <div class="item" id="item-sec5-2">
+        <div class="item-title" onclick="toggleItem('item-sec5-2')">
+          <strong data-zh="3. 美国电池储能装机达51.8吉瓦，年增约70%" data-en="3. US Battery Storage Hits 51.8 GW, Up About 70% Year-on-Year">3. 美国电池储能装机达51.8吉瓦，年增约70%</strong>
+          <button class="fold-btn" id="fold-item-sec5-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国电网级电池储能累计装机达到51.8吉瓦，同比增长约70%，成为平抑可再生能源波动、提升电网韧性的关键力量。值得关注的是：储能正从「补充角色」变为电力系统的「刚需基础设施」，其装机增速已显著快于新增发电。" data-en="US grid-scale battery storage reached 51.8 GW cumulative, up about 70% year-on-year, becoming key to smoothing renewable swings and boosting grid resilience. Why it matters: storage is moving from complement to essential infrastructure, growing far faster than new generation.">美国电网级电池储能累计装机达到51.8吉瓦，同比增长约70%，成为平抑可再生能源波动、提升电网韧性的关键力量。值得关注的是：储能正从「补充角色」变为电力系统的「刚需基础设施」，其装机增速已显著快于新增发电。</div>
+      </div>
+      <div class="item" id="item-sec5-3">
+        <div class="item-title" onclick="toggleItem('item-sec5-3')">
+          <strong data-zh="4. OPEC+ 闲置产能为2010年代初以来最窄" data-en="4. OPEC+ Spare Capacity at Narrowest Since Early 2010s">4. OPEC+ 闲置产能为2010年代初以来最窄</strong>
+          <button class="fold-btn" id="fold-item-sec5-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="分析显示，OPEC+ 可用的闲置产能已降至2010年代初以来最窄水平，意味着面对突发供应中断时的缓冲空间有限；这与地缘紧张形成脆弱组合。值得关注的是：当「剩余产能」这一传统减震器变薄，任何地缘冲击都会被更直接地传导至油价。" data-en="Analysis shows OPEC+ spare capacity has fallen to its narrowest since the early 2010s, leaving limited buffer against sudden supply shocks - a fragile mix with geopolitical tension. Why it matters: as the traditional shock-absorber of spare capacity thins, any geopolitical jolt transmits more directly to oil prices.">分析显示，OPEC+ 可用的闲置产能已降至2010年代初以来最窄水平，意味着面对突发供应中断时的缓冲空间有限；这与地缘紧张形成脆弱组合。值得关注的是：当「剩余产能」这一传统减震器变薄，任何地缘冲击都会被更直接地传导至油价。</div>
+      </div>
+      <div class="item" id="item-sec5-4">
+        <div class="item-title" onclick="toggleItem('item-sec5-4')">
+          <strong data-zh="5. 气候波动冲击农业：可可涨逾50%，谷物供应缺口为2006年来最大" data-en="5. Climate Volatility Hits Agriculture: Cocoa Up Over 50%, Grain Gap Largest Since 2006/07">5. 气候波动冲击农业：可可涨逾50%，谷物供应缺口为2006年来最大</strong>
+          <button class="fold-btn" id="fold-item-sec5-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="极端天气与气候波动持续冲击全球农业：可可价格年内涨逾50%，主要谷物供应缺口扩大至2006/07年度以来最大；食品通胀压力再起。值得关注的是：气候正从「长期叙事」变为「当期价格变量」，粮食安全与宏观通胀的耦合更紧密。" data-en="Extreme weather keeps hitting global agriculture - cocoa is up over 50% this year and the major-grain supply gap has widened to its largest since 2006/07, reviving food-inflation pressure. Why it matters: climate is moving from a long-term story to a current price variable, tying food security and macro inflation more tightly together.">极端天气与气候波动持续冲击全球农业：可可价格年内涨逾50%，主要谷物供应缺口扩大至2006/07年度以来最大；食品通胀压力再起。值得关注的是：气候正从「长期叙事」变为「当期价格变量」，粮食安全与宏观通胀的耦合更紧密。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec6">
+    <div class="section-header" onclick="toggleSection('sec6')">
+      <img src="" alt="" loading="lazy" decoding="async">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="医疗健康" data-en="Health &amp; Medicine"><span class="section-icon">🏥</span>医疗健康</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec6')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec6')" id="fold-sec6">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec6')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec6">
+      <div class="item" id="item-sec6-0">
+        <div class="item-title" onclick="toggleItem('item-sec6-0')">
+          <strong data-zh="1. FDA 批准 Garetosmab，首款进行性骨化性纤维发育不良疗法" data-en="1. FDA Approves Garetosmab, First Treatment for Fibrodysplasia Ossificans Progressiva">1. FDA 批准 Garetosmab，首款进行性骨化性纤维发育不良疗法</strong>
+          <button class="fold-btn" id="fold-item-sec6-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国 FDA 批准 Garetosmab-grts，成为首款用于进行性骨化性纤维发育不良（FOP）的治疗药物，可减缓患者软组织异常骨化的进程。值得关注的是：这一罕见病长期无药可治，首款疗法的获批填补了重大空白，也彰显罕见病研发的临床价值。" data-en="The US FDA approved Garetosmab-grts, the first therapy for fibrodysplasia ossificans progressiva FOP, slowing the abnormal soft-tissue ossification that defines the disease. Why it matters: a long-untreatable rare disease finally has a drug, filling a major gap and underscoring rare-disease R&amp;D value.">美国 FDA 批准 Garetosmab-grts，成为首款用于进行性骨化性纤维发育不良（FOP）的治疗药物，可减缓患者软组织异常骨化的进程。值得关注的是：这一罕见病长期无药可治，首款疗法的获批填补了重大空白，也彰显罕见病研发的临床价值。</div>
+      </div>
+      <div class="item" id="item-sec6-1">
+        <div class="item-title" onclick="toggleItem('item-sec6-1')">
+          <strong data-zh="2. Vitestro「Aletta」获批，全球首款独立机器人自动抽血设备" data-en="2. Vitestro's Aletta Approved - World's First Standalone Robotic Blood-Draw Device">2. Vitestro「Aletta」获批，全球首款独立机器人自动抽血设备</strong>
+          <button class="fold-btn" id="fold-item-sec6-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="荷兰公司 Vitestro 的「Aletta」于8月19日获 FDA 新批（De Novo）授权，成为全球首款可独立完成采血的机器人设备，通过超声引导与机械臂精准定位静脉。值得关注的是：采血这一高频、依赖人手的环节实现自动化，有望缓解护理人员短缺、提升采血一致性。" data-en="Dutch firm Vitestro's Aletta won FDA De Novo authorization on Aug 19 as the world's first standalone robotic device that autonomously draws blood via ultrasound guidance and a robotic arm. Why it matters: automating this frequent, hands-on step could ease nursing shortages and improve draw consistency.">荷兰公司 Vitestro 的「Aletta」于8月19日获 FDA 新批（De Novo）授权，成为全球首款可独立完成采血的机器人设备，通过超声引导与机械臂精准定位静脉。值得关注的是：采血这一高频、依赖人手的环节实现自动化，有望缓解护理人员短缺、提升采血一致性。</div>
+      </div>
+      <div class="item" id="item-sec6-2">
+        <div class="item-title" onclick="toggleItem('item-sec6-2')">
+          <strong data-zh="3. FDA 批准首款可穿戴连续酮体+血糖监测仪" data-en="3. FDA Clears First Wearable Continuous Ketone Plus Blood-Sugar Monitor">3. FDA 批准首款可穿戴连续酮体+血糖监测仪</strong>
+          <button class="fold-btn" id="fold-item-sec6-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="FDA 批准首款可同时连续监测酮体与血糖的可穿戴设备，为糖尿病酮症酸中毒等急症的早期预警提供新工具；患者可在家中实时掌握代谢状态。值得关注的是：连续监测从「单一指标」走向「多指标联动」，慢病管理正迈向更精细的个体化预警。" data-en="The FDA cleared the first wearable that continuously tracks both ketones and blood glucose, giving new early-warning power against emergencies like diabetic ketoacidosis, with patients monitoring metabolism at home in real time. Why it matters: continuous monitoring is moving from single metric to multi-metric linkage, pushing chronic care toward finer individualised alerts.">FDA 批准首款可同时连续监测酮体与血糖的可穿戴设备，为糖尿病酮症酸中毒等急症的早期预警提供新工具；患者可在家中实时掌握代谢状态。值得关注的是：连续监测从「单一指标」走向「多指标联动」，慢病管理正迈向更精细的个体化预警。</div>
+      </div>
+      <div class="item" id="item-sec6-3">
+        <div class="item-title" onclick="toggleItem('item-sec6-3')">
+          <strong data-zh="4. Oveporexton 治疗1型发作性睡病获突破" data-en="4. Oveporexton Breakthrough for Narcolepsy Type 1">4. Oveporexton 治疗1型发作性睡病获突破</strong>
+          <button class="fold-btn" id="fold-item-sec6-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="Oveporexton 在1型发作性睡病治疗中取得进展，通过调控食欲素通路改善日间过度嗜睡等症状，为患者提供区别于传统兴奋剂的新机制选择。值得关注的是：针对睡眠—觉醒神经环路的新药，正把「对症提神」升级为「对因调节」。" data-en="Oveporexton advanced in narcolepsy type 1, improving excessive daytime sleepiness by targeting the orexin pathway and offering a new-mechanism alternative to traditional stimulants. Why it matters: drugs aimed at the sleep-wake circuit are upgrading care from symptomatic alertness to causal regulation.">Oveporexton 在1型发作性睡病治疗中取得进展，通过调控食欲素通路改善日间过度嗜睡等症状，为患者提供区别于传统兴奋剂的新机制选择。值得关注的是：针对睡眠—觉醒神经环路的新药，正把「对症提神」升级为「对因调节」。</div>
+      </div>
+      <div class="item" id="item-sec6-4">
+        <div class="item-title" onclick="toggleItem('item-sec6-4')">
+          <strong data-zh="5. Avexitide 三期显示减肥术后低血糖发作降55%" data-en="5. Avexitide Phase 3 Cuts Post-Bariatric Hypoglycemia Attacks by 55%">5. Avexitide 三期显示减肥术后低血糖发作降55%</strong>
+          <button class="fold-btn" id="fold-item-sec6-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="Avexitide 在减肥术后低血糖（PBH）的三期研究中，将低血糖发作频率降低约55%，为这一困扰减重手术患者的并发症提供首个针对性疗法。值得关注的是：随着代谢手术普及，其长期并发症的专门用药正从「无药可用」走向「精准可治」。" data-en="Avexitide cut post-bariatric hypoglycemia PBH attacks by about 55% in phase 3, the first targeted therapy for a complication plaguing weight-loss-surgery patients. Why it matters: as metabolic surgery spreads, dedicated drugs for its long-term complications are moving from none available to precisely treatable.">Avexitide 在减肥术后低血糖（PBH）的三期研究中，将低血糖发作频率降低约55%，为这一困扰减重手术患者的并发症提供首个针对性疗法。值得关注的是：随着代谢手术普及，其长期并发症的专门用药正从「无药可用」走向「精准可治」。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec7">
+    <div class="section-header" onclick="toggleSection('sec7')">
+      <img src="" alt="" loading="lazy" decoding="async">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="半导体与硬件" data-en="Semiconductors &amp; Hardware"><span class="section-icon">💻</span>半导体与硬件</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec7')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec7')" id="fold-sec7">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec7')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec7">
+      <div class="item" id="item-sec7-0">
+        <div class="item-title" onclick="toggleItem('item-sec7-0')">
+          <strong data-zh="1. 美国《MATCH 法案》逼荷兰停售对华剩余 ASML 光刻设备" data-en="1. US MATCH Act Pressures Netherlands to Halt Remaining ASML DUV Sales to China">1. 美国《MATCH 法案》逼荷兰停售对华剩余 ASML 光刻设备</strong>
+          <button class="fold-btn" id="fold-item-sec7-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国国会推动《MATCH 法案》，要求荷兰在150天内停止向中国出售并 servicing 剩余的 ASML 深紫外（DUV）光刻设备，否则动用外国直接产品规则（FDPR）施压；管制范围还涵盖日本等盟友。值得关注的是：管制从「最先进EUV」下探到「成熟DUV」，意在彻底锁死中国成熟制程的扩产与维护。" data-en="The US Congress is pushing the MATCH Act, demanding the Netherlands halt remaining ASML deep-ultraviolet DUV sales and servicing to China within 150 days or face Foreign Direct Product Rule FDPR pressure; allies like Japan are also in scope. Why it matters: controls are reaching down from cutting-edge EUV to mature DUV, aiming to lock China's mature-node expansion and maintenance entirely.">美国国会推动《MATCH 法案》，要求荷兰在150天内停止向中国出售并 servicing 剩余的 ASML 深紫外（DUV）光刻设备，否则动用外国直接产品规则（FDPR）施压；管制范围还涵盖日本等盟友。值得关注的是：管制从「最先进EUV」下探到「成熟DUV」，意在彻底锁死中国成熟制程的扩产与维护。</div>
+      </div>
+      <div class="item" id="item-sec7-1">
+        <div class="item-title" onclick="toggleItem('item-sec7-1')">
+          <strong data-zh="2. 日本新增23项出口管制，中芯/长鑫/长江存储等受限" data-en="2. Japan Adds 23 Export Controls; SMIC, CXMT, YMTC Restricted">2. 日本新增23项出口管制，中芯/长鑫/长江存储等受限</strong>
+          <button class="fold-btn" id="fold-item-sec7-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="日本在既有管制基础上新增23项半导体相关出口管制，并将中芯国际、长鑫存储、长江存储、华为、华虹等中国企业纳入限制清单；这是盟友对华技术封锁的进一步协同。值得关注的是：管制清单的「扩围+细化」使中国企业的设备获取与备件维护更趋困难。" data-en="Japan added 23 semiconductor-related export controls on top of existing ones and listed Chinese firms including SMIC, CXMT, YMTC, Huawei and Hua Hong as restricted - further allied coordination of tech containment. Why it matters: the broaden-and-refine control lists make equipment access and spare-part maintenance harder for Chinese firms.">日本在既有管制基础上新增23项半导体相关出口管制，并将中芯国际、长鑫存储、长江存储、华为、华虹等中国企业纳入限制清单；这是盟友对华技术封锁的进一步协同。值得关注的是：管制清单的「扩围+细化」使中国企业的设备获取与备件维护更趋困难。</div>
+      </div>
+      <div class="item" id="item-sec7-2">
+        <div class="item-title" onclick="toggleItem('item-sec7-2')">
+          <strong data-zh="3. 美国撤销台积电、三星在华晶圆厂授权豁免" data-en="3. US Revokes TSMC and Samsung China Wafer-Fab License Waivers">3. 美国撤销台积电、三星在华晶圆厂授权豁免</strong>
+          <button class="fold-btn" id="fold-item-sec7-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国商务部撤销了此前给予台积电、三星等企业在华晶圆厂的「视同授权」豁免，意味着其在大陆工厂的技术更新与设备采购将受更严格约束。值得关注的是：豁免的撤销把「在华代工」也纳入管制网，跨国芯片巨头的两岸布局面临重新权衡。" data-en="The US Commerce Department revoked the license waivers previously granted to TSMC's, Samsung's and others' China wafer fabs, tightening constraints on tech upgrades and equipment procurement at their mainland plants. Why it matters: pulling the waiver drags fabs in China into the control net, forcing multinationals to reweigh their cross-strait footprints.">美国商务部撤销了此前给予台积电、三星等企业在华晶圆厂的「视同授权」豁免，意味着其在大陆工厂的技术更新与设备采购将受更严格约束。值得关注的是：豁免的撤销把「在华代工」也纳入管制网，跨国芯片巨头的两岸布局面临重新权衡。</div>
+      </div>
+      <div class="item" id="item-sec7-3">
+        <div class="item-title" onclick="toggleItem('item-sec7-3')">
+          <strong data-zh="4. FCC 永久禁止华为、中兴、海康、大华、海能达设备" data-en="4. FCC Permanently Bans Huawei, ZTE, Hikvision, Dahua, Hytera Equipment">4. FCC 永久禁止华为、中兴、海康、大华、海能达设备</strong>
+          <button class="fold-btn" id="fold-item-sec7-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国联邦通信委员会（FCC）将针对华为、中兴、海康威视、大华、海能达的设备禁令转为永久，禁止其在美国通信网络中的销售与运营。值得关注的是：从「临时限制」到「永久封禁」，科技脱钩在通信基础设施领域完成制度化固化。" data-en="The US FCC made permanent its equipment ban on Huawei, ZTE, Hikvision, Dahua and Hytera, barring their sale and operation in US communications networks. Why it matters: from temporary limits to permanent ban, tech decoupling is institutionally entrenched in communications infrastructure.">美国联邦通信委员会（FCC）将针对华为、中兴、海康威视、大华、海能达的设备禁令转为永久，禁止其在美国通信网络中的销售与运营。值得关注的是：从「临时限制」到「永久封禁」，科技脱钩在通信基础设施领域完成制度化固化。</div>
+      </div>
+      <div class="item" id="item-sec7-4">
+        <div class="item-title" onclick="toggleItem('item-sec7-4')">
+          <strong data-zh="5. 中国修订《集成电路布图设计保护条例》，最高可处5倍惩罚性赔偿" data-en="5. China Revises IC Layout-Design Protection Rules, Up to 5x Punitive Damages">5. 中国修订《集成电路布图设计保护条例》，最高可处5倍惩罚性赔偿</strong>
+          <button class="fold-btn" id="fold-item-sec7-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="中国启动《集成电路布图设计保护条例》实施25年来的首次大修，拟于10月15日施行，新增对光子芯片、量子芯片的保护，并将故意侵权的最高惩罚性赔偿提高至5倍。值得关注的是：在外部管制加码的同时，中国以知识产权「强保护」为本土芯片创新提供制度护航。" data-en="China launched the first major revision in 25 years of its IC layout-design protection rules, set to take effect Oct 15, adding protection for photonic and quantum chips and raising punitive damages for wilful infringement to 5x. Why it matters: as external controls tighten, China is backing home-grown chip innovation with strong IP protection as institutional cover.">中国启动《集成电路布图设计保护条例》实施25年来的首次大修，拟于10月15日施行，新增对光子芯片、量子芯片的保护，并将故意侵权的最高惩罚性赔偿提高至5倍。值得关注的是：在外部管制加码的同时，中国以知识产权「强保护」为本土芯片创新提供制度护航。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec8">
+    <div class="section-header" onclick="toggleSection('sec8')">
+      <img src="" alt="" loading="lazy" decoding="async">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="航天与空间" data-en="Space &amp; Aerospace"><span class="section-icon">🚀</span>航天与空间</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec8')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec8')" id="fold-sec8">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec8')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec8">
+      <div class="item" id="item-sec8-0">
+        <div class="item-title" onclick="toggleItem('item-sec8-0')">
+          <strong data-zh="1. 长征六号丙遥一太原一箭七星，长征第665次飞行" data-en="1. Long March 6C Lofts 7 Satellites; 665th Long March Flight">1. 长征六号丙遥一太原一箭七星，长征第665次飞行</strong>
+          <button class="fold-btn" id="fold-item-sec8-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="北京时间8月25日，长征六号丙遥一运载火箭在太原将中科卫星14/15星、木铎1A/1B、静安梦想星、八一04星、银河航天灵知09泰国立方星等7颗卫星送入轨道，任务圆满成功，这是长征系列第665次飞行。值得关注的是：一箭多星常态化印证中国运载火箭的批量发射与任务弹性。" data-en="On Aug 25 Beijing time, a Long March 6C rocket from Taiyuan placed seven satellites - CAS 14/15, Duojue 1A/B, Jing'an Dream, Bayi-04 and GalaxySpace Lingzhi-09 Thailand cubesat - into orbit, the 665th Long March flight. Why it matters: routine multi-satellite launches confirm China's batch-launch capacity and mission flexibility.">北京时间8月25日，长征六号丙遥一运载火箭在太原将中科卫星14/15星、木铎1A/1B、静安梦想星、八一04星、银河航天灵知09泰国立方星等7颗卫星送入轨道，任务圆满成功，这是长征系列第665次飞行。值得关注的是：一箭多星常态化印证中国运载火箭的批量发射与任务弹性。</div>
+      </div>
+      <div class="item" id="item-sec8-1">
+        <div class="item-title" onclick="toggleItem('item-sec8-1')">
+          <strong data-zh="2. 银河航天灵知09泰国立方星：中国商业航天首次整星出口东南亚" data-en="2. GalaxySpace Thailand Cubesat: China's First Whole-Satellite Export to SE Asia">2. 银河航天灵知09泰国立方星：中国商业航天首次整星出口东南亚</strong>
+          <button class="fold-btn" id="fold-item-sec8-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="随长征六号丙发射的银河航天灵知09泰国立方星，由国内商业航天企业银河航天为泰国交付，用于国土、农业与生态遥感及高校教学，是中国商业航天首次面向东南亚完成整星研制、发射与在轨交付。值得关注的是：整星出口标志着中国商业航天从「本土发射」迈向「全球交付」的能力跃迁。" data-en="The GalaxySpace Lingzhi-09 Thailand cubesat, riding the Long March 6C, was built by Chinese commercial firm GalaxySpace for Thailand, serving land, agriculture and ecology remote sensing and teaching - China's first whole-satellite R&amp;D, launch and in-orbit delivery to a Southeast Asian nation. Why it matters: whole-satellite export marks China's commercial space leaping from domestic launch to global delivery.">随长征六号丙发射的银河航天灵知09泰国立方星，由国内商业航天企业银河航天为泰国交付，用于国土、农业与生态遥感及高校教学，是中国商业航天首次面向东南亚完成整星研制、发射与在轨交付。值得关注的是：整星出口标志着中国商业航天从「本土发射」迈向「全球交付」的能力跃迁。</div>
+      </div>
+      <div class="item" id="item-sec8-2">
+        <div class="item-title" onclick="toggleItem('item-sec8-2')">
+          <strong data-zh="3. 朱雀三号完成中国民营火箭首次垂直回收着陆" data-en="3. Zhuque-3 Completes China's First Private Booster Landing">3. 朱雀三号完成中国民营火箭首次垂直回收着陆</strong>
+          <button class="fold-btn" id="fold-item-sec8-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="由蓝箭航天研制的朱雀三号于8月18日完成中国民营运载火箭的首次垂直回收着陆，验证了一子级可重复使用的关键技术，为低成本、高频次发射奠定基础。值得关注的是：民营火箭跻身「可回收」俱乐部，将加速中国商业航天的成本曲线下探与发射节奏提升。" data-en="LandSpace's Zhuque-3 completed China's first private rocket vertical-recovery landing on Aug 18, validating key reusable first-stage technology and paving the way for low-cost, high-cadence launches. Why it matters: a private rocket joining the reusable club will accelerate China's commercial-space cost curve down and launch cadence up.">由蓝箭航天研制的朱雀三号于8月18日完成中国民营运载火箭的首次垂直回收着陆，验证了一子级可重复使用的关键技术，为低成本、高频次发射奠定基础。值得关注的是：民营火箭跻身「可回收」俱乐部，将加速中国商业航天的成本曲线下探与发射节奏提升。</div>
+      </div>
+      <div class="item" id="item-sec8-3">
+        <div class="item-title" onclick="toggleItem('item-sec8-3')">
+          <strong data-zh="4. 罗曼空间望远镜拟8月30日由猎鹰重型发射" data-en="4. Nancy Grace Roman Space Telescope Targets Aug 30 Launch on Falcon Heavy">4. 罗曼空间望远镜拟8月30日由猎鹰重型发射</strong>
+          <button class="fold-btn" id="fold-item-sec8-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国国家航空航天局（NASA）的罗曼空间望远镜计划于8月30日由猎鹰重型运载火箭发射，其广域巡天能力约为哈勃的100倍，将聚焦暗物质、暗能量与系外行星普查。值得关注的是：更强的统计巡天将把宇宙学从「个案深场」推向「全景普查」。" data-en="NASA's Nancy Grace Roman Space Telescope targets an Aug 30 launch atop a Falcon Heavy, with wide-field survey power about 100x Hubble's, focusing on dark matter, dark energy and exoplanet censuses. Why it matters: stronger statistical surveys move cosmology from case deep fields to panoramic censuses.">美国国家航空航天局（NASA）的罗曼空间望远镜计划于8月30日由猎鹰重型运载火箭发射，其广域巡天能力约为哈勃的100倍，将聚焦暗物质、暗能量与系外行星普查。值得关注的是：更强的统计巡天将把宇宙学从「个案深场」推向「全景普查」。</div>
+      </div>
+      <div class="item" id="item-sec8-4">
+        <div class="item-title" onclick="toggleItem('item-sec8-4')">
+          <strong data-zh="5. 欧空局 MTG-I2 气象卫星拟8月27日由阿丽亚娜62发射" data-en="5. ESA's MTG-I2 Weather Satellite Targets Aug 27 Launch on Ariane 62">5. 欧空局 MTG-I2 气象卫星拟8月27日由阿丽亚娜62发射</strong>
+          <button class="fold-btn" id="fold-item-sec8-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="欧洲航天局（ESA）的第三代气象卫星 MTG-I2 计划于8月27日由阿丽亚娜62火箭发射，这将是阿丽亚娜6型的首次地球同步转移轨道（GTO）任务，承担欧洲闪电、云图与极端天气监测。值得关注的是：阿丽亚娜6型迈过GTO门槛，意味着欧洲自主发射能力在关键轨道补上了缺口。" data-en="ESA's third-generation weather satellite MTG-I2 is set for an Aug 27 launch on an Ariane 62 - the Ariane 6's first geostationary-transfer-orbit GTO mission - carrying Europe's lightning, imagery and severe-weather monitoring. Why it matters: Ariane 6 clearing the GTO bar fills a gap in Europe's autonomous access to key orbits.">欧洲航天局（ESA）的第三代气象卫星 MTG-I2 计划于8月27日由阿丽亚娜62火箭发射，这将是阿丽亚娜6型的首次地球同步转移轨道（GTO）任务，承担欧洲闪电、云图与极端天气监测。值得关注的是：阿丽亚娜6型迈过GTO门槛，意味着欧洲自主发射能力在关键轨道补上了缺口。</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-card" id="sec9">
+    <div class="section-header" onclick="toggleSection('sec9')">
+      <img src="" alt="" loading="lazy" decoding="async">
+      <div class="section-titlebar">
+        <span class="section-title" data-zh="社会与舆情" data-en="Society &amp; Public Opinion"><span class="section-icon">📱</span>社会与舆情</span>
+        <span class="section-actions">
+          <button class="fold-btn" onclick="event.stopPropagation();expandSectionItems('sec9')" title="展开本节">📖</button>
+          <button class="fold-btn" onclick="event.stopPropagation();toggleSection('sec9')" id="fold-sec9">▼</button>
+          <button class="tts-btn" onclick="event.stopPropagation();speakSection('sec9')" title="朗读本节">🔊</button>
+        </span>
+      </div>
+    </div>
+    <div class="section-body" id="body-sec9">
+      <div class="item" id="item-sec9-0">
+        <div class="item-title" onclick="toggleItem('item-sec9-0')">
+          <strong data-zh="1. Meta 儿童隐私案开庭，29州起诉、扎克伯格将作证" data-en="1. Meta Child-Privacy Trial Begins; 29 States Sued, Zuckerberg to Testify">1. Meta 儿童隐私案开庭，29州起诉、扎克伯格将作证</strong>
+          <button class="fold-btn" id="fold-item-sec9-0">▼</button>
+        </div>
+        <div class="item-body" data-zh="针对 Meta 的未成年人隐私集体诉讼正式开庭，由29个州联合起诉，指控其算法致瘾与违规收集13岁以下儿童数据；马克·扎克伯格将被传唤作证，庭审预计持续6–8周。值得关注的是：科技巨头首次在「算法致瘾+儿童数据」组合指控下面临创始人级作证，平台责任边界将被重新定义。" data-en="The class-action over Meta's child privacy opened, brought by 29 states alleging algorithmic addiction and unlawful collection of under-13s' data; Mark Zuckerberg is subpoenaed to testify in a trial expected to last 6-8 weeks. Why it matters: a tech giant is for the first time facing founder-level testimony under combined algorithmic addiction plus child data charges, redefining platform accountability.">针对 Meta 的未成年人隐私集体诉讼正式开庭，由29个州联合起诉，指控其算法致瘾与违规收集13岁以下儿童数据；马克·扎克伯格将被传唤作证，庭审预计持续6–8周。值得关注的是：科技巨头首次在「算法致瘾+儿童数据」组合指控下面临创始人级作证，平台责任边界将被重新定义。</div>
+      </div>
+      <div class="item" id="item-sec9-1">
+        <div class="item-title" onclick="toggleItem('item-sec9-1')">
+          <strong data-zh="2. 中国三部门通报：下架400余款App，整改1100余款" data-en="2. China's Three Regulators: 400+ Apps Removed, 1,100+ Rectified">2. 中国三部门通报：下架400余款App，整改1100余款</strong>
+          <button class="fold-btn" id="fold-item-sec9-1">▼</button>
+        </div>
+        <div class="item-body" data-zh="中国网信、工信、公安三部门通报个人信息保护专项整治结果：累计下架400余款违规App、责令整改1100余款，重点整治过度索权、强制授权与违规收集行为。值得关注的是：监管从「运动式整改」转向常态化执法，App 的个人信息处理正被纳入持续合规轨道。" data-en="China's cyberspace, industry and public-security regulators reported a personal-information crackdown: over 400 non-compliant apps removed and more than 1,100 ordered to rectify, targeting excessive permissions, forced authorization and unlawful collection. Why it matters: regulation is shifting from campaign-style fixes to routine enforcement, putting app data handling on a continuous-compliance track.">中国网信、工信、公安三部门通报个人信息保护专项整治结果：累计下架400余款违规App、责令整改1100余款，重点整治过度索权、强制授权与违规收集行为。值得关注的是：监管从「运动式整改」转向常态化执法，App 的个人信息处理正被纳入持续合规轨道。</div>
+      </div>
+      <div class="item" id="item-sec9-2">
+        <div class="item-title" onclick="toggleItem('item-sec9-2')">
+          <strong data-zh="3. 美司法部就儿童隐私与 TikTok 达成4亿美元和解" data-en="3. DOJ Reaches $400M TikTok Settlement Over Children's Privacy">3. 美司法部就儿童隐私与 TikTok 达成4亿美元和解</strong>
+          <button class="fold-btn" id="fold-item-sec9-2">▼</button>
+        </div>
+        <div class="item-body" data-zh="美国司法部就儿童隐私问题与 TikTok 达成约4亿美元的和解（8月21日公布），涉及违规处理未成年人数据；这是社交平台未成年人保护领域的又一高额案件。值得关注的是：在 Meta 案之外，TikTok 和解显示监管对「未成年人数据」采取零容忍姿态，平台合规成本持续抬升。" data-en="The US Justice Department reached a roughly $400 million settlement with TikTok over children's privacy (announced Aug 21), involving unlawful handling of minors' data - another high-dollar case in social-platform youth protection. Why it matters: alongside the Meta suit, the TikTok deal shows a zero-tolerance stance on minors' data, keeping platforms' compliance costs climbing.">美国司法部就儿童隐私问题与 TikTok 达成约4亿美元的和解（8月21日公布），涉及违规处理未成年人数据；这是社交平台未成年人保护领域的又一高额案件。值得关注的是：在 Meta 案之外，TikTok 和解显示监管对「未成年人数据」采取零容忍姿态，平台合规成本持续抬升。</div>
+      </div>
+      <div class="item" id="item-sec9-3">
+        <div class="item-title" onclick="toggleItem('item-sec9-3')">
+          <strong data-zh="4. 新泽西州长签署未成年人社交媒体法案" data-en="4. New Jersey Governor Signs Kids' Social-Media Law">4. 新泽西州长签署未成年人社交媒体法案</strong>
+          <button class="fold-btn" id="fold-item-sec9-3">▼</button>
+        </div>
+        <div class="item-body" data-zh="新泽西州长签署未成年人社交媒体法案，要求平台对未成年用户实施年龄验证、限制算法推送与夜间通知，并赋予家长更强管控权。值得关注的是：各州「分散立法」正倒逼联邦层面出台统一规则，未成年人网络保护的制度拼图加速成形。" data-en="New Jersey's governor signed a kids' social-media law requiring age verification for minor users, limiting algorithmic feeds and nighttime notifications, and giving parents stronger controls. Why it matters: states' scattered legislation is forcing federal uniform rules, and the patchwork of youth-online-protection law is taking shape faster.">新泽西州长签署未成年人社交媒体法案，要求平台对未成年用户实施年龄验证、限制算法推送与夜间通知，并赋予家长更强管控权。值得关注的是：各州「分散立法」正倒逼联邦层面出台统一规则，未成年人网络保护的制度拼图加速成形。</div>
+      </div>
+      <div class="item" id="item-sec9-4">
+        <div class="item-title" onclick="toggleItem('item-sec9-4')">
+          <strong data-zh="5. 全球未成年人网络保护趋严：澳禁16岁以下、英2027圣诞前禁16岁以下" data-en="5. Global Minors' Online Protection Tightens: Australia Bans Under-16s, UK by Christmas 2027">5. 全球未成年人网络保护趋严：澳禁16岁以下、英2027圣诞前禁16岁以下</strong>
+          <button class="fold-btn" id="fold-item-sec9-4">▼</button>
+        </div>
+        <div class="item-body" data-zh="未成年人网络保护在全球加速收紧：澳大利亚实施16岁以下禁用社交媒体，英国计划最迟于2027年圣诞节前落实16岁以下禁令，法国则因最高法院裁定而暂缓15岁以下禁令（以言论自由为由）。值得关注的是：在「平台义务」与「未成年人权利」之间，各国正以不同路径探索平衡，监管趋严已成明确趋势。" data-en="Minors' online protection is tightening worldwide: Australia bans under-16s from social media, the UK plans a sub-16 ban by Christmas 2027, while France suspended its under-15 ban after a top court cited free speech. Why it matters: between platform duty and minors' rights, nations are probing different balances, but a tightening trend is clear.">未成年人网络保护在全球加速收紧：澳大利亚实施16岁以下禁用社交媒体，英国计划最迟于2027年圣诞节前落实16岁以下禁令，法国则因最高法院裁定而暂缓15岁以下禁令（以言论自由为由）。值得关注的是：在「平台义务」与「未成年人权利」之间，各国正以不同路径探索平衡，监管趋严已成明确趋势。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing" id="closingText" data-zh="世界很大，今天的故事只是其中一角。愿你在了解远方的同时，也不忘照顾好身边的生活，多一份理解，少一分焦虑，安稳地度过这一天。" data-en="The world is vast, and today's stories are only a sliver of it. May you stay informed about distant events while tending to the life around you - with a little more understanding and a little less anxiety, and a steady day.">世界很大，今天的故事只是其中一角。愿你在了解远方的同时，也不忘照顾好身边的生活，多一份理解，少一分焦虑，安稳地度过这一天。</div>
+
+  <div class="summary">
+    <h3 id="summaryTitle">核心主线</h3>
+    <p id="summaryBody" data-zh="2026年8月26日的全球主线延续两条对抗轴线：其一，美伊博弈从军事威慑转向「经济终局」——贝森特将次级制裁扩至数字资产、科技、黄金、航空、航运五大行业约60个实体，阿联酋全面切断与伊贸易金融，油价却因「力度不及预期」而从高位回落（布油-4%至88.58美元）， 凸显制裁与实体流量的背离；其二，科技管制与AI算力竞赛同步升级——美国《MATCH法案》逼荷兰停售对华剩余ASML光刻设备、FCC永久封禁华为等五企，而中国修订芯片布图保护条例强化「强保护」；AI侧OpenAI自研Jalapeño推理芯片、英伟达Vera Rubin全面量产、通义千问1250亿模型开源。航天（长征六号丙一箭七星、朱雀三号回收、罗曼望远镜8月30日发射）与未成年人网络保护（Meta案开庭、中国下架400余款App）则构成今日科技与社会的双亮点。" data-en="The global story of Aug 26, 2026 runs along two confrontation axes. First, the US-Iran contest shifted from military deterrence to an economic endgame - Bessent widened secondary sanctions to about 60 entities across digital assets, technology, gold, aviation and shipping, the UAE cut all Iran trade and finance, yet oil eased from highs (Brent -4% to $88.58) as markets judged sanctions softer than expected, exposing a gap between sanction headlines and physical flows. Second, tech controls and the AI-compute race escalated together - the US MATCH Act pressures the Netherlands to halt remaining ASML DUV sales to China and the FCC permanently banned Huawei and four others, while China revised its chip layout-protection rules for strong IP. On the AI side, OpenAI's in-house Jalapeno inference chip, Nvidia's full-production Vera Rubin and Alibaba's open 125B Qwen model headline progress. Space (Long March 6C's seven satellites, Zhuque-3 recovery, Roman Telescope's Aug 30 launch) and youth online protection (Meta trial, China's 400+ app removals) form today's twin tech-and-society highlights.">2026年8月26日的全球主线延续两条对抗轴线：其一，美伊博弈从军事威慑转向「经济终局」——贝森特将次级制裁扩至数字资产、科技、黄金、航空、航运五大行业约60个实体，阿联酋全面切断与伊贸易金融，油价却因「力度不及预期」而从高位回落（布油-4%至88.58美元）， 凸显制裁与实体流量的背离；其二，科技管制与AI算力竞赛同步升级——美国《MATCH法案》逼荷兰停售对华剩余ASML光刻设备、FCC永久封禁华为等五企，而中国修订芯片布图保护条例强化「强保护」；AI侧OpenAI自研Jalapeño推理芯片、英伟达Vera Rubin全面量产、通义千问1250亿模型开源。航天（长征六号丙一箭七星、朱雀三号回收、罗曼望远镜8月30日发射）与未成年人网络保护（Meta案开庭、中国下架400余款App）则构成今日科技与社会的双亮点。</p>
+    <p style="margin-top:12px;font-size:.85em;">图片来源：本地实拍 + Wikimedia / Openverse 等多条 CC 授权线路，自动选用最快线路（离线始终有图）；语音由浏览器 Web Speech API 生成，播放器可一键开启「AI 语音增强」选用云端神经语音。</p>
+  </div>
+</div>
+
+<!-- Settings -->
+<div class="settings-overlay" id="settingsOverlay" onclick="if(event.target===this)closeSettings()">
+  <div class="settings-panel">
+    <div class="settings-header">
+      <h2 id="settingsTitle">设置</h2>
+      <button class="icon-btn" onclick="closeSettings()">✕</button>
+    </div>
+
+    <div class="settings-scroll">
+    <!-- 语言：跨网页同步 -->
+    <div class="setting-row common-setting">
+      <label id="lblLang">语言</label>
+      <select id="selLang" onchange="setLang(this.value)">
+        <option value="zh">简体中文</option>
+        <option value="en">English</option>
+      </select>
+      <div class="cw-actions">
+        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <label id="lblTheme">主题</label>
+      <select id="selTheme" onchange="setTheme(this.value)">
+        <option value="auto">跟随系统</option>
+        <option value="light">浅色</option>
+        <option value="dark">深色</option>
+      </select>
+    </div>
+
+    <!-- 主题色：跨网页同步 -->
+    <div class="setting-row common-setting">
+      <label id="lblAccent">主题色</label>
+      <div class="color-row">
+        <input type="color" id="accentColor" value="#2563eb" onchange="setAccent(this.value)">
+        <input type="number" id="accentR" min="0" max="255" placeholder="R">
+        <input type="number" id="accentG" min="0" max="255" placeholder="G">
+        <input type="number" id="accentB" min="0" max="255" placeholder="B">
+        <button class="apply-btn" onclick="applyRGBAccent()" id="btnApplyAccent">应用</button>
+      </div>
+      <div class="cw-actions">
+        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      </div>
+    </div>
+
+    <!-- 字号：跨网页同步 -->
+    <div class="setting-row common-setting">
+      <label id="lblFont">字号</label>
+      <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:flex-end;">
+        <input type="range" id="rngFont" min="12" max="22" value="15" oninput="setFont(this.value)">
+        <span id="fontVal">15px</span>
+      </div>
+      <div class="cw-actions">
+        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      </div>
+    </div>
+
+    <!-- 圆角大小：跨网页同步 -->
+    <div class="setting-row common-setting">
+      <label id="lblRadius">圆角大小</label>
+      <div style="display:flex;align-items:center;gap:10px;flex:1;justify-content:flex-end;">
+        <input type="range" id="rngRadius" min="0" max="32" value="16" oninput="setRadius(this.value)">
+        <span id="radiusVal">16px</span>
+      </div>
+      <div class="cw-actions">
+        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <label id="lblHl">高光显示</label>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <label class="switch">
+          <input type="checkbox" id="chkHl" checked onchange="setHlOn(this.checked)">
+          <span class="slider"></span>
+        </label>
+        <input type="color" id="hlColor" value="#ffeb3b" onchange="setHl(this.value)">
+        <input type="number" id="hlR" min="0" max="255" placeholder="R">
+        <input type="number" id="hlG" min="0" max="255" placeholder="G">
+        <input type="number" id="hlB" min="0" max="255" placeholder="B">
+        <button class="apply-btn" onclick="applyRGBHl()" id="btnApplyHl">应用</button>
+      </div>
+    </div>
+    <div class="setting-row" style="justify-content:flex-end;gap:8px;margin-top:8px;">
+      <button class="apply-btn" onclick="exportSettings()" id="btnExport">导出设置</button>
+      <button class="apply-btn" onclick="importSettings()" id="btnImport">导入设置</button>
+    </div>
+
+    <div class="setting-row" style="margin-top:22px;">
+      <button class="danger-btn" id="clearCacheBtn" onclick="confirmClearCache()">清理所有缓存</button>
+    </div>
+    <a class="bottom-link" id="gotoHome" href="index.html#open-settings" target="_blank" rel="noopener">前往主页设置界面 →</a>
+    </div><!-- /settings-scroll -->
+
+    <div class="settings-footer">
+      <div class="cache-hint" id="cacheHint">若样式或图片未更新，请按 Ctrl+F5 强制刷新</div>
+      <button class="exit-btn" id="exitNoSave" onclick="closeSettingsDiscard()">不保存退出</button>
+      <button class="exit-btn save-btn" id="exitSave" onclick="closeSettings()">保存并退出</button>
+    </div>
+  </div>
+</div>
+
+<!-- Player -->
+<div class="player" id="player">
+  <div class="player-main-row">
+    <button class="p-icon-btn" id="shuffleBtn" onclick="toggleShuffle()" title="随机">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M3 4l5 5"/></svg>
+    </button>
+    <button class="p-icon-btn" onclick="prevItem()" title="上一则">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm11 12l-8-6 8-6v12z"/></svg>
+    </button>
+    <button class="p-icon-btn" onclick="seekBy(-10)" title="后退 10 秒">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 17.5L7 12l4.5-5.5"/><path d="M7 12h10"/><text x="12" y="22" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">10</text></svg>
+    </button>
+    <button class="p-play-btn" id="playPauseBtn" onclick="togglePlay()" title="播放/暂停">
+      <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+    <button class="p-icon-btn" onclick="seekBy(30)" title="前进 30 秒">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 17.5L17 12l-4.5-5.5"/><path d="M17 12H7"/><text x="12" y="22" text-anchor="middle" font-size="7" fill="currentColor" stroke="none">30</text></svg>
+    </button>
+    <button class="p-icon-btn" onclick="nextItem()" title="下一则">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8-6-8-6v12zm9-12h2v12h-2z"/></svg>
+    </button>
+    <button class="p-icon-btn" id="repeatBtn" onclick="toggleRepeat()" title="循环">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2.5l3 3-3 3M2 12a10 10 0 0115-8.5M7 21.5l-3-3 3-3M22 12a10 10 0 01-15 8.5"/></svg>
+    </button>
+  </div>
+  <div class="player-progress-row">
+    <span class="player-time" id="curTime">0:00</span>
+    <input type="range" class="player-progress" id="playerProgress" value="0" min="0" max="100" step="0.1" oninput="previewSeek(this.value)" onchange="seekProgress(this.value)">
+    <span class="player-time" id="totTime">0:00</span>
+  </div>
+  <div class="player-extra-row">
+    <button class="player-reset-btn" id="playerResetBtn" onclick="resetSpeech()" title="停止并重置"><span id="playerResetLabel">重置</span></button>
+    <div class="player-extra-group">
+      <select id="voiceSel" onchange="changeVoice(this.value)">
+        <option value="">默认语音</option>
+        <option value="__custom__">➕ 自定义声音…</option>
+      </select>
+      <select id="speedSel" onchange="setSpeed(this.value)">
+        <option value="0.5">0.5x</option>
+        <option value="0.75">0.75x</option>
+        <option value="1" selected>1x</option>
+        <option value="1.25">1.25x</option>
+        <option value="1.5">1.5x</option>
+        <option value="2">2x</option>
+      </select>
+      <div class="volume-wrap">
+        <button class="vol-btn" id="volBtn" title="音量">
+          <svg id="volHighIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 000-6.5v1.75a2.75 2.75 0 010 4.75V12zm3-6.5a8 8 0 000 11.5v-1.75a6.25 6.25 0 010-8V5.5z"/></svg>
+          <svg id="volMuteIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M16.5 12l4.5-4.5-1.5-1.5L15 10.5 10.5 6 9 7.5l4.5 4.5L9 16.5l1.5 1.5 4.5-4.5 4.5 4.5 1.5-1.5L16.5 12zM3 9v6h4l5 5V4L7 9H3z"/></svg>
+          <span id="volLabel">音量</span>
+        </button>
+        <div class="volume-slider">
+          <input type="range" id="volRange" min="0" max="100" value="100" orient="vertical" oninput="previewVolume(this.value/100)" onchange="setVolume(this.value/100)">
+        </div>
+      </div>
+      <button class="player-native-btn" id="aiVoiceBtn" onclick="toggleAiVoice()" title="AI 语音增强：自动选用云端神经语音并优化音色"><span id="aiVoiceLabel">AI 语音</span></button>
+      <button class="player-native-btn" id="nativeBtn" onclick="toggleNativeMode()" title="切换系统原生播放模式"><span id="nativeLabel">智能分块</span></button>
+      <button class="p-icon-btn" id="playerExpandBtn" onclick="togglePlayerSize()" title="放大播放器">
+        <svg id="expandIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3m11-5v3a2 2 0 002 2h3"/></svg>
+        <svg id="shrinkIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2V3M3 16h3a2 2 0 012 2v3m11-5h-3a2 2 0 01-2-2v-3"/></svg>
+      </button>
+    </div>
+    <button class="p-icon-btn" onclick="stopAll()" title="关闭">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="player-chapter" id="playerChapter" style="width:100%;font-size:12px;color:var(--text-secondary);text-align:center;margin-top:2px;min-height:16px;"></div>
+  <div class="player-hint" id="playerHint" style="width:100%;font-size:11px;color:var(--text-secondary);opacity:.7;text-align:center;margin-top:4px;">💡 建议使用默认浏览器打开，语音朗读更稳定</div>
+</div>
+<!-- Custom voice modal -->
+<div class="modal-overlay" id="voiceModal" onclick="if(event.target===this)closeVoiceModal()">
+  <div class="modal">
+    <h3 id="modalTitle">收藏自定义声音</h3>
+    <select id="modalVoiceSel"></select>
+    <div class="modal-actions">
+      <button onclick="closeVoiceModal()" id="btnCancel">取消</button>
+      <button class="primary" onclick="saveCustomVoice()" id="btnSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Safe storage wrapper: localStorage throws a SecurityError on file:// (opaque
+// origin) in Chrome/Edge, which would crash init(). Fall back to in-memory.
+var safeLS = (function() {
+  try {
+    var __k = '__wb_ls_probe__';
+    window.localStorage.setItem(__k, '1');
+    window.localStorage.removeItem(__k);
+    return window.localStorage;
+  } catch (e) {
+    var __mem = {};
+    return {
+      getItem: function(k) { return (Object.prototype.hasOwnProperty.call(__mem, k)) ? __mem[k] : null; },
+      setItem: function(k, v) { __mem[k] = String(v); },
+      removeItem: function(k) { delete __mem[k]; }
+    };
+  }
+})();
+(function() {
+  'use strict';
+
+  // ========== Date Seed Rotation ==========
+  var seed = new Date().getFullYear()*10000 + (new Date().getMonth()+1)*100 + new Date().getDate();
+  var dayNames = ['周日','周一','周二','周三','周四','周五','周六'];
+  var dayNamesEn = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var today = new Date();
+  var dateStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var weekDay = dayNames[today.getDay()];
+  var weekDayEn = dayNamesEn[today.getDay()];
+
+  var welcomes = [
+    {zh:'愿今日资讯为您带来收获', en:'May today\'s news bring you value'},
+    {zh:'欢迎阅读今日全球要闻', en:'Welcome to today\'s global briefing'},
+    {zh:'新的一天，从了解世界开始', en:'Start your day by understanding the world'},
+    {zh:'保持好奇，保持关注', en:'Stay curious, stay informed'},
+    {zh:'信息是洞察世界的窗口', en:'Information is a window into the world'},
+    {zh:'探索世界，从这里出发', en:'Explore the world from here'},
+    {zh:'愿知识照亮前路', en:'May knowledge light your way'},
+    {zh:'今日事，今日知', en:'Today\'s affairs, today known'}
+  ];
+  var closings = [
+    {zh:'今日全球要闻已结束，感谢您的阅读', en:'Today\'s briefing ends here. Thank you for reading'},
+    {zh:'资讯有价，思考无价，明日再会', en:'News has value, thinking is priceless. See you tomorrow'},
+    {zh:'世界瞬息万变，我们始终关注', en:'The world changes fast; we keep watching'},
+    {zh:'感谢您的阅读，愿明日更好', en:'Thanks for reading. May tomorrow be better'},
+    {zh:'知全局者，方行稳致远', en:'Know the whole to walk steady and far'},
+    {zh:'新闻有终点，思考无止境', en:'News ends, thinking never does'},
+    {zh:'愿您在信息的海洋中找到方向', en:'May you find direction in the sea of information'},
+    {zh:'今日落幕，明朝再启', en:'Today closes; tomorrow begins'}
+  ];
+  var gradients = [
+    'linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%)',
+    'linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%)',
+    'linear-gradient(135deg, #312e81 0%, #6366f1 100%)',
+    'linear-gradient(135deg, #064e3b 0%, #10b981 100%)',
+    'linear-gradient(135deg, #7c2d12 0%, #f59e0b 100%)',
+    'linear-gradient(135deg, #581c87 0%, #d946ef 100%)',
+    'linear-gradient(135deg, #3b0764 0%, #8b5cf6 100%)',
+    'linear-gradient(135deg, #1e1b4b 0%, #ec4899 100%)'
+  ];
+  var bannerKeywords = ['nature,landscape','mountain,lake','ocean,beach','forest,sunlight','sunset,clouds','river,valley','flower,meadow','snow,mountain'];
+
+  var welcome = welcomes[seed % welcomes.length];
+  var closing = closings[seed % closings.length];
+  var gradient = gradients[seed % gradients.length];
+  var bannerKw = bannerKeywords[seed % bannerKeywords.length];
+
+  document.documentElement.style.setProperty('--title-gradient', gradient);
+
+  // ========== BUILTIN PREFS from user-prefs.json ==========
+  var BUILTIN_PREFS = {"lang":"zh","theme":"auto","accent":"#2563eb","font":15,"radius":16,"voice":"","hl":"#ffeb3b","hlOn":true};
+
+  // ========== State ==========
+  var lang = safeLS.getItem('wb_lang') || BUILTIN_PREFS.lang || 'zh';
+  var theme = safeLS.getItem('wb_theme') || BUILTIN_PREFS.theme || 'auto';
+  var accent = safeLS.getItem('wb_accent') || BUILTIN_PREFS.accent || '#2563eb';
+  var fontSize = parseInt(safeLS.getItem('wb_font') || BUILTIN_PREFS.font || 15);
+  var radius = parseInt(safeLS.getItem('wb_radius') || BUILTIN_PREFS.radius || 16);
+  var hlColor = safeLS.getItem('wb_hl') || BUILTIN_PREFS.hl || '#ffeb3b';
+  var hlOn = (safeLS.getItem('wb_hl_on') !== null ? safeLS.getItem('wb_hl_on') : (BUILTIN_PREFS.hlOn !== undefined ? BUILTIN_PREFS.hlOn : true)) === 'true' || (safeLS.getItem('wb_hl_on') !== null ? safeLS.getItem('wb_hl_on') : (BUILTIN_PREFS.hlOn !== undefined ? BUILTIN_PREFS.hlOn : true)) === true;
+  var customVoices = JSON.parse(safeLS.getItem('wb_custom_voices') || '[]');
+  var selectedVoice = safeLS.getItem('wb_voice') || BUILTIN_PREFS.voice || '';
+
+  var sections = document.querySelectorAll('.section-card');
+  var sectionData = [];
+  var isPlaying = false, isPaused = false, currentUtt = null, currentQueue = [];
+  var currentSectionIdx = 0, currentItemIdx = 0, currentMode = 'all'; // 'all' or 'section'
+  var playbackRate = 1;
+  var volume = 1;
+  var speakOffset = 0, charMap = [], highlightSpans = [], currentBodyEl = null;
+  var chunks = [], chunkIdx = 0; // text chunking for Chrome TTS silence bug
+  var nativeMode = false; // toggle: false=chunked mode, true=single native utterance
+  // Refined progress: track chars across the whole queue for smooth, fine-grained bar + time.
+  var totalQueueChars = 0, playedChars = 0, currentItemChars = 0, intraChar = 0;
+  var CPS = 4.8; // approx chars/sec for zh TTS at rate 1 (used for time estimate)
+  function fmtTime(s) { s = Math.max(0, Math.floor(s)); var m = Math.floor(s/60), ss = s % 60; return m + ':' + (ss < 10 ? '0' : '') + ss; }
+  function computeQueueChars() {
+    var total = 0;
+    if (currentMode === 'section' && sectionData[currentSectionIdx]) {
+      sectionData[currentSectionIdx].items.forEach(function(it) { total += it.text.length; });
+    } else {
+      sectionData.forEach(function(s) { s.items.forEach(function(it) { total += it.text.length; }); });
+    }
+    return total;
+  }
+  // AI voice enhancement: auto-pick the best neural/cloud voice + warmer pitch.
+  // Defaults ON (user wants better-than-system voice); can be turned off in player.
+  var aiVoiceBoost = safeLS.getItem('wb_ai_voice') !== '0';
+  var AI_BOOST_PITCH = 1.08;
+  var lastHlTime = 0, lastHlEl = null; // highlight throttle + dedup scroll
+  var isSeeking = false; // true while user drags the progress bar
+  var shuffleMode = false, repeatMode = false;
+
+  function init() {
+    // Browser compatibility: adjust tip text for WeChat / in-app browsers
+    var ua = navigator.userAgent || '';
+    var isWeChat = /MicroMessenger/i.test(ua);
+    var isQQ = /QQ\//i.test(ua);
+    var isWeibo = /Weibo/i.test(ua);
+    var isInApp = isWeChat || isQQ || isWeibo || /WebView/i.test(ua);
+    var tipEl = document.getElementById('browserTip');
+    var tipText = document.getElementById('browserTipText');
+    if (tipEl && tipText) {
+      if (isInApp) {
+        tipText.textContent = (lang === 'zh'
+          ? '检测到内置浏览器，语音朗读等功能可能受限。建议点击右上角「在浏览器中打开」使用 Safari / Chrome / Edge 获得完整体验。'
+          : 'In-app browser detected. Voice features may be limited. Please open in Safari / Chrome / Edge for full experience.');
+        tipEl.style.background = '#fff3cd';
+        tipEl.style.color = '#856404';
+        tipEl.style.borderColor = '#ffeaa7';
+      } else if (!window.speechSynthesis) {
+        tipText.textContent = (lang === 'zh'
+          ? '当前浏览器不支持语音朗读（Web Speech API）。建议更换为 Safari / Chrome / Edge。'
+          : 'Your browser does not support text-to-speech (Web Speech API). Please use Safari / Chrome / Edge.');
+        tipEl.style.background = '#fee2e2';
+        tipEl.style.color = '#991b1b';
+        tipEl.style.borderColor = '#fecaca';
+      } else {
+        // Normal browser: hide the tip after 6s
+        setTimeout(function(){ if(tipEl) tipEl.style.display='none'; }, 6000);
+      }
+    }
+    applyLang();
+    applyTheme();
+    applyAccent();
+    applyFont();
+    applyRadius();
+    applyHl();
+    applyHlOn();
+    setupImages();
+    setupSectionButtonLabels();
+    setupSettingsUI();
+    setupVoices();
+    applyFillStyle();
+    updateFillButtons();
+    updateAiVoiceUI();
+    setupScroll();
+    setupExitCleanup();
+  }
+
+  // ---------- Category-themed scenery images (pure nature, NO people/objects) ----------
+  // Every category maps to a nature motif + color + nature keyword.
+  // Guarantee: no people, no buildings, no text, no objects -- only landscapes/sky/water/plants/celestial.
+  // Each kind has MULTIPLE source lines (local bundle + remote CDNs via proxy).
+  // At open time we probe all sources and use the FASTEST one that loads; the local
+  // bundle is always the guaranteed fallback (never an AI/SVG image).
+  var KIND_META = {
+    military:    { src:'img/sec-military.jpg',      c:['#3b4252','#56657d'], motif:'shield',      alt:[] },
+    finance:     { src:'img/sec-finance.jpg',       c:['#7c5e10','#caa12b'], motif:'chart',       alt:[] },
+    ai:          { src:'img/sec-ai.jpg',            c:['#1a1a3a','#5b4bb0'], motif:'neural',      alt:[] },
+    politics:    { src:'img/sec-politics.jpg',      c:['#0b3d5c','#2693b3'], motif:'globe',       alt:[] },
+    industry:    { src:'img/sec-industry.jpg',      c:['#274a22','#5f9a3e'], motif:'gear',        alt:[] },
+    energy:      { src:'img/sec-energy.jpg',        c:['#7a3b10','#e89a1c'], motif:'bolt',        alt:[] },
+    health:      { src:'img/sec-health.jpg',        c:['#0f5132','#33bd86'], motif:'cross',       alt:[] },
+    semiconductor:{ src:'img/sec-semiconductor.jpg',c:['#16455c','#5cc4ec'], motif:'chip',        alt:[] },
+    space:       { src:'img/sec-space.jpg',         c:['#0a0a23','#4a3c8e'], motif:'rocket',      alt:[] },
+    society:     { src:'img/sec-society.jpg',       c:['#3a4a5a','#8aa6bd'], motif:'network',     alt:[] },
+    cover:       { src:'img/banner.jpg',            c:['#16356b','#3b82f6'], motif:'peaks',       alt:[] }
+  };
+  var SECTION_KIND = ['military','finance','ai','politics','industry','energy','health','semiconductor','space','society'];
+
+  function svgMotif(kind, w, h) {
+    // Distinct, text-free geometric icon per category so images correspond to the topic.
+    var cx = w * 0.5, cy = h * 0.5, s = Math.min(w, h);
+    var m = '';
+    function line(x1, y1, x2, y2, o) { return "<line x1='" + x1 + "' y1='" + y1 + "' x2='" + x2 + "' y2='" + y2 + "' stroke='#fff' stroke-width='" + (s*0.012).toFixed(2) + "' opacity='" + (o||0.16) + "'/>"; }
+    function circ(x, y, r, o) { return "<circle cx='" + x + "' cy='" + y + "' r='" + r + "' fill='#fff' opacity='" + (o||0.16) + "'/>"; }
+    function rect(x, y, ww, hh, o) { return "<rect x='" + x + "' y='" + y + "' width='" + ww + "' height='" + hh + "' fill='#fff' opacity='" + (o||0.16) + "'/>"; }
+    function poly(pts, o) { return "<polygon points='" + pts + "' fill='#fff' opacity='" + (o||0.16) + "'/>"; }
+    switch (kind) {
+      case 'shield':
+        m += poly(cx + "," + (cy - s*0.30) + " " + (cx + s*0.26) + "," + (cy - s*0.20) + " " + (cx + s*0.26) + "," + (cy + s*0.06) + " " + cx + "," + (cy + s*0.30) + " " + (cx - s*0.26) + "," + (cy + s*0.06) + " " + (cx - s*0.26) + "," + (cy - s*0.20), 0.18);
+        m += line(cx, cy - s*0.22, cx, cy + s*0.22, 0.16);
+        m += line(cx - s*0.18, cy, cx + s*0.18, cy, 0.16);
+        break;
+      case 'chart':
+        for (var b = 0; b < 5; b++) { var bh = s * (0.12 + 0.06 * b); m += rect(cx - s*0.34 + b*s*0.16, cy + s*0.30 - bh, s*0.10, bh, 0.18); }
+        m += line(cx - s*0.34, cy - s*0.04, cx + s*0.34, cy - s*0.28, 0.20);
+        break;
+      case 'neural':
+        var nn = [[cx - s*0.28, cy - s*0.18], [cx + s*0.05, cy - s*0.30], [cx + s*0.30, cy - s*0.05], [cx - s*0.05, cy + s*0.02], [cx + s*0.10, cy + s*0.28], [cx - s*0.30, cy + s*0.22]];
+        var ne = [[0,1],[1,2],[0,3],[3,4],[2,4],[3,5],[1,3]];
+        ne.forEach(function(e){ m += line(nn[e[0]][0], nn[e[0]][1], nn[e[1]][0], nn[e[1]][1], 0.14); });
+        nn.forEach(function(p){ m += circ(p[0], p[1], s*0.035, 0.22); });
+        break;
+      case 'globe':
+        m += circ(cx, cy, s*0.30, 0.16);
+        m += "<ellipse cx='" + cx + "' cy='" + cy + "' rx='" + (s*0.13).toFixed(1) + "' ry='" + (s*0.30).toFixed(1) + "' fill='none' stroke='#fff' stroke-width='" + (s*0.012).toFixed(2) + "' opacity='0.16'/>";
+        m += line(cx - s*0.30, cy, cx + s*0.30, cy, 0.16);
+        m += line(cx - s*0.21, cy - s*0.21, cx + s*0.21, cy - s*0.21, 0.14);
+        m += line(cx - s*0.21, cy + s*0.21, cx + s*0.21, cy + s*0.21, 0.14);
+        break;
+      case 'gear':
+        m += circ(cx, cy, s*0.24, 0.16);
+        m += circ(cx, cy, s*0.12, 0.18);
+        for (var g = 0; g < 8; g++) { var ang = g * Math.PI / 4; m += line(cx + Math.cos(ang)*s*0.24, cy + Math.sin(ang)*s*0.24, cx + Math.cos(ang)*s*0.36, cy + Math.sin(ang)*s*0.36, 0.16); }
+        break;
+      case 'bolt':
+        m += poly((cx + s*0.10) + "," + (cy - s*0.32) + " " + (cx - s*0.18) + "," + (cy + s*0.02) + " " + (cx - s*0.02) + "," + (cy + s*0.02) + " " + (cx - s*0.12) + "," + (cy + s*0.32) + " " + (cx + s*0.20) + "," + (cy - s*0.04) + " " + (cx + s*0.04) + "," + (cy - s*0.04), 0.20);
+        break;
+      case 'cross':
+        m += rect(cx - s*0.07, cy - s*0.30, s*0.14, s*0.60, 0.20);
+        m += rect(cx - s*0.30, cy - s*0.07, s*0.60, s*0.14, 0.20);
+        break;
+      case 'chip':
+        m += rect(cx - s*0.22, cy - s*0.22, s*0.44, s*0.44, 0.16);
+        m += rect(cx - s*0.12, cy - s*0.12, s*0.24, s*0.24, 0.20);
+        for (var p = 0; p < 4; p++) { var off = (p - 1.5) * s * 0.12; m += line(cx + off, cy - s*0.22, cx + off, cy - s*0.34, 0.18); m += line(cx + off, cy + s*0.22, cx + off, cy + s*0.34, 0.18); m += line(cx - s*0.22, cy + off, cx - s*0.34, cy + off, 0.18); m += line(cx + s*0.22, cy + off, cx + s*0.34, cy + off, 0.18); }
+        break;
+      case 'rocket':
+        m += poly(cx + "," + (cy - s*0.32) + " " + (cx + s*0.14) + "," + (cy - s*0.02) + " " + (cx + s*0.14) + "," + (cy + s*0.18) + " " + (cx - s*0.14) + "," + (cy + s*0.18) + " " + (cx - s*0.14) + "," + (cy - s*0.02), 0.18);
+        m += circ(cx, cy - s*0.10, s*0.05, 0.22);
+        m += poly((cx - s*0.14) + "," + (cy + s*0.18) + " " + (cx - s*0.26) + "," + (cy + s*0.34) + " " + (cx - s*0.06) + "," + (cy + s*0.20), 0.18);
+        m += poly((cx + s*0.14) + "," + (cy + s*0.18) + " " + (cx + s*0.26) + "," + (cy + s*0.34) + " " + (cx + s*0.06) + "," + (cy + s*0.20), 0.18);
+        m += line(cx, cy + s*0.18, cx, cy + s*0.36, 0.18);
+        break;
+      case 'network':
+        var nw = [[cx - s*0.26, cy - s*0.20], [cx + s*0.22, cy - s*0.26], [cx + s*0.30, cy + s*0.10], [cx - s*0.10, cy + s*0.04], [cx - s*0.02, cy - s*0.02], [cx + s*0.02, cy + s*0.28], [cx - s*0.30, cy + s*0.22]];
+        var we = [[0,4],[4,1],[1,2],[2,4],[4,3],[3,6],[4,5],[5,2],[0,3]];
+        we.forEach(function(e){ m += line(nw[e[0]][0], nw[e[0]][1], nw[e[1]][0], nw[e[1]][1], 0.13); });
+        nw.forEach(function(p){ m += circ(p[0], p[1], s*0.03, 0.20); });
+        break;
+      case 'peaks':
+      default:
+        m += poly("0," + h + " 0," + (h*0.62) + " " + (w*0.30) + "," + (h*0.38) + " " + (w*0.55) + "," + (h*0.56) + " " + (w*0.78) + "," + (h*0.34) + " " + w + "," + (h*0.58) + " " + w + "," + h, 0.16);
+        m += poly("0," + h + " 0," + (h*0.80) + " " + (w*0.25) + "," + (h*0.66) + " " + (w*0.5) + "," + (h*0.78) + " " + (w*0.75) + "," + (h*0.62) + " " + w + "," + (h*0.82) + " " + w + "," + h, 0.14);
+        break;
+    }
+    return m;
+  }
+
+  function themedImage(kind, w, h) {
+    var meta = KIND_META[kind] || KIND_META['cover'];
+    var col = meta.c;
+    var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='" + w + "' height='" + h + "' viewBox='0 0 " + w + " " + h + "'>" +
+      "<defs>" +
+        "<linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>" +
+          "<stop offset='0' stop-color='" + col[0] + "'/><stop offset='1' stop-color='" + col[1] + "'/>" +
+        "</linearGradient>" +
+        "<radialGradient id='r' cx='0.74' cy='0.26' r='0.9'>" +
+          "<stop offset='0' stop-color='rgba(255,255,255,0.30)'/><stop offset='1' stop-color='rgba(255,255,255,0)'/>" +
+        "</radialGradient>" +
+      "</defs>" +
+      "<rect width='" + w + "' height='" + h + "' fill='url(#g)'/>" +
+      "<rect width='" + w + "' height='" + h + "' fill='url(#r)'/>" +
+      svgMotif(meta.motif, w, h) +
+      "</svg>";
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }
+
+  // Try each URL in turn; if all fail (or time out), fall back to a guaranteed category-themed nature SVG.
+  function loadWithFallback(img, sources, finalUri, timeout) {
+    var i = 0;
+    function tryNext() {
+      if (i >= sources.length) { img.src = finalUri; return; }
+      var url = sources[i++];
+      var settled = false;
+      var timer = setTimeout(function() {
+        if (settled) return; settled = true;
+        img.onload = null; img.onerror = null;
+        tryNext();
+      }, timeout || 3500);
+      img.onload = function() { if (settled) return; settled = true; clearTimeout(timer); img.onerror = null; };
+      img.onerror = function() { if (settled) return; settled = true; clearTimeout(timer); tryNext(); };
+      img.src = url;
+    }
+    tryNext();
+  }
+
+  function setupImages() {
+    // Real, non-AI photos. Each image has multiple source lines (local bundle + remote CDN).
+    // At open time we race all sources and use the FASTEST one that loads successfully.
+    // The local bundle (meta.src) is the guaranteed fallback -- never an AI/SVG image.
+    function reveal(img, cls) {
+      if (!img) return;
+      if (img.complete && img.naturalWidth > 0) { img.classList.add(cls); return; }
+      img.addEventListener('load', function () { img.classList.add(cls); });
+    }
+    function fastestImage(img, kind, done) {
+      var meta = KIND_META[kind] || KIND_META['cover'];
+      // 优先使用本地已审核的实拍图，避免远程无效/占位图抢先导致空白或文字图
+      function setLocal() {
+        img.onerror = function() {
+          img.onerror = null;
+          var fallback = themedImage(kind, 800, 400);
+          img.src = fallback;
+          reveal(img, 'img-loaded');
+          done(fallback);
+        };
+        img.src = meta.src;
+        reveal(img, 'img-loaded');
+        done(meta.src);
+      }
+      if ((meta.alt || []).length === 0) {
+        setLocal();
+        return;
+      }
+      // 若未来配置了可信远程源，仅在本地图失败后才尝试
+      var sources = [meta.src].concat(meta.alt || []);
+      var settled = false;
+      sources.forEach(function(url, idx) {
+        var probe = new Image();
+        probe.onload = function () {
+          if (settled) return; settled = true;
+          img.onerror = function() { setLocal(); };
+          img.src = url;
+          reveal(img, 'img-loaded');
+          done(url);
+        };
+        probe.onerror = function () {
+          if (!settled && idx === sources.length - 1) {
+            settled = true;
+            setLocal();
+          }
+        };
+        probe.src = url;
+      });
+    }
+    function dailyHeroImage() {
+      var pool = ['img/bg-1.jpg','img/bg-2.jpg','img/bg-3.jpg','img/bg-4.jpg','img/bg-5.jpg','img/banner.jpg'];
+      var m = location.pathname.match(/\d{4}-\d{2}-\d{2}/);
+      var key = m ? m[0]
+              : ((typeof dateStr === 'string' && /\d{4}-\d{2}-\d{2}/.test(dateStr)) ? dateStr : 'default');
+      var h = 0; for (var i = 0; i < key.length; i++) { h = (h * 31 + key.charCodeAt(i)) >>> 0; }
+      return pool[h % pool.length];
+    }
+    var banner = document.getElementById('bannerImg');
+    if (banner) { banner.src = dailyHeroImage(); }
+    sections.forEach(function(sec, i) {
+      var img = sec.querySelector('.section-header img');
+      if (!img) return;
+      var kind = SECTION_KIND[i] || 'cover';
+      fastestImage(img, kind, function() {});
+    });
+  }
+
+  function foldLabel(isOpen) {
+    return lang === 'zh' ? (isOpen ? '折叠' : '展开') : (isOpen ? 'Collapse' : 'Expand');
+  }
+  var FOLD_EXPAND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M6 9l6 6 6-6"/></svg>';
+  var FOLD_COLLAPSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M18 15l-6-6-6 6"/></svg>';
+  var READ_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 000-6.5v1.75a2.75 2.75 0 010 4.75V12zm3-6.5a8 8 0 000 11.5v-1.75a6.25 6.25 0 010-8V5.5z"/></svg>';
+  function foldBtnHtml(isOpen) {
+    var icon = isOpen ? FOLD_COLLAPSE_ICON : FOLD_EXPAND_ICON;
+    return icon + '<span>' + foldLabel(isOpen) + '</span>';
+  }
+  function relabelAllButtons() {
+    document.querySelectorAll('.section-card').forEach(function(card) {
+      var body = card.querySelector('.section-body');
+      var open = body && body.classList.contains('open');
+      var acts = card.querySelectorAll('.section-actions .fold-btn');
+      if (acts.length >= 1) acts[0].innerHTML = FOLD_EXPAND_ICON + '<span>' + (lang==='zh'?'展开':'Expand') + '</span>';
+      if (acts.length >= 2) acts[1].innerHTML = foldBtnHtml(open);
+      var tts = card.querySelector('.tts-btn');
+      if (tts) tts.innerHTML = READ_ICON + '<span>' + (lang==='zh'?'朗读':'Read') + '</span>';
+    });
+    document.querySelectorAll('.item').forEach(function(item) {
+      var body = item.querySelector('.item-body');
+      var open = body && body.classList.contains('open');
+      var b = item.querySelector('.item-title .fold-btn');
+      if (b) b.innerHTML = foldBtnHtml(open);
+    });
+  }
+
+  function setupSectionButtonLabels() {
+    // Auto-apply visible text labels to all section/item buttons on load,
+    // so even generated HTML without text still shows labels (idempotent).
+    relabelAllButtons();
+  }
+
+  // ---- 主题色填充 ----
+  var PAGE_TAG = 'news';
+  function isLight(hex) {
+    var c = hexToRgb(hex); if (!c) return true;
+    var f = function(v){ v/=255; return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); };
+    return 0.2126*f(c.r) + 0.7152*f(c.g) + 0.0722*f(c.b) > 0.5;
+  }
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0; }
+    else {
+      var d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h /= 6;
+    }
+    return { h: h * 360, s: s * 100, l: l * 100 };
+  }
+  function hslToHex(h, s, l) {
+    h /= 360; s /= 100; l /= 100;
+    var r, g, b;
+    if (s === 0) { r = g = b = l; }
+    else {
+      var hue2rgb = function(p, q, t) {
+        if (t < 0) t += 1; if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 2;
+        return p;
+      };
+      var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      var p = 2 * l - q;
+      r = hue2rgb(p, q, h + 1/3); g = hue2rgb(p, q, h); b = hue2rgb(p, q, h - 1/3);
+    }
+    var to = function(x) { return ('0' + Math.round(x * 255).toString(16)).slice(-2); };
+    return '#' + to(r) + to(g) + to(b);
+  }
+  // 亮度按 ±10 个百分点调整；若已到边界无法继续增减，则保持原亮度
+  function adjustLightness(hex, delta) {
+    var c = hexToRgb(hex); if (!c) return hex;
+    var hsl = rgbToHsl(c.r, c.g, c.b);
+    var nl = hsl.l + delta;
+    if (nl < 0 || nl > 100) nl = hsl.l;
+    return hslToHex(hsl.h, hsl.s, nl);
+  }
+  // 在保持色相（H）基本不变的前提下，自动将填充色推向可读 contrast
+  function lum(hex) {
+    var c = hexToRgb(hex); if (!c) return 1;
+    var f = function(v){ v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b);
+  }
+  function contrastRatio(a, b) {
+    var l1 = lum(a) + 0.05, l2 = lum(b) + 0.05;
+    return l1 > l2 ? l1 / l2 : l2 / l1;
+  }
+  function optimizeFill(fill, fg, minRatio) {
+    minRatio = minRatio || 4.5;
+    if (contrastRatio(fill, fg) >= minRatio) return fill;
+    var c = hexToRgb(fill); if (!c) return fill;
+    var hsl = rgbToHsl(c.r, c.g, c.b);
+    var step = isLight(fg) ? -2 : 2;
+    for (var i = 0; i < 30; i++) {
+      hsl.l += step;
+      if (hsl.l < 0 || hsl.l > 100) break;
+      var candidate = hslToHex(hsl.h, hsl.s, hsl.l);
+      if (contrastRatio(candidate, fg) >= minRatio) return candidate;
+    }
+    return fill;
+  }
+  function themeFillKeyThis() { return PAGE_TAG === 'home' ? 'wb_theme_fill_home' : 'wb_theme_fill_news'; }
+  function currentFillScope() {
+    if (safeLS.getItem('wb_theme_fill_off') === '1') return '';
+    if (safeLS.getItem('wb_theme_fill_all') === '1') return 'all';
+    if (safeLS.getItem(themeFillKeyThis()) === '1') return 'this';
+    return 'all'; // 默认开启
+  }
+  function getThemeColor() {
+    var a = safeLS.getItem('wb_accent');
+    // 若用户把主题色设成白色/接近白色，填充会不可见，回退到页面默认主题色
+    if (a && a.toLowerCase() !== '#ffffff' && a.toLowerCase() !== '#fff') return a;
+    return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#2563eb';
+  }
+  function applyFillStyle() {
+    var rows = document.querySelectorAll('.common-setting');
+    var scope = currentFillScope();
+    if (!scope) {
+      rows.forEach(function(r){ r.style.background = ''; r.style.color = ''; });
+      return;
+    }
+    var accent = getThemeColor();
+    var dark = !isLight(accent);
+    var fill = accent; // 默认直接使用主题色，不改变
+    var fg = dark ? '#ffffff' : '#1a1a1a';
+    fill = optimizeFill(fill, fg, 2.5); // 仅当可读性非常差（contrast < 2.5）时才微调，且只调亮度、保持色相饱和度
+    rows.forEach(function(r){
+      r.style.background = fill;
+      r.style.color = fg;
+    });
+  }
+  function updateFillButtons() {
+    var scope = currentFillScope();
+    document.querySelectorAll('.fill-btn[data-scope]').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-scope') === scope);
+    });
+  }
+  window.applyThemeFill = function(scope) {
+    var all = 'wb_theme_fill_all', thisK = themeFillKeyThis(), off = 'wb_theme_fill_off';
+    safeLS.removeItem(off);
+    if (currentFillScope() === scope) { safeLS.setItem(off, '1'); }
+    else if (scope === 'all') { safeLS.setItem(all, '1'); safeLS.removeItem(thisK); }
+    else { safeLS.setItem(thisK, '1'); safeLS.removeItem(all); }
+    applyFillStyle(); updateFillButtons();
+  };
+
+  function updateFillBtnLang() {
+    var isZh = lang === 'zh';
+    document.querySelectorAll('.fill-btn[data-scope]').forEach(function(b){
+      var key = isZh ? 'data-zh' : 'data-en';
+      if (b.hasAttribute(key)) b.textContent = b.getAttribute(key);
+    });
+  }
+
+  function applyLang() {
+    var isZh = lang === 'zh';
+    document.getElementById('pageTitle').textContent = (isZh ? '每日全球要闻｜' : 'Daily Global Brief｜') + dateStr + '（' + (isZh ? weekDay : weekDayEn) + '）';
+    document.getElementById('welcomeText').textContent = isZh ? welcome.zh : welcome.en;
+    document.getElementById('aiGenText').textContent = isZh ? '内容由 AI 生成' : 'Content generated by AI';
+    document.getElementById('ttsMainLabel').textContent = isZh ? '全文语音收听' : 'Listen to all';
+    document.getElementById('homeLabel').textContent = isZh ? '主页' : 'Home';
+    document.getElementById('shareLabel').textContent = isZh ? '分享' : 'Share';
+    document.getElementById('settingsLabel').textContent = isZh ? '设置' : 'Settings';
+    document.getElementById('playerResetLabel').textContent = isZh ? '重置' : 'Reset';
+    document.getElementById('volLabel').textContent = isZh ? '音量' : 'Vol';
+    var peb = document.getElementById('playerExpandBtn');
+    if (peb) peb.title = isZh ? '放大/缩小播放器' : 'Enlarge/Shrink player';
+    updateAiVoiceUI();
+    var nativeLabel = document.getElementById('nativeLabel');
+    var nativeBtn = document.getElementById('nativeBtn');
+    if (nativeLabel && nativeBtn) {
+      nativeLabel.textContent = nativeMode ? (isZh ? '系统原生' : 'Native') : (isZh ? '智能分块' : 'Chunked');
+    }
+    document.getElementById('closingText').textContent = '—— ' + (isZh ? closing.zh : closing.en) + ' ——';
+    document.getElementById('btnExpandAll').textContent = isZh ? '展开全部' : 'Expand all';
+    document.getElementById('btnCollapseAll').textContent = isZh ? '收起全部' : 'Collapse all';
+    document.getElementById('settingsTitle').textContent = isZh ? '设置' : 'Settings';
+    document.getElementById('lblLang').textContent = isZh ? '语言' : 'Language';
+    document.getElementById('lblTheme').textContent = isZh ? '主题' : 'Theme';
+    document.getElementById('lblAccent').textContent = isZh ? '主题色' : 'Accent color';
+    document.getElementById('lblFont').textContent = isZh ? '字号' : 'Font size';
+    document.getElementById('lblRadius').textContent = isZh ? '圆角大小' : 'Corner radius';
+    document.getElementById('lblHl').textContent = isZh ? '高光显示' : 'Highlight';
+    updateFillBtnLang();
+    document.getElementById('btnApplyAccent').textContent = isZh ? '应用' : 'Apply';
+    document.getElementById('btnApplyHl').textContent = isZh ? '应用' : 'Apply';
+    document.getElementById('btnExport').textContent = isZh ? '导出设置' : 'Export';
+    document.getElementById('btnImport').textContent = isZh ? '导入设置' : 'Import';
+    var gh = document.getElementById('gotoHome');
+    if (gh) {
+      gh.textContent = isZh ? '前往主页设置界面 →' : 'Go to Home settings →';
+      var ghBase = location.pathname.indexOf('/news-site/') >= 0 ? '../index.html' : 'index.html';
+      gh.href = ghBase + '#open-settings';
+    }
+    var ccb = document.getElementById('clearCacheBtn');
+    if (ccb && !ccb.classList.contains('confirm')) ccb.textContent = isZh ? '清理所有缓存' : 'Clear all cache';
+    document.getElementById('summaryTitle').textContent = isZh ? '核心主线' : 'Key Themes';
+    document.getElementById('cacheHint').textContent = isZh
+      ? '若样式或图片未更新，请按 Ctrl+F5 强制刷新'
+      : 'If styles or images do not update, press Ctrl+F5 to hard-refresh';
+    document.getElementById('modalTitle').textContent = isZh ? '收藏自定义声音' : 'Save custom voice';
+    document.getElementById('btnCancel').textContent = isZh ? '取消' : 'Cancel';
+    document.getElementById('btnSave').textContent = isZh ? '保存' : 'Save';
+    document.querySelectorAll('.section-title').forEach(function(el) {
+      if (!el.dataset.zh && !el.dataset.en) return;
+      var icon = el.querySelector('.section-icon');
+      var iconHTML = icon ? icon.outerHTML : '';
+      el.innerHTML = iconHTML + (isZh ? (el.dataset.zh || '') : (el.dataset.en || ''));
+    });
+    document.querySelectorAll('.item-title strong').forEach(function(el) {
+      if (!el.dataset.zh && !el.dataset.en) return;
+      el.textContent = isZh ? (el.dataset.zh || '') : (el.dataset.en || '');
+    });
+    document.querySelectorAll('.item-body').forEach(function(el) {
+      if (!el.dataset.zh && !el.dataset.en) return;
+      el.textContent = isZh ? (el.dataset.zh || '') : (el.dataset.en || '');
+    });
+    var sb = document.getElementById('summaryBody');
+    if (sb && sb.dataset.zh) sb.textContent = isZh ? sb.dataset.zh : (sb.dataset.en || sb.dataset.zh);
+    relabelAllButtons();
+  }
+
+  window.goHome = function() { location.href = 'index.html'; };
+  window.sharePage = function() {
+    var url = location.href;
+    if (navigator.share) {
+      navigator.share({ title: document.title, url: url }).catch(function() {});
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(
+        function() { alert((lang === 'zh' ? '链接已复制：' : 'Link copied: ') + url); },
+        function() { prompt(lang === 'zh' ? '请手动复制链接：' : 'Copy this link:', url); }
+      );
+    } else {
+      prompt(lang === 'zh' ? '请手动复制链接：' : 'Copy this link:', url);
+    }
+  };
+  window.togglePlayerSize = function() {
+    var p = document.getElementById('player');
+    var expanded = p.classList.toggle('expanded');
+    var expandIcon = document.getElementById('expandIcon');
+    var shrinkIcon = document.getElementById('shrinkIcon');
+    if (expandIcon && shrinkIcon) {
+      expandIcon.style.display = expanded ? 'none' : 'inline-block';
+      shrinkIcon.style.display = expanded ? 'inline-block' : 'none';
+    }
+    var b = document.getElementById('playerExpandBtn');
+    if (b) b.title = expanded ? (lang === 'zh' ? '缩小播放器' : 'Shrink player') : (lang === 'zh' ? '放大播放器' : 'Enlarge player');
+  };
+
+  function applyTheme() {
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var effective = theme === 'auto' ? (prefersDark ? 'dark' : 'light') : theme;
+    document.documentElement.setAttribute('data-theme', effective);
+  }
+
+  function applyAccent() {
+    document.documentElement.style.setProperty('--accent', accent);
+    var rgb = hexToRgb(accent);
+    document.getElementById('accentColor').value = accent;
+    if (rgb) { document.getElementById('accentR').value = rgb.r; document.getElementById('accentG').value = rgb.g; document.getElementById('accentB').value = rgb.b; }
+  }
+
+  function applyFont() {
+    document.documentElement.style.setProperty('--font-base', fontSize + 'px');
+    document.getElementById('rngFont').value = fontSize;
+    document.getElementById('fontVal').textContent = fontSize + 'px';
+  }
+
+  function applyRadius() {
+    var r = Math.max(4, Math.min(32, parseInt(radius) || 16));
+    document.documentElement.style.setProperty('--radius', r + 'px');
+    document.getElementById('rngRadius').value = r;
+    document.getElementById('radiusVal').textContent = r + 'px';
+  }
+
+  function applyHl() {
+    document.documentElement.style.setProperty('--hl-color', hlColor);
+    document.getElementById('hlColor').value = hlColor;
+    var rgb = hexToRgb(hlColor);
+    if (rgb) { document.getElementById('hlR').value = rgb.r; document.getElementById('hlG').value = rgb.g; document.getElementById('hlB').value = rgb.b; }
+  }
+
+  function applyHlOn() {
+    document.getElementById('chkHl').checked = !!hlOn;
+  }
+
+  function setupSettingsUI() {
+    document.getElementById('selLang').value = lang;
+    document.getElementById('selTheme').value = theme;
+  }
+
+  function setupVoices() {
+    if (!window.speechSynthesis) return;
+    var sel = document.getElementById('voiceSel');
+    if (!sel) return;
+    while (sel.options.length > 2) sel.remove(2);
+    customVoices.forEach(function(v) {
+      var opt = document.createElement('option');
+      opt.value = v.voiceURI;
+      opt.textContent = (lang==='zh'?'自定义: ':'Custom: ') + v.name;
+      sel.appendChild(opt);
+    });
+    var preferred = findPreferredVoices();
+    if (preferred.length) {
+      var group = document.createElement('optgroup');
+      group.label = lang === 'zh' ? 'AI 语音' : 'AI Voices';
+      preferred.forEach(function(x) {
+        var opt = document.createElement('option');
+        opt.value = x.voice.voiceURI;
+        opt.textContent = (lang==='zh' ? x.pref.gender + ' · ' : '') + x.pref.name;
+        group.appendChild(opt);
+      });
+      sel.appendChild(group);
+    }
+    if (selectedVoice) {
+      var stillExists = Array.from(sel.options).some(function(o){ return o.value === selectedVoice; });
+      if (stillExists) sel.value = selectedVoice;
+    }
+  }
+
+  function setupScroll() {
+    var titlebar = document.getElementById('titlebar');
+    var banner = document.getElementById('bannerImg');
+    if (typeof IntersectionObserver !== 'undefined') {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            titlebar.classList.remove('scrolled');
+          } else {
+            titlebar.classList.add('scrolled');
+          }
+        });
+      }, { threshold: 0 });
+      if (banner) observer.observe(banner);
+    }
+
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 30) {
+        titlebar.classList.add('shrunk');
+      } else {
+        titlebar.classList.remove('shrunk');
+      }
+    });
+  }
+
+  function setupExitCleanup() {
+    function cleanup() {
+      safeLS.setItem('wb_lang', lang);
+      safeLS.setItem('wb_theme', theme);
+      safeLS.setItem('wb_accent', accent);
+      safeLS.setItem('wb_font', fontSize);
+      safeLS.setItem('wb_radius', radius);
+      safeLS.setItem('wb_hl', hlColor);
+      safeLS.setItem('wb_hl_on', hlOn);
+      safeLS.setItem('wb_custom_voices', JSON.stringify(customVoices));
+      safeLS.setItem('wb_voice', selectedVoice);
+      stopAll();
+    }
+    window.addEventListener('pagehide', cleanup);
+    window.addEventListener('beforeunload', cleanup);
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) cleanup();
+    });
+  }
+
+  // ========== Settings actions ==========
+  var settingsSnapshot = null;
+  function snapshotSettings() {
+    settingsSnapshot = {};
+    try { for (var i = 0; i < safeLS.length; i++) { var k = safeLS.key(i); if (k && k.indexOf('wb_') === 0) settingsSnapshot[k] = safeLS.getItem(k); } } catch (e) {}
+  }
+  function restoreSettings() {
+    if (!settingsSnapshot) return;
+    for (var k in settingsSnapshot) { if (!settingsSnapshot.hasOwnProperty(k)) continue; if (settingsSnapshot[k] === null) safeLS.removeItem(k); else safeLS.setItem(k, settingsSnapshot[k]); }
+  }
+  function reapplyAll() {
+    try { applyTheme(); applyAccent(); applyFont(); applyRadius(); applyHl(); applyHlOn(); applyLang(); applyFillStyle(); updateFillButtons(); } catch (e) {}
+  }
+  window.openSettings = function() { snapshotSettings(); document.getElementById('settingsOverlay').classList.add('open'); applyFillStyle(); updateFillButtons(); };
+  window.closeSettings = function() { document.getElementById('settingsOverlay').classList.remove('open'); };
+  window.closeSettingsDiscard = function() { restoreSettings(); reapplyAll(); document.getElementById('settingsOverlay').classList.remove('open'); };
+  if (location.hash === '#open-settings') openSettings();
+  window.setLang = function(v) { lang = v; safeLS.setItem('wb_lang', lang); applyLang(); setupVoices(); };
+  window.setTheme = function(v) { theme = v; safeLS.setItem('wb_theme', theme); applyTheme(); };
+  window.setAccent = function(v) { accent = v; safeLS.setItem('wb_accent', accent); applyAccent(); applyFillStyle(); };
+  window.applyRGBAccent = function() {
+    var r = document.getElementById('accentR').value;
+    var g = document.getElementById('accentG').value;
+    var b = document.getElementById('accentB').value;
+    if (r!=='' && g!=='' && b!=='') { accent = rgbToHex(+r,+g,+b); setAccent(accent); }
+  };
+  window.setFont = function(v) { fontSize = +v; safeLS.setItem('wb_font', fontSize); applyFont(); };
+  window.setRadius = function(v) { radius = +v; safeLS.setItem('wb_radius', radius); applyRadius(); };
+  window.setHl = function(v) { hlColor = v; safeLS.setItem('wb_hl', hlColor); applyHl(); };
+  window.setHlOn = function(v) { hlOn = !!v; safeLS.setItem('wb_hl_on', hlOn); applyHlOn(); };
+  window.applyRGBHl = function() {
+    var r = document.getElementById('hlR').value;
+    var g = document.getElementById('hlG').value;
+    var b = document.getElementById('hlB').value;
+    if (r!=='' && g!=='' && b!=='') { hlColor = rgbToHex(+r,+g,+b); setHl(hlColor); }
+  };
+  window.exportSettings = function() {
+    var data = { lang, theme, accent, font: fontSize, radius, voice: selectedVoice, hl: hlColor, hlOn };
+    var blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'daily-news-settings.json';
+    a.click();
+  };
+  window.importSettings = function() {
+    var inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = '.json';
+    inp.onchange = function() {
+      var file = inp.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          var data = JSON.parse(e.target.result);
+          if (data.lang) setLang(data.lang);
+          if (data.theme) setTheme(data.theme);
+          if (data.accent) setAccent(data.accent);
+          if (data.font) setFont(data.font);
+          if (data.radius !== undefined) setRadius(data.radius);
+          if (data.hl) setHl(data.hl);
+          if (data.hlOn !== undefined) setHlOn(data.hlOn);
+          if (data.voice !== undefined) { selectedVoice = data.voice; safeLS.setItem('wb_voice', selectedVoice); setupVoices(); document.getElementById('voiceSel').value = selectedVoice; }
+          setupSettingsUI();
+        } catch(err) { alert('Invalid JSON'); }
+      };
+      reader.readAsText(file);
+    };
+    inp.click();
+  };
+
+  // ========== Clear all cache (two-step confirm) ==========
+  window.confirmClearCache = function() {
+    var btn = document.getElementById('clearCacheBtn');
+    var isZh = lang === 'zh';
+    if (!btn.classList.contains('confirm')) {
+      btn.classList.add('confirm');
+      btn.textContent = isZh ? '再次点击确认清除缓存' : 'Tap again to confirm';
+      setTimeout(function(){
+        if (btn.classList.contains('confirm')) {
+          btn.classList.remove('confirm');
+          btn.textContent = isZh ? '清理所有缓存' : 'Clear all cache';
+        }
+      }, 3000);
+      return;
+    }
+    // second tap -> clear visitor device cache (localStorage for this site)
+    try {
+      var keys = [];
+      for (var i = 0; i < safeLS.length; i++) { var k = safeLS.key(i); if (k && k.indexOf('wb_') === 0) keys.push(k); }
+      keys.forEach(function(k){ safeLS.removeItem(k); });
+    } catch (e) {}
+    btn.classList.remove('confirm');
+    btn.textContent = isZh ? '清理所有缓存' : 'Clear all cache';
+    location.reload();
+  };
+
+  // ========== Collapse/Expand ==========
+  window.toggleSection = function(idOrEl) {
+    var card = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
+    if (!card) return;
+    var body = card.querySelector('.section-body');
+    if (!body) { body = card.nextElementSibling; }
+    if (!body) return;
+    body.classList.toggle('open');
+    var btns = card.querySelectorAll('.section-actions .fold-btn');
+    if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(body.classList.contains('open'));
+  };
+  window.toggleItem = function(idOrEl) {
+    var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
+    if (!item) return;
+    var body = item.querySelector('.item-body');
+    if (!body) { body = item.nextElementSibling; }
+    if (!body) return;
+    body.classList.toggle('open');
+    var btn = item.querySelector('.fold-btn');
+    if (btn) btn.innerHTML = foldBtnHtml(body.classList.contains('open'));
+  };
+  window.expandSectionItems = function(idOrEl) {
+    var section = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl.closest('.section-card');
+    if (!section) return;
+    var bodies = section.querySelectorAll('.item-body');
+    var anyClosed = Array.from(bodies).some(function(b) { return !b.classList.contains('open'); });
+    bodies.forEach(function(b) { b.classList.toggle('open', anyClosed); });
+    section.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(anyClosed); });
+  };
+  window.expandAll = function() {
+    document.querySelectorAll('.section-body').forEach(function(b) { b.classList.add('open'); });
+    document.querySelectorAll('.section-actions').forEach(function(actions) {
+      var btns = actions.querySelectorAll('.fold-btn');
+      if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(true);
+    });
+    document.querySelectorAll('.item-body').forEach(function(b) { b.classList.add('open'); });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(true); });
+  };
+  window.collapseAll = function() {
+    document.querySelectorAll('.section-body').forEach(function(b) { b.classList.remove('open'); });
+    document.querySelectorAll('.section-actions').forEach(function(actions) {
+      var btns = actions.querySelectorAll('.fold-btn');
+      if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(false);
+    });
+    document.querySelectorAll('.item-body').forEach(function(b) { b.classList.remove('open'); });
+    document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(false); });
+  };
+
+  // ========== TTS ==========
+  // Curated list of 20 preferred AI/neural voices (5 zhM, 5 zhF, 5 enM, 5 enF).
+  // The browser must expose these (usually Microsoft Online/Natural voices on Windows/Edge).
+  // If you need guaranteed cloud AI voices, integrate Azure/Google/ElevenLabs TTS with an API key.
+  var PREFERRED_VOICES = [
+    // Chinese male
+    {name:'Yunxi',   lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Yunjian', lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Yunxia',  lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Kangkang',lang:'zh', gender:lang==='zh'?'男':'M'},
+    {name:'Yunhao',  lang:'zh', gender:lang==='zh'?'男':'M'},
+    // Chinese female
+    {name:'Xiaoxiao',lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaoyi',  lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaochen',lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaohan', lang:'zh', gender:lang==='zh'?'女':'F'},
+    {name:'Xiaomeng',lang:'zh', gender:lang==='zh'?'女':'F'},
+    // English male
+    {name:'Guy',        lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Christopher',lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Eric',       lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Steffan',    lang:'en', gender:lang==='zh'?'男':'M'},
+    {name:'Brandon',    lang:'en', gender:lang==='zh'?'男':'M'},
+    // English female
+    {name:'Jenny',   lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Michelle',lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Ava',     lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Emma',    lang:'en', gender:lang==='zh'?'女':'F'},
+    {name:'Ana',     lang:'en', gender:lang==='zh'?'女':'F'}
+  ];
+
+  function voiceQuality(v) {
+    var n = (v.name || '').toLowerCase();
+    if (/neural|online|natural|premium|enhanced/.test(n)) return 3;
+    if (/microsoft|azure|google|amazon/.test(n)) return 2;
+    return 1;
+  }
+  function scoreVoice(v, pref) {
+    var n = (v.name || '').toLowerCase();
+    var pName = pref.name.toLowerCase();
+    var score = 0;
+    if (n.indexOf(pName) !== -1) score += 100;
+    else if (n.indexOf(pName.replace(/[^a-z]/g,'')) !== -1) score += 80;
+    if (v.lang && v.lang.toLowerCase().indexOf(pref.lang) === 0) score += 10;
+    score += voiceQuality(v) * 5;
+    return score;
+  }
+  function findPreferredVoices() {
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return [];
+    var out = [];
+    PREFERRED_VOICES.forEach(function(pref) {
+      var best = null, bestScore = 0;
+      voices.forEach(function(v) {
+        var s = scoreVoice(v, pref);
+        if (s > bestScore) { bestScore = s; best = v; }
+      });
+      if (best && bestScore >= 80) {
+        out.push({voice: best, pref: pref});
+      }
+    });
+    var seen = {};
+    return out.filter(function(x) {
+      if (seen[x.voice.voiceURI]) return false;
+      seen[x.voice.voiceURI] = true;
+      return true;
+    });
+  }
+  function bestVoiceByLang(prefix) {
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return null;
+    var preferred = findPreferredVoices().filter(function(x) { return x.voice.lang.toLowerCase().indexOf(prefix) === 0; });
+    if (preferred.length) return preferred[0].voice;
+    var pool = voices.filter(function(v) { return v.lang && v.lang.toLowerCase().indexOf(prefix) === 0; });
+    if (!pool.length) pool = voices.slice();
+    pool.sort(function(a, b) { return voiceQuality(b) - voiceQuality(a); });
+    return pool[0];
+  }
+  function bestChineseVoice() { return bestVoiceByLang('zh'); }
+  function getVoice() {
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return null;
+    if (selectedVoice) {
+      var found = voices.find(function(v) { return v.voiceURI === selectedVoice; });
+      if (found) return found;
+    }
+    var prefix = lang === 'en' ? 'en' : 'zh';
+    if (aiVoiceBoost) {
+      var best = bestVoiceByLang(prefix);
+      if (best) return best;
+    }
+    var match = voices.find(function(v) { return v.lang && v.lang.toLowerCase().indexOf(prefix) === 0; });
+    return match || voices[0] || null;
+  }
+
+  function buildTextFromSection(secIdx) {
+    var sec = sections[secIdx];
+    var titleEl = sec.querySelector('.section-title');
+    var title = (titleEl && titleEl.dataset[lang]) ? titleEl.dataset[lang] : titleEl.textContent;
+    var items = sec.querySelectorAll('.item');
+    var parts = [title];
+    items.forEach(function(item) {
+      var strong = item.querySelector('.item-title strong');
+      var t = (strong && strong.dataset[lang]) ? strong.dataset[lang] : strong.textContent;
+      var bEl = item.querySelector('.item-body');
+      var b = (bEl && bEl.dataset[lang]) ? bEl.dataset[lang] : bEl.textContent;
+      parts.push(t + '。' + b);
+    });
+    return parts.join('。');
+  }
+
+  function wrapTextForHighlight(bodyEl) {
+    // reset first
+    clearHighlight(bodyEl);
+    if (!hlOn) return [];
+    var walker = document.createTreeWalker(bodyEl, NodeFilter.SHOW_TEXT, null, false);
+    var textNodes = [];
+    var n;
+    while ((n = walker.nextNode())) { textNodes.push(n); }
+    var map = []; // {span, char}
+    textNodes.forEach(function(node) {
+      var parent = node.parentNode;
+      var text = node.textContent;
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < text.length; i++) {
+        var span = document.createElement('span');
+        span.className = 'hl-ch';
+        span.textContent = text[i];
+        span.style.background = 'transparent';
+        frag.appendChild(span);
+        map.push({span: span, char: text[i]});
+      }
+      parent.replaceChild(frag, node);
+    });
+    return map;
+  }
+
+  function clearHighlight(bodyEl) {
+    if (!bodyEl) return;
+    var spans = bodyEl.querySelectorAll('.hl-ch');
+    spans.forEach(function(span) {
+      var text = document.createTextNode(span.textContent);
+      span.parentNode.replaceChild(text, span);
+    });
+    // normalize
+    bodyEl.normalize();
+  }
+
+  function highlightCharAt(map, idx) {
+    if (!map || !map.length) return;
+    var now = Date.now();
+    if (now - lastHlTime < 120) return;
+    lastHlTime = now;
+    map.forEach(function(m) { m.span.style.background = 'transparent'; });
+    if (idx < 0 || idx >= map.length) return;
+    var start = idx, end = idx;
+    var punct = /[\s\n\r\t，。！？、；：""''（）【】《》.,;:!?()'"\-\/\[\]]/;
+    while (start > 0 && !punct.test(map[start-1].char)) start--;
+    while (end < map.length - 1 && !punct.test(map[end+1].char)) end++;
+    for (var i = start; i <= end; i++) {
+      map[i].span.style.background = 'var(--hl-color)';
+    }
+    // Do not auto-scroll: let the user freely scroll while listening.
+  }
+
+  // Split long text into chunks
+  // Split long text into chunks to avoid Chrome ~15s silence bug
+  function splitIntoChunks(text, maxChars) {
+    var parts = text.split(/([。！？.!?]\s*)/);
+    var out = [], cur = '';
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i];
+      if (!p) continue;
+      if (cur.length + p.length > maxChars && cur.length > 0) {
+        out.push(cur);
+        cur = p;
+      } else {
+        cur += p;
+      }
+    }
+    if (cur) out.push(cur);
+    var result = [];
+    out.forEach(function(c) {
+      while (c.length > maxChars) {
+        result.push(c.slice(0, maxChars));
+        c = c.slice(maxChars);
+      }
+      if (c) result.push(c);
+    });
+    return result.length ? result : [text];
+  }
+
+  function startSpeaking(text, bodyEl) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    currentBodyEl = bodyEl;
+    charMap = bodyEl ? wrapTextForHighlight(bodyEl) : [];
+    currentItemChars = text.length;
+    intraChar = 0;
+    if (nativeMode) {
+      // Native mode: single utterance (no chunking)
+      var utt = new SpeechSynthesisUtterance(text);
+      utt.lang = lang === 'zh' ? 'zh-CN' : 'en-US';
+      utt.rate = playbackRate;
+      utt.volume = volume;
+      utt.pitch = aiVoiceBoost ? AI_BOOST_PITCH : 1;
+      var v = getVoice();
+      if (v) utt.voice = v;
+      currentUtt = utt;
+      speakOffset = 0;
+      utt.onboundary = function(e) {
+        if (e.name === 'word' || e.name === 'sentence') {
+          var globalIdx = e.charIndex;
+          intraChar = globalIdx;
+          if (charMap.length && hlOn) {
+            highlightCharAt(charMap, globalIdx);
+          }
+          updateProgressUI();
+        }
+      };
+      utt.onend = function() {
+        if (currentUtt !== utt) return;
+        if (charMap.length) clearHighlight(currentBodyEl);
+        onItemEnd();
+      };
+      utt.onerror = function() {
+        if (currentUtt !== utt) return;
+        if (charMap.length) clearHighlight(currentBodyEl);
+        onItemEnd();
+      };
+      window.speechSynthesis.speak(utt);
+      isPlaying = true; isPaused = false;
+      updatePlayerUI();
+    } else {
+      // Chunked mode: split into short chunks to avoid Chrome 15s silence bug
+      chunks = splitIntoChunks(text, 150);
+      chunkIdx = 0;
+      speakOffset = 0;
+      updateProgressUI();
+      speakCurrentChunk();
+    }
+  }
+
+  function speakCurrentChunk() {
+    if (chunkIdx >= chunks.length) {
+      if (charMap.length) clearHighlight(currentBodyEl);
+      onItemEnd();
+      return;
+    }
+    updateProgressUI();
+    var text = chunks[chunkIdx];
+    var utt = new SpeechSynthesisUtterance(text);
+    utt.lang = lang === 'zh' ? 'zh-CN' : 'en-US';
+    utt.rate = playbackRate;
+    utt.volume = volume;
+    utt.pitch = aiVoiceBoost ? AI_BOOST_PITCH : 1;
+    var v = getVoice();
+    if (v) utt.voice = v;
+    currentUtt = utt;
+
+    utt.onboundary = function(e) {
+      if (e.name === 'word' || e.name === 'sentence') {
+        var globalIdx = speakOffset + e.charIndex;
+        intraChar = globalIdx;
+        if (charMap.length && hlOn) {
+          highlightCharAt(charMap, globalIdx);
+        }
+        updateProgressUI();
+      }
+    };
+    utt.onend = function() {
+      if (currentUtt !== utt) return;
+      speakOffset += text.length;
+      intraChar = speakOffset;
+      chunkIdx++;
+      updateProgressUI();
+      speakCurrentChunk();
+    };
+    utt.onerror = function() {
+      if (currentUtt !== utt) return;
+      speakOffset += text.length;
+      intraChar = speakOffset;
+      chunkIdx++;
+      updateProgressUI();
+      speakCurrentChunk();
+    };
+    window.speechSynthesis.speak(utt);
+    isPlaying = true; isPaused = false;
+    updatePlayerUI();
+  }
+
+  function onItemEnd() {
+    playedChars += currentItemChars;
+    if (currentMode === 'all') {
+      currentItemIdx++;
+      if (currentItemIdx >= sectionData[currentSectionIdx].items.length) {
+        currentSectionIdx++;
+        currentItemIdx = 0;
+      }
+      if (currentSectionIdx >= sectionData.length) {
+        if (repeatMode) { currentSectionIdx = 0; currentItemIdx = 0; }
+        else { stopAll(); return; }
+      }
+      playCurrentQueue();
+    } else if (currentMode === 'section') {
+      currentItemIdx++;
+      if (currentItemIdx >= sectionData[currentSectionIdx].items.length) {
+        if (repeatMode) { currentItemIdx = 0; }
+        else { stopAll(); return; }
+      }
+      playCurrentQueue();
+    }
+  }
+
+  function playCurrentQueue() {
+    if (currentSectionIdx >= sectionData.length) { stopAll(); return; }
+    var sec = sectionData[currentSectionIdx];
+    if (currentItemIdx >= sec.items.length) { currentSectionIdx++; currentItemIdx = 0; playCurrentQueue(); return; }
+    var item = sec.items[currentItemIdx];
+    var secEl = sections[currentSectionIdx];
+    var body = secEl.querySelector('.section-body');
+    if (!body.classList.contains('open')) body.classList.add('open');
+    var itemBody = item.el.querySelector('.item-body');
+    if (!itemBody.classList.contains('open')) itemBody.classList.add('open');
+    var chapEl = document.getElementById('playerChapter');
+    if (chapEl) chapEl.textContent = sec.title + ' - ' + (currentItemIdx+1);
+    startSpeaking(item.text, itemBody);
+  }
+
+  function buildQueue() {
+    sectionData = [];
+    sections.forEach(function(sec) {
+      var titleEl = sec.querySelector('.section-title');
+      var title = (titleEl && titleEl.dataset[lang]) ? titleEl.dataset[lang] : (titleEl ? titleEl.textContent : '');
+      var items = [];
+      sec.querySelectorAll('.item').forEach(function(item) {
+        var strong = item.querySelector('.item-title strong');
+        var t = (strong && strong.dataset[lang]) ? strong.dataset[lang] : (strong ? strong.textContent : '');
+        var bEl = item.querySelector('.item-body');
+        var b = (bEl && bEl.dataset[lang]) ? bEl.dataset[lang] : (bEl ? bEl.textContent : '');
+        items.push({ text: t + '。' + b, el: item });
+      });
+      sectionData.push({ title: title, items: items });
+    });
+  }
+
+  function ttsUnavailableAlert() {
+    var msg = lang === 'zh'
+      ? '当前浏览器或环境不支持语音朗读。建议用 Safari / Chrome / Edge 打开。'
+      : 'Text-to-speech is not supported in this browser. Please use Safari / Chrome / Edge.';
+    alert(msg);
+  }
+  window.playAll = function() {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
+    buildQueue();
+    if (!sectionData.length) return;
+    currentMode = 'all';
+    currentSectionIdx = 0; currentItemIdx = 0;
+    playedChars = 0;
+    totalQueueChars = computeQueueChars();
+    document.getElementById('player').classList.add('open');
+    playCurrentQueue();
+  };
+
+  window.playSection = function(idx) {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
+    buildQueue();
+    idx = +idx;
+    if (idx < 0 || idx >= sectionData.length) return;
+    currentMode = 'section';
+    currentSectionIdx = idx; currentItemIdx = 0;
+    playedChars = 0;
+    totalQueueChars = computeQueueChars();
+    document.getElementById('player').classList.add('open');
+    playCurrentQueue();
+  };
+  // Alias for generated HTML buttons that use speakSection()
+  window.speakSection = window.playSection;
+
+  window.stopAll = function() {
+    currentUtt = null; // set null BEFORE cancel so stale onend/onerror get ignored
+    chunks = []; chunkIdx = 0;
+    totalQueueChars = 0; playedChars = 0; intraChar = 0;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    isPlaying = false; isPaused = false;
+    if (currentBodyEl) clearHighlight(currentBodyEl);
+    document.getElementById('player').classList.remove('open');
+    var prog = document.getElementById('playerProgress');
+    if (prog) { prog.value = 0; prog.disabled = false; }
+    var cur = document.getElementById('curTime');
+    var tot = document.getElementById('totTime');
+    if (cur) cur.textContent = '0:00';
+    if (tot) tot.textContent = '0:00';
+  };
+
+  // 暂停并重置语音播放：立即停止合成、清除高光、收起播放器，并把播放进度归零（下次点击「全文语音收听」从第一节第一条重新开始）
+  window.resetSpeech = function() {
+    stopAll();
+    currentMode = null;
+    currentSectionIdx = 0; currentItemIdx = 0;
+    var prog = document.getElementById('playerProgress');
+    if (prog) { prog.value = 0; }
+    var cur = document.getElementById('curTime');
+    var tot = document.getElementById('totTime');
+    if (cur) cur.textContent = '0:00';
+    if (tot) tot.textContent = '0:00';
+    var chap = document.getElementById('playerChapter');
+    if (chap) chap.textContent = '--';
+    updatePlayerUI();
+  };
+
+  window.togglePlay = function() {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
+    if (isPlaying && !isPaused) {
+      window.speechSynthesis.pause();
+      isPaused = true;
+    } else if (isPaused) {
+      window.speechSynthesis.resume();
+      isPaused = false;
+    } else {
+      // restart all
+      playAll();
+    }
+    updatePlayerUI();
+  };
+
+  function updateVolIcon() {
+    var high = document.getElementById('volHighIcon');
+    var mute = document.getElementById('volMuteIcon');
+    var label = document.getElementById('volLabel');
+    if (high && mute) {
+      if (volume === 0) { high.style.display = 'none'; mute.style.display = 'inline-block'; }
+      else { high.style.display = 'inline-block'; mute.style.display = 'none'; }
+    }
+    if (label) label.textContent = lang === 'zh' ? '音量' : 'Vol';
+  }
+
+  // called continuously
+  // called continuously while dragging the volume slider: update value + icon only,
+  // do NOT restart speech here (restarting on every input causes choppy repeated audio)
+  window.previewVolume = function(v) {
+    volume = Math.max(0, Math.min(1, +v));
+    updateVolIcon();
+  };
+
+  // restart current item with new settings (rate/volume/voice)
+  function restartIfPlaying() {
+    if (isPlaying && !isPaused && currentBodyEl) {
+      var sec = sectionData[currentSectionIdx];
+      var item = sec.items[currentItemIdx];
+      currentUtt = null;
+      chunks = []; chunkIdx = 0;
+      window.speechSynthesis.cancel();
+      setTimeout(function() { startSpeaking(item.text, currentBodyEl); }, 80);
+    }
+  }
+
+  window.setSpeed = function(v) {
+    playbackRate = +v;
+    restartIfPlaying();
+  };
+
+  window.setVolume = function(v) {
+    volume = Math.max(0, Math.min(1, +v));
+    updateVolIcon();
+    restartIfPlaying();
+  };
+
+  window.changeVoice = function(v) {
+    if (v === '__custom__') { openVoiceModal(); return; }
+    selectedVoice = v;
+    safeLS.setItem('wb_voice', selectedVoice);
+    restartIfPlaying();
+  };
+
+  window.openVoiceModal = function() {
+    if (!window.speechSynthesis) { ttsUnavailableAlert(); return; }
+    var sel = document.getElementById('modalVoiceSel');
+    sel.innerHTML = '';
+    var voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) {
+      var opt = document.createElement('option');
+      opt.textContent = lang === 'zh' ? '暂无可选声音，请稍后再试' : 'No voices available, please try again later';
+      sel.appendChild(opt);
+    } else {
+      voices.forEach(function(v) {
+        var opt = document.createElement('option');
+        opt.value = v.voiceURI;
+        opt.textContent = v.name + ' (' + v.lang + ')';
+        sel.appendChild(opt);
+      });
+    }
+    document.getElementById('voiceModal').classList.add('open');
+  };
+  window.closeVoiceModal = function() { document.getElementById('voiceModal').classList.remove('open'); };
+  window.saveCustomVoice = function() {
+    var sel = document.getElementById('modalVoiceSel');
+    var uri = sel.value;
+    var voices = speechSynthesis.getVoices();
+    var v = voices.find(function(x) { return x.voiceURI === uri; });
+    if (v) {
+      if (!customVoices.find(function(x) { return x.voiceURI === uri; })) {
+        customVoices.push({ voiceURI: v.voiceURI, name: v.name, lang: v.lang });
+        safeLS.setItem('wb_custom_voices', JSON.stringify(customVoices));
+        setupVoices();
+      }
+      selectedVoice = uri;
+      safeLS.setItem('wb_voice', selectedVoice);
+      document.getElementById('voiceSel').value = selectedVoice;
+    }
+    closeVoiceModal();
+  };
+
+  function updatePlayerUI() {
+    var playIcon = document.getElementById('playIcon');
+    var pauseIcon = document.getElementById('pauseIcon');
+    if (playIcon && pauseIcon) {
+      if (isPlaying && !isPaused) {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'inline-block';
+      } else {
+        playIcon.style.display = 'inline-block';
+        pauseIcon.style.display = 'none';
+      }
+    }
+  }
+
+  // Playback control helpers
+  window.toggleShuffle = function() {
+    shuffleMode = !shuffleMode;
+    var btn = document.getElementById('shuffleBtn');
+    if (btn) {
+      if (shuffleMode) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  };
+  window.toggleRepeat = function() {
+    repeatMode = !repeatMode;
+    var btn = document.getElementById('repeatBtn');
+    if (btn) {
+      if (repeatMode) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  };
+  function recalcPlayedChars() {
+    playedChars = 0;
+    if (currentMode === 'section' && sectionData[currentSectionIdx]) {
+      for (var i = 0; i < currentItemIdx; i++) playedChars += sectionData[currentSectionIdx].items[i].text.length;
+    } else {
+      for (var s = 0; s < currentSectionIdx; s++) {
+        sectionData[s].items.forEach(function(it){ playedChars += it.text.length; });
+      }
+      if (sectionData[currentSectionIdx]) {
+        for (var i = 0; i < currentItemIdx; i++) playedChars += sectionData[currentSectionIdx].items[i].text.length;
+      }
+    }
+  }
+  window.seekBy = function(seconds) {
+    if (nativeMode || !chunks.length) return;
+    var charJump = Math.floor(seconds * CPS * playbackRate);
+    var targetOffset = Math.max(0, Math.min(speakOffset + intraChar + charJump, totalQueueChars));
+    var acc = 0, targetIdx = 0;
+    for (var i = 0; i < chunks.length; i++) {
+      if (acc + chunks[i].length > targetOffset) { targetIdx = i; break; }
+      acc += chunks[i].length;
+      targetIdx = i + 1;
+    }
+    targetIdx = Math.max(0, Math.min(targetIdx, chunks.length - 1));
+    speakOffset = 0;
+    for (var j = 0; j < targetIdx; j++) speakOffset += chunks[j].length;
+    intraChar = speakOffset;
+    chunkIdx = targetIdx;
+    if (currentBodyEl) charMap = wrapTextForHighlight(currentBodyEl);
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    currentUtt = null;
+    updateProgressUI();
+    speakCurrentChunk();
+  };
+  window.prevItem = function() {
+    if (!sectionData.length) return;
+    currentItemIdx--;
+    if (currentItemIdx < 0) {
+      currentSectionIdx--;
+      if (currentSectionIdx < 0) {
+        if (currentMode === 'section') { currentSectionIdx = 0; currentItemIdx = 0; }
+        else { currentSectionIdx = sectionData.length - 1; }
+      }
+      if (currentSectionIdx >= 0 && sectionData[currentSectionIdx]) {
+        currentItemIdx = sectionData[currentSectionIdx].items.length - 1;
+      }
+    }
+    if (currentSectionIdx < 0) currentSectionIdx = 0;
+    if (currentItemIdx < 0) currentItemIdx = 0;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    chunks = []; chunkIdx = 0; speakOffset = 0; intraChar = 0;
+    if (currentBodyEl) clearHighlight(currentBodyEl);
+    recalcPlayedChars();
+    playCurrentQueue();
+  };
+  window.nextItem = function() {
+    if (!sectionData.length) return;
+    if (shuffleMode) {
+      var randS = Math.floor(Math.random() * sectionData.length);
+      var randI = Math.floor(Math.random() * sectionData[randS].items.length);
+      currentSectionIdx = randS; currentItemIdx = randI;
+    } else {
+      currentItemIdx++;
+      if (currentSectionIdx >= sectionData.length || currentItemIdx >= sectionData[currentSectionIdx].items.length) {
+        currentItemIdx = 0;
+        currentSectionIdx++;
+        if (currentMode === 'section' || currentSectionIdx >= sectionData.length) {
+          if (repeatMode) { currentSectionIdx = 0; }
+          else { stopAll(); return; }
+        }
+      }
+    }
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    chunks = []; chunkIdx = 0; speakOffset = 0; intraChar = 0;
+    if (currentBodyEl) clearHighlight(currentBodyEl);
+    recalcPlayedChars();
+    playCurrentQueue();
+  };
+
+  window.toggleNativeMode = function() {
+    nativeMode = !nativeMode;
+    var btn = document.getElementById('nativeBtn');
+    var lbl = document.getElementById('nativeLabel');
+    if (nativeMode) {
+      btn.classList.add('active');
+      lbl.textContent = lang === 'zh' ? '系统原生' : 'Native';
+    } else {
+      btn.classList.remove('active');
+      lbl.textContent = lang === 'zh' ? '智能分块' : 'Chunked';
+    }
+  };
+
+  function updateAiVoiceUI() {
+    var btn = document.getElementById('aiVoiceBtn');
+    var lbl = document.getElementById('aiVoiceLabel');
+    if (!btn) return;
+    if (aiVoiceBoost) {
+      btn.classList.add('active');
+      lbl.textContent = lang === 'zh' ? 'AI 已增强' : 'AI On';
+    } else {
+      btn.classList.remove('active');
+      lbl.textContent = lang === 'zh' ? 'AI 语音' : 'AI Voice';
+    }
+  }
+  window.toggleAiVoice = function() {
+    aiVoiceBoost = !aiVoiceBoost;
+    safeLS.setItem('wb_ai_voice', aiVoiceBoost ? '1' : '0');
+    updateAiVoiceUI();
+    // re-pick voice immediately so the dropdown reflects the chosen voice
+    var sel = document.getElementById('voiceSel');
+    if (sel && aiVoiceBoost && !selectedVoice) {
+      var best = bestChineseVoice();
+      if (best) sel.value = best.voiceURI;
+    }
+    if (isPlaying) restartIfPlaying();
+  };
+
+  function updateProgressUI() {
+    var prog = document.getElementById('playerProgress');
+    var cur = document.getElementById('curTime');
+    var tot = document.getElementById('totTime');
+    if (!prog) return;
+    if (totalQueueChars > 0) {
+      // Fine-grained: char-level position across the whole queue
+      var pos = playedChars + intraChar;
+      var pct = (pos / totalQueueChars) * 100;
+      prog.value = Math.max(0, Math.min(100, pct));
+      prog.disabled = false;
+      var totalSec = totalQueueChars / CPS / playbackRate;
+      var elapSec = pos / CPS / playbackRate;
+      if (cur) cur.textContent = fmtTime(elapSec);
+      if (tot) tot.textContent = fmtTime(totalSec);
+    } else if (nativeMode || !chunks.length) {
+      prog.value = 0;
+      prog.disabled = true;
+      if (cur) cur.textContent = '--';
+      if (tot) tot.textContent = '--';
+    } else {
+      prog.disabled = false;
+      var pct2 = chunks.length ? (chunkIdx / chunks.length) * 100 : 0;
+      prog.value = pct2;
+      if (cur) cur.textContent = String(chunkIdx + 1);
+      if (tot) tot.textContent = String(chunks.length);
+    }
+  }
+
+  window.previewSeek = function(val) {
+    isSeeking = true;
+    var cur = document.getElementById('curTime');
+    if (cur && totalQueueChars) {
+      var elapSec = (val / 100) * totalQueueChars / CPS / playbackRate;
+      cur.textContent = fmtTime(elapSec);
+    }
+  };
+
+  window.seekProgress = function(val) {
+    isSeeking = false;
+    if (nativeMode || !chunks.length) return;
+    var targetIdx = Math.floor((val / 100) * chunks.length);
+    targetIdx = Math.max(0, Math.min(targetIdx, chunks.length - 1));
+
+    // Stop current playback
+    currentUtt = null;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+
+    // Recalculate speakOffset from start up to target chunk
+    speakOffset = 0;
+    for (var i = 0; i < targetIdx; i++) {
+      speakOffset += chunks[i].length;
+    }
+    intraChar = speakOffset;
+
+    chunkIdx = targetIdx;
+
+    // Rebuild highlight map for the new position
+    if (currentBodyEl) {
+      charMap = wrapTextForHighlight(currentBodyEl);
+    }
+
+    updateProgressUI();
+    speakCurrentChunk();
+  };
+
+  // ========== Utils ==========
+  function hexToRgb(hex) {
+    var m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+    return m ? { r: parseInt(m[1],16), g: parseInt(m[2],16), b: parseInt(m[3],16) } : null;
+  }
+  function rgbToHex(r,g,b) {
+    return '#' + [r,g,b].map(function(x) { var h = Math.max(0,Math.min(255,Math.round(x))).toString(16); return h.length===1?'0'+h:h; }).join('');
+  }
+
+  // Chrome bug workaround: speechSynthesis goes silent ~15s into long utterances.
+  // Text chunking (splitIntoChunks) is the primary fix; this keepalive is secondary insurance.
+  setInterval(function() {
+    if (window.speechSynthesis && speechSynthesis.speaking && !speechSynthesis.paused && isPlaying && !isPaused) {
+      speechSynthesis.pause();
+      speechSynthesis.resume();
+    }
+  }, 8000);
+
+  init();
+})();
+</script>
+<footer style="text-align:center;padding:22px 16px 30px;font-size:12px;color:var(--sub);opacity:0.7;line-height:1.6;">
+  栏目配图来自多条 CC 授权线路（本地实拍 + Wikimedia / Openverse 等），自动选取最快线路 · Section photos via CC-licensed multi-line sources, fastest line auto-selected
+</footer>
+</body>
+</html>
