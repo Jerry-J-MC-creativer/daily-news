@@ -6,7 +6,8 @@
 <title>Jerry's-webpage-home</title>
 <style>
   :root {
-    --bar-bg: rgb(40, 89, 156);
+    /* 透明度对齐 Windows 任务栏：半透明 + 毛玻璃模糊 */
+    --bar-bg: rgba(40, 89, 156, 0.72);
     --bar-fg: #ffffff;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,10 +26,11 @@
     z-index: 100;
     height: 64px;
     background: var(--bar-bg);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    backdrop-filter: blur(16px) saturate(160%);
     color: var(--bar-fg);
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 0 24px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   }
@@ -38,20 +40,11 @@
     letter-spacing: 0.3px;
     color: var(--bar-fg);
     white-space: nowrap;
-  }
-  .topbar .home-link {
-    color: var(--bar-fg);
     text-decoration: none;
-    font-size: 14px;
-    opacity: 0.85;
-    padding: 6px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    border-radius: 8px;
-    transition: opacity 0.15s ease, background 0.15s ease;
+    cursor: pointer;
   }
-  .topbar .home-link:hover {
-    opacity: 1;
-    background: rgba(255, 255, 255, 0.12);
+  .topbar .site-name:hover {
+    opacity: 0.88;
   }
 
   /* ---- 内容区 (content area, placeholder scaffold) ---- */
@@ -90,6 +83,26 @@
     line-height: 1.8;
   }
 
+  /* 产品链接 + 返回主站 */
+  .prod-link {
+    color: #28599c;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(40, 89, 156, 0.4);
+  }
+  .prod-link:hover { border-bottom-color: #28599c; }
+  .back-main {
+    margin-top: 14px;
+    text-align: left;
+  }
+  .back-main a {
+    color: #6b7c93;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .back-main a:hover { color: #28599c; }
+
   @media (max-width: 560px) {
     .topbar { padding: 0 14px; }
     .topbar .site-name { font-size: 17px; }
@@ -98,24 +111,20 @@
 </style>
 </head>
 <body>
-  <!-- 上方栏 -->
+  <!-- 上方栏：左上角站名作为主站链接 -->
   <header class="topbar">
-    <span class="site-name">Jerry's-webpage-home</span>
-    <a class="home-link" href="index.html">← 返回主页</a>
+    <a class="site-name" href="jerrys-webpage-home.html">Jerry's-webpage</a>
   </header>
 
   <!-- 内容区（起始脚手架，可继续扩展） -->
   <main class="content">
     <h1>欢迎来到 Jerry's-webpage-home</h1>
-    <p>这是页面的起始框架。上方蓝色栏已按你的要求设定：背景色 rgb(40, 89, 156)，左上角用白色写着 “Jerry's-webpage-home”。</p>
+    <p>这是一个基于微软 GitHub 的网站，用于做各种各样有用的东西；也不知道想写些什么。</p>
 
     <div class="card">
-      <h2>接下来可以扩展的内容</h2>
-      <ul>
-        <li>顶部导航：加更多栏目链接</li>
-        <li>主体板块：个人介绍、项目、日志等</li>
-        <li>主题色、语言、字号等个性化设置</li>
-      </ul>
+      <h2>产品</h2>
+      <p><a class="prod-link" href="index.html" target="_blank" rel="noopener">全球新闻</a></p>
+      <p class="back-main"><a href="jerrys-webpage-home.html">⬅ 返回主站</a></p>
     </div>
   </main>
 </body>
