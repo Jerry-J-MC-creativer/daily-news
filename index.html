@@ -248,6 +248,21 @@
     .home-actions .action-btn { font-size: 12px; padding: 7px 12px; }
   }
 
+  /* 左下角：返回主站 */
+  .back-main {
+    position: fixed; left: 16px; bottom: 16px; z-index: 20;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 7px 14px; font-size: 13px; color: var(--sub);
+    box-shadow: 0 2px 12px var(--shadow); text-decoration: none;
+    cursor: pointer; user-select: none; transition: background .3s;
+  }
+  .back-main:hover { background: var(--card); }
+  @media (max-width: 480px) {
+    .back-main { left: 10px; bottom: 10px; padding: 6px 11px; font-size: 12px; }
+  }
+
   /* 跨网页设置分组 */
   .cross-webpage-group {
     border: 1px solid var(--border);
@@ -287,7 +302,6 @@
 
   <!-- 右上角：设置按钮 -->
   <div class="top-bar">
-    <a class="pill" href="jerrys-webpage-home.html" target="_self" style="text-decoration:none;" title="返回主站">⬅ 返回主站</a>
     <div class="pill" id="settingsBtn" title="设置">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       <span id="settingsLabel">设置</span>
@@ -315,6 +329,9 @@
     <button type="button" class="action-btn" id="neverBtn" onclick="window.location.href='https://www.bilibili.com/video/BV1GJ411x7h7/'">千万别点</button>
     <a class="action-btn" id="gotoDev" href="dev-area.html" target="_blank" rel="noopener">前往新闻测试版➡</a>
   </div>
+
+  <!-- 左下角：返回小蓝页主站 -->
+  <a class="back-main" href="jerrys-webpage-home.html" target="_self" title="返回主站">⬅ 返回主站</a>
 
 <!-- 设置面板 -->
 <div class="settings-overlay" id="settingsOverlay" onclick="if(event.target===this)closeSettings()">
