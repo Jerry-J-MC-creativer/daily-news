@@ -164,6 +164,10 @@
     width: 92px; padding: 5px 8px; border-radius: 8px; border: 1px solid var(--border);
     background: var(--bg); color: var(--text); font-size: .85em;
   }
+  .color-row input[type="number"] {
+    width: 54px; padding: 4px 6px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: .82em;
+  }
   .range-row { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
   .range-row input[type="range"] { flex: 1; accent-color: var(--accent); }
   .range-row input[type="range"]::-webkit-slider-runnable-track {
@@ -342,6 +346,21 @@
         </div>
       </div>
 
+      <!-- 0.5) 主题色（accent：控制按钮、最新徽标等） -->
+      <div class="setting-row common-setting">
+        <label id="lblAccent">主题色</label>
+        <div class="color-row">
+          <input type="color" id="accentColor" value="#4f6ef7" onchange="setAccent(this.value)">
+          <input type="number" id="accentR" min="0" max="255" placeholder="R" oninput="setAccentRgb()">
+          <input type="number" id="accentG" min="0" max="255" placeholder="G" oninput="setAccentRgb()">
+          <input type="number" id="accentB" min="0" max="255" placeholder="B" oninput="setAccentRgb()">
+        </div>
+        <div class="cw-actions" data-var="accent">
+          <button class="fill-btn" onclick="applyThemeFill('accent','this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+          <button class="fill-btn" onclick="applyThemeFill('accent','all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+        </div>
+      </div>
+
       <!-- 1) 主题色（大标题文字颜色） -->
       <div class="setting-row common-setting">
         <div class="row-head">
@@ -491,6 +510,9 @@
     var inv = function(v){ return 255 - v; };
     return '#' + [inv(c.r),inv(c.g),inv(c.b)].map(function(v){ return ('0'+v.toString(16)).slice(-2); }).join('');
   }
+  function rgbToHex(r,g,b) {
+    return '#' + [r,g,b].map(function(x){ var h = Math.max(0,Math.min(255,Math.round(x))).toString(16); return h.length===1?'0'+h:h; }).join('');
+  }
 
   // ---- 背景 ----
   var bgSources = [
@@ -604,6 +626,31 @@
     document.getElementById('chkTitleColor').checked = true;
     updateTitleColor();
     applyFillStyle();
+  };
+  window.setAccent = function(v) {
+    if (!/^#[0-9a-fA-F]{6}$/.test(v)) return;
+    setScoped('accent', v);
+    document.documentElement.style.setProperty('--accent', v);
+    var c = hexToRgb(v);
+    if (c) {
+      if (document.getElementById('accentColor')) document.getElementById('accentColor').value = v;
+      if (document.getElementById('accentR')) document.getElementById('accentR').value = c.r;
+      if (document.getElementById('accentG')) document.getElementById('accentG').value = c.g;
+      if (document.getElementById('accentB')) document.getElementById('accentB').value = c.b;
+      // 与「大标题文字颜色」共用同一 accent 值，保持两个取色器显示一致
+      document.getElementById('titleColor').value = v;
+      document.getElementById('titleColorHex').value = v;
+    }
+    applyFillStyle();
+    updateTitleColor();
+  };
+  window.setAccentRgb = function() {
+    var r = document.getElementById('accentR').value,
+        g = document.getElementById('accentG').value,
+        b = document.getElementById('accentB').value;
+    if (r !== '' && g !== '' && b !== '') {
+      setAccent(rgbToHex(+r, +g, +b));
+    }
   };
   window.setRefresh = function(on) {
     safeLS.setItem('wb_home_refresh', on ? '1' : '0');
@@ -849,6 +896,14 @@
     document.getElementById('chkTitleColor').checked = colorOn === '1';
     document.getElementById('titleColor').value = themeColor;
     document.getElementById('titleColorHex').value = themeColor;
+    var accentNow = getScoped('accent', null) || getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#4f6ef7';
+    if (document.getElementById('accentColor')) document.getElementById('accentColor').value = accentNow;
+    var ac = hexToRgb(accentNow);
+    if (ac) {
+      if (document.getElementById('accentR')) document.getElementById('accentR').value = ac.r;
+      if (document.getElementById('accentG')) document.getElementById('accentG').value = ac.g;
+      if (document.getElementById('accentB')) document.getElementById('accentB').value = ac.b;
+    }
     document.getElementById('chkRefresh').checked = (safeLS.getItem('wb_home_refresh') || '1') === '1';
     var r = getScoped('radius', null); if (r!==null) { document.getElementById('rngRadius').value=r; document.getElementById('radiusVal').textContent=r+'px'; document.documentElement.style.setProperty('--radius', r+'px'); }
     var f = getScoped('font', null); if (f!==null) { document.getElementById('rngFont').value=f; document.getElementById('fontVal').textContent=f+'px'; document.documentElement.style.setProperty('--font-base', f+'px'); }
@@ -858,6 +913,7 @@
       document.getElementById('lblBg').textContent='页面背景';
       document.getElementById('lblTitleColor').textContent='大标题文字颜色';
       document.getElementById('titleColorSub').textContent='未设置主题色时，大标题颜色会随背景明暗自动取白/黑';
+      document.getElementById('lblAccent').textContent='主题色';
       document.getElementById('lblRefresh').textContent='每次进入刷新背景';
       document.getElementById('refreshHint').textContent='若关闭该开关，则背景图片每天仅刷新一次。';
       document.getElementById('lblRadius').textContent='按钮与圆角弧度';
@@ -872,6 +928,7 @@
       document.getElementById('lblBg').textContent='Page background';
       document.getElementById('lblTitleColor').textContent='Title text color';
       document.getElementById('titleColorSub').textContent='With no theme color, the title auto uses white/black by background brightness';
+      document.getElementById('lblAccent').textContent='Theme color';
       document.getElementById('lblRefresh').textContent='Refresh background each visit';
       document.getElementById('refreshHint').textContent='If off, the background refreshes only once per day.';
       document.getElementById('lblRadius').textContent='Button & corner radius';
