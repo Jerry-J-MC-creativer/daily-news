@@ -2696,9 +2696,26 @@ var safeLS = (function() {
   栏目配图来自多条 CC 授权线路（本地实拍 + Wikimedia / Openverse 等），自动选取最快线路 · Section photos via CC-licensed multi-line sources, fastest line auto-selected
 </footer>
 <script>
-/* 所有网页小型字体统一：黑字 + 白边（提升在图片/深色背景上的可读性） */
+/* 所有网页小型字体统一：深色/图片背景→黑字+白边；白底→默认颜色 */
 (function(){
   try {
+    function bgOf(el){
+      var n = el;
+      while (n && n.nodeType === 1){
+        var bg = getComputedStyle(n).backgroundColor;
+        if (bg && bg !== 'transparent' && !/^rgba?\(\s*0,\s*0,\s*0,\s*0\s*\)$/.test(bg)) return bg;
+        n = n.parentNode;
+      }
+      return null;
+    }
+    function lum(rgb){
+      var m = (rgb || '').match(/(\d+(?:\.\d+)?)/g);
+      if (!m || m.length < 3) return -1;
+      var r=+m[0], g=+m[1], b=+m[2], a = m[3]!==undefined ? +m[3] : 1;
+      if (a < 0.1) return -1;
+      var f = function(c){ c/=255; return c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055,2.4); };
+      return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b);
+    }
     var base = parseFloat(getComputedStyle(document.body).fontSize) || 15;
     var max = base * 0.88;
     document.querySelectorAll('body *').forEach(function(el){
@@ -2707,11 +2724,12 @@ var safeLS = (function() {
       if (/(btn|button|switch|tab|pill)/i.test(el.className || '')) return;
       if (el.children.length) return;
       var fs = parseFloat(getComputedStyle(el).fontSize);
-      if (!isNaN(fs) && fs <= max) {
-        el.style.color = '#000';
-        el.style.setProperty('-webkit-text-stroke', '0.6px #fff');
-        el.style.textShadow = '0 0 1px #fff, 0 0 2px #fff, 0 0 3px #fff';
-      }
+      if (isNaN(fs) || fs > max) return;
+      var bg = bgOf(el) || getComputedStyle(document.body).backgroundColor;
+      if (lum(bg) >= 0.6) return; // 浅色/白色背景：保持默认颜色，不强制黑字+白边
+      el.style.color = '#000';
+      el.style.setProperty('-webkit-text-stroke', '0.6px #fff');
+      el.style.textShadow = '0 0 1px #fff, 0 0 2px #fff, 0 0 3px #fff';
     });
   } catch(e) {}
 })();
