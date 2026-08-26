@@ -394,6 +394,8 @@
 
     <!-- 前往每日新闻 -->
     <a class="bottom-link" id="gotoNews" href="2026-08-24.html" target="_blank" rel="noopener">前往每日新闻的设置界面 →</a>
+    <!-- 前往正在开发的区域 -->
+    <a class="bottom-link" id="gotoDev" href="dev-area.html" target="_blank" rel="noopener">前往正在开发的区域 →</a>
     </div><!-- /settings-scroll -->
 
     <div class="settings-footer">
@@ -831,6 +833,7 @@
       document.getElementById('lblCrossWebpage').textContent='跨网页设置';
       document.getElementById('subCrossWebpage').textContent='以下设置在主页与每日新闻之间同步';
       document.getElementById('gotoNews').textContent='前往每日新闻的设置界面 →';
+      document.getElementById('gotoDev').textContent='前往正在开发的区域 →';
     } else {
       document.getElementById('settingsLabel').textContent='Settings';
       document.getElementById('settingsTitle').textContent='Settings';
@@ -844,6 +847,7 @@
       document.getElementById('lblCrossWebpage').textContent='Cross-webpage settings';
       document.getElementById('subCrossWebpage').textContent='These settings sync between the homepage and daily news';
       document.getElementById('gotoNews').textContent='Daily News Settings →';
+      document.getElementById('gotoDev').textContent='Development Area →';
     }
     updateFillBtnLang();
   }
