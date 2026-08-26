@@ -3194,5 +3194,26 @@ var safeLS = (function() {
 <footer style="text-align:center;padding:22px 16px 30px;font-size:12px;color:var(--sub);opacity:0.7;line-height:1.6;">
   栏目配图来自多条 CC 授权线路（本地实拍 + Wikimedia / Openverse 等），自动选取最快线路 · Section photos via CC-licensed multi-line sources, fastest line auto-selected
 </footer>
+<script>
+/* 所有网页小型字体统一：黑字 + 白边（提升在图片/深色背景上的可读性） */
+(function(){
+  try {
+    var base = parseFloat(getComputedStyle(document.body).fontSize) || 15;
+    var max = base * 0.88;
+    document.querySelectorAll('body *').forEach(function(el){
+      var tag = el.tagName;
+      if (tag === 'BUTTON' || tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA' || tag === 'OPTION') return;
+      if (/(btn|button|switch|tab|pill)/i.test(el.className || '')) return;
+      if (el.children.length) return;
+      var fs = parseFloat(getComputedStyle(el).fontSize);
+      if (!isNaN(fs) && fs <= max) {
+        el.style.color = '#000';
+        el.style.setProperty('-webkit-text-stroke', '0.6px #fff');
+        el.style.textShadow = '0 0 1px #fff, 0 0 2px #fff, 0 0 3px #fff';
+      }
+    });
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>
