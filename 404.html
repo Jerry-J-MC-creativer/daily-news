@@ -79,8 +79,24 @@
       如果问题持续存在，欢迎联系：<br>
       <a href="mailto:jerryjwx@163.com" style="color:#0078d4">jerryjwx@163.com</a>
     </p>
+    <button class="btn" type="button" onclick="history.back()">← 返回刚才</button>
     <a class="btn" href="index.html">← 返回主页</a>
     <footer>每日全球要闻</footer>
   </div>
+<script>
+/* 所有链接默认新标签页打开，除了“返回主页” */
+(function(){
+  try {
+    document.querySelectorAll('a[href]').forEach(function(a){
+      var h = a.getAttribute('href') || '';
+      if (h.charAt(0) === '#') return;                                   // 页内锚点不新开
+      if (h === 'index.html') return;                                    // 返回主页不新开
+      if (/返回主页|返回首页|back[\s-]?home/i.test(a.textContent)) return; // 返回主页按钮不新开
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener');
+    });
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>
