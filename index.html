@@ -789,6 +789,13 @@
         r.style.color = fg;
       }
     });
+    applyBadgeContrast();
+  }
+  function applyBadgeContrast() {
+    // 「最新」徽标的底色为主题色，文字按主题色深浅自动取反色，保证可读
+    var accent = getThemeColor();
+    var ink = isLight(accent) ? '#15233b' : '#ffffff';
+    document.querySelectorAll('.day-card .badge:not(.old)').forEach(function(b){ b.style.color = ink; });
   }
   function updateFillButtons() {
     document.querySelectorAll('.common-setting').forEach(function(row){
@@ -908,6 +915,7 @@
         '<div class="badge-wrap"><span class="badge' + oldCls + '">' + badge + '</span>' +
         '<span class="arrow">→</span></div></a>';
     }).join('');
+    applyBadgeContrast();
   }
   var manifestPromise = (typeof fetch === 'function')
     ? fetch('dates.json', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : Promise.reject(); })
