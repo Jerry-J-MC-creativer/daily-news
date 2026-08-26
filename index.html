@@ -226,21 +226,22 @@
   }
   .bottom-link:hover { text-decoration: underline; }
   /* 主页底部右侧：前往测试版 + 千万别点（恶搞跳转） */
+  /* 容器本身不可见，仅是定位层；每个按钮各自是独立卡片 */
   .home-actions {
     position: fixed; right: 16px; bottom: 16px; z-index: 20;
-    display: flex; gap: 24px; align-items: center;
-    background: rgba(255,255,255,0.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(0,0,0,0.12); border-radius: var(--radius);
-    padding: 9px 18px; box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    display: flex; gap: 28px; align-items: center;
   }
   .home-actions .action-btn {
     font-size: 13px; font-weight: 700; color: #000; text-decoration: none;
-    background: none; border: none; font-family: inherit; cursor: pointer; padding: 2px 4px;
+    font-family: inherit; cursor: pointer; padding: 9px 16px;
+    background: rgba(255,255,255,0.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0,0,0,0.12); border-radius: var(--radius);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
   }
   .home-actions .action-btn:hover { text-decoration: underline; }
   @media (max-width: 480px) {
-    .home-actions { right: 10px; bottom: 10px; padding: 7px 11px; }
-    .home-actions .action-btn { font-size: 12px; }
+    .home-actions { right: 10px; bottom: 10px; gap: 16px; }
+    .home-actions .action-btn { font-size: 12px; padding: 7px 12px; }
   }
 
   /* 跨网页设置分组 */
