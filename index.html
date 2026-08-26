@@ -228,13 +228,13 @@
   /* 主页底部右侧：前往测试版 + 千万别点（恶搞跳转） */
   .home-actions {
     position: fixed; right: 16px; bottom: 16px; z-index: 20;
-    display: flex; gap: 12px; align-items: center;
-    background: var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 9px 14px; box-shadow: 0 6px 24px var(--shadow);
+    display: flex; gap: 24px; align-items: center;
+    background: rgba(255,255,255,0.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0,0,0,0.12); border-radius: var(--radius);
+    padding: 9px 18px; box-shadow: 0 6px 24px rgba(0,0,0,0.18);
   }
   .home-actions .action-btn {
-    font-size: 13px; font-weight: 700; color: var(--accent); text-decoration: none;
+    font-size: 13px; font-weight: 700; color: #000; text-decoration: none;
     background: none; border: none; font-family: inherit; cursor: pointer; padding: 2px 4px;
   }
   .home-actions .action-btn:hover { text-decoration: underline; }
@@ -770,6 +770,8 @@
   function applyFillStyle() {
     var rows = document.querySelectorAll('.common-setting');
     var accent = getThemeColor();
+    // 同步主题色到 --accent，保证全站按钮/填充色与所选主题一致（新闻页已有，主页补齐）
+    document.documentElement.style.setProperty('--accent', accent);
     var dark = !isLight(accent);
     var fill = accent; // 默认直接使用主题色，不改变
     var fg = dark ? '#ffffff' : '#1a1a2e';
@@ -950,6 +952,27 @@
       if (getScope('accent') !== 'this') { setTitleColor(e.newValue); }
     }
   });
+})();
+</script>
+<script>
+/* 所有网页小型字体统一：黑字 + 白边（提升在图片/深色背景上的可读性） */
+(function(){
+  try {
+    var base = parseFloat(getComputedStyle(document.body).fontSize) || 15;
+    var max = base * 0.88;
+    document.querySelectorAll('body *').forEach(function(el){
+      var tag = el.tagName;
+      if (tag === 'BUTTON' || tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA' || tag === 'OPTION') return;
+      if (/(btn|button|switch|tab|pill)/i.test(el.className || '')) return;
+      if (el.children.length) return;
+      var fs = parseFloat(getComputedStyle(el).fontSize);
+      if (!isNaN(fs) && fs <= max) {
+        el.style.color = '#000';
+        el.style.setProperty('-webkit-text-stroke', '0.6px #fff');
+        el.style.textShadow = '0 0 1px #fff, 0 0 2px #fff, 0 0 3px #fff';
+      }
+    });
+  } catch(e) {}
 })();
 </script>
 </body>
