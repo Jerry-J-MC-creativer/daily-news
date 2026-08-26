@@ -283,9 +283,9 @@
           <option value="zh">简体中文</option>
           <option value="en">English</option>
         </select>
-        <div class="cw-actions">
-          <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
-          <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+        <div class="cw-actions" data-var="lang">
+          <button class="fill-btn" onclick="applyThemeFill('lang','this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+          <button class="fill-btn" onclick="applyThemeFill('lang','all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
         </div>
       </div>
 
@@ -303,9 +303,9 @@
           <input type="text" id="titleColorHex" value="#ffffff" onchange="setTitleColor(this.value)">
         </div>
         <span class="color-sub" id="titleColorSub">未设置主题色时，大标题颜色会随背景明暗自动取白/黑</span>
-        <div class="cw-actions">
-          <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
-          <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+        <div class="cw-actions" data-var="accent">
+          <button class="fill-btn" onclick="applyThemeFill('accent','this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+          <button class="fill-btn" onclick="applyThemeFill('accent','all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
         </div>
       </div>
 
@@ -316,9 +316,9 @@
           <input type="range" id="rngRadius" min="0" max="32" value="16" oninput="setRadius(this.value)">
           <span class="val" id="radiusVal">16px</span>
         </div>
-        <div class="cw-actions">
-          <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
-          <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+        <div class="cw-actions" data-var="radius">
+          <button class="fill-btn" onclick="applyThemeFill('radius','this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+          <button class="fill-btn" onclick="applyThemeFill('radius','all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
         </div>
       </div>
 
@@ -329,9 +329,9 @@
           <input type="range" id="rngFont" min="12" max="22" value="15" oninput="setFont(this.value)">
           <span class="val" id="fontVal">15px</span>
         </div>
-        <div class="cw-actions">
-          <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
-          <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+        <div class="cw-actions" data-var="font">
+          <button class="fill-btn" onclick="applyThemeFill('font','this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+          <button class="fill-btn" onclick="applyThemeFill('font','all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
         </div>
       </div>
     </div>
@@ -383,8 +383,38 @@
     catch (e) { var m={}; return { getItem:function(x){return (x in m)?m[x]:null;}, setItem:function(x,v){m[x]=String(v);}, removeItem:function(x){delete m[x];} }; }
   })();
 
+  // ---- 跨网页设置：每个变量独立作用域（仅该网页 / 用于所有） ----
+  var PAGE_TAG = 'home';
+  function varBaseKey(v) {
+    if (v === 'accent') return PAGE_TAG === 'home' ? 'wb_home_titlecolor' : 'wb_accent';
+    return 'wb_' + v;
+  }
+  function scopeKey(v) { return 'wb_scope_' + v; }
+  function scopedKey(v) { return varBaseKey(v) + '_' + PAGE_TAG; }
+  function getScope(v) {
+    var s = safeLS.getItem(scopeKey(v));
+    return (s === 'this' || s === 'all') ? s : 'all';
+  }
+  function setScope(v, scope) {
+    if (scope === 'all') safeLS.removeItem(scopeKey(v));
+    else safeLS.setItem(scopeKey(v), scope);
+  }
+  function getScoped(v, fallback) {
+    var s = getScope(v);
+    if (s === 'this') {
+      var val = safeLS.getItem(scopedKey(v));
+      if (val !== null) return val;
+    }
+    var val = safeLS.getItem(varBaseKey(v));
+    return val !== null ? val : fallback;
+  }
+  function setScoped(v, value) {
+    var key = (getScope(v) === 'this') ? scopedKey(v) : varBaseKey(v);
+    safeLS.setItem(key, value);
+  }
+
   // 语言：与每日新闻共享 wb_lang（'zh' / 'en'），优先用已保存偏好
-  var lang = safeLS.getItem('wb_lang');
+  var lang = getScoped('lang', null);
   if (lang !== 'zh' && lang !== 'en') {
     lang = (navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
   }
@@ -471,7 +501,7 @@
     if (on === null) on = '1';
     var titleEl = document.getElementById('heroTitle');
     var colorOn = safeLS.getItem('wb_home_titlecolor_on');
-    var themeColor = safeLS.getItem('wb_home_titlecolor');
+    var themeColor = getScoped('accent', null);
     if (colorOn === '1' && themeColor) {
       // 有主题色：自动检测主题色深浅，并对比背景
       if (on === '1') {
@@ -506,9 +536,9 @@
   };
   window.setTitleColorOn = function(on) {
     safeLS.setItem('wb_home_titlecolor_on', on ? '1' : '0');
-    if (on && !safeLS.getItem('wb_home_titlecolor')) {
+    if (on && !getScoped('accent', null)) {
       var v = document.getElementById('titleColor').value;
-      safeLS.setItem('wb_home_titlecolor', v);
+      setScoped('accent', v);
     }
     updateTitleColor();
   };
@@ -516,7 +546,7 @@
     if (!/^#[0-9a-fA-F]{6}$/.test(v)) v = '#ffffff';
     document.getElementById('titleColor').value = v;
     document.getElementById('titleColorHex').value = v;
-    safeLS.setItem('wb_home_titlecolor', v);
+    setScoped('accent', v);
     safeLS.setItem('wb_home_titlecolor_on', '1');
     document.getElementById('chkTitleColor').checked = true;
     updateTitleColor();
@@ -532,20 +562,20 @@
     document.documentElement.style.setProperty('--radius', v + 'px');
     document.getElementById('rngRadius').value = v;
     document.getElementById('radiusVal').textContent = v + 'px';
-    safeLS.setItem('wb_radius', v);
+    setScoped('radius', v);
   };
   window.setFont = function(v) {
     v = Math.max(12, Math.min(22, parseInt(v) || 15));
     document.documentElement.style.setProperty('--font-base', v + 'px');
     document.getElementById('rngFont').value = v;
     document.getElementById('fontVal').textContent = v + 'px';
-    safeLS.setItem('wb_font', v);
+    setScoped('font', v);
   };
   // 语言切换：与每日新闻共享 wb_lang，双向同步
   window.setLang = function(v) {
     if (v !== 'zh' && v !== 'en') v = 'zh';
     lang = v; isZh = (v === 'zh');
-    safeLS.setItem('wb_lang', v);
+    setScoped('lang', v);
     applyLang();
   };
   var settingsSnapshot = null;
@@ -595,7 +625,7 @@
     }
     // 二次确认 -> 清除
     safeLS.removeItem('wb_home_bg'); safeLS.removeItem('wb_home_bg_date'); safeLS.removeItem('wb_home_bg_file');
-    safeLS.removeItem('wb_home_refresh'); safeLS.removeItem('wb_home_titlecolor');
+    safeLS.removeItem('wb_home_refresh'); safeLS.removeItem(varBaseKey('accent')); safeLS.removeItem(scopedKey('accent'));
     safeLS.removeItem('wb_home_titlecolor_on'); safeLS.removeItem('wb_home_titlecolor_cur');
     safeLS.removeItem('wb_radius'); safeLS.removeItem('wb_font');
     btn.classList.remove('confirm');
@@ -672,15 +702,15 @@
     }
     return fill;
   }
-  function themeFillKeyThis() { return PAGE_TAG === 'home' ? 'wb_theme_fill_home' : 'wb_theme_fill_news'; }
-  function currentFillScope() {
-    if (safeLS.getItem('wb_theme_fill_off') === '1') return '';
-    if (safeLS.getItem('wb_theme_fill_all') === '1') return 'all';
-    if (safeLS.getItem(themeFillKeyThis()) === '1') return 'this';
-    return 'all'; // 默认开启：跨网页设置始终按主题色填充
+  function rowVar(row) {
+    var actions = row.querySelector('.cw-actions');
+    return actions ? actions.getAttribute('data-var') : null;
+  }
+  function currentFillScope(v) {
+    return getScope(v);
   }
   function getThemeColor() {
-    var t = safeLS.getItem('wb_home_titlecolor');
+    var t = getScoped('accent', null);
     // 大标题颜色默认/常用白色，白色填充到浅色面板上会不可见，
     // 因此以页面真实主题色 --accent 作为填充来源，保证始终可见。
     if (t && t.toLowerCase() !== '#ffffff' && t.toLowerCase() !== '#fff') return t;
@@ -688,33 +718,35 @@
   }
   function applyFillStyle() {
     var rows = document.querySelectorAll('.common-setting');
-    var scope = currentFillScope();
-    if (!scope) {
-      rows.forEach(function(r){ r.style.background = ''; r.style.color = ''; });
-      return;
-    }
     var accent = getThemeColor();
     var dark = !isLight(accent);
     var fill = accent; // 默认直接使用主题色，不改变
-    var fg = dark ? '#ffffff' : '#1a1a1a';
+    var fg = dark ? '#ffffff' : '#1a1a2e';
     fill = optimizeFill(fill, fg, 2.5); // 仅当可读性非常差（contrast < 2.5）时才微调，且只调亮度、保持色相饱和度
     rows.forEach(function(r){
-      r.style.background = fill;
-      r.style.color = fg;
+      var v = rowVar(r);
+      var scope = v ? currentFillScope(v) : 'all';
+      if (scope === 'this') {
+        r.style.background = '';
+        r.style.color = '';
+      } else {
+        r.style.background = fill;
+        r.style.color = fg;
+      }
     });
   }
   function updateFillButtons() {
-    var scope = currentFillScope();
-    document.querySelectorAll('.fill-btn[data-scope]').forEach(function(b){
-      b.classList.toggle('active', b.getAttribute('data-scope') === scope);
+    document.querySelectorAll('.common-setting').forEach(function(row){
+      var v = rowVar(row);
+      if (!v) return;
+      var scope = currentFillScope(v);
+      row.querySelectorAll('.fill-btn[data-scope]').forEach(function(b){
+        b.classList.toggle('active', b.getAttribute('data-scope') === scope);
+      });
     });
   }
-  window.applyThemeFill = function(scope) {
-    var all = 'wb_theme_fill_all', thisK = themeFillKeyThis(), off = 'wb_theme_fill_off';
-    safeLS.removeItem(off);
-    if (currentFillScope() === scope) { safeLS.setItem(off, '1'); }
-    else if (scope === 'all') { safeLS.setItem(all, '1'); safeLS.removeItem(thisK); }
-    else { safeLS.setItem(thisK, '1'); safeLS.removeItem(all); }
+  window.applyThemeFill = function(v, scope) {
+    setScope(v, scope);
     applyFillStyle(); updateFillButtons();
   };
 
@@ -751,13 +783,13 @@
     document.getElementById('selLang').value = lang;
     document.getElementById('chkBg').checked = (safeLS.getItem('wb_home_bg') || '1') === '1';
     var colorOn = safeLS.getItem('wb_home_titlecolor_on');
-    var themeColor = safeLS.getItem('wb_home_titlecolor') || '#ffffff';
+    var themeColor = getScoped('accent', null) || '#ffffff';
     document.getElementById('chkTitleColor').checked = colorOn === '1';
     document.getElementById('titleColor').value = themeColor;
     document.getElementById('titleColorHex').value = themeColor;
     document.getElementById('chkRefresh').checked = (safeLS.getItem('wb_home_refresh') || '1') === '1';
-    var r = safeLS.getItem('wb_radius'); if (r!==null) { document.getElementById('rngRadius').value=r; document.getElementById('radiusVal').textContent=r+'px'; document.documentElement.style.setProperty('--radius', r+'px'); }
-    var f = safeLS.getItem('wb_font'); if (f!==null) { document.getElementById('rngFont').value=f; document.getElementById('fontVal').textContent=f+'px'; document.documentElement.style.setProperty('--font-base', f+'px'); }
+    var r = getScoped('radius', null); if (r!==null) { document.getElementById('rngRadius').value=r; document.getElementById('radiusVal').textContent=r+'px'; document.documentElement.style.setProperty('--radius', r+'px'); }
+    var f = getScoped('font', null); if (f!==null) { document.getElementById('rngFont').value=f; document.getElementById('fontVal').textContent=f+'px'; document.documentElement.style.setProperty('--font-base', f+'px'); }
     if (isZh) {
       document.getElementById('settingsLabel').textContent='设置';
       document.getElementById('settingsTitle').textContent='设置';
@@ -855,13 +887,14 @@
 
   // 与每日新闻实时同步语言/圆角/字号（跨标签页，共用同一偏好键）
   window.addEventListener('storage', function(e){
-    if (e.key === 'wb_lang' && (e.newValue === 'zh' || e.newValue === 'en')) {
-      lang = e.newValue; isZh = (lang === 'zh');
-      applyLang(); syncSettingsUI();
-    } else if (e.key === 'wb_radius' && e.newValue !== null) {
-      setRadius(e.newValue);
-    } else if (e.key === 'wb_font' && e.newValue !== null) {
-      setFont(e.newValue);
+    if (e.key === varBaseKey('lang') && (e.newValue === 'zh' || e.newValue === 'en')) {
+      if (getScope('lang') !== 'this') { lang = e.newValue; isZh = (lang === 'zh'); applyLang(); syncSettingsUI(); }
+    } else if (e.key === varBaseKey('radius') && e.newValue !== null) {
+      if (getScope('radius') !== 'this') setRadius(e.newValue);
+    } else if (e.key === varBaseKey('font') && e.newValue !== null) {
+      if (getScope('font') !== 'this') setFont(e.newValue);
+    } else if (e.key === varBaseKey('accent') && e.newValue !== null) {
+      if (getScope('accent') !== 'this') { setTitleColor(e.newValue); }
     }
   });
 })();
