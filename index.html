@@ -225,12 +225,23 @@
     color: var(--accent); text-decoration: none; font-weight: 600;
   }
   .bottom-link:hover { text-decoration: underline; }
-  .bottom-row {
-    display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap;
-    margin-top: 22px;
+  /* 主页底部右侧：前往测试版 + 千万别点（恶搞跳转） */
+  .home-actions {
+    position: fixed; right: 16px; bottom: 16px; z-index: 20;
+    display: flex; gap: 12px; align-items: center;
+    background: var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 9px 14px; box-shadow: 0 6px 24px var(--shadow);
   }
-  .bottom-row .bottom-link { display: inline-block; margin-top: 0; }
-  .prank-btn { background: none; border: none; font: inherit; cursor: pointer; padding: 0; }
+  .home-actions .action-btn {
+    font-size: 13px; font-weight: 700; color: var(--accent); text-decoration: none;
+    background: none; border: none; font-family: inherit; cursor: pointer; padding: 2px 4px;
+  }
+  .home-actions .action-btn:hover { text-decoration: underline; }
+  @media (max-width: 480px) {
+    .home-actions { right: 10px; bottom: 10px; padding: 7px 11px; }
+    .home-actions .action-btn { font-size: 12px; }
+  }
 
   /* 跨网页设置分组 */
   .cross-webpage-group {
@@ -290,6 +301,12 @@
       内容由 AI 生成 · 图片来自公开共享实拍 · 语音由浏览器内置 TTS 生成<br>
       遇到问题？请联系 <a href="mailto:jerryjwx@163.com">jerryjwx@163.com</a>
     </footer>
+  </div>
+
+  <!-- 主页底部右侧：前往测试版 + 千万别点（点开自动跳 B 站 Rickroll） -->
+  <div class="home-actions">
+    <button type="button" class="action-btn" id="neverBtn" onclick="window.location.href='https://www.bilibili.com/video/BV1GJ411x7h7/'">千万别点</button>
+    <a class="action-btn" id="gotoDev" href="dev-area.html" target="_blank" rel="noopener">前往测试版➡</a>
   </div>
 
 <!-- 设置面板 -->
@@ -400,11 +417,6 @@
 
     <!-- 前往每日新闻 -->
     <a class="bottom-link" id="gotoNews" href="2026-08-24.html" target="_blank" rel="noopener">前往每日新闻的设置界面 →</a>
-    <!-- 前往测试版 + 千万别点（恶搞跳转按钮，点开自动跳 B 站 Rickroll） -->
-    <div class="bottom-row">
-      <button type="button" class="bottom-link prank-btn" id="neverBtn" onclick="window.location.href='https://www.bilibili.com/video/BV1GJ411x7h7/'">千万别点</button>
-      <a class="bottom-link" id="gotoDev" href="dev-area.html" target="_blank" rel="noopener">前往测试版➡</a>
-    </div>
     </div><!-- /settings-scroll -->
 
     <div class="settings-footer">
