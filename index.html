@@ -229,7 +229,7 @@
     color: var(--accent); text-decoration: none; font-weight: 600;
   }
   .bottom-link:hover { text-decoration: underline; }
-  /* 主页底部右侧：前往测试版 + 千万别点（恶搞跳转） */
+  /* 新闻主页底部右侧：前往新闻测试版 + 千万别点（恶搞跳转） */
   /* 容器本身不可见，仅是定位层；每个按钮各自是独立卡片 */
   .home-actions {
     position: fixed; right: 16px; bottom: 16px; z-index: 20;
@@ -287,6 +287,7 @@
 
   <!-- 右上角：设置按钮 -->
   <div class="top-bar">
+    <a class="pill" href="jerrys-webpage-home.html" target="_self" style="text-decoration:none;" title="返回主站">⬅ 返回主站</a>
     <div class="pill" id="settingsBtn" title="设置">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       <span id="settingsLabel">设置</span>
@@ -309,10 +310,10 @@
     </footer>
   </div>
 
-  <!-- 主页底部右侧：前往测试版 + 千万别点（点开自动跳 B 站 Rickroll） -->
+  <!-- 新闻主页底部右侧：前往新闻测试版 + 千万别点（点开自动跳 B 站 Rickroll） -->
   <div class="home-actions">
     <button type="button" class="action-btn" id="neverBtn" onclick="window.location.href='https://www.bilibili.com/video/BV1GJ411x7h7/'">千万别点</button>
-    <a class="action-btn" id="gotoDev" href="dev-area.html" target="_blank" rel="noopener">前往测试版➡</a>
+    <a class="action-btn" id="gotoDev" href="dev-area.html" target="_blank" rel="noopener">前往新闻测试版➡</a>
   </div>
 
 <!-- 设置面板 -->
@@ -330,7 +331,7 @@
     <div class="cross-webpage-group" id="crossWebpageGroup">
       <div class="cw-header">
         <span class="cw-title" id="lblCrossWebpage" data-zh="跨网页设置" data-en="Cross-webpage settings">跨网页设置</span>
-        <span class="cw-sub" id="subCrossWebpage" data-zh="以下设置在主页与每日新闻之间同步" data-en="These settings sync between the homepage and daily news">以下设置在主页与每日新闻之间同步</span>
+        <span class="cw-sub" id="subCrossWebpage" data-zh="以下设置在新闻主页与每日新闻之间同步" data-en="These settings sync between the news homepage and daily news">以下设置在新闻主页与每日新闻之间同步</span>
       </div>
 
       <!-- 0) 语言切换（与每日新闻同步 wb_lang） -->
@@ -437,7 +438,7 @@
     </div>
 
     <!-- 前往每日新闻 -->
-    <a class="bottom-link" id="gotoNews" href="2026-08-24.html" target="_blank" rel="noopener">前往每日新闻的设置界面 →</a>
+    <a class="bottom-link" id="gotoNews" href="2026-08-24.html" target="_blank" rel="noopener">前往每日新闻设置 →</a>
     </div><!-- /settings-scroll -->
 
     <div class="settings-footer">
@@ -881,7 +882,7 @@
     document.getElementById('selLang').value = lang;
     document.getElementById('lblLang').textContent = z ? '语言' : 'Language';
     document.getElementById('lblCrossWebpage').textContent = z ? '跨网页设置' : 'Cross-webpage settings';
-    document.getElementById('subCrossWebpage').textContent = z ? '以下设置在主页与每日新闻之间同步' : 'These settings sync between the homepage and daily news';
+    document.getElementById('subCrossWebpage').textContent = z ? '以下设置在新闻主页与每日新闻之间同步' : 'These settings sync between the news homepage and daily news';
     updateFillBtnLang();
     document.getElementById('heroTitle').textContent = z ? '每日全球要闻' : 'Daily Global News';
     document.getElementById('heroSub').textContent = z ? '十大领域 · 全球动态 · 每日更新' : '10 domains · Global updates · Daily';
@@ -929,8 +930,8 @@
       document.getElementById('lblFont').textContent='字体大小';
       document.getElementById('lblCrossWebpage').textContent='跨网页设置';
       document.getElementById('subCrossWebpage').textContent='以下设置在主页与每日新闻之间同步';
-      document.getElementById('gotoNews').textContent='前往每日新闻的设置界面 →';
-      document.getElementById('gotoDev').textContent='前往测试版➡';
+      document.getElementById('gotoNews').textContent='前往每日新闻设置 →';
+      document.getElementById('gotoDev').textContent='前往新闻测试版➡';
     } else {
       document.getElementById('settingsLabel').textContent='Settings';
       document.getElementById('settingsTitle').textContent='Settings';
@@ -943,9 +944,9 @@
       document.getElementById('lblRadius').textContent='Button & corner radius';
       document.getElementById('lblFont').textContent='Font size';
       document.getElementById('lblCrossWebpage').textContent='Cross-webpage settings';
-      document.getElementById('subCrossWebpage').textContent='These settings sync between the homepage and daily news';
+      document.getElementById('subCrossWebpage').textContent='These settings sync between the news homepage and daily news';
       document.getElementById('gotoNews').textContent='Daily News Settings →';
-      document.getElementById('gotoDev').textContent='Test Version ➡';
+      document.getElementById('gotoDev').textContent='News Test Version ➡';
     }
     updateFillBtnLang();
   }
