@@ -458,7 +458,8 @@
   // ---- 跨网页设置：每个变量独立作用域（仅该网页 / 用于所有） ----
   var PAGE_TAG = 'home';
   function varBaseKey(v) {
-    if (v === 'accent') return PAGE_TAG === 'home' ? 'wb_home_titlecolor' : 'wb_accent';
+    // 首页与每日新闻共用同一主题色键 wb_accent，保证两端主题色同步
+    if (v === 'accent') return 'wb_accent';
     return 'wb_' + v;
   }
   function scopeKey(v) { return 'wb_scope_' + v; }
@@ -484,6 +485,14 @@
     var key = (getScope(v) === 'this') ? scopedKey(v) : varBaseKey(v);
     safeLS.setItem(key, value);
   }
+
+  // 一次性迁移：将旧首页主题色键合并进共享键 wb_accent（与每日新闻同步）
+  (function(){
+    var oldKey = 'wb_home_titlecolor';
+    if (!safeLS.getItem('wb_accent') && safeLS.getItem(oldKey)) {
+      safeLS.setItem('wb_accent', safeLS.getItem(oldKey));
+    }
+  })();
 
   // 语言：与每日新闻共享 wb_lang（'zh' / 'en'），优先用已保存偏好
   var lang = getScoped('lang', null);
