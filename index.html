@@ -995,5 +995,21 @@
   } catch(e) {}
 })();
 </script>
+
+<script>
+/* 所有链接默认新标签页打开，除了“返回主页” */
+(function(){
+  try {
+    document.querySelectorAll('a[href]').forEach(function(a){
+      var h = a.getAttribute('href') || '';
+      if (h.charAt(0) === '#') return;                                   // 页内锚点不新开
+      if (h === 'index.html') return;                                    // 返回主页不新开
+      if (/返回主页|返回首页|back[\s-]?home/i.test(a.textContent)) return; // 返回主页按钮不新开
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener');
+    });
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>
