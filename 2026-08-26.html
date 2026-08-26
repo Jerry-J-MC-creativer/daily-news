@@ -100,7 +100,10 @@
     transition: background .2s;
   }
   .gear-btn:hover { background: rgba(255,255,255,0.35); }
-  .title-btns { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; flex-shrink: 0; }
+  .title-btns { display: flex; flex-direction: row; gap: 6px; align-items: center; flex-shrink: 0; }
+  @media (orientation: portrait) {
+    .title-btns { flex-direction: column; align-items: flex-end; }
+  }
   .title-btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     width: 100px;
@@ -1309,9 +1312,9 @@
         <option value="zh">简体中文</option>
         <option value="en">English</option>
       </select>
-      <div class="cw-actions">
-        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
-        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      <div class="cw-actions" data-var="lang">
+          <button class="fill-btn" onclick="applyThemeFill('lang','this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('lang','all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
       </div>
     </div>
 
@@ -1334,9 +1337,9 @@
         <input type="number" id="accentB" min="0" max="255" placeholder="B">
         <button class="apply-btn" onclick="applyRGBAccent()" id="btnApplyAccent">应用</button>
       </div>
-      <div class="cw-actions">
-        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
-        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      <div class="cw-actions" data-var="accent">
+          <button class="fill-btn" onclick="applyThemeFill('accent','this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('accent','all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
       </div>
     </div>
 
@@ -1347,9 +1350,9 @@
         <input type="range" id="rngFont" min="12" max="22" value="15" oninput="setFont(this.value)">
         <span id="fontVal">15px</span>
       </div>
-      <div class="cw-actions">
-        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
-        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      <div class="cw-actions" data-var="font">
+          <button class="fill-btn" onclick="applyThemeFill('font','this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('font','all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
       </div>
     </div>
 
@@ -1360,9 +1363,9 @@
         <input type="range" id="rngRadius" min="0" max="32" value="16" oninput="setRadius(this.value)">
         <span id="radiusVal">16px</span>
       </div>
-      <div class="cw-actions">
-        <button class="fill-btn" onclick="applyThemeFill('this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
-        <button class="fill-btn" onclick="applyThemeFill('all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      <div class="cw-actions" data-var="radius">
+          <button class="fill-btn" onclick="applyThemeFill('radius','this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('radius','all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
       </div>
     </div>
 
@@ -1554,11 +1557,41 @@ var safeLS = (function() {
   var BUILTIN_PREFS = {"lang":"zh","theme":"auto","accent":"#2563eb","font":15,"radius":16,"voice":"","hl":"#ffeb3b","hlOn":true};
 
   // ========== State ==========
-  var lang = safeLS.getItem('wb_lang') || BUILTIN_PREFS.lang || 'zh';
+  // ---- 跨网页设置：每个变量独立作用域（仅该网页 / 用于所有） ----
+  var PAGE_TAG = 'news';
+  function varBaseKey(v) {
+    if (v === 'accent') return PAGE_TAG === 'home' ? 'wb_home_titlecolor' : 'wb_accent';
+    return 'wb_' + v;
+  }
+  function scopeKey(v) { return 'wb_scope_' + v; }
+  function scopedKey(v) { return varBaseKey(v) + '_' + PAGE_TAG; }
+  function getScope(v) {
+    var s = safeLS.getItem(scopeKey(v));
+    return (s === 'this' || s === 'all') ? s : 'all';
+  }
+  function setScope(v, scope) {
+    if (scope === 'all') safeLS.removeItem(scopeKey(v));
+    else safeLS.setItem(scopeKey(v), scope);
+  }
+  function getScoped(v, fallback) {
+    var s = getScope(v);
+    if (s === 'this') {
+      var val = safeLS.getItem(scopedKey(v));
+      if (val !== null) return val;
+    }
+    var val = safeLS.getItem(varBaseKey(v));
+    return val !== null ? val : fallback;
+  }
+  function setScoped(v, value) {
+    var key = (getScope(v) === 'this') ? scopedKey(v) : varBaseKey(v);
+    safeLS.setItem(key, value);
+  }
+
+  var lang = getScoped('lang', BUILTIN_PREFS.lang || 'zh');
   var theme = safeLS.getItem('wb_theme') || BUILTIN_PREFS.theme || 'auto';
-  var accent = safeLS.getItem('wb_accent') || BUILTIN_PREFS.accent || '#2563eb';
-  var fontSize = parseInt(safeLS.getItem('wb_font') || BUILTIN_PREFS.font || 15);
-  var radius = parseInt(safeLS.getItem('wb_radius') || BUILTIN_PREFS.radius || 16);
+  var accent = getScoped('accent', BUILTIN_PREFS.accent || '#2563eb');
+  var fontSize = parseInt(getScoped('font', BUILTIN_PREFS.font || 15));
+  var radius = parseInt(getScoped('radius', BUILTIN_PREFS.radius || 16));
   var hlColor = safeLS.getItem('wb_hl') || BUILTIN_PREFS.hl || '#ffeb3b';
   var hlOn = (safeLS.getItem('wb_hl_on') !== null ? safeLS.getItem('wb_hl_on') : (BUILTIN_PREFS.hlOn !== undefined ? BUILTIN_PREFS.hlOn : true)) === 'true' || (safeLS.getItem('wb_hl_on') !== null ? safeLS.getItem('wb_hl_on') : (BUILTIN_PREFS.hlOn !== undefined ? BUILTIN_PREFS.hlOn : true)) === true;
   var customVoices = JSON.parse(safeLS.getItem('wb_custom_voices') || '[]');
@@ -1944,48 +1977,50 @@ var safeLS = (function() {
     }
     return fill;
   }
-  function themeFillKeyThis() { return PAGE_TAG === 'home' ? 'wb_theme_fill_home' : 'wb_theme_fill_news'; }
-  function currentFillScope() {
-    if (safeLS.getItem('wb_theme_fill_off') === '1') return '';
-    if (safeLS.getItem('wb_theme_fill_all') === '1') return 'all';
-    if (safeLS.getItem(themeFillKeyThis()) === '1') return 'this';
-    return 'all'; // 默认开启
+  function rowVar(row) {
+    var actions = row.querySelector('.cw-actions');
+    return actions ? actions.getAttribute('data-var') : null;
+  }
+  function currentFillScope(v) {
+    return getScope(v);
   }
   function getThemeColor() {
-    var a = safeLS.getItem('wb_accent');
+    var a = getScoped('accent', null);
     // 若用户把主题色设成白色/接近白色，填充会不可见，回退到页面默认主题色
     if (a && a.toLowerCase() !== '#ffffff' && a.toLowerCase() !== '#fff') return a;
     return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#2563eb';
   }
   function applyFillStyle() {
     var rows = document.querySelectorAll('.common-setting');
-    var scope = currentFillScope();
-    if (!scope) {
-      rows.forEach(function(r){ r.style.background = ''; r.style.color = ''; });
-      return;
-    }
     var accent = getThemeColor();
     var dark = !isLight(accent);
     var fill = accent; // 默认直接使用主题色，不改变
-    var fg = dark ? '#ffffff' : '#1a1a1a';
+    var fg = dark ? '#ffffff' : '#1a1a2e';
     fill = optimizeFill(fill, fg, 2.5); // 仅当可读性非常差（contrast < 2.5）时才微调，且只调亮度、保持色相饱和度
     rows.forEach(function(r){
-      r.style.background = fill;
-      r.style.color = fg;
+      var v = rowVar(r);
+      var scope = v ? currentFillScope(v) : 'all';
+      if (scope === 'this') {
+        r.style.background = '';
+        r.style.color = '';
+      } else {
+        r.style.background = fill;
+        r.style.color = fg;
+      }
     });
   }
   function updateFillButtons() {
-    var scope = currentFillScope();
-    document.querySelectorAll('.fill-btn[data-scope]').forEach(function(b){
-      b.classList.toggle('active', b.getAttribute('data-scope') === scope);
+    document.querySelectorAll('.common-setting').forEach(function(row){
+      var v = rowVar(row);
+      if (!v) return;
+      var scope = currentFillScope(v);
+      row.querySelectorAll('.fill-btn[data-scope]').forEach(function(b){
+        b.classList.toggle('active', b.getAttribute('data-scope') === scope);
+      });
     });
   }
-  window.applyThemeFill = function(scope) {
-    var all = 'wb_theme_fill_all', thisK = themeFillKeyThis(), off = 'wb_theme_fill_off';
-    safeLS.removeItem(off);
-    if (currentFillScope() === scope) { safeLS.setItem(off, '1'); }
-    else if (scope === 'all') { safeLS.setItem(all, '1'); safeLS.removeItem(thisK); }
-    else { safeLS.setItem(thisK, '1'); safeLS.removeItem(all); }
+  window.applyThemeFill = function(v, scope) {
+    setScope(v, scope);
     applyFillStyle(); updateFillButtons();
   };
 
@@ -2192,11 +2227,11 @@ var safeLS = (function() {
 
   function setupExitCleanup() {
     function cleanup() {
-      safeLS.setItem('wb_lang', lang);
+      setScoped('lang', lang);
       safeLS.setItem('wb_theme', theme);
-      safeLS.setItem('wb_accent', accent);
-      safeLS.setItem('wb_font', fontSize);
-      safeLS.setItem('wb_radius', radius);
+      setScoped('accent', accent);
+      setScoped('font', fontSize);
+      setScoped('radius', radius);
       safeLS.setItem('wb_hl', hlColor);
       safeLS.setItem('wb_hl_on', hlOn);
       safeLS.setItem('wb_custom_voices', JSON.stringify(customVoices));
@@ -2227,17 +2262,17 @@ var safeLS = (function() {
   window.closeSettings = function() { document.getElementById('settingsOverlay').classList.remove('open'); };
   window.closeSettingsDiscard = function() { restoreSettings(); reapplyAll(); document.getElementById('settingsOverlay').classList.remove('open'); };
   if (location.hash === '#open-settings') openSettings();
-  window.setLang = function(v) { lang = v; safeLS.setItem('wb_lang', lang); applyLang(); setupVoices(); };
+  window.setLang = function(v) { lang = v; setScoped('lang', lang); applyLang(); setupVoices(); };
   window.setTheme = function(v) { theme = v; safeLS.setItem('wb_theme', theme); applyTheme(); };
-  window.setAccent = function(v) { accent = v; safeLS.setItem('wb_accent', accent); applyAccent(); applyFillStyle(); };
+  window.setAccent = function(v) { accent = v; setScoped('accent', accent); applyAccent(); applyFillStyle(); };
   window.applyRGBAccent = function() {
     var r = document.getElementById('accentR').value;
     var g = document.getElementById('accentG').value;
     var b = document.getElementById('accentB').value;
     if (r!=='' && g!=='' && b!=='') { accent = rgbToHex(+r,+g,+b); setAccent(accent); }
   };
-  window.setFont = function(v) { fontSize = +v; safeLS.setItem('wb_font', fontSize); applyFont(); };
-  window.setRadius = function(v) { radius = +v; safeLS.setItem('wb_radius', radius); applyRadius(); };
+  window.setFont = function(v) { fontSize = +v; setScoped('font', fontSize); applyFont(); };
+  window.setRadius = function(v) { radius = +v; setScoped('radius', radius); applyRadius(); };
   window.setHl = function(v) { hlColor = v; safeLS.setItem('wb_hl', hlColor); applyHl(); };
   window.setHlOn = function(v) { hlOn = !!v; safeLS.setItem('wb_hl_on', hlOn); applyHlOn(); };
   window.applyRGBHl = function() {
