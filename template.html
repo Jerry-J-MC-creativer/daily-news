@@ -344,6 +344,34 @@
     color: var(--text);
     font-size: .9em;
   }
+  .setting-row input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+  }
+  .setting-row input[type="range"]::-moz-range-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+  }
+  .setting-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #000, 0 1px 4px rgba(0,0,0,.25);
+    margin-top: -5px;
+    cursor: pointer;
+  }
+  .setting-row input[type="range"]::-moz-range-thumb {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #000, 0 1px 4px rgba(0,0,0,.25);
+    cursor: pointer;
+  }
   .color-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .color-row input[type="color"] {
     width: 40px; height: 32px;
@@ -844,6 +872,19 @@
       </div>
     </div>
 
+    <!-- 字体开关：跨网页同步 -->
+    <div class="setting-row common-setting">
+      <label id="lblFontToggle">字体</label>
+      <label class="switch">
+        <input type="checkbox" id="chkFontToggle" checked onchange="setFontEnabled(this.checked)">
+        <span class="slider"></span>
+      </label>
+      <div class="cw-actions" data-var="fontEnabled">
+          <button class="fill-btn" onclick="applyThemeFill('fontEnabled','this')" data-scope="this" data-zh="仅用于该网页" data-en="This page only">仅用于该网页</button>
+        <button class="fill-btn" onclick="applyThemeFill('fontEnabled','all')" data-scope="all" data-zh="用于所有" data-en="Use for all">用于所有</button>
+      </div>
+    </div>
+
     <!-- 字号：跨网页同步 -->
     <div class="setting-row common-setting">
       <label id="lblFont">字号</label>
@@ -1062,6 +1103,7 @@ var safeLS = (function() {
   var PAGE_TAG = 'news';
   function varBaseKey(v) {
     if (v === 'accent') return PAGE_TAG === 'home' ? 'wb_home_titlecolor' : 'wb_accent';
+    if (v === 'fontEnabled') return 'wb_font_enabled';
     return 'wb_' + v;
   }
   function scopeKey(v) { return 'wb_scope_' + v; }
@@ -1091,6 +1133,7 @@ var safeLS = (function() {
   var lang = getScoped('lang', BUILTIN_PREFS.lang || 'zh');
   var theme = safeLS.getItem('wb_theme') || BUILTIN_PREFS.theme || 'auto';
   var accent = getScoped('accent', BUILTIN_PREFS.accent || '#2563eb');
+  var fontEnabled = getScoped('fontEnabled', 'true') !== 'false';
   var fontSize = parseInt(getScoped('font', BUILTIN_PREFS.font || 15));
   var radius = parseInt(getScoped('radius', BUILTIN_PREFS.radius || 16));
   var hlColor = safeLS.getItem('wb_hl') || BUILTIN_PREFS.hl || '#ffeb3b';
@@ -1160,7 +1203,7 @@ var safeLS = (function() {
     applyLang();
     applyTheme();
     applyAccent();
-    applyFont();
+    applyFontEnabled();
     applyRadius();
     applyHl();
     applyHlOn();
@@ -1560,6 +1603,7 @@ var safeLS = (function() {
     document.getElementById('lblTheme').textContent = isZh ? '主题' : 'Theme';
     document.getElementById('lblAccent').textContent = isZh ? '主题色' : 'Accent color';
     document.getElementById('lblFont').textContent = isZh ? '字号' : 'Font size';
+    document.getElementById('lblFontToggle').textContent = isZh ? '字体' : 'Font';
     document.getElementById('lblRadius').textContent = isZh ? '圆角大小' : 'Corner radius';
     document.getElementById('lblHl').textContent = isZh ? '高光显示' : 'Highlight';
     updateFillBtnLang();
@@ -1644,9 +1688,16 @@ var safeLS = (function() {
   }
 
   function applyFont() {
-    document.documentElement.style.setProperty('--font-base', fontSize + 'px');
+    document.documentElement.style.setProperty('--font-base', fontEnabled ? (fontSize + 'px') : '15px');
     document.getElementById('rngFont').value = fontSize;
     document.getElementById('fontVal').textContent = fontSize + 'px';
+    var t = document.getElementById('chkFontToggle');
+    if (t) t.checked = fontEnabled;
+  }
+  function applyFontEnabled() {
+    var t = document.getElementById('chkFontToggle');
+    if (t) t.checked = fontEnabled;
+    applyFont();
   }
 
   function applyRadius() {
@@ -1757,7 +1808,7 @@ var safeLS = (function() {
     for (var k in settingsSnapshot) { if (!settingsSnapshot.hasOwnProperty(k)) continue; if (settingsSnapshot[k] === null) safeLS.removeItem(k); else safeLS.setItem(k, settingsSnapshot[k]); }
   }
   function reapplyAll() {
-    try { applyTheme(); applyAccent(); applyFont(); applyRadius(); applyHl(); applyHlOn(); applyLang(); applyFillStyle(); updateFillButtons(); } catch (e) {}
+    try { applyTheme(); applyAccent(); applyFontEnabled(); applyRadius(); applyHl(); applyHlOn(); applyLang(); applyFillStyle(); updateFillButtons(); } catch (e) {}
   }
   window.openSettings = function() { snapshotSettings(); document.getElementById('settingsOverlay').classList.add('open'); applyFillStyle(); updateFillButtons(); };
   window.closeSettings = function() { document.getElementById('settingsOverlay').classList.remove('open'); };
@@ -1773,6 +1824,7 @@ var safeLS = (function() {
     if (r!=='' && g!=='' && b!=='') { accent = rgbToHex(+r,+g,+b); setAccent(accent); }
   };
   window.setFont = function(v) { fontSize = +v; setScoped('font', fontSize); applyFont(); };
+  window.setFontEnabled = function(v) { fontEnabled = !!v; setScoped('fontEnabled', fontEnabled ? 'true' : 'false'); applyFont(); };
   window.setRadius = function(v) { radius = +v; setScoped('radius', radius); applyRadius(); };
   window.setHl = function(v) { hlColor = v; safeLS.setItem('wb_hl', hlColor); applyHl(); };
   window.setHlOn = function(v) { hlOn = !!v; safeLS.setItem('wb_hl_on', hlOn); applyHlOn(); };
@@ -1783,7 +1835,7 @@ var safeLS = (function() {
     if (r!=='' && g!=='' && b!=='') { hlColor = rgbToHex(+r,+g,+b); setHl(hlColor); }
   };
   window.exportSettings = function() {
-    var data = { lang, theme, accent, font: fontSize, radius, voice: selectedVoice, hl: hlColor, hlOn };
+    var data = { lang, theme, accent, font: fontSize, fontEnabled, radius, voice: selectedVoice, hl: hlColor, hlOn };
     var blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -1805,6 +1857,7 @@ var safeLS = (function() {
           if (data.theme) setTheme(data.theme);
           if (data.accent) setAccent(data.accent);
           if (data.font) setFont(data.font);
+          if (data.fontEnabled !== undefined) setFontEnabled(data.fontEnabled);
           if (data.radius !== undefined) setRadius(data.radius);
           if (data.hl) setHl(data.hl);
           if (data.hlOn !== undefined) setHlOn(data.hlOn);
