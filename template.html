@@ -269,7 +269,7 @@
     padding: 6px 0;
   }
   .item-title { font-weight: 700; flex: 1; }
-  .item-body { display: none; padding: 8px 0 4px 4px; color: var(--text-secondary); font-size: .95em; }
+  .item-body { display: none; padding: 8px 0 4px 4px; color: var(--text-secondary); font-size: .95em; white-space: pre-line; }
   .item-body.open { display: block; }
   .hl-ch { background: var(--hl-color); color: var(--text); border-radius: 2px; padding: 0 1px; }
   .closing {
@@ -1424,13 +1424,17 @@ var safeLS = (function() {
     var icon = isOpen ? FOLD_COLLAPSE_ICON : FOLD_EXPAND_ICON;
     return icon + '<span>' + foldLabel(isOpen) + '</span>';
   }
+  function expandContentLabel() {
+    return FOLD_EXPAND_ICON + '<span>' + (lang==='zh'?'展开具体内容':'Expand details') + '</span>';
+  }
   function relabelAllButtons() {
     document.querySelectorAll('.section-card').forEach(function(card) {
       var body = card.querySelector('.section-body');
       var open = body && body.classList.contains('open');
       var acts = card.querySelectorAll('.section-actions .fold-btn');
-      if (acts.length >= 1) acts[0].innerHTML = FOLD_EXPAND_ICON + '<span>' + (lang==='zh'?'展开':'Expand') + '</span>';
-      if (acts.length >= 2) acts[1].innerHTML = foldBtnHtml(open);
+      // 左(acts[0]) = 折叠/展开本节；右(acts[1]) = 展开具体内容
+      if (acts.length >= 1) acts[0].innerHTML = foldBtnHtml(open);
+      if (acts.length >= 2) acts[1].innerHTML = expandContentLabel();
       var tts = card.querySelector('.tts-btn');
       if (tts) tts.innerHTML = READ_ICON + '<span>' + (lang==='zh'?'朗读':'Read') + '</span>';
     });
@@ -1905,7 +1909,7 @@ var safeLS = (function() {
     if (!body) return;
     body.classList.toggle('open');
     var btns = card.querySelectorAll('.section-actions .fold-btn');
-    if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(body.classList.contains('open'));
+    if (btns.length >= 1) btns[0].innerHTML = foldBtnHtml(body.classList.contains('open'));
   };
   window.toggleItem = function(idOrEl) {
     var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
@@ -1929,7 +1933,7 @@ var safeLS = (function() {
     document.querySelectorAll('.section-body').forEach(function(b) { b.classList.add('open'); });
     document.querySelectorAll('.section-actions').forEach(function(actions) {
       var btns = actions.querySelectorAll('.fold-btn');
-      if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(true);
+      if (btns.length >= 1) btns[0].innerHTML = foldBtnHtml(true);
     });
     document.querySelectorAll('.item-body').forEach(function(b) { b.classList.add('open'); });
     document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(true); });
@@ -1938,7 +1942,7 @@ var safeLS = (function() {
     document.querySelectorAll('.section-body').forEach(function(b) { b.classList.remove('open'); });
     document.querySelectorAll('.section-actions').forEach(function(actions) {
       var btns = actions.querySelectorAll('.fold-btn');
-      if (btns.length >= 2) btns[1].innerHTML = foldBtnHtml(false);
+      if (btns.length >= 1) btns[0].innerHTML = foldBtnHtml(false);
     });
     document.querySelectorAll('.item-body').forEach(function(b) { b.classList.remove('open'); });
     document.querySelectorAll('.item-title .fold-btn').forEach(function(b) { b.innerHTML = foldBtnHtml(false); });
