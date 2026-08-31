@@ -307,6 +307,18 @@
     color: var(--text-secondary);
   }
   .summary h3 { color: var(--text); margin-bottom: 10px; font-size: 1.1em; }
+  .article-note {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    font-size: .85em;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .article-note p { margin: 0; }
   /* Settings panel */
   .settings-overlay {
     position: fixed;
@@ -911,6 +923,8 @@ img.xl-fade.loaded { opacity: 1; }
     <p id="summaryBody">{{SUMMARY_BODY}}</p>
     <p style="margin-top:12px;font-size:.85em;">图片来源：本地实拍 + Wikimedia / Openverse 等多条 CC 授权线路，自动选用最快线路（离线始终有图）；语音由浏览器 Web Speech API 生成，播放器可一键开启「AI 语音增强」选用云端神经语音。</p>
   </div>
+
+  <div class="article-note" id="disclaimerBox">{{DISCLAIMER_HTML}}</div>
 </div>
 
 <!-- Settings -->
