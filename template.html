@@ -268,9 +268,28 @@
     cursor: pointer;
     padding: 6px 0;
   }
-  .item-title { font-weight: 700; flex: 1; }
+  .item-title { font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0; cursor: pointer; }
+  .item-title strong { flex: 1; min-width: 0; }
+  .item-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
   .item-body { display: none; padding: 8px 0 4px 4px; color: var(--text-secondary); font-size: .95em; white-space: pre-line; }
   .item-body.open { display: block; }
+  .item-body.zoomed { font-size: 1.25em; line-height: 1.7; }
+  .zoom-btn {
+    height: 38px; padding: 0 14px; width: auto; min-width: 72px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: .85em; font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+  .zoom-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .zoom-btn:active { transform: scale(.94); }
   .hl-ch { background: var(--hl-color); color: var(--text); border-radius: 2px; padding: 0 1px; }
   .closing {
     text-align: center;
@@ -703,8 +722,9 @@
     .section-title { font-size: .95em; }
     .icon-btn { height: 34px; padding: 0 12px; font-size: 12.5px; }
     .fold-btn, .tts-btn { height: 34px; padding: 0 14px; min-width: 78px; font-size: 12.5px; }
+    .zoom-btn { height: 34px; padding: 0 10px; min-width: 60px; font-size: 12.5px; }
     .global-actions button { padding: 8px 16px; font-size: .85em; }
-    .item-title { font-size: .92em; }
+    .item-title { font-size: .92em; flex-wrap: wrap; }
     .item-body { font-size: .9em; }
     .settings-panel { padding: 0; }
     .modal { padding: 14px; }
@@ -765,6 +785,7 @@
     .global-actions button { padding: 8px 18px; font-size: 1em; }
     .icon-btn { width: 36px; height: 36px; font-size: 15px; }
     .fold-btn, .tts-btn { height: 36px; padding: 0 12px; font-size: 14px; }
+    .zoom-btn { height: 36px; padding: 0 12px; font-size: 14px; }
     .settings-panel { max-width: 480px; padding: 0; }
   }
   /* ========== Responsive: Extra ultra-wide (>= 2560px) ========== */
@@ -1487,9 +1508,17 @@ var safeLS = (function() {
   var FOLD_EXPAND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M6 9l6 6 6-6"/></svg>';
   var FOLD_COLLAPSE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M18 15l-6-6-6 6"/></svg>';
   var READ_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 000-6.5v1.75a2.75 2.75 0 010 4.75V12zm3-6.5a8 8 0 000 11.5v-1.75a6.25 6.25 0 010-8V5.5z"/></svg>';
+  var ZOOM_IN_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>';
+  var ZOOM_OUT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.35-4.35"/><path d="M8 11h6"/></svg>';
   function foldBtnHtml(isOpen) {
     var icon = isOpen ? FOLD_COLLAPSE_ICON : FOLD_EXPAND_ICON;
     return icon + '<span>' + foldLabel(isOpen) + '</span>';
+  }
+  function zoomLabel(isZoomed) {
+    return lang === 'zh' ? (isZoomed ? '缩小' : '放大') : (isZoomed ? 'Shrink' : 'Zoom');
+  }
+  function zoomBtnHtml(isZoomed) {
+    return (isZoomed ? ZOOM_OUT_ICON : ZOOM_IN_ICON) + '<span>' + zoomLabel(isZoomed) + '</span>';
   }
   function expandContentLabel() {
     return FOLD_EXPAND_ICON + '<span>' + (lang==='zh'?'展开具体内容':'Expand details') + '</span>';
@@ -1510,6 +1539,8 @@ var safeLS = (function() {
       var open = body && body.classList.contains('open');
       var b = item.querySelector('.item-title .fold-btn');
       if (b) b.innerHTML = foldBtnHtml(open);
+      var z = item.querySelector('.item-title .zoom-btn');
+      if (z) z.innerHTML = zoomBtnHtml(body && body.classList.contains('zoomed'));
     });
   }
 
@@ -1987,6 +2018,16 @@ var safeLS = (function() {
     body.classList.toggle('open');
     var btn = item.querySelector('.fold-btn');
     if (btn) btn.innerHTML = foldBtnHtml(body.classList.contains('open'));
+  };
+  window.toggleZoomItem = function(idOrEl) {
+    var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
+    if (!item) return;
+    var body = item.querySelector('.item-body');
+    if (!body) { body = item.nextElementSibling; }
+    if (!body) return;
+    body.classList.toggle('zoomed');
+    var btn = item.querySelector('.zoom-btn');
+    if (btn) btn.innerHTML = zoomBtnHtml(body.classList.contains('zoomed'));
   };
   window.expandSectionItems = function(idOrEl) {
     var section = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl.closest('.section-card');
