@@ -274,6 +274,10 @@
   .item-body { display: none; padding: 8px 0 4px 4px; color: var(--text-secondary); font-size: .95em; white-space: pre-line; }
   .item-body.open { display: block; }
   .item-body.zoomed { font-size: 1.25em; line-height: 1.7; }
+  /* 出处标注：默认隐藏，随正文展开而显示；放大时同步放大 */
+  .item-source { display: none; padding: 8px 0 2px 4px; margin-top: 8px; border-top: 1px dashed var(--border); color: var(--text-secondary); font-size: .82em; opacity: .9; white-space: pre-line; }
+  .item-body.open ~ .item-source { display: block; }
+  .item-body.zoomed ~ .item-source { font-size: 1em; line-height: 1.7; }
   .zoom-btn {
     height: 38px; padding: 0 14px; width: auto; min-width: 72px;
     border-radius: var(--radius);
@@ -1753,6 +1757,10 @@ var safeLS = (function() {
       el.textContent = isZh ? (el.dataset.zh || '') : (el.dataset.en || '');
     });
     document.querySelectorAll('.item-body').forEach(function(el) {
+      if (!el.dataset.zh && !el.dataset.en) return;
+      el.textContent = isZh ? (el.dataset.zh || '') : (el.dataset.en || '');
+    });
+    document.querySelectorAll('.item-source').forEach(function(el) {
       if (!el.dataset.zh && !el.dataset.en) return;
       el.textContent = isZh ? (el.dataset.zh || '') : (el.dataset.en || '');
     });
