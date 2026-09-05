@@ -294,6 +294,34 @@
   }
   .zoom-btn:hover { border-color: var(--accent); color: var(--accent); }
   .zoom-btn:active { transform: scale(.94); }
+  .fs-btn {
+    height: 38px; padding: 0 14px; width: auto; min-width: 96px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: .85em; font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0,0,0,.06);
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+  .fs-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .fs-btn:active { transform: scale(.94); }
+  /* 条目全屏态：撑满视口、可滚动、用卡片底色 */
+  .item:fullscreen, .item:-webkit-full-screen {
+    background: var(--card-bg);
+    padding: 36px clamp(16px, 5vw, 72px);
+    overflow: auto;
+    width: 100%; height: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    box-shadow: none;
+  }
+  .item:fullscreen .item-title { position: sticky; top: 0; background: var(--card-bg); padding-top: 4px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 16px; z-index: 2; }
+  .item:fullscreen .item-body { max-height: none; }
   .hl-ch { background: var(--hl-color); color: var(--text); border-radius: 2px; padding: 0 1px; }
   .closing {
     text-align: center;
@@ -739,6 +767,7 @@
     .icon-btn { height: 34px; padding: 0 12px; font-size: 12.5px; }
     .fold-btn, .tts-btn { height: 34px; padding: 0 14px; min-width: 78px; font-size: 12.5px; }
     .zoom-btn { height: 34px; padding: 0 10px; min-width: 60px; font-size: 12.5px; }
+    .fs-btn { height: 34px; padding: 0 10px; min-width: 80px; font-size: 12.5px; }
     .global-actions button { padding: 8px 16px; font-size: .85em; }
     .item-title { font-size: .92em; flex-wrap: wrap; }
     .item-body { font-size: .9em; }
@@ -802,6 +831,7 @@
     .icon-btn { width: 36px; height: 36px; font-size: 15px; }
     .fold-btn, .tts-btn { height: 36px; padding: 0 12px; font-size: 14px; }
     .zoom-btn { height: 36px; padding: 0 12px; font-size: 14px; }
+    .fs-btn { height: 36px; padding: 0 12px; font-size: 14px; }
     .settings-panel { max-width: 480px; padding: 0; }
   }
   /* ========== Responsive: Extra ultra-wide (>= 2560px) ========== */
@@ -1533,10 +1563,16 @@ var safeLS = (function() {
     return icon + '<span>' + foldLabel(isOpen) + '</span>';
   }
   function zoomLabel(isZoomed) {
-    return lang === 'zh' ? (isZoomed ? '缩小' : '放大') : (isZoomed ? 'Shrink' : 'Zoom');
+    return lang === 'zh' ? (isZoomed ? '缩小字体' : '放大字体') : (isZoomed ? 'Shrink font' : 'Zoom font');
   }
   function zoomBtnHtml(isZoomed) {
     return (isZoomed ? ZOOM_OUT_ICON : ZOOM_IN_ICON) + '<span>' + zoomLabel(isZoomed) + '</span>';
+  }
+  var FS_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M8 3H5a2 2 0 00-2 2v3M16 3h3a2 2 0 012 2v3M8 21H5a2 2 0 01-2-2v-3M16 21h3a2 2 0 002-2v-3"/></svg>';
+  var FS_EXIT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M8 3v3a2 2 0 01-2 2H3M21 8h-3a2 2 0 01-2-2V3M3 16h3a2 2 0 012 2v3M16 21v-3a2 2 0 012-2h3"/></svg>';
+  function fsBtnHtml(isFs) {
+    if (isFs) return FS_EXIT_ICON + '<span>' + (lang === 'zh' ? '退出全屏' : 'Exit fullscreen') + '</span>';
+    return FS_ICON + '<span>' + (lang === 'zh' ? '放大改内容至全屏' : 'Fullscreen content') + '</span>';
   }
   function expandContentLabel() {
     return FOLD_EXPAND_ICON + '<span>' + (lang==='zh'?'展开具体内容':'Expand details') + '</span>';
@@ -1559,6 +1595,8 @@ var safeLS = (function() {
       if (b) b.innerHTML = foldBtnHtml(open);
       var z = item.querySelector('.item-title .zoom-btn');
       if (z) z.innerHTML = zoomBtnHtml(body && body.classList.contains('zoomed'));
+      var f = item.querySelector('.item-title .fs-btn');
+      if (f) f.innerHTML = fsBtnHtml(document.fullscreenElement === item);
     });
   }
 
@@ -2051,6 +2089,38 @@ var safeLS = (function() {
     var btn = item.querySelector('.zoom-btn');
     if (btn) btn.innerHTML = zoomBtnHtml(body.classList.contains('zoomed'));
   };
+  window.toggleFsItem = function(idOrEl) {
+    var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
+    if (!item) return;
+    var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+    if (!fsEl) {
+      // 进入全屏前确保正文已展开，否则全屏里看不到内容
+      var body = item.querySelector('.item-body');
+      if (body && !body.classList.contains('open')) {
+        body.classList.add('open');
+        var fb = item.querySelector('.item-title .fold-btn');
+        if (fb) fb.innerHTML = foldBtnHtml(true);
+      }
+      var req = item.requestFullscreen ? item.requestFullscreen() : (item.webkitRequestFullscreen ? item.webkitRequestFullscreen() : null);
+      if (req && req.then) req.catch(function(e){ console.warn('fullscreen request failed', e); });
+    } else if (fsEl === item) {
+      var ex = document.exitFullscreen ? document.exitFullscreen() : (document.webkitExitFullscreen ? document.webkitExitFullscreen() : null);
+      if (ex && ex.then) ex.catch(function(){});
+    } else {
+      // 当前是别的元素在全屏，先退出
+      var ex2 = document.exitFullscreen ? document.exitFullscreen() : (document.webkitExitFullscreen ? document.webkitExitFullscreen() : null);
+      if (ex2 && ex2.then) ex2.catch(function(){});
+    }
+  };
+  function relabelFsButtons() {
+    var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+    document.querySelectorAll('.item').forEach(function(item) {
+      var b = item.querySelector('.item-title .fs-btn');
+      if (b) b.innerHTML = fsBtnHtml(fsEl === item);
+    });
+  }
+  document.addEventListener('fullscreenchange', relabelFsButtons);
+  document.addEventListener('webkitfullscreenchange', relabelFsButtons);
   window.expandSectionItems = function(idOrEl) {
     var section = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl.closest('.section-card');
     if (!section) return;
