@@ -310,18 +310,21 @@
   }
   .fs-btn:hover { border-color: var(--accent); color: var(--accent); }
   .fs-btn:active { transform: scale(.94); }
-  /* 条目全屏态：撑满视口、可滚动、用卡片底色 */
-  .item:fullscreen, .item:-webkit-full-screen {
+  /* 条目「网页全屏」态：页面内覆盖层撑满视口（浏览器标签页/地址栏仍在），
+     非 OS 级 requestFullscreen，避免移动端/旧浏览器兼容问题 */
+  .item.web-fs {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
     background: var(--card-bg);
     padding: 36px clamp(16px, 5vw, 72px);
     overflow: auto;
-    width: 100%; height: 100%;
     max-width: none;
     box-sizing: border-box;
-    box-shadow: none;
+    box-shadow: 0 0 0 100vmax rgba(0,0,0,.55);
   }
-  .item:fullscreen .item-title { position: sticky; top: 0; background: var(--card-bg); padding-top: 4px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 16px; z-index: 2; }
-  .item:fullscreen .item-body { max-height: none; }
+  .item.web-fs .item-title { position: sticky; top: 0; background: var(--card-bg); padding-top: 4px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 16px; z-index: 2; }
+  .item.web-fs .item-body { max-height: none; }
   .hl-ch { background: var(--hl-color); color: var(--text); border-radius: 2px; padding: 0 1px; }
   .closing {
     text-align: center;
@@ -967,7 +970,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec0-0" onclick="event.stopPropagation();toggleItem('item-sec0-0')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec0-0" onclick="event.stopPropagation();toggleZoomItem('item-sec0-0')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec0-0" onclick="event.stopPropagation();toggleFsItem('item-sec0-0')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec0-0" onclick="event.stopPropagation();toggleFsItem('item-sec0-0')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：9月4日至5日，在美军8月30日与9月1日两波对伊打击后，美国高层释放明显降温信号。副总统万斯9月3日称针对伊朗的「主要作战行动早已结束」，并将战事延续与油价上涨归咎于伊朗，表示美方何时结束冲突「取决于伊朗何时停止袭击商船」；特朗普则强调新一轮打击不会「持续太久」。但特朗普9月4日又称美军「可能很快」对伊朗镐山（Fordow）地下核设施发动打击，并称当前只是「军事冲突」而非战争。伊朗方面称该设施「是空的」。
@@ -988,7 +991,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec0-1" onclick="event.stopPropagation();toggleItem('item-sec0-1')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec0-1" onclick="event.stopPropagation();toggleZoomItem('item-sec0-1')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec0-1" onclick="event.stopPropagation();toggleFsItem('item-sec0-1')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec0-1" onclick="event.stopPropagation();toggleFsItem('item-sec0-1')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：美军中央司令部9月4日披露，自9月1日对伊打击后双方交火重启，美军已护送40艘载有约1800万桶石油的商船通过霍尔木兹海峡，创战时新高；同期伊朗对约旦、巴林、科威特发动攻击。美方称其「萨德」（THAAD）拦截弹消耗已接近80%，「爱国者」拦截弹消耗约一半，凸显高强度防空消耗对库存的压力。美国汽油均价升至每加仑4.14美元。
@@ -1009,7 +1012,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec0-2" onclick="event.stopPropagation();toggleItem('item-sec0-2')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec0-2" onclick="event.stopPropagation();toggleZoomItem('item-sec0-2')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec0-2" onclick="event.stopPropagation();toggleFsItem('item-sec0-2')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec0-2" onclick="event.stopPropagation();toggleFsItem('item-sec0-2')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：8月31日至9月2日夜间，俄军向乌克兰发射317架「天竺葵」攻击无人机，配合多型导弹实施大规模打击；自8月27日以来四天内俄军发射约1500架无人机，其中约800架为喷气式动力，无人机战争正推向更残酷的2.0时代。9月4日，一架俄军无人机直接击中乌克兰国家安全局（SBU）位于基辅市中心的总部大楼，为四年半冲突中该机构总部首次在白天遭打击；基辅已连续8天遭袭，自本轮袭击开始以来基辅市及周边至少53人死亡、134人受伤。
@@ -1045,7 +1048,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec1-0" onclick="event.stopPropagation();toggleItem('item-sec1-0')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec1-0" onclick="event.stopPropagation();toggleZoomItem('item-sec1-0')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec1-0" onclick="event.stopPropagation();toggleFsItem('item-sec1-0')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec1-0" onclick="event.stopPropagation();toggleFsItem('item-sec1-0')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：美国劳工统计局9月4日公布，8月非农就业新增16.2万人，为今年3月以来最高，远高于道琼斯调查经济学家预期的5.3万人；失业率稳定在4.1%。前两个月数据亦上修：7月由原先减少2.3万修正为增加2.1万，6月上修1.1万至3.1万。分行业看，餐饮酒吧增5.9万、政府教育增4.2万、制造业增1.6万，但医疗仅增1.3万（过去12个月月均3.2万），信息行业减少2.3万（过去12个月月均流失8000）。
@@ -1066,7 +1069,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec1-1" onclick="event.stopPropagation();toggleItem('item-sec1-1')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec1-1" onclick="event.stopPropagation();toggleZoomItem('item-sec1-1')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec1-1" onclick="event.stopPropagation();toggleFsItem('item-sec1-1')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec1-1" onclick="event.stopPropagation();toggleFsItem('item-sec1-1')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：全球最大主权财富基金——挪威主权财富基金（规模约2.3万亿美元）的管理人挪威央行投资管理公司，9月4日向挪威财政部提交公开信，建议将债券组合内政府债券子指数占比从70%下调至50%。按此方案，该基金持有的美国国债占比将由34.1%逐步降至21.9%，欧元区国债由16.8%降至14.1%，日本国债则由4.6%提升至7.4%。
@@ -1087,7 +1090,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec1-2" onclick="event.stopPropagation();toggleItem('item-sec1-2')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec1-2" onclick="event.stopPropagation();toggleZoomItem('item-sec1-2')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec1-2" onclick="event.stopPropagation();toggleFsItem('item-sec1-2')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec1-2" onclick="event.stopPropagation();toggleFsItem('item-sec1-2')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：全球债市抛售在G20财长会期间持续发酵，日本10年期国债收益率本周突破3%，创1996年以来新高；会议闭幕时美国10年期国债收益率升至4.795%，为特朗普第二任期以来最高。与此同时，贵金属大涨：现货黄金9月4日涨2.37%报4491.85美元/盎司、盘中站上4500美元，现货白银涨2.52%报66.79美元；美国零售柴油均价5.783美元/加仑，逼近2022年6月历史峰值。
@@ -1123,7 +1126,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec2-0" onclick="event.stopPropagation();toggleItem('item-sec2-0')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec2-0" onclick="event.stopPropagation();toggleZoomItem('item-sec2-0')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec2-0" onclick="event.stopPropagation();toggleFsItem('item-sec2-0')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec2-0" onclick="event.stopPropagation();toggleFsItem('item-sec2-0')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：OpenAI于9月3日正式发布旗舰模型GPT-6 Astra（代号Astra）。公司称其为「迄今最智能、最对齐」的模型，由约10万块GPU训练，Greg Brockman称之为「代际飞跃」并宣告「欢迎进入AGI时代」。Astra API定价为每百万输入Token 10美元、输出50美元，约为GPT-5.6 Sol的2.5倍。OpenAI称Astra首次达到公司内部「关键」网络安全能力门槛，可在较少人类干预下识别未知漏洞并开发利用方式，但最强功能暂不全面开放。
@@ -1144,7 +1147,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec2-1" onclick="event.stopPropagation();toggleItem('item-sec2-1')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec2-1" onclick="event.stopPropagation();toggleZoomItem('item-sec2-1')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec2-1" onclick="event.stopPropagation();toggleFsItem('item-sec2-1')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec2-1" onclick="event.stopPropagation();toggleFsItem('item-sec2-1')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：9月2日至3日，多家厂商密集发布：Google推出Gemini 3.8 Flash，保持3.7 Flash的API低价（输入0.75/输出3.75美元每百万Token），强调以额外推理步与工具迭代啃「难任务」，在Agent竞技场排名由#32升至#14；Meta发布Muse Spark 1.3，提升长程智能体与编码表现，内部对比显示工具调用减少20%、Token减少25%。Anthropic发布用Claude构建商业智能体的开源蓝图（零售、旅行、电信、娱乐四套demo），零售商称购物车最高增35%、购买完成率增60%。
@@ -1165,7 +1168,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec2-2" onclick="event.stopPropagation();toggleItem('item-sec2-2')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec2-2" onclick="event.stopPropagation();toggleZoomItem('item-sec2-2')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec2-2" onclick="event.stopPropagation();toggleFsItem('item-sec2-2')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec2-2" onclick="event.stopPropagation();toggleFsItem('item-sec2-2')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：英伟达9月4日宣布已达成收购AI开源平台Hugging Face的最终协议，交易金额129.3亿美元，为英伟达迄今规模最大的单笔收购。黄仁勋表示，公司将维持Hugging Face平台的开放性，允许开发者自由上传、下载模型与数据集，且不强制要求使用英伟达硬件。Hugging Face将继续作为开放、中立、独立的AI生态家园，创始团队留任。
@@ -1186,7 +1189,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec2-3" onclick="event.stopPropagation();toggleItem('item-sec2-3')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec2-3" onclick="event.stopPropagation();toggleZoomItem('item-sec2-3')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec2-3" onclick="event.stopPropagation();toggleFsItem('item-sec2-3')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec2-3" onclick="event.stopPropagation();toggleFsItem('item-sec2-3')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：Perplexity于9月3日开源Lily推理引擎，专为苹果芯片混合算力打造，面向Qwen3.6-35B-A3B模型，用Rust运行时与自定义Metal内核最小化推理时的数据搬运，在M5 Max的MacBook Pro上实现比MLX-LM高1.23倍的预填充与1.35倍的解码吞吐。同日Cursor宣布支持在客户自管基础设施上运行云代理，执行留在本地或沙箱，可访问内网、专用硬件与定制构建流水线，支持AWS Lambda、Cloudflare、Modal、Vercel等。
@@ -1222,7 +1225,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec3-0" onclick="event.stopPropagation();toggleItem('item-sec3-0')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec3-0" onclick="event.stopPropagation();toggleZoomItem('item-sec3-0')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec3-0" onclick="event.stopPropagation();toggleFsItem('item-sec3-0')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec3-0" onclick="event.stopPropagation();toggleFsItem('item-sec3-0')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：9月1日，G20财长和央行行长会议在美国北卡罗来纳州阿什维尔落幕，未形成联合声明。美方随后发布主席声明，其中一行小字写道：「除中方外，所有出席的G20成员同意案文，中方对第4、10、11、13段提出异议」。中方在9月2日例行记者会上表示「深表遗憾」，强调G20应基于协商一致、平等参与原则客观公正协调全球经济问题。俄方亦出席并同意该主席声明。
@@ -1243,7 +1246,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec3-1" onclick="event.stopPropagation();toggleItem('item-sec3-1')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec3-1" onclick="event.stopPropagation();toggleZoomItem('item-sec3-1')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec3-1" onclick="event.stopPropagation();toggleFsItem('item-sec3-1')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec3-1" onclick="event.stopPropagation();toggleFsItem('item-sec3-1')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：俄罗斯财政部长西卢安诺夫与央行代表应美国政府邀请，出席8月31日至9月1日的G20财长会——这是2022年俄乌冲突以来俄财长首次亲自到会。会议期间他与美财长贝森特会晤，讨论俄美金融领域及G20框架内合作；贝森特称在冲突结束前美国不可能放松对俄制裁，也不可能就其他问题达成协议。欧洲多国财长对此强烈不满，拒绝与俄方合影，俄财长最终未参与传统「全家福」。
@@ -1264,7 +1267,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec3-2" onclick="event.stopPropagation();toggleItem('item-sec3-2')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec3-2" onclick="event.stopPropagation();toggleZoomItem('item-sec3-2')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec3-2" onclick="event.stopPropagation();toggleFsItem('item-sec3-2')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec3-2" onclick="event.stopPropagation();toggleFsItem('item-sec3-2')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：在G20财长会分歧约三周后，特朗普计划于华盛顿与中国国家主席习近平会晤，贸易紧张与出口管制几乎确定成为首要议题。中方在G20前夕回应美方「中国出口激增不可持续」「G20应重审对华贸易条件」的喊话，商务部发言人黄玲明确表示：利用多边机制炒作「经济失衡」「产能过剩」实质是推行保护主义、为对华施压找借口，中方坚决反对。
@@ -1300,7 +1303,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec4-0" onclick="event.stopPropagation();toggleItem('item-sec4-0')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec4-0" onclick="event.stopPropagation();toggleZoomItem('item-sec4-0')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec4-0" onclick="event.stopPropagation();toggleFsItem('item-sec4-0')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec4-0" onclick="event.stopPropagation();toggleFsItem('item-sec4-0')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：商务部与海关数据显示，今年前7个月我国进口同比增长22%、出口增长14%，进口增速连续5个月跑赢出口；进口规模已连续17年居全球第二，是近80个国家和地区的主要出口目的地。其中机电产品进口5.31万亿元、同比增长29.7%，占进口总值四成以上，成为进口增长的重要拉动力量。新产业带动的进口需求正转化为上游企业新订单。
@@ -1321,7 +1324,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec4-1" onclick="event.stopPropagation();toggleItem('item-sec4-1')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec4-1" onclick="event.stopPropagation();toggleZoomItem('item-sec4-1')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec4-1" onclick="event.stopPropagation();toggleFsItem('item-sec4-1')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec4-1" onclick="event.stopPropagation();toggleFsItem('item-sec4-1')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：面对美财长贝森特「中国出口激增不可持续」「G20应重审对华贸易条件」的喊话，商务部发言人黄玲9月3日直截了当地回应：利用G20等多边机制炒作「经济失衡」「产能过剩」，实质是推行保护主义、为对华施压找借口，中方坚决反对。她以数据回应：7月规模以上高技术制造业增加值同比增16.9%，高出整体工业12.4个百分点；同期工业增速4.5%。
@@ -1342,7 +1345,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec4-2" onclick="event.stopPropagation();toggleItem('item-sec4-2')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec4-2" onclick="event.stopPropagation();toggleZoomItem('item-sec4-2')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec4-2" onclick="event.stopPropagation();toggleFsItem('item-sec4-2')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec4-2" onclick="event.stopPropagation();toggleFsItem('item-sec4-2')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：商务部9月3日介绍，今年暑期「中国游」「中国购」持续火热。1-7月境外人员在华消费2636亿元，同比增长27.8%；办理离境退税的境外旅客数量同比增长3倍以上。暑期入境消费呈现新特点：来华避暑走红，「China Cool」在海外社交平台走红；入境游排名前20客源国和地区中欧洲占30%，订单同比增275%，门票订单量增超20倍。
@@ -1378,7 +1381,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec5-0" onclick="event.stopPropagation();toggleItem('item-sec5-0')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec5-0" onclick="event.stopPropagation();toggleZoomItem('item-sec5-0')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec5-0" onclick="event.stopPropagation();toggleFsItem('item-sec5-0')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec5-0" onclick="event.stopPropagation();toggleFsItem('item-sec5-0')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：9月4日收盘，纽约轻质原油期货涨18美分至每桶91.48美元，涨幅0.2%；伦敦布伦特原油涨76美分至96.28美元，涨幅0.8%，市场在地缘风险与供需博弈中维持窄幅震荡。美方称前三日累计涨约9%的WTI在91美元附近企稳。与此同时，沙特原油出口8月骤降至九年最低，每日仅约300万桶，其「替代方案」红海港口亦受威胁。美财长贝森特9月5日称，伊朗冲突结束后全球油市将严重供过于求，油价可能跌至50美元甚至40美元。
@@ -1399,7 +1402,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec5-1" onclick="event.stopPropagation();toggleItem('item-sec5-1')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec5-1" onclick="event.stopPropagation();toggleZoomItem('item-sec5-1')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec5-1" onclick="event.stopPropagation();toggleFsItem('item-sec5-1')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec5-1" onclick="event.stopPropagation();toggleFsItem('item-sec5-1')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：受霍尔木兹断供风险与中东局势升级影响，亚洲LNG现货价格升至2022年12月以来新高，较战前翻倍，巴基斯坦被迫取消紧急采购。欧洲方面同样承压：据《金融时报》，欧洲天然气储存量目前仅为储存能力的65.6%，为15年来同期最低；过去两个月欧洲天然气价格涨超75%，本周创三年新高。中东航线海运价格自7月下旬以来涨超50%，上海至达曼40英尺箱突破1万美元。
@@ -1420,7 +1423,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec5-2" onclick="event.stopPropagation();toggleItem('item-sec5-2')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec5-2" onclick="event.stopPropagation();toggleZoomItem('item-sec5-2')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec5-2" onclick="event.stopPropagation();toggleFsItem('item-sec5-2')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec5-2" onclick="event.stopPropagation();toggleFsItem('item-sec5-2')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：今年上半年，我国能源行业在稳产保供与绿色转型中实现新突破：发电装机突破40亿千瓦，非化石能源装机占比达62%；煤电发电量占比首次低于50%，可再生能源发电量占比首次超四成，能源结构正经历深刻变革。规模以上工业发电量4.8万亿千瓦时、同比增3.5%，清洁能源发电量增4.6%、占规上工业发电量36.2%。
@@ -1441,7 +1444,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec5-3" onclick="event.stopPropagation();toggleItem('item-sec5-3')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec5-3" onclick="event.stopPropagation();toggleZoomItem('item-sec5-3')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec5-3" onclick="event.stopPropagation();toggleFsItem('item-sec5-3')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec5-3" onclick="event.stopPropagation();toggleFsItem('item-sec5-3')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：联合国环境规划署9月2日发布《限制气温超标》报告，首次明确承认全球升温突破《巴黎协定》1.5℃目标已几成定局，并警告每升0.1℃都将放大气候影响与临界点风险。欧盟哥白尼气候变化服务局同期指出，欧洲是全球变暖速度最快的大洲，升温速度为全球平均的两倍，气候变化正成为极端天气的「风险放大器」；今年5月以来欧洲已遭多轮热浪袭击。
@@ -1477,7 +1480,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec6-0" onclick="event.stopPropagation();toggleItem('item-sec6-0')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec6-0" onclick="event.stopPropagation();toggleZoomItem('item-sec6-0')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec6-0" onclick="event.stopPropagation();toggleFsItem('item-sec6-0')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec6-0" onclick="event.stopPropagation();toggleFsItem('item-sec6-0')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：Ionis Pharmaceuticals 9月3日宣布，美国FDA批准ZANVASTRO（zilganersen）用于治疗亚历山大病（AxD）儿童与成人患者，这是全球首款、也是唯一一款亚历山大病疾病修饰疗法。该药为RNA靶向药物，通过降低胶质纤维酸性蛋白（GFAP）的产生以干预疾病根本机制，每季一次50毫克鞘内注射。亚历山大病是一种超罕见、进行性且常致死的非典型神经退行性疾病，全球约每100万至300万人中1人患病。
@@ -1498,7 +1501,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec6-1" onclick="event.stopPropagation();toggleItem('item-sec6-1')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec6-1" onclick="event.stopPropagation();toggleZoomItem('item-sec6-1')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec6-1" onclick="event.stopPropagation();toggleFsItem('item-sec6-1')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec6-1" onclick="event.stopPropagation();toggleFsItem('item-sec6-1')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：FDA正式批准Revolution Medicines研发的口服泛RAS抑制剂daraxonrasib（商品名Rasonque）上市，用于既往接受过至少一种全身治疗的RAS突变转移性胰腺腺癌成人患者。这是全球首款获批的泛RAS口服抑制剂，被视为近十年来「癌王」胰腺癌治疗领域最具里程碑意义的突破。其Ⅲ期RASolute 302共纳入500名患者，接受该药者中位总生存期从化疗的6.7个月延长至13.2个月，死亡风险下降60%。
@@ -1519,7 +1522,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec6-2" onclick="event.stopPropagation();toggleItem('item-sec6-2')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec6-2" onclick="event.stopPropagation();toggleZoomItem('item-sec6-2')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec6-2" onclick="event.stopPropagation();toggleFsItem('item-sec6-2')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec6-2" onclick="event.stopPropagation();toggleFsItem('item-sec6-2')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：8月26日中尼边境冰川溃决引发的「喜马拉雅海啸」式灾难持续恶化。据尼泊尔灾害管理局9月4日数据，已找回遗体1259具、失联5083人；联合国同日警告，跨境（尼泊尔与西藏）死亡与失联合计超1200死、约5600失踪，其中800余名外国人来自至少34国。受灾社区道路、桥梁与水电设施被毁，搜救在 hydropower 隧道等处屡陷僵局，暂无幸存者确认。
@@ -1555,7 +1558,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec7-0" onclick="event.stopPropagation();toggleItem('item-sec7-0')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec7-0" onclick="event.stopPropagation();toggleZoomItem('item-sec7-0')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec7-0" onclick="event.stopPropagation();toggleFsItem('item-sec7-0')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec7-0" onclick="event.stopPropagation();toggleFsItem('item-sec7-0')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：美国商务部长卢特尼克9月2日在G20创新部长级会议（北卡教堂山）公开确认，正在制定「有针对性、经过深思」的半导体关税，核心原则只有一条：在美国建厂的企业免税，不在美国建厂的企业付费进入美国市场。他证实此前媒体准确描述了方向，并称仿制药MFN模式是政策模板，但拒绝透露具体税率、产品范围与分阶段时间表。这是首位高级官员的公开确认。
@@ -1576,7 +1579,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec7-1" onclick="event.stopPropagation();toggleItem('item-sec7-1')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec7-1" onclick="event.stopPropagation();toggleZoomItem('item-sec7-1')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec7-1" onclick="event.stopPropagation();toggleFsItem('item-sec7-1')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec7-1" onclick="event.stopPropagation();toggleFsItem('item-sec7-1')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：据TechTimes报道，长鑫存储（CXMT）已向阿里巴巴平头哥（T-Head）与寒武纪（Cambricon）交付HBM3E人工智能存储样品，用于资格测试。这意味着中国本土HBM量产时间表较原定2027年提前——以初步小批量形式于2026年9月实现。值得注意的是，CXMT仅使用DUV光刻工具、未依赖EUV便跨过了功能性HBM3E生产门槛。
@@ -1597,7 +1600,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec7-2" onclick="event.stopPropagation();toggleItem('item-sec7-2')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec7-2" onclick="event.stopPropagation();toggleZoomItem('item-sec7-2')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec7-2" onclick="event.stopPropagation();toggleFsItem('item-sec7-2')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec7-2" onclick="event.stopPropagation();toggleFsItem('item-sec7-2')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：英伟达否认将向中国出货基于Groq 3架构的语言处理单元（LPU），发言人明确称「相关报道不正确，我们当前在中国市场没有LPU销售，路线图里也没有中国专属LPU产品」。该LPU原为Vera Rubin平台的译码协处理器，因Vera Rubin被禁售中国，英伟达据称重写了GPU与LPU间的软件分工以适配在售处理器。分析指出，真正的障碍不在硅片合规，而在北京准入的「酌情权」。
@@ -1633,7 +1636,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec8-0" onclick="event.stopPropagation();toggleItem('item-sec8-0')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec8-0" onclick="event.stopPropagation();toggleZoomItem('item-sec8-0')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec8-0" onclick="event.stopPropagation();toggleFsItem('item-sec8-0')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec8-0" onclick="event.stopPropagation();toggleFsItem('item-sec8-0')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：9月4日，印度空间研究组织（ISRO）利用GSLV Mk II运载火箭，从萨蒂什·达万航天中心成功发射GISAT-1A（EOS-05）地球同步轨道成像卫星。该星运行于地球同步轨道，可对印度次大陆实现连续观测，并快速监测自然灾害与灾害态势。这是ISRO今年密集发射中的又一关键任务，卫星将接替2021年因发射失败而损失的EOS-03/GISAT-1。
@@ -1654,7 +1657,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec8-1" onclick="event.stopPropagation();toggleItem('item-sec8-1')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec8-1" onclick="event.stopPropagation();toggleZoomItem('item-sec8-1')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec8-1" onclick="event.stopPropagation();toggleFsItem('item-sec8-1')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec8-1" onclick="event.stopPropagation();toggleFsItem('item-sec8-1')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：在2026年深空探测（天都）国际会议上披露，中国发起的国际地月立方星座大科学计划已启动，拟联合多国在地月空间部署30颗立方星，初步计划2030年左右完成部署，以填补全球系统性地月观测的空白。该计划聚焦地月空间的环境、导航与通信等基础能力构建，属典型的「大科学、多国参与」合作范式。
@@ -1675,7 +1678,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec8-2" onclick="event.stopPropagation();toggleItem('item-sec8-2')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec8-2" onclick="event.stopPropagation();toggleZoomItem('item-sec8-2')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec8-2" onclick="event.stopPropagation();toggleFsItem('item-sec8-2')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec8-2" onclick="event.stopPropagation();toggleFsItem('item-sec8-2')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：9月全球发射日程密集。SpaceX于9月2日成功发射猎鹰9号执行Starlink 15-23组（27颗），9月6日计划发射15-24组；星舰（Starship）第14次试飞定于9月30日。中国民营航天引力能源（Galactic Energy）的Pallas-1火箭9月1日首飞成功（酒泉，搭载模拟载荷）；Rocket Lab的Electron于9月2日成功发射StriX-11（合成孔径雷达，日本Synspective）。欧洲Isar Aerospace的Spectrum火箭9月4日进行第二次试飞。
@@ -1711,7 +1714,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec9-0" onclick="event.stopPropagation();toggleItem('item-sec9-0')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec9-0" onclick="event.stopPropagation();toggleZoomItem('item-sec9-0')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec9-0" onclick="event.stopPropagation();toggleFsItem('item-sec9-0')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec9-0" onclick="event.stopPropagation();toggleFsItem('item-sec9-0')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：8月26日中尼边境冰川溃决引发的灾难持续霸占全球舆论头条。尼泊尔灾害管理局9月4日通报已找回遗体1259具、失联5083人；联合国称跨境（尼泊尔与西藏）合计超1200死、约5600失踪，其中800余名外国人来自至少34国，包括游客与朝圣者。在加德满都，多国失踪者家属奔波于医院与殡仪馆之间；社交平台上家属发布寻人信息，「Himalayan tsunami」成为国际媒体与舆论的共同标签。
@@ -1732,7 +1735,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec9-1" onclick="event.stopPropagation();toggleItem('item-sec9-1')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec9-1" onclick="event.stopPropagation();toggleZoomItem('item-sec9-1')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec9-1" onclick="event.stopPropagation();toggleFsItem('item-sec9-1')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec9-1" onclick="event.stopPropagation();toggleFsItem('item-sec9-1')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：9月2日，乌克兰国家安全局（SBU）与国防部情报总局（GUR）人员在基辅一处住宅区发生冲突并鸣枪，造成3名情报总局人员受伤。乌国家调查局已介入，议会也启动专项调查。事件发生在俄军连续空袭、首都安全高度敏感的当口，两情报机构公开「内斗」的画面迅速在乌克兰社会与舆论场引发震动。
@@ -1753,7 +1756,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec9-2" onclick="event.stopPropagation();toggleItem('item-sec9-2')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec9-2" onclick="event.stopPropagation();toggleZoomItem('item-sec9-2')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec9-2" onclick="event.stopPropagation();toggleFsItem('item-sec9-2')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec9-2" onclick="event.stopPropagation();toggleFsItem('item-sec9-2')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：9月初亚洲多地灾害并发，舆情持续紧张。泰国防灾减灾厅提醒54个府及曼谷，9月4日至7日警惕突发洪水、山洪、泥石流与城市内涝，气象部门预计北部和东北部将出现大雨至特大暴雨。中国四川绵阳北川县9月3日19时39分发生4.8级地震（震源深度10千米），多地有感、重庆等地收到预警；西藏吉隆「8·26」泥石流截至9月2日12时已致21人遇难、541人失联；海南海口一装修中餐厅9月3日火灾致6死3伤。
@@ -1774,7 +1777,7 @@ img.xl-fade.loaded { opacity: 1; }
           <span class="item-actions">
             <button class="fold-btn" id="fold-item-sec9-3" onclick="event.stopPropagation();toggleItem('item-sec9-3')">▼</button>
             <button class="zoom-btn" id="zoom-item-sec9-3" onclick="event.stopPropagation();toggleZoomItem('item-sec9-3')" title="放大/缩小字体">□</button>
-            <button class="fs-btn" id="fs-item-sec9-3" onclick="event.stopPropagation();toggleFsItem('item-sec9-3')" title="放大内容至全屏">⛶</button>
+            <button class="fs-btn" id="fs-item-sec9-3" onclick="event.stopPropagation();toggleFsItem('item-sec9-3')" title="放大该内容至网页全屏">⛶</button>
           </span>
         </div>
         <div class="item-body" data-zh="① 事件概述：据Orbis Weather全球灾害简报，美国仍处国家野地火灾戒备5级（最高级）。9月3日数据：78场未控大型火灾、1起新增、活跃事件涉及378万英亩，1.91万余名人员、108架直升机投入；华盛顿与俄勒冈多地疏散。太平洋热带气旋活跃：飓风Lowell逼近夏威夷以南，Karina与Marie更东海域活动。9月3日阿拉斯加阿留申群岛以南84公里处发生M6.3地震（USGS已复核），9月2日南桑威奇群岛M6.2地震，均未演变为重大伤亡灾难。
@@ -2413,8 +2416,8 @@ var safeLS = (function() {
   var FS_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M8 3H5a2 2 0 00-2 2v3M16 3h3a2 2 0 012 2v3M8 21H5a2 2 0 01-2-2v-3M16 21h3a2 2 0 002-2v-3"/></svg>';
   var FS_EXIT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M8 3v3a2 2 0 01-2 2H3M21 8h-3a2 2 0 01-2-2V3M3 16h3a2 2 0 012 2v3M16 21v-3a2 2 0 012-2h3"/></svg>';
   function fsBtnHtml(isFs) {
-    if (isFs) return FS_EXIT_ICON + '<span>' + (lang === 'zh' ? '退出全屏' : 'Exit fullscreen') + '</span>';
-    return FS_ICON + '<span>' + (lang === 'zh' ? '放大改内容至全屏' : 'Fullscreen content') + '</span>';
+    if (isFs) return FS_EXIT_ICON + '<span>' + (lang === 'zh' ? '退出网页全屏' : 'Exit web fullscreen') + '</span>';
+    return FS_ICON + '<span>' + (lang === 'zh' ? '放大该内容至网页全屏' : 'Web fullscreen content') + '</span>';
   }
   function expandContentLabel() {
     return FOLD_EXPAND_ICON + '<span>' + (lang==='zh'?'展开具体内容':'Expand details') + '</span>';
@@ -2438,7 +2441,7 @@ var safeLS = (function() {
       var z = item.querySelector('.item-title .zoom-btn');
       if (z) z.innerHTML = zoomBtnHtml(body && body.classList.contains('zoomed'));
       var f = item.querySelector('.item-title .fs-btn');
-      if (f) f.innerHTML = fsBtnHtml(document.fullscreenElement === item);
+      if (f) f.innerHTML = fsBtnHtml(item.classList.contains('web-fs'));
     });
   }
 
@@ -2934,35 +2937,34 @@ var safeLS = (function() {
   window.toggleFsItem = function(idOrEl) {
     var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
     if (!item) return;
-    var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
-    if (!fsEl) {
-      // 进入全屏前确保正文已展开，否则全屏里看不到内容
+    if (!item.classList.contains('web-fs')) {
+      // 进入网页全屏前确保正文已展开，否则覆盖层里看不到内容
       var body = item.querySelector('.item-body');
       if (body && !body.classList.contains('open')) {
         body.classList.add('open');
         var fb = item.querySelector('.item-title .fold-btn');
         if (fb) fb.innerHTML = foldBtnHtml(true);
       }
-      var req = item.requestFullscreen ? item.requestFullscreen() : (item.webkitRequestFullscreen ? item.webkitRequestFullscreen() : null);
-      if (req && req.then) req.catch(function(e){ console.warn('fullscreen request failed', e); });
-    } else if (fsEl === item) {
-      var ex = document.exitFullscreen ? document.exitFullscreen() : (document.webkitExitFullscreen ? document.webkitExitFullscreen() : null);
-      if (ex && ex.then) ex.catch(function(){});
+      document.body.style.overflow = 'hidden'; // 锁住背景滚动
+      item.classList.add('web-fs');
     } else {
-      // 当前是别的元素在全屏，先退出
-      var ex2 = document.exitFullscreen ? document.exitFullscreen() : (document.webkitExitFullscreen ? document.webkitExitFullscreen() : null);
-      if (ex2 && ex2.then) ex2.catch(function(){});
+      item.classList.remove('web-fs');
+      document.body.style.overflow = '';
     }
+    relabelFsButtons();
   };
   function relabelFsButtons() {
-    var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
     document.querySelectorAll('.item').forEach(function(item) {
       var b = item.querySelector('.item-title .fs-btn');
-      if (b) b.innerHTML = fsBtnHtml(fsEl === item);
+      if (b) b.innerHTML = fsBtnHtml(item.classList.contains('web-fs'));
     });
   }
-  document.addEventListener('fullscreenchange', relabelFsButtons);
-  document.addEventListener('webkitfullscreenchange', relabelFsButtons);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var open = document.querySelector('.item.web-fs');
+      if (open) toggleFsItem(open);
+    }
+  });
   window.expandSectionItems = function(idOrEl) {
     var section = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl.closest('.section-card');
     if (!section) return;
