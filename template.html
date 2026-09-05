@@ -310,18 +310,21 @@
   }
   .fs-btn:hover { border-color: var(--accent); color: var(--accent); }
   .fs-btn:active { transform: scale(.94); }
-  /* 条目全屏态：撑满视口、可滚动、用卡片底色 */
-  .item:fullscreen, .item:-webkit-full-screen {
+  /* 条目「网页全屏」态：页面内覆盖层撑满视口（浏览器标签页/地址栏仍在），
+     非 OS 级 requestFullscreen，避免移动端/旧浏览器兼容问题 */
+  .item.web-fs {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
     background: var(--card-bg);
     padding: 36px clamp(16px, 5vw, 72px);
     overflow: auto;
-    width: 100%; height: 100%;
     max-width: none;
     box-sizing: border-box;
-    box-shadow: none;
+    box-shadow: 0 0 0 100vmax rgba(0,0,0,.55);
   }
-  .item:fullscreen .item-title { position: sticky; top: 0; background: var(--card-bg); padding-top: 4px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 16px; z-index: 2; }
-  .item:fullscreen .item-body { max-height: none; }
+  .item.web-fs .item-title { position: sticky; top: 0; background: var(--card-bg); padding-top: 4px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 16px; z-index: 2; }
+  .item.web-fs .item-body { max-height: none; }
   .hl-ch { background: var(--hl-color); color: var(--text); border-radius: 2px; padding: 0 1px; }
   .closing {
     text-align: center;
@@ -1571,8 +1574,8 @@ var safeLS = (function() {
   var FS_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M8 3H5a2 2 0 00-2 2v3M16 3h3a2 2 0 012 2v3M8 21H5a2 2 0 01-2-2v-3M16 21h3a2 2 0 002-2v-3"/></svg>';
   var FS_EXIT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M8 3v3a2 2 0 01-2 2H3M21 8h-3a2 2 0 01-2-2V3M3 16h3a2 2 0 012 2v3M16 21v-3a2 2 0 012-2h3"/></svg>';
   function fsBtnHtml(isFs) {
-    if (isFs) return FS_EXIT_ICON + '<span>' + (lang === 'zh' ? '退出全屏' : 'Exit fullscreen') + '</span>';
-    return FS_ICON + '<span>' + (lang === 'zh' ? '放大改内容至全屏' : 'Fullscreen content') + '</span>';
+    if (isFs) return FS_EXIT_ICON + '<span>' + (lang === 'zh' ? '退出网页全屏' : 'Exit web fullscreen') + '</span>';
+    return FS_ICON + '<span>' + (lang === 'zh' ? '放大该内容至网页全屏' : 'Web fullscreen content') + '</span>';
   }
   function expandContentLabel() {
     return FOLD_EXPAND_ICON + '<span>' + (lang==='zh'?'展开具体内容':'Expand details') + '</span>';
@@ -1596,7 +1599,7 @@ var safeLS = (function() {
       var z = item.querySelector('.item-title .zoom-btn');
       if (z) z.innerHTML = zoomBtnHtml(body && body.classList.contains('zoomed'));
       var f = item.querySelector('.item-title .fs-btn');
-      if (f) f.innerHTML = fsBtnHtml(document.fullscreenElement === item);
+      if (f) f.innerHTML = fsBtnHtml(item.classList.contains('web-fs'));
     });
   }
 
@@ -2092,35 +2095,34 @@ var safeLS = (function() {
   window.toggleFsItem = function(idOrEl) {
     var item = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl;
     if (!item) return;
-    var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
-    if (!fsEl) {
-      // 进入全屏前确保正文已展开，否则全屏里看不到内容
+    if (!item.classList.contains('web-fs')) {
+      // 进入网页全屏前确保正文已展开，否则覆盖层里看不到内容
       var body = item.querySelector('.item-body');
       if (body && !body.classList.contains('open')) {
         body.classList.add('open');
         var fb = item.querySelector('.item-title .fold-btn');
         if (fb) fb.innerHTML = foldBtnHtml(true);
       }
-      var req = item.requestFullscreen ? item.requestFullscreen() : (item.webkitRequestFullscreen ? item.webkitRequestFullscreen() : null);
-      if (req && req.then) req.catch(function(e){ console.warn('fullscreen request failed', e); });
-    } else if (fsEl === item) {
-      var ex = document.exitFullscreen ? document.exitFullscreen() : (document.webkitExitFullscreen ? document.webkitExitFullscreen() : null);
-      if (ex && ex.then) ex.catch(function(){});
+      document.body.style.overflow = 'hidden'; // 锁住背景滚动
+      item.classList.add('web-fs');
     } else {
-      // 当前是别的元素在全屏，先退出
-      var ex2 = document.exitFullscreen ? document.exitFullscreen() : (document.webkitExitFullscreen ? document.webkitExitFullscreen() : null);
-      if (ex2 && ex2.then) ex2.catch(function(){});
+      item.classList.remove('web-fs');
+      document.body.style.overflow = '';
     }
+    relabelFsButtons();
   };
   function relabelFsButtons() {
-    var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
     document.querySelectorAll('.item').forEach(function(item) {
       var b = item.querySelector('.item-title .fs-btn');
-      if (b) b.innerHTML = fsBtnHtml(fsEl === item);
+      if (b) b.innerHTML = fsBtnHtml(item.classList.contains('web-fs'));
     });
   }
-  document.addEventListener('fullscreenchange', relabelFsButtons);
-  document.addEventListener('webkitfullscreenchange', relabelFsButtons);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var open = document.querySelector('.item.web-fs');
+      if (open) toggleFsItem(open);
+    }
+  });
   window.expandSectionItems = function(idOrEl) {
     var section = (typeof idOrEl === 'string') ? document.getElementById(idOrEl) : idOrEl.closest('.section-card');
     if (!section) return;
